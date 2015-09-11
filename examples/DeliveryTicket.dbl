@@ -1,0 +1,371 @@
+
+import System
+import SynPSG.PDF
+
+main TestDeliveryTicket
+    record
+        pdf,        @PdfFile
+        x1,     float
+        y1,     float
+        x2,     float
+        y2,     float
+        exeFolder,  string
+        arialNarrow,    string
+        arialNarrowBold,string
+    endrecord
+proc
+    xcall flags(7004020,1)
+
+    pdf = new PdfFile(,,,,,,,,,,,,"Delivery Ticket")
+
+    ;;Ask reader applications to display a single page at a time
+    pdf.PageLayout = PdfPageLayout.Single
+
+    ;;Load and embed custom fonts
+    arialNarrow     = pdf.LoadTrueTypeFont("C:\Windows\Fonts\ARIALN.TTF")
+    arialNarrowBold = pdf.LoadTrueTypeFont("C:\Windows\Fonts\ARIALNB.TTF")
+
+    ;;Top line titles
+    pdf.SelectFont(arialNarrowBold,22)
+    pdf.DrawText("SOME COMPANY INC.",36,729)
+    pdf.SelectFont(arialNarrowBold,14)
+    pdf.DrawText("DELIVERY TICKET",459,740)
+    pdf.SelectFont(arialNarrowBold,9)
+    pdf.DrawText("SHIPPING DOCUMENT",477,731)
+
+    ;;Small text below main title
+    pdf.SelectFont(arialNarrow,8)
+    pdf.DrawText("DISTRIBUTOR OF SOMETHING",27,720)
+    pdf.DrawText("PHONE (555) 555 5555",63,711)
+    pdf.DrawText("P.O. BOX 12345",238.5,720)
+    pdf.DrawText("SOMETOWN, CA, 55555-5555",216,711)
+
+    ;;TICKET NO box (top)
+    pdf.DrawBox(481.5,729,598.5,702)
+    pdf.SelectFont(arialNarrow,8)
+    pdf.DrawText("TICKET NO.",502,706.5)
+
+    ;;CUSTOMER NO. box
+    pdf.DrawBox(229.5,697.5,288,670.5,,PdfColor.LightPink,true,PdfColor.LightPink)
+    pdf.SelectFont(arialNarrow,6)
+    pdf.DrawText("CUSTOMER NO.",231,693)
+
+    ;;SHIP DATE box
+    pdf.DrawBox(x1=540,y1=697.5,x2=607.5,y2=670.5,,PdfColor.LightPink,true,PdfColor.LightPink)
+    pdf.SelectFont(arialNarrow,6)
+    pdf.DrawText("SHIP DATE",542,693)
+
+    ;;Main outer box
+    pdf.DrawBox(x1=5,y1=634.5,x2=607,y2=54)
+
+    ;;1st black bar
+    pdf.DrawBox(x1=5,y1=634.5,x2=607,y2=621,,PdfColor.Black,true,PdfColor.Black)
+    ;;White Lines inside 1st black bar
+    pdf.StrokeColor = PdfColor.White
+    pdf.FillColor = PdfColor.White
+    pdf.DrawLine(117,634.5,117,621)
+    pdf.DrawLine(153,634.5,153,621)
+    pdf.DrawLine(202.5,634.5,202.5,621)
+    pdf.DrawLine(252,634.5,252,621)
+    pdf.DrawLine(306,634.5,306,621)
+    pdf.DrawLine(355.5,634.5,355.5,621)
+    pdf.DrawLine(477,634.5,477,621)
+    ;;White text in 1st black bar
+    pdf.SelectFont(arialNarrow,6)
+    pdf.DrawText("CUSTOMER ORDER NUMBER",30,624)
+    pdf.DrawText("SALES CODE",118,624)
+    pdf.DrawText("CREDIT APPROV.",158,624)
+    pdf.DrawText("TYPED BY",216,624)
+    pdf.DrawText("LOADED BY",265,624)
+    pdf.DrawText("CHECKED BY",313,624)
+    pdf.DrawText("TRUCK/TRAILER NO.",385,624)
+    pdf.DrawText("DRIVER",535,624)
+    pdf.StrokeColor = PdfColor.Black
+    pdf.FillColor = PdfColor.Black
+
+    ;;Vertical black Lines between the 1st and 2nd black bars
+    pdf.DrawLine(117,621,117,598.5)
+    pdf.DrawLine(153,621,153,598.5)
+    pdf.DrawLine(202.5,621,202.5,598.5)
+    pdf.DrawLine(252,621,252,598.5)
+    pdf.DrawLine(306,621,306,598.5)
+    pdf.DrawLine(355.5,621,355.5,598.5)
+    pdf.DrawLine(477,621,477,598.5)
+
+    ;;2nd black bar
+    pdf.DrawBox(x1=5,y1=598.5,x2=607,y2=585,,PdfColor.Black,true,PdfColor.Black)
+    ;;White Lines inside 2nd black bar
+    pdf.StrokeColor = PdfColor.White
+    pdf.FillColor = PdfColor.White
+    pdf.DrawLine( 72,598.5, 72,585)         ;after NO OF PKGS
+    pdf.DrawLine(130.5,598.5,130.5,585)     ;after PKG SIZE
+    pdf.DrawLine(360,591.75,360,585)        ;before PRODUCT NO
+    pdf.DrawLine(409.5,591.75,409.5,585)    ;before VER
+    pdf.DrawLine(432,598.5,432,585)         ;before QUANTITY SHIPPED
+    pdf.DrawLine(526.5,598.5,526.5,585)     ;before UNIT
+    pdf.DrawLine(553.5,598.5,553.5,585)     ;before OUR ORDER NUMBER
+    pdf.DrawLine(130.5,591.75,432,591.75)   ;Horizontal line in midle of black bar
+    ;;White text in 2nd black bar
+    pdf.SelectFont(arialNarrow,9)
+    pdf.DrawText("NO. OF PKGS.",7,588)
+    pdf.DrawText("PKG. SIZE",80,588)
+    pdf.SelectFont(arialNarrow,6)
+    pdf.DrawText("DESCRIPTION",260,593)
+    pdf.DrawText("PRODUCT NAME",210,586)
+    pdf.DrawText("PRODUCT NO.",365,586)
+    pdf.DrawText("VER.",415,586)
+    pdf.SelectFont(arialNarrow,9)
+    pdf.DrawText("QUANTITY SHIPPED",443,588)
+    pdf.DrawText("UNIT",533,588)
+    pdf.SelectFont(arialNarrow,6)
+    pdf.DrawText("OUR",563,592)
+    pdf.DrawText("ORDER NO.",563,586)
+    pdf.StrokeColor = PdfColor.Black
+    pdf.FillColor = PdfColor.Black
+
+    ;;Shaded lines in upper main box (top=576, bottom is 396, divided into 15 equal areas)
+    ;;So 15 rows of 12 pixels
+    pdf.DrawBox(x1=6,y1=578,x2=606,y2=567,,PdfColor.LightPink,true,PdfColor.LightPink)
+    pdf.DrawBox(x1=6,y1=554,x2=606,y2=543,,PdfColor.LightGray,true,PdfColor.LightGray)
+    pdf.DrawBox(x1=6,y1=530,x2=606,y2=519,,PdfColor.LightPink,true,PdfColor.LightPink)
+    pdf.DrawBox(x1=6,y1=506,x2=606,y2=495,,PdfColor.LightGray,true,PdfColor.LightGray)
+    pdf.DrawBox(x1=6,y1=482,x2=606,y2=471,,PdfColor.LightPink,true,PdfColor.LightPink)
+    pdf.DrawBox(x1=6,y1=458,x2=606,y2=447,,PdfColor.LightGray,true,PdfColor.LightGray)
+    pdf.DrawBox(x1=6,y1=434,x2=606,y2=423,,PdfColor.LightPink,true,PdfColor.LightPink)
+    pdf.DrawBox(x1=6,y1=410,x2=606,y2=399,,PdfColor.LightGray,true,PdfColor.LightGray)
+
+    ;;Vertical lines between 2nd and 3rd black bars
+    pdf.DrawLine(x1= 72,y1=585,x2= 72,y2=391.5)     ;after NO OF PKGS
+    pdf.DrawLine(x1=130.5,y1=585,x2=130.5,y2=391.5) ;after PKG size
+    pdf.DrawLine(x1=360,y1=585,x2=360,y2=391.5)     ;before PRODUCT NO
+    pdf.DrawLine(x1=409.5,y1=585,x2=409.5,y2=391.5) ;before VER
+    pdf.DrawLine(x1=432,y1=585,x2=432,y2=391.5)     ;before QUANTITY SHIPPED
+    pdf.DrawLine(x1=526.5,y1=585,x2=526.5,y2=391.5) ;before UNIT
+    pdf.DrawLine(x1=553.5,y1=585,x2=553.5,y2=391.5) ;after UNIT
+
+    ;;3rd black bar
+    pdf.DrawBox(x1=5,y1=391.5,x2=607,y2=378,,PdfColor.Black,true,PdfColor.Black)
+    ;;White Lines inside 3rd black bar
+    pdf.StrokeColor = PdfColor.White
+    pdf.FillColor = PdfColor.White
+    pdf.DrawLine( 72,391.5, 72,378) ;after QUANTITY
+    pdf.DrawLine(441,391.5,441,378) ;before WEIGHT
+    pdf.DrawLine(495,391.5,495,378) ;after WEIGHT
+    ;;White text in 3rd black bar
+    pdf.SelectFont(arialNarrow,9)
+    pdf.DrawText("QUANTITY",20,381)
+    pdf.DrawText("UNIT",76,381)
+    pdf.DrawBox(x1=99,y1=391.5,x2=121.5,y2=378,,PdfColor.Red,true,PdfColor.Red)  ;Red box for HM
+    pdf.DrawText("HM",104,381)
+    pdf.DrawText("HAZARDOUS MATERIAL SHIPPING DESCRIPTION",195,381)
+    pdf.SelectFont(arialNarrow,8)
+    pdf.DrawText("WEIGHT",458,386)
+    pdf.SelectFont(arialNarrow,6)
+    pdf.DrawText("SUB TO CORRECTION",442,379)
+    pdf.SelectFont(arialNarrow,9)
+    pdf.DrawText("GUARANTEED ANALYSIS:",505,381)
+    pdf.StrokeColor = PdfColor.Black
+    pdf.FillColor = PdfColor.Black
+
+    ;;Shaded lines in lower main box (top=374, bottom is 122, divided into 21 equal areas)
+    ;;So 21 rows of 12 pixels
+    pdf.DrawBox(x1=6,y1=374,x2=494,y2=363,,PdfColor.LightPink,true,PdfColor.LightPink)
+    pdf.DrawBox(x1=6,y1=350,x2=494,y2=339,,PdfColor.LightGray,true,PdfColor.LightGray)
+    pdf.DrawBox(x1=6,y1=326,x2=494,y2=315,,PdfColor.LightPink,true,PdfColor.LightPink)
+    pdf.DrawBox(x1=6,y1=302,x2=494,y2=291,,PdfColor.LightGray,true,PdfColor.LightGray)
+    pdf.DrawBox(x1=6,y1=278,x2=494,y2=267,,PdfColor.LightPink,true,PdfColor.LightPink)
+    pdf.DrawBox(x1=6,y1=254,x2=494,y2=243,,PdfColor.LightGray,true,PdfColor.LightGray)
+    pdf.DrawBox(x1=6,y1=230,x2=494,y2=219,,PdfColor.LightPink,true,PdfColor.LightPink)
+    pdf.DrawBox(x1=6,y1=206,x2=494,y2=195,,PdfColor.LightGray,true,PdfColor.LightGray)
+    pdf.DrawBox(x1=6,y1=182,x2=494,y2=171,,PdfColor.LightPink,true,PdfColor.LightPink)
+    pdf.DrawBox(x1=6,y1=158,x2=494,y2=147,,PdfColor.LightGray,true,PdfColor.LightGray)
+    pdf.DrawBox(x1=6,y1=134,x2=494,y2=123,,PdfColor.LightPink,true,PdfColor.LightPink)
+
+    ;;Vertical lines between 3rd black bar and delivery instructions top line
+    pdf.DrawLine(x1= 72,y1=378,x2= 72,y2=117)                   ;after QUANTITY
+    pdf.DrawLine(x1=99,y1=378,x2=99,y2=117,,PdfColor.Red)       ;before HM
+    pdf.DrawLine(x1=121.5,y1=378,x2=121.5,y2=117,,PdfColor.Red) ;after HM
+    pdf.DrawLine(x1=441,y1=378,x2=441,y2=117)                   ;before WEIGHT
+    pdf.DrawLine(x1=495,y1=378,x2=495,y2=117)                   ;after WEIGHT
+
+    ;;GUARANTEED ANALYSIS
+    pdf.SelectFont(arialNarrow,8)
+    pdf.DrawText("TOTAL NIT.",508.5,364.5)
+    pdf.DrawLine(547,364.5,600,364.5)
+
+    pdf.DrawText("AVAIL P2O5",508.5,353.5)
+    pdf.DrawLine(547,353.5,600,353.5)
+
+    pdf.DrawText("SOL K2O",508.5,342)
+    pdf.DrawLine(547,342,600,342)
+
+    pdf.DrawText("S",508.5,331)
+    pdf.DrawLine(518,331,537,331)
+    pdf.DrawText(", ZN",540,331)
+    pdf.DrawLine(555,331,600,331)
+
+    pdf.DrawLine(508.5,319.5,600,319.5)
+
+    pdf.DrawText("SPREAD                     ACRES",508.5,309.5)
+    pdf.DrawLine(540,309.5,570,309.5)
+
+    pdf.DrawText("AT              LBS. PER ACRE",508.5,297)
+    pdf.DrawLine(522,297,539,297)
+
+    ;;Double horizontal lines before CERTIFICATION
+    pdf.DrawLine(495,288,607,288)
+    pdf.DrawLine(495,283.5,607,283.5)
+
+    pdf.SelectFont(arialNarrow,8)
+    pdf.DrawText('CERTIFICATION',532,275)
+    pdf.DrawText('"This is to certify that the above',500,266)
+    pdf.DrawText('named materials are properly classi-',500,259)
+    pdf.DrawText('fied, described, packaged, marked,',500,252)
+    pdf.DrawText('and labelled, and are in proper con-',500,245)
+    pdf.DrawText('dition for transportation, according',500,238)
+    pdf.DrawText('to the applicable regulations of the',500,231)
+    pdf.DrawText('Department of Transportation."',500,224)
+    pdf.SelectFont(arialNarrowBold,12)
+    pdf.DrawText('X',498,196)
+
+    ;;Double horizontal lines before INVOICE DATE
+    pdf.DrawLine(495,193.5,607,193.5)
+    pdf.DrawLine(495,189,607,189)
+    pdf.SelectFont(arialNarrow,8)
+    pdf.DrawText("INVOICE DATE",498,182)
+
+    ;;Double horizontal lines before INVOICE NOS.
+    pdf.DrawLine(495,157.5,607,157.5)
+    pdf.DrawLine(495,153,607,153)
+    pdf.SelectFont(arialNarrow,8)
+    pdf.DrawText("INVOICE NOS.",498,146)
+
+    ;Horizontal line above delivery instructions
+    pdf.DrawLine(x1=5,y1=117,x2=607,y2=117)
+
+    pdf.SelectFont(arialNarrow,8)
+    pdf.DrawText("DELIVERY",7,109)
+    pdf.DrawText("INSTRUCTIONS:",7,100)
+
+    ;;Signature line (REC'D BY)
+    pdf.SelectFont(arialNarrow,8)
+    pdf.DrawText("REC'D",425,45)
+    pdf.DrawText("BY:",435,37)
+    pdf.SelectFont(arialNarrowBold,12)
+    pdf.DrawText('X',450,40)
+    pdf.DrawLine(450,36,607,36)
+
+    pdf.SelectFont(arialNarrowBold,8)
+    pdf.DrawText("LATE PAYMENT PENALTY PER MONTH ON PART DUE ACCOUNTS, ALL ORDERS SUBJECT TO OFFICE APPROVAL,",36,36)
+    pdf.DrawText("PRICE CHANGE, AND GOODS AVAILABLE. NO MERCHANDISE RETURNS UNLESS AUTHORIZED BY PREVIOUS CORRESPONDENCE.",9,27)
+
+    pdf.SelectFont(arialNarrowBold,12)
+    pdf.DrawText("ORIGINAL                             EMERGENCY -- 555-555-5555 -- CHEM TREC # CC55555",30,9,PdfColor.Red)
+
+    ;;TICKET NO box (bottom)
+    pdf.DrawBox(x1=486,y1=31.5,x2=603,y2=9)
+    pdf.SelectFont(arialNarrow,8)
+    pdf.DrawText("TICKET NO.",490.5,13)
+
+    ;;-----------------------------------------------------------------------------------------
+    ;;Add X's as fake data
+
+    pdf.SelectFont("Courier",12)
+
+    pdf.DrawText("XXXXX",555,711)                      ;;Top ticket number
+    pdf.DrawText("XXXXXXXX",230,675)                   ;;Pink customer number box
+    pdf.DrawText("XXXXXXXX",230,657)                   ;;Location # (below customer number box)
+    pdf.DrawText("XX/XX/XX",544,675)                   ;;Pink ship date box
+
+    ;;Sold To
+    pdf.DrawText("X",2,711)
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",2,697.5)
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",2,684)
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",2,670.5)
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",2,657)
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",2,643.5)
+
+    ;;Ship To:
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXX",320,711)
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXX",320,697.5)
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",320,684)
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",320,670.5)
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",320,657)
+
+    pdf.DrawText("XXXXXXXXXXXXXXX",6,606)              ;;Customer order number
+    pdf.DrawText("XXXX",119,606)                       ;;Sales code
+    pdf.DrawText("XXXXXX",155,606)                     ;;Credit Approv
+    pdf.DrawText("XXXXXX",204,606)                     ;;Typed by
+    pdf.DrawText("XXXXXX",254,606)                     ;;Loaded by
+    pdf.DrawText("XXXXXX",308,606)                     ;;Checked by
+    pdf.DrawText("XXXXXXXXXXXXXXXX",357,606)           ;;Truck / Trailer No.
+    pdf.DrawText("XXXXXXXXXXXXXXXXX",479,606)          ;;Driver
+
+    ;;Upper box
+    begin
+        data ix, float
+        for ix from 569 thru 400 by -12
+        begin
+            pdf.DrawText("XXXXXXXXX",6,ix)                          ;;No of pkgs
+            pdf.DrawText("XXXXXXX",77,ix)                           ;;Pkg size
+            pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",134,ix)  ;;Prod name / desc
+            pdf.DrawText("XXXXXX",363,ix)                           ;;Product no
+            pdf.DrawText("XX",413,ix)                               ;;Ver
+            pdf.DrawText("XXXXXXXXXXXX",435,ix)                     ;;Quantity shipped
+            pdf.DrawText("XXX",529,ix)                              ;;Unit
+            pdf.DrawText("XXXXXX",558,ix)                           ;;Van Diest Order Number
+        end
+    end
+
+    ;;Lower box
+    begin
+        data ix, float
+        for ix from 365 thru 125 by -12
+        begin
+            pdf.DrawText("XXXXXXXXX",6,ix)
+            pdf.DrawText("XXX",77,ix)
+            pdf.DrawText("XX",103,ix)
+            pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",125,ix)
+            pdf.DrawText("XXXXXXX",443,ix)
+        end
+    end
+
+    ;;Guaranteed analysis
+    pdf.SelectFont("Courier",10)
+    pdf.DrawText("XXXXXXXX",549,366)        ;;Total nit
+    pdf.DrawText("XXXXXXXX",549,355)        ;;Avail P2O5
+    pdf.DrawText("XXXXXXXX",549,344)        ;;Sol K2O
+    pdf.DrawText("XXX",517,333)             ;;S
+    pdf.DrawText("XXXXXXX",557,333)         ;;ZN
+    pdf.DrawText("XXXXXXXXXXXXXXX",509,321)
+    pdf.DrawText("XXXX",542,311)            ;;Acres
+    pdf.DrawText("XX",524,299)              ;;Per acre
+
+    pdf.SelectFont("Courier",12)
+
+    pdf.DrawText("XX/XX/XXXX",510,168)      ;;Invoice date
+    pdf.DrawText("XXXXXXXXXXXX",510,135)    ;;Invoice Nos
+    pdf.DrawText("XXXXXXXXXXXX",510,125)    ;;Invoice Nos
+
+    ;;Delivery instructions
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",90,99)
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",90,90)
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",90,81)
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",90,72)
+
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",360,99)
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",360,90)
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",360,81)
+    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",360,72)
+
+    pdf.DrawText("X.X%",6,36)      ;;Late payment penalty
+
+    ;;Lower ticket number
+    pdf.DrawText("XXXXX",555,18)
+
+    ;;-----------------------------------------------------------------------------------------
+    ;;And show it
+
+    pdf.Preview()
+
+endmain

@@ -1,0 +1,97 @@
+
+import SynPSG.PDF
+
+main DblMessagesReport
+
+    record syntxt   ;218
+        facility,   a3
+        errnum,     d5
+        errcode,    a10
+        severity,   a1
+        message,    a199
+    endrecord
+
+    record print_line
+        ,           a2
+        facility,   a3
+        ,           a3
+        errnum,     a5
+        ,           a3
+        errcode,    a10
+        ,           a3
+        severity,   a1
+        ,           a3
+        message,    a97
+        ,           a2
+    endrecord
+
+    record
+        pdf,        @PdfFile
+        row,        int
+        maxrow,     int
+        ch,         int
+    endrecord
+
+proc
+
+    open(ch=0,i:i,"DBLDIR:syntxt.ism")
+    xcall flags(7004020,1)
+
+
+    ;;Create a PDF document and specify that we want 2 header rows and 2 footer rows
+    pdf = new PdfFile(,PdfOrientation.Landscape,132,,,,,,,2,2,,"DBL Error Messages")
+
+    ;;Define the content for the header rows
+    pdf.HeaderText[1] = "Synergy DBL Error Messages                                                                               Printed MM/DD/YYYY at HH:MM"
+
+    ;;Define the content for the footer rows
+    pdf.FooterText[2] = "Page [PAGE#]"
+
+    ;------------------------------------------------------------------------------------------------------------------------------------
+    ;| XXX | XXXXX | XXXXXXXXXX | X | XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX |
+    ;------------------------------------------------------------------------------------------------------------------------------------
+
+    ;;Add some auto-text
+    pdf.AutoItems.Add(new AutoBoxRowCol(1,1,pdf.Rows,pdf.Columns))
+    pdf.AutoItems.Add(new AutoTextRowCol("Fac   Err #   Code        Sev  Message",2,3))
+    pdf.AutoItems.Add(new AutoLineRowCol(1,7,pdf.Rows,7))
+    pdf.AutoItems.Add(new AutoLineRowCol(1,15,pdf.Rows,15))
+    pdf.AutoItems.Add(new AutoLineRowCol(1,28,pdf.Rows,28))
+    pdf.AutoItems.Add(new AutoLineRowCol(1,32,pdf.Rows,32))
+    pdf.AutoItems.Add(new AutoLineRowCol(3,1,3,pdf.Columns))
+
+    maxrow = pdf.Rows - 1
+    row = 4
+
+    repeat
+    begin
+        reads(ch,syntxt,eof)
+
+        print_line.facility = syntxt.facility
+        print_line.errnum = %string(syntxt.errnum,"ZZZZX")
+        print_line.errcode = syntxt.errcode
+        print_line.severity = syntxt.severity
+        print_line.message = syntxt.message
+
+        pdf.DrawTextRC(print_line,row,1)
+
+        if (row<maxrow) then
+            row += 1
+        else
+        begin
+            pdf.NewPage()
+            row = 4
+        end
+
+    end
+eof,
+
+    close ch
+
+    ;;Show the results
+    pdf.Preview()
+
+    stop
+
+endmain
+

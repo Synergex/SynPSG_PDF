@@ -1,0 +1,42 @@
+
+import SynPSG.PDF
+
+main MixedPageOrientation
+    record
+        pdf, @PdfFile
+    endrecord
+proc
+    xcall flags(7004020,1)
+
+    ;;Create a new PDF document
+    pdf = new PdfFile()
+
+    ;Display a single page at a time
+    pdf.PageLayout = PdfPageLayout.Single
+    pdf.PageMode = PdfPageMode.Outline
+
+    ;;Add page one content
+    pdf.NewPage()
+    pdf.DrawTextRC("This page is portrait",,,,,,true)
+    pdf.DrawTextRC("The page is " + %string(pdf.Width,"XXX.X") + " pixels wide and " + %string(pdf.Height,"XXX.X") + " pixels high.",,,,,,true)
+    pdf.DrawTextRC("The page body is " + %string(pdf.Columns) + " columns wide and " + %string(pdf.Rows) + " rows high.")
+
+    ;;Add a new landscape page and some content
+    pdf.NewPage(PdfOrientation.Landscape)
+    pdf.DrawTextRC("This page is landscape",,,,,,true)
+    pdf.DrawTextRC("The page is " + %string(pdf.Width,"XXX.X") + " pixels wide and " + %string(pdf.Height,"XXX.X") + " pixels high.",,,,,,true)
+    pdf.DrawTextRC("The page body is " + %string(pdf.Columns) + " columns wide and " + %string(pdf.Rows) + " rows high.")
+
+    ;;Add a portrait page and some content
+    pdf.NewPage()
+    pdf.DrawTextRC("This page is portrait",,,,,,true)
+    pdf.DrawTextRC("The page is " + %string(pdf.Width,"XXX.X") + " pixels wide and " + %string(pdf.Height,"XXX.X") + " pixels high.",,,,,,true)
+    pdf.DrawTextRC("The page body is " + %string(pdf.Columns) + " columns wide and " + %string(pdf.Rows) + " rows high.")
+
+    ;;Save the document and show the results
+    pdf.Preview()
+
+    stop
+
+endmain
+

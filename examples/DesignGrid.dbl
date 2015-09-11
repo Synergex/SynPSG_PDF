@@ -1,0 +1,34 @@
+
+import SynPSG.PDF
+
+main DesignGrid
+    record
+        pdf, @PdfFile
+    endrecord
+proc
+    xcall flags(7004020,1)
+
+    ;;Create a new PDF document
+    pdf = new PdfFile()
+
+    ;;Ask reader applications to display a single page at a time
+    pdf.PageLayout = PdfPageLayout.Single
+
+    ;;Add a design grid - this adds the grid using auto items
+    pdf.AddDesignGrid()
+
+    ;;Add a page so we can see the grid
+    pdf.NewPage()
+    pdf.NewPage()
+    pdf.NewPage()
+    pdf.NewPage()
+    pdf.NewPage()
+
+    ;;Save the document and show the results
+    pdf.Preview()
+
+    stop
+
+
+endmain
+

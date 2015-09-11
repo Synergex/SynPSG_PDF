@@ -1,0 +1,57 @@
+
+import SynPSG.PDF
+
+main AutoItems
+    record
+        pdf, @PdfFile
+    endrecord
+proc
+    xcall flags(7004020,1)
+
+    ;;Create a PDF document and specify that we want 2 header rows and 2 footer rows
+    pdf = new PdfFile(,,,,,,,,,2,2)
+
+    ;;Ask reader applications to display a single page at a time
+    pdf.PageLayout = PdfPageLayout.Single
+
+    ;;Define the content for the header rows
+    pdf.HeaderText[1] = "This is header text. The line below is a header line."
+    pdf.HeaderText[2] = "[LINE]"
+
+    ;;Define the content for the footer rows
+    pdf.FooterText[1] = "[LINE]"
+    pdf.FooterText[2] = "This is footer text on page [PAGE#]. The line above is a footer line."
+
+    ;;Add some auto-items that will be drawn on all pages
+
+    ;;Add some auto-text
+    pdf.AutoItems.Add(new AutoTextRowCol("This is auto text at position 1,1",1,1))
+
+    ;Draw a thin red line across row 10
+    pdf.AutoItems.Add(new AutoLineRowCol(10,1,10,80,0.1,PdfColor.Red))
+    pdf.AutoItems.Add(new AutoTextRowCol("This is an auto line",9,1))
+
+    ;Draw a thick green empty box from 12,1 to 15,40
+    pdf.AutoItems.Add(new AutoBoxRowCol(12,1,14,40,5,PdfColor.LightGreen))
+    pdf.AutoItems.Add(new AutoTextRowCol("This is an auto box",13,2))
+
+    ;Draw a thick orange box filled with pink from 12,41 to 15,80
+    pdf.AutoItems.Add(new AutoBoxRowCol(12,41,14,80,5,PdfColor.Orange,true,PdfColor.Pink))
+    pdf.AutoItems.Add(new AutoTextRowCol("This is an auto box",13,42))
+
+    ;;Draw an auto image
+    pdf.AutoItems.Add(new AutoImage("sdelogo.png",200,300))
+    pdf.AutoItems.Add(new AutoTextAbsolute("This is an auto image",225,285))
+
+    ;;Add three pages. All pages should have the header, footer and auto items drawn automatically
+    pdf.NewPage()
+    pdf.NewPage()
+    pdf.NewPage()
+
+    ;;Show the results
+    pdf.Preview()
+
+    stop
+
+endmain
+

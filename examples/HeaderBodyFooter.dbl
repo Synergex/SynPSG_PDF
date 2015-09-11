@@ -1,0 +1,43 @@
+
+import SynPSG.PDF
+
+main HeaderBodyFooter
+    record
+        pdf, @PdfFile
+        ix, int
+        buffer, a256
+    endrecord
+proc
+    xcall flags(7004020,1)
+
+    ;;Create a PDF document and specify that we want 2 header rows and 2 footer rows
+    pdf = new PdfFile(,,,,,,,,,2,2)
+
+    ;;Define the content for the header rows
+    if (pdf.HeaderRows)
+    begin
+        xcall fill("H",buffer)
+        for ix from 1 thru pdf.HeaderRows
+            pdf.HeaderText[ix] = buffer(1,pdf.Columns)
+    end
+
+    ;;Define the content for the footer rows
+    if (pdf.FooterRows)
+    begin
+        xcall fill("F",buffer)
+        for ix from 1 thru pdf.FooterRows
+            pdf.FooterText[ix] = buffer(1,pdf.Columns)
+    end
+
+    ;;Define the body text content
+    xcall fill("B",buffer)
+    for ix from 1 thru pdf.Rows
+        pdf.DrawTextRC(buffer(1,pdf.Columns),,,,,,true)
+
+    ;;Show the results
+    pdf.Preview()
+
+    stop
+
+endmain
+

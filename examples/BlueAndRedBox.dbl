@@ -1,0 +1,29 @@
+
+import SynPSG.PDF
+
+main BlueAndRedBox
+    record
+        pdf, @PdfFile
+    endrecord
+proc
+    xcall flags(7004020,1)
+
+    ;;Create a new PDF document
+    pdf = new PdfFile()
+
+    ;;Ask reader applications to display a single page at a time
+    pdf.PageLayout = PdfPageLayout.Single
+
+    ;;Various ways to draw boxes
+    pdf.DrawBoxRC(5,2,10,45,0.5,PdfColor.Navy)
+    pdf.DrawBoxObjectRC(new AutoBoxRowCol(10,50,15,60,2.5,PdfColor.Blue,true,PdfColor.Red))
+    pdf.DrawBox(100,500,300,200,5,PdfColor.Red,true,PdfColor.Blue)
+    pdf.DrawBoxObject(new AutoBoxAbsolute(350,300,450,100,2,PdfColor.Navy,true,PdfColor.Red))
+
+    ;;Save the document and show the results
+    pdf.Preview()
+
+    stop
+
+endmain
+

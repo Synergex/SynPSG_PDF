@@ -1,0 +1,32 @@
+
+import SynPSG.PDF
+
+main Portrait100
+    record
+        pdf, @PdfFile
+    endrecord
+proc
+    xcall flags(7004020,1)
+
+    ;;Create a new PDF document and specify 100 columns wide
+    pdf = new PdfFile(,,100)
+
+    ;;Add some content
+    pdf.DrawTextRC("This document is 100 characters wide in portrait mode.")
+    pdf.DrawTextRC("To achieve that a font size of " + %string(pdf.FontSize) + " was selected.",2,1)
+
+    pdf.SelectFont("Courier",pdf.FontSize)
+    pdf.DrawTextRC("ThiS Is a SenTENce",10,1,,,,,true)
+    pdf.DrawTextRC("thiS IS another sentENcE",11,1,,,,,true)
+    pdf.SelectFont("Helvetica",pdf.FontSize)
+    pdf.DrawTextRC("ThiS Is a SenTENce",20,1,,,,,true)
+    pdf.DrawTextRC("thiS IS another sentENcE",21,1,,,,,true)
+    pdf.ResetFont()
+
+    ;;Save the document and show the results
+    pdf.Preview()
+
+    stop
+
+endmain
+

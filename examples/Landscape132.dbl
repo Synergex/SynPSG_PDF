@@ -1,0 +1,24 @@
+
+import SynPSG.PDF
+
+main Landscape132
+    record
+        pdf, @PdfFile
+    endrecord
+proc
+    xcall flags(7004020,1)
+
+    ;;Create a new PDF document and specify landscape mode and 132 columns wide
+    pdf = new PdfFile(,PdfOrientation.Landscape,132)
+
+    ;;Add some content
+    pdf.DrawTextRC("This document is 132 characters wide in landscape mode.")
+    pdf.DrawTextRC("To achieve that a font size of " + %string(pdf.FontSize) + " was selected.",2,1)
+
+    ;;Save the document and show the results
+    pdf.Preview()
+
+    stop
+
+endmain
+
