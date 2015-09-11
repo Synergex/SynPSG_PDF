@@ -1,0 +1,6437 @@
+.ifdef DBLNET
+.ifndef DBLv953
+.define NO_HPDF
+.endc
+.endc
+
+.ifndef NO_HPDF
+
+import System
+.ifdef DBLNET
+import System.Runtime.InteropServices
+.endc
+
+.ifdef OS_VMS
+.define HARUPDF_LIB	"LIBHPDF"
+.else
+.ifdef OS_UNIX
+.if D_ADDRSIZE .eq. 8
+.define HARUPDF_LIB	"libhpdf64.so"
+.else
+.define HARUPDF_LIB	"libhpdf.so"
+.endc
+.else
+.if D_ADDRSIZE .eq. 8
+.define HARUPDF_LIB	"libhpdf64.dll"
+.else
+.define HARUPDF_LIB	"libhpdf.dll"
+.endc
+.endc
+.endc
+
+.ifdef DBLNET
+;; DllImport method attribute
+.define DLLIMP_ATTR	{DllImport(HARUPDF_LIB, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)}
+
+;; structures data attribute
+.define LAYOUT_ATTR	{StructLayout(LayoutKind.Sequential)}
+
+.else
+
+.define DLLIMP_ATTR
+.define LAYOUT_ATTR
+
+.endc
+
+namespace HPdf
+
+.region "Enumerations"
+
+    public enum HPdfPageLayout
+	HPDF_PAGE_LAYOUT_SINGLE, 0
+	HPDF_PAGE_LAYOUT_ONE_COLUMN
+	HPDF_PAGE_LAYOUT_TWO_C_LEFT
+	HPDF_PAGE_LAYOUT_TWO_C_RIGHT
+	HPDF_PAGE_LAYOUT_EOF
+    endenum
+
+    public enum HPdfPageMode
+	HPDF_PAGE_MODE_USE_NONE, 0
+	HPDF_PAGE_MODE_USE_OUTLINE
+	HPDF_PAGE_MODE_USE_THUMBS
+	HPDF_PAGE_MODE_FULL_SCREEN
+	HPDF_PAGE_MODE_EOF
+    endenum
+
+    public enum HPdfPageSizes
+	HPDF_PAGE_SIZE_LETTER, 0
+	HPDF_PAGE_SIZE_LEGAL
+	HPDF_PAGE_SIZE_A3
+	HPDF_PAGE_SIZE_A4
+	HPDF_PAGE_SIZE_A5
+	HPDF_PAGE_SIZE_B4
+	HPDF_PAGE_SIZE_B5
+	HPDF_PAGE_SIZE_EXECUTIVE
+	HPDF_PAGE_SIZE_US4x6
+	HPDF_PAGE_SIZE_US4x8
+	HPDF_PAGE_SIZE_US5x7
+	HPDF_PAGE_SIZE_COMM10
+	HPDF_PAGE_SIZE_EOF
+    endenum
+
+    public enum HPdfPageDirection
+	HPDF_PAGE_PORTRAIT, 0
+	HPDF_PAGE_LANDSCAPE
+    endenum
+
+    public enum HPdfPageNumStyle
+	HPDF_PAGE_NUM_STYLE_DECIMAL, 0
+	HPDF_PAGE_NUM_S_UPPER_ROMAN
+	HPDF_PAGE_NUM_S_LOWER_ROMAN
+	HPDF_PAGE_NUM_S_UPPER_LETRS
+	HPDF_PAGE_NUM_S_LOWER_LETRS
+	HPDF_PAGE_NUM_STYLE_EOF
+    endenum
+
+    public enum HPdfWritingMode
+	HPDF_WMODE_HORIZONTAL, 0
+	HPDF_WMODE_VERTICAL
+	HPDF_WMODE_EOF
+    endenum
+
+    public enum HPdfEncoderType
+	HPDF_ENCODER_TYPE_SINGLE_BYTE, 0
+	HPDF_ENCODER_TYPE_DOUBLE_BYTE
+	HPDF_ENCODER_TYPE_UNINIT
+	HPDF_ENCODER_UNKNOWN
+    endenum
+
+    public enum HPdfByteType
+	HPDF_BYTE_TYPE_SINGLE, 0
+	HPDF_BYTE_TYPE_LEAD
+	HPDF_BYTE_TYPE_TRIAL
+	HPDF_BYTE_TYPE_UNKNOWN
+    endenum
+
+    public enum HPdfAnnotHighlightMode
+	HPDF_ANNOT_NO_HIGHTLIGHT, 0
+	HPDF_ANNOT_INVERT_BOX
+	HPDF_ANNOT_INVERT_BORDER
+	HPDF_ANNOT_DOWN_APPEARANCE
+	HPDF_ANNOT_HIGHTLIGHT_MODE_EOF
+    endenum
+
+    public enum HPdfAnnotIcon
+	HPDF_ANNOT_ICON_COMMENT, 0
+	HPDF_ANNOT_ICON_KEY
+	HPDF_ANNOT_ICON_NOTE
+	HPDF_ANNOT_ICON_HELP
+	HPDF_ANNOT_ICON_NEW_PARAGRAPH
+	HPDF_ANNOT_ICON_PARAGRAPH
+	HPDF_ANNOT_ICON_INSERT
+	HPDF_ANNOT_ICON_EOF
+    endenum
+
+    public enum HPdfColorSpace
+	HPDF_CS_DEVICE_GRAY, 0
+	HPDF_CS_DEVICE_RGB
+	HPDF_CS_DEVICE_CMYK
+	HPDF_CS_CAL_GRAY
+	HPDF_CS_CAL_RGB
+	HPDF_CS_LAB
+	HPDF_CS_ICC_BASED
+	HPDF_CS_SEPARATION
+	HPDF_CS_DEVICE_N
+	HPDF_CS_INDEXED
+	HPDF_CS_PATTERN
+	HPDF_CS_EOF
+    endenum
+
+    public enum HPdfInfoType
+	HPDF_INFO_CREATION_DATE, 0
+	HPDF_INFO_MOD_DATE, 1
+	HPDF_INFO_AUTHOR, 2
+	HPDF_INFO_CREATOR, 3
+	HPDF_INFO_PRODUCER, 4
+	HPDF_INFO_TITLE, 5
+	HPDF_INFO_SUBJECT, 6
+	HPDF_INFO_KEYWORDS, 7
+	HPDF_INFO_EOF, 8
+    endenum
+
+    public enum HPdfEncryptMode
+	HPDF_ENCRYPT_R2, 2
+	HPDF_ENCRYPT_R3, 3
+    endenum
+
+    public enum HPdfTextRenderingMode
+	HPDF_FILL, 0
+	HPDF_STROKE, 1
+	HPDF_FILL_THEN_STROKE, 2
+	HPDF_INVISIBLE, 3
+	HPDF_FILL_CLIPPING, 4
+	HPDF_STROKE_CLIPPING, 5
+	HPDF_FILL_STROKE_CLIPPING, 6
+	HPDF_CLIPPING, 7
+	HPDF_RENDERING_MODE_EOF, 8
+    endenum
+
+    public enum HPdfLineCap
+	HPDF_BUTT_END, 0
+	HPDF_ROUND_END, 1
+	HPDF_PROJECTING_SCUARE_END, 2
+	HPDF_LINECAP_EOF, 3
+    endenum
+
+    public enum HPdfLineJoin
+	HPDF_MITER_JOIN, 0
+	HPDF_ROUND_JOIN, 1
+	HPDF_BEVEL_JOIN, 2
+	HPDF_LINEJOIN_EOF, 3
+    endenum
+
+    public enum HPdfTextAlignment
+	HPDF_TALIGN_LEFT, 0
+	HPDF_TALIGN_RIGHT, 1
+	HPDF_TALIGN_CENTER, 2
+	HPDF_TALIGN_JUSTIFY, 3
+    endenum
+
+    public enum HPdfTransitionStyle
+	HPDF_TS_WIPE_RIGHT, 0
+	HPDF_TS_WIPE_UP
+	HPDF_TS_WIPE_LEFT
+	HPDF_TS_WIPE_DOWN
+;	HPDF_TS_BARN_DOORS_HORIZONTAL_OUT
+;	HPDF_TS_BARN_DOORS_HORIZONTAL_IN
+	HPDF_TS_BARN_DOORS_HOR_OUT
+	HPDF_TS_BARN_DOORS_HOR_IN
+;	HPDF_TS_BARN_DOORS_VERTICAL_OUT
+;	HPDF_TS_BARN_DOORS_VERTICAL_IN
+	HPDF_TS_BARN_DOORS_VERT_OUT
+	HPDF_TS_BARN_DOORS_VERT_IN
+	HPDF_TS_BOX_OUT
+	HPDF_TS_BOX_IN
+	HPDF_TS_BLINDS_HORIZONTAL
+	HPDF_TS_BLINDS_VERTICAL
+	HPDF_TS_DISSOLVE
+	HPDF_TS_GLITTER_RIGHT
+	HPDF_TS_GLITTER_DOWN
+;	HPDF_TS_GLITTER_TOP_LEFT_TO_BOTTOM_RIGHT
+	HPDF_TS_GL_TOP_LEFT_TBOT_RT
+	HPDF_TS_REPLACE
+	HPDF_TS_EOF
+    endenum
+
+    public enum HPdfBlendMode
+	HPDF_BM_NORMAL, 0
+	HPDF_BM_MULTIPLY
+	HPDF_BM_SCREEN
+	HPDF_BM_OVERLAY
+	HPDF_BM_DARKEN
+	HPDF_BM_LIGHTEN
+	HPDF_BM_COLOR_DODGE
+	HPDF_BM_COLOR_BUM
+	HPDF_BM_HARD_LIGHT
+	HPDF_BM_SOFT_LIGHT
+	HPDF_BM_DIFFERENCE
+	HPDF_BM_EXCLUSHON
+	HPDF_BM_EOF
+    endenum
+
+.endregion
+
+.region "Structures"
+
+    LAYOUT_ATTR
+    public cls structure HPdfRect
+	public left, float
+	public bottom, float
+	public right, float
+	public top, float
+    endstructure
+
+    LAYOUT_ATTR
+    public cls structure HPdfBox
+	public left, float
+	public bottom, float
+	public right, float
+	public top, float
+    endstructure
+
+    LAYOUT_ATTR
+    public cls structure HPdfPoint
+	public x, float
+	public y, float
+    endstructure
+
+    LAYOUT_ATTR
+    public cls structure HPdfDate
+	public year, int
+	public month, int
+	public day, int
+	public hour, int
+	public minutes, int
+	public seconds, int
+	public ind, int
+	public off_hour, int
+	public off_minutes, int
+    endstructure
+
+    LAYOUT_ATTR
+    public cls structure HPdfTextWidth
+	public numchars, int
+	public numwords, int
+	public width, int
+	public numspace, int
+    endstructure
+
+    LAYOUT_ATTR
+    public cls structure HPdfTransMatrix
+	public a, float
+	public b, float
+	public c, float
+	public d, float
+	public x, float
+	public y, float
+    endstructure
+
+    LAYOUT_ATTR
+    public cls structure HPdfDashMode_Internal
+	public ptn0, short
+	public ptn1, short
+	public ptn2, short
+	public ptn3, short
+	public ptn4, short
+	public ptn5, short
+	public ptn6, short
+	public ptn7, short
+	public num_ptn, int
+	public phase, int
+    endstructure
+
+    LAYOUT_ATTR
+    public cls structure HPdfDashMode
+.ifdef DBLNET
+	public ptn, [#]short
+.else
+	public ptn, [8]short
+.endc
+	public phase, int
+.ifdef DBLNET
+	filler,	int
+.endc
+    endstructure
+
+    LAYOUT_ATTR
+    public cls structure HPdfRGBColor
+	public r, float
+	public g, float
+	public b, float
+    endstructure
+
+    LAYOUT_ATTR
+    public cls structure HPdfCMYKColor
+	public c, float
+	public y, float
+	public m, float
+	public k, float
+    endstructure
+
+.endregion
+
+.region "Delegates"
+
+.ifdef DBLNET
+    public delegate HPDF_ErrorHandler, void
+	error_no, int
+	detail_no, int
+	user_data, D_ADDR
+	endparams
+    enddelegate
+.endc
+
+.endregion
+
+.region "SynHelper Class"
+
+    public class SynHelper
+
+	public static method ptr_to_string, string
+	    ptr, D_ADDR
+	    endparams
+	    structure overlay
+		field	,[65535]a1
+	    endstructure
+	    record
+		handle	,D_HANDLE
+		i	,int
+	    endrecord
+	    literal
+		null, a1, %char(0)
+	proc
+	    if (ptr == 0) mreturn (string)""
+	    ;; map pointer to memory handle unknown length
+	    handle = %mem_proc(DM_REG, 65535, ptr)
+	    ;; search for null terminator
+	    i = %instr(1, ^m(handle), null)
+	    if (i .eq. 1) mreturn (string)""
+	    if (i .eq. 0) i = 65536
+	    mreturn (string)^m(overlay(1:i-1), handle)
+	endmethod
+
+	public static method FormatError, string
+	    error_no, int
+	    detail_no, int
+	    endparams
+	    record
+		s	,string
+	    endrecord
+	proc
+.ifdef DBLNET
+	    s = "error-code=0x" + %hex(error_no) + " detail-code=" + %string(detail_no)
+.else
+	    if (^passed(detail_no)) then
+		s = "error-code=0x" + %hex(error_no) + " detail-code=" + %string(detail_no)
+	    else
+		s = "error-code=0x" + %hex(error_no)
+.endc
+	    mreturn s
+	endmethod
+
+	public static method FileExists	,boolean
+	    req in aFilename	,string
+	    endparams
+	proc
+	    try
+	    begin
+		data chan	,i4	,0
+		open(chan, I, aFilename)
+		close chan
+	    end
+	    catch (ex)
+	    begin
+		mreturn false
+	    end
+	    endtry
+	    mreturn true
+	endmethod
+
+.ifdef OS_VMS
+	public static method String_to_charstar, a
+	   req in astr,	string
+	   endparams
+	   record
+		str,	a65535
+	   endrecord
+	proc
+	    str = astr
+	    str(%trimz(str)+1:1) = %char(0)
+	    mreturn str
+	endmethod
+.endc
+
+	public static method NativeFilename, a
+	    req in aFilename	,string
+	    endparams
+	    record
+		fName		,a400
+	    endrecord
+	proc
+	    try
+	    begin
+		data chan	,int	,0
+		open(chan, I, aFilename)
+		filnm(chan, fName)
+		close chan
+	    end
+	    catch (ex)
+	    begin
+		;; get filename
+		;;(note, if filename contains an environment variable that is
+		;; a search list, will use the last folder in the search list)
+		parse(aFilename,,,,,,,, fName)
+	    end
+	    endtry
+.ifdef OS_VMS
+	    fName(%trimz(fName)+1:1) = %char(0)
+.endc
+	    mreturn %atrim(fName)
+	endmethod
+
+	public static method NativeFilename, a
+	    req in aFilename	,string
+	    req in aValidate	,boolean
+	    endparams
+	proc
+	    if(aValidate == true && !SynHelper.FileExists(aFilename))
+		throw new ApplicationException("Error opening file ["+%atrim(aFilename)+"]")
+	    mreturn SynHelper.NativeFilename(aFilename)
+	endmethod
+
+    endclass
+
+.endregion
+
+.region "HPdfDoc Class"
+
+.ifdef DBLNET
+    public class HPdfDoc implements IDisposable
+.else
+    public class HPdfDoc
+.endc
+
+	public const HPDF_TRUE, int, 1
+	public const HPDF_FALSE, int, 0
+
+	public const HPDF_COMP_NONE, int, 0
+	public const HPDF_COMP_TEXT, int, 1
+	public const HPDF_COMP_IMAGE, int, 2
+	public const HPDF_COMP_METADATA, int, 4
+	public const HPDF_COMP_ALL, int, 15
+
+	public const HPDF_HIDE_TOOLBAR, int, 1
+	public const HPDF_HIDE_MENUBAR, int, 2
+	public const HPDF_HIDE_WINDOW_UI, int, 4
+	public const HPDF_FIT_WINDOW, int, 8
+	public const HPDF_CENTER_WINDOW, int, 16
+
+	public const HPDF_ENABLE_READ, int, 0
+	public const HPDF_ENABLE_PRINT, int, 4
+	public const HPDF_ENABLE_EDIT_ALL, int, 8
+	public const HPDF_ENABLE_COPY, int, 16
+	public const HPDF_ENABLE_EDIT, int, 32
+
+	public static hpdf_dll, D_ADDR
+	private static hpdfdllcnt, int
+.ifdef DBLNET
+	private static error_handler, @HPDF_ErrorHandler, new HPDF_ErrorHandler(HPdfDoc.ErrorProc)
+.endc
+	private hpdf, D_ADDR
+
+.region "Helper routines"
+
+	DLLIMP_ATTR
+	private static method HPDF_GetVersion, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+	    begin
+		data ptr    ,D_ADDR
+.ifdef OS_VMS
+		ptr = %xsubr(%xaddr("HPDF_GetVersion", HARUPDF_LIB))
+.else
+		if (!hpdf_dll)
+		    hpdf_dll = %dll_open(%libhpdf_dllname, 1)
+		ptr = %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_GetVersion")
+.endc
+		mreturn ptr
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_New, D_ADDR
+	    User_err_fn	,D_ADDR
+	    User_data	,D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [1]D_ADDR
+	    argblk[1] = 0
+	    mreturn %xsubr(%xaddr("SHPDF_New", HARUPDF_LIB), ^ref(argblk))
+	end
+	    xcall ErrorProc()	;force linkage
+.else
+	    if (!hpdf_dll)
+		hpdf_dll = %dll_open(%libhpdf_dllname, 1)
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "SHPDF_New")
+	    xcall ErrorProc()	;force linkage
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Free, void
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    xcall xsubr(%xaddr("HPDF_Free", HARUPDF_LIB), ^val(pdf))
+.else
+	    if (hpdf_dll)
+		xcall dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Free", pdf)
+.endc
+	    mreturn
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_NewDoc, int
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_NewDoc", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_NewDoc", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_FreeDoc, int
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_FreeDoc", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_FreeDoc", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_FreeDocAll, int
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_FreeDocAll", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_FreeDocAll", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_HasDoc, int
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_HasDoc", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_HasDoc", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_SaveToFile, int
+	    pdf, D_ADDR
+	    filename, string
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_SaveToFile", HARUPDF_LIB), ^val(pdf), ^ref(SynHelper.NativeFilename(filename)))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_SaveToFile", pdf, SynHelper.NativeFilename(filename))
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_GetError, int
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_GetError", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_GetError", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_GetErrorDetail, int
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_GetErrorDetail", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_GetErrorDetail", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_ResetError, void
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    xcall xsubr(%xaddr("HPDF_ResetError", HARUPDF_LIB), ^val(pdf))
+.else
+	    xcall dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_ResetError", pdf)
+.endc
+	    mreturn
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_SetPagesConfiguration, int
+	    pdf, D_ADDR
+	    page_per_pages, int
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_SetPagesConfiguration", HARUPDF_LIB), ^val(pdf), ^val(page_per_pages))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_SetPagesConfiguration", pdf, page_per_pages)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_GetPageByIndex, D_ADDR
+	    pdf, D_ADDR
+	    index, int
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_GetPageByIndex", HARUPDF_LIB), ^val(pdf), ^val(index))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_GetPageByIndex", pdf, index)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_GetPageLayout, HPdfPageLayout
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn (HPdfPageLayout)%xsubr(%xaddr("HPDF_GetPageLayout", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn (HPdfPageLayout)%dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_GetPageLayout", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_SetPageLayout, int
+	    pdf, D_ADDR
+	    layout, HPdfPageLayout
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_SetPageLayout", HARUPDF_LIB), ^val(pdf), ^ref(layout))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_SetPageLayout", pdf, layout)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_GetPageMode, HPdfPageMode
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn (HPdfPageMode)%xsubr(%xaddr("HPDF_GetPageMode", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn (HPdfPageMode)%dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_GetPageMode", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_SetPageMode, int
+	    pdf, D_ADDR
+	    mode, HPdfPageMode
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_SetPageMode", HARUPDF_LIB), ^val(pdf), ^val(mode))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_SetPageMode", pdf, (int)mode)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_SetOpenAction, int
+	    pdf, D_ADDR
+	    open_action, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_SetOpenAction", HARUPDF_LIB), ^val(pdf), ^val(open_action))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_SetOpenAction", pdf, open_action)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_GetViewerPreference, int
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_GetViewerPreference", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_GetViewerPreference", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_SetViewerPreference, int
+	    pdf, D_ADDR
+	    value, int
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_SetViewerPreference", HARUPDF_LIB), ^val(pdf), ^val(value))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_SetViewerPreference", pdf, value)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_GetCurrentPage, D_ADDR
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_GetCurrentPage", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_GetCurrentPage", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_AddPage, D_ADDR
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_AddPage", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_AddPage", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_InsertPage, D_ADDR
+	    pdf, D_ADDR
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_InsertPage", HARUPDF_LIB), ^val(pdf), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_InsertPage", pdf, page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_GetFont, D_ADDR
+	    pdf, D_ADDR
+	    font_name, string
+	    encoding_name, string
+	    endparams
+	proc
+.ifndef DBLNET
+	    if (encoding_name == ^NULL)
+	    begin
+		data ip, D_ADDR, 0
+.ifdef OS_VMS
+		mreturn %xsubr(%xaddr("HPDF_GetFont", HARUPDF_LIB), ^val(pdf), ^ref(SynHelper.String_to_charstar(font_name)), ^val(ip))
+.else
+		mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_GetFont", pdf, (a)font_name, ip)
+.endc
+	    end
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_GetFont", HARUPDF_LIB), ^val(pdf), ^ref(SynHelper.String_to_charstar(font_name)), ^ref(SynHelper.String_to_charstar(encoding_name)))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_GetFont", pdf, (a)font_name, (a)encoding_name)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_LoadType1FontFromFile, D_ADDR
+	    pdf, D_ADDR
+	    afmfilename, string
+	    pfmfilename, string
+	    endparams
+	proc
+.ifndef DBLNET
+	    begin
+		data ptr, D_ADDR
+.ifdef OS_VMS
+		ptr = %xsubr(%xaddr("HPDF_LoadType1FontFromFile", HARUPDF_LIB), ^val(pdf), ^ref(SynHelper.NativeFilename(afmfilename, true)), ^ref(SynHelper.NativeFilename(pfmfilename, true)))
+.else
+		ptr = %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_LoadType1FontFromFile", pdf, SynHelper.NativeFilename(afmfilename, true), SynHelper.NativeFilename(pfmfilename, true))
+.endc
+		mreturn ptr
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_LoadTTFontFromFile, D_ADDR
+	    pdf, D_ADDR
+	    filename, string
+	    embedding, int
+	    endparams
+	proc
+.ifndef DBLNET
+	    begin
+		data ptr, D_ADDR
+.ifdef OS_VMS
+		ptr = %xsubr(%xaddr("HPDF_LoadTTFontFromFile", HARUPDF_LIB), ^val(pdf), ^ref(SynHelper.NativeFilename(filename, true)), ^val(embedding))
+.else
+		ptr = %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_LoadTTFontFromFile", pdf, SynHelper.NativeFilename(filename, true), embedding)
+.endc
+		mreturn ptr
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_LoadTTFontFromFile2, D_ADDR
+	    pdf, D_ADDR
+	    filename, string
+	    index, int
+	    embedding, int
+	    endparams
+	proc
+.ifndef DBLNET
+	    begin
+		data ptr, D_ADDR
+.ifdef OS_VMS
+		ptr = %xsubr(%xaddr("HPDF_LoadTTFontFromFile2", HARUPDF_LIB), ^val(pdf), ^ref(SynHelper.NativeFilename(filename, true)), ^val(index), ^val(embedding))
+.else
+		ptr = %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_LoadTTFontFromFile2", pdf, SynHelper.NativeFilename(filename, true), index, embedding)
+.endc
+		mreturn ptr
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_AddPageLabel, int
+	    pdf, D_ADDR
+	    page_num, int
+	    style, HPdfPageNumStyle
+	    first_page, int
+	    prefix, string
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_AddPageLabel", HARUPDF_LIB), ^val(pdf), ^val(page_num), ^val(style), ^val(first_page), ^ref(SynHelper.String_to_charstar(prefix)))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_AddPageLabel", pdf, page_num, style, first_page, (a)prefix)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_UseJPFonts, int
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_UseJPFonts", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_UseJPFonts", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_UseKRFonts, int
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_UseKRFonts", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_UseKRFonts", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_UseCNSFonts, int
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_UseCNSFonts", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_UseCNSFonts", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_UseCNTFonts, int
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_UseCNTFonts", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_UseCNTFonts", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_CreateOutline, D_ADDR
+	    pdf, D_ADDR
+	    a_parent, D_ADDR
+	    title, string
+	    encoder, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_CreateOutline", HARUPDF_LIB), ^val(pdf), ^val(a_parent), ^ref(SynHelper.String_to_charstar(title)), ^val(encoder))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_CreateOutline", pdf, a_parent, (a)title, encoder)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_GetEncoder, D_ADDR
+	    pdf, D_ADDR
+	    encoding_name, string
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_GetEncoder", HARUPDF_LIB), ^val(pdf), ^ref(SynHelper.String_to_charstar(encoding_name)))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_GetEncoder", pdf, (a)encoding_name)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_GetCurrentEncoder, D_ADDR
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_GetCurrentEncoder", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_GetCurrentEncoder", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_SetCurrentEncoder, int
+	    pdf, D_ADDR
+	    encoding_name, string
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_SetCurrentEncoder", HARUPDF_LIB), ^val(pdf), ^ref(SynHelper.String_to_charstar(encoding_name)))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_SetCurrentEncoder", pdf, (a)encoding_name)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_UseJPEncodings, int
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_UseJPEncodings", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_UseJPEncodings", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_UseKREncodings, int
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_UseKREncodings", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_UseKREncodings", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_UseCNSEncodings, int
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_UseCNSEncodings", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_UseCNSEncodings", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_UseCNTEncodings, int
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_UseCNTEncodings", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_UseCNTEncodings", pdf)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_LoadPngImageFromFile, D_ADDR
+	    pdf, D_ADDR
+	    filename, string
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_LoadPngImageFromFile", HARUPDF_LIB), ^val(pdf), ^ref(SynHelper.NativeFilename(filename, true)))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_LoadPngImageFromFile", pdf, SynHelper.NativeFilename(filename, true))
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_LoadPngImageFromFile2, D_ADDR
+	    pdf, D_ADDR
+	    filename, string
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_LoadPngImageFromFile2", HARUPDF_LIB), ^val(pdf), ^ref(SynHelper.NativeFilename(filename, true)))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_LoadPngImageFromFile2", pdf, SynHelper.NativeFilename(filename, true))
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_LoadJpegImageFromFile, D_ADDR
+	    pdf, D_ADDR
+	    filename, string
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_LoadJpegImageFromFile", HARUPDF_LIB), ^val(pdf), ^ref(SynHelper.NativeFilename(filename, true)))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_LoadJpegImageFromFile", pdf, SynHelper.NativeFilename(filename, true))
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_LoadRawImageFromFile, D_ADDR
+	    pdf, D_ADDR
+	    filename, string
+	    width, int
+	    height, int
+	    color_space, HPdfColorSpace
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_LoadRawImageFromFile", HARUPDF_LIB), ^val(pdf), ^ref(SynHelper.NativeFilename(filename, true)), ^val(width), ^val(height), ^val(color_space))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_LoadRawImageFromFile", pdf, SynHelper.NativeFilename(filename, true), width, height, color_space)
+.endc
+.endc
+	endmethod
+
+.ifndef DBLNET
+	structure byte_array
+	    ,	a1
+	endstructure
+.endc
+
+	DLLIMP_ATTR
+	private static method HPDF_LoadRawImageFromMem, D_ADDR
+	    pdf, D_ADDR
+	    data, [#]byte
+	    width, int
+	    height, int
+	    color_space, HPdfColorSpace
+	    bits_per_component, int
+	    endparams
+	proc
+.ifndef DBLNET
+	    begin
+		data tempb, int
+		data i, int
+		data size, int
+		size = width * height
+		if (color_space .eq. HPdfColorSpace.HPDF_CS_DEVICE_GRAY)
+		    size = size / (8 / bits_per_component)
+		if (color_space .eq. HPdfColorSpace.HPDF_CS_DEVICE_RGB)
+		    size = (size / (8 / bits_per_component)) * 3
+		if (color_space .eq. HPdfColorSpace.HPDF_CS_DEVICE_CMYK)
+		    size = (size / (8 / bits_per_component)) * 4
+		tempb = %mem_proc(DM_ALLOC, size)
+		for i from 1 thru size
+		    ^m(byte_array[i],tempb) = ^a(data[i])
+.ifdef OS_VMS
+		mreturn %xsubr(%xaddr("HPDF_LoadRawImageFromMem", HARUPDF_LIB), ^val(pdf), ^ref(^m(tempb)), ^val(width), ^val(height), ^val(color_space), ^val(bits_per_component))
+.else
+		mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_LoadRawImageFromMem", pdf, ^addr(^m(tempb)), width, height, color_space, bits_per_component)
+.endc
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_SetInfoAttr, int
+	    pdf, D_ADDR
+	    type, HPdfInfoType
+	    value, string
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_SetInfoAttr", HARUPDF_LIB), ^val(pdf), ^val(type), ^ref(SynHelper.String_to_charstar(value)))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_SetInfoAttr", pdf, type, (a)value)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_SetInfoDateAttr, int
+	    pdf, D_ADDR
+	    type, HPdfInfoType
+	    value, HPdfDate
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    begin
+		data argblk, [4]D_ADDR
+		argblk[1] = 3
+		xcall set_dscr(argblk[2], pdf)
+		xcall set_dscr(argblk[3], type)
+		xcall set_dscr(argblk[4], value)
+		mreturn %xsubr(%xaddr("SHPDF_SetInfoDateAttr", HARUPDF_LIB), ^ref(argblk))
+	    end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_SetInfoDateAttr", pdf, type, value)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_GetInfoAttr, D_ADDR
+	    pdf, D_ADDR
+	    type, HPdfInfoType
+	    endparams
+	proc
+.ifndef DBLNET
+	    begin
+		data ptr,	D_ADDR
+.ifdef OS_VMS
+		ptr = %xsubr(%xaddr("HPDF_GetInfoAttr", HARUPDF_LIB), ^val(pdf), ^val(type))
+.else
+		ptr = %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_GetInfoAttr", pdf, type)
+.endc
+		mreturn ptr
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_SetPassword, int
+	    pdf, D_ADDR
+	    owner_passwd, string
+	    user_passwd, string
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_SetPassword", HARUPDF_LIB), ^val(pdf), ^ref(SynHelper.String_to_charstar(owner_passwd)), ^ref(SynHelper.String_to_charstar(user_passwd)))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_SetPassword", pdf, (a)owner_passwd, (a)user_passwd)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_SetPermission, int
+	    pdf, D_ADDR
+	    permission, int
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_SetPermission", HARUPDF_LIB), ^val(pdf), ^val(permission))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_SetPermission", pdf, permission)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_SetEncryptionMode, int
+	    pdf, D_ADDR
+	    mode, HPdfEncryptMode
+	    key_len, int
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_SetEncryptionMode", HARUPDF_LIB), ^val(pdf), ^val(mode), ^val(key_len))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "HPDF_SetEncryptionMode", pdf, mode, key_len)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_SetCompressionMode, int
+	    pdf, D_ADDR
+	    mode, int
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_SetCompressionMode", HARUPDF_LIB), ^val(pdf), ^val(mode))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_SetCompressionMode", pdf, mode)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_CreateExtGState, D_ADDR
+	    pdf, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_CreateExtGState", HARUPDF_LIB), ^val(pdf))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_CreateExtGState", pdf)
+.endc
+.endc
+	endmethod
+
+.endregion
+
+.region "Public methods"
+
+	public method HPdfDoc		;; constructor
+	    endparams
+	proc
+.ifdef DBLNET
+	    begin
+		hpdf = HPDF_New(Marshal.GetFunctionPointerForDelegate(error_handler), 0)
+		if (!hpdf)
+		    throw new Exception("Cannot create HPdfDoc object.")
+		incr hpdfdllcnt
+	    end
+.else
+.ifndef OS_VMS
+	    if (!hpdf_dll)
+		hpdf_dll = %dll_open(%libhpdf_dllname, 1)
+.endc
+	    begin
+		data error_rtn, D_ADDR, 0
+		data user_data, D_ADDR, 0
+		hpdf = HPDF_New(error_rtn,user_data)
+		if (!hpdf)
+		    throw new Exception("Cannot create HPdfDoc object.")
+		incr hpdfdllcnt
+	    end
+.endc
+	endmethod
+
+.ifdef OS_VMS
+	public method Dispose, void
+	    endparams
+	proc
+	    if (hpdf)
+		HPDF_Free(hpdf)
+	    clear hpdf
+	endmethod
+.endc
+
+.ifdef DBLNET
+	public method Dispose, void
+	    endparams
+	proc
+	    if (hpdf)
+		HPDF_Free(hpdf)
+	    clear hpdf
+	endmethod
+.endc
+
+.ifdef OS_VMS
+	subroutine HPdfDoc_Destructor
+	proc
+	    if (hpdf)
+		HPDF_Free(hpdf)
+	    xreturn
+	endsubroutine
+.else
+	method ~HPdfDoc
+	    endparams
+	proc
+.ifdef DBLNET
+	    if (hpdf)
+		Dispose()
+.else
+	    if (hpdf)
+		HPDF_Free(hpdf)
+	    if (hpdf_dll && (--hpdfdllcnt <= 0))
+	    begin
+		data sts, int
+		sts = %dll_close(hpdf_dll)
+		clear hpdf_dll
+	    end
+.endc
+	endmethod
+.endc
+
+	public static method HPdfGetVersion, string
+	    endparams
+	record
+	    ptr, D_ADDR
+	endrecord
+	proc
+	    ptr = HPDF_GetVersion()
+	    mreturn SynHelper.ptr_to_string(ptr)
+	endmethod
+
+.ifdef DBLNET
+	public static method ErrorProc, void
+	    error_no, int
+	    detail_no, int
+	    user_data, D_ADDR
+	    endparams
+	proc
+	    throw new Exception(SynHelper.FormatError(error_no, detail_no))
+	endmethod
+.endc
+
+	public method NewDoc, void
+	    endparams
+	proc
+	    HPDF_NewDoc(hpdf)
+	endmethod
+
+	public method FreeDoc, void
+	    endparams
+	proc
+	    HPDF_FreeDoc(hpdf)
+	endmethod
+
+	public method FreeDocAll, void
+	    endparams
+	proc
+	    HPDF_FreeDocAll(hpdf)
+	endmethod
+
+	public method HasDoc, boolean
+	    endparams
+	proc
+	    mreturn (HPDF_HasDoc(hpdf) != 0)
+	endmethod
+
+	public method SaveToFile, void
+	    filename, string
+	    endparams
+	proc
+	    HPDF_SaveToFile(hpdf, SynHelper.NativeFilename(filename))
+	endmethod
+
+	public method GetError, int
+	    endparams
+	proc
+	    mreturn HPDF_GetError(hpdf)
+	endmethod
+
+	public method GetErrorDetail, int
+	    endparams
+	proc
+	    mreturn HPDF_GetErrorDetail(hpdf)
+	endmethod
+
+	public method ResetError, void
+	    endparams
+	proc
+	    HPDF_ResetError(hpdf)
+	endmethod
+
+	public method SetPagesConfiguration, void
+	    page_per_pages, int
+	    endparams
+	proc
+	    HPDF_SetPagesConfiguration(hpdf, page_per_pages)
+	endmethod
+
+	public method GetPageByIndex, @HPdfPage
+	    index, int
+	    endparams
+	proc
+	    mreturn new HPdfPage(HPDF_GetPageByIndex(hpdf, index), hpdf_dll)
+	endmethod
+
+	public method GetPageLayout, HPdfPageLayout
+	    endparams
+	proc
+	    mreturn HPDF_GetPageLayout(hpdf)
+	endmethod
+
+	public method SetPageLayout, void
+	    layoutarg, HPdfPageLayout
+	    endparams
+	proc
+	    HPDF_SetPageLayout(hpdf, layoutarg)
+	endmethod
+
+	public method GetPageMode, HPdfPageMode
+	    endparams
+	proc
+	    mreturn HPDF_GetPageMode(hpdf)
+	endmethod
+
+	public method SetPageMode, void
+	    mode, HPdfPageMode
+	    endparams
+	proc
+	    HPDF_SetPageMode(hpdf, mode)
+	endmethod
+
+	public method SetOpenAction, void
+	    open_action, @HPdfDestination
+	    endparams
+	proc
+	    if (open_action != ^null)
+		HPDF_SetOpenAction(hpdf, open_action.GetHandle())
+	endmethod
+
+	public method GetViewerPreference, int
+	    endparams
+	proc
+	    mreturn HPDF_GetViewerPreference(hpdf)
+	endmethod
+
+	public method SetViewerPreference, void
+	    value, int
+	    endparams
+	proc
+	    HPDF_SetViewerPreference(hpdf, value)
+	endmethod
+
+	public method GetCurrentPage, @HPdfPage
+	    endparams
+	proc
+	    mreturn new HPdfPage(HPDF_GetCurrentPage(hpdf), hpdf_dll)
+	endmethod
+
+	public method AddPage, @HPdfPage
+	    endparams
+	proc
+	    mreturn new HPdfPage(HPDF_AddPage(hpdf), hpdf_dll)
+	endmethod
+
+	public method InsertPage, @HPdfPage
+	    page, @HPdfPage
+	    endparams
+	proc
+	    mreturn new HPdfPage(HPDF_InsertPage(hpdf, page.GetHandle()), hpdf_dll)
+	endmethod
+
+	public method GetFont, @HPdfFont
+	    font_name, string
+	    encoding_name, string
+	    endparams
+	proc
+	    mreturn new HPdfFont(HPDF_GetFont(hpdf, font_name, encoding_name))
+	endmethod
+
+	public method LoadType1FontFromFile, string
+	    afmfilename, string
+	    pfmfilename, string
+	    endparams
+	record
+	    ptr, D_ADDR
+	endrecord
+	proc
+	    ptr = HPDF_LoadType1FontFromFile(hpdf, SynHelper.NativeFilename(afmfilename, true), SynHelper.NativeFilename(pfmfilename, true))
+	    mreturn SynHelper.ptr_to_string(ptr)
+	endmethod
+
+	public method LoadTTFontFromFile, string
+	    filename, string
+	    embedding, boolean
+	    endparams
+	proc
+	    begin
+		data ptr, D_ADDR
+		data emb, int
+		if (embedding) then
+		    emb = HPDF_TRUE
+		else
+		    emb = HPDF_FALSE
+		ptr = HPDF_LoadTTFontFromFile(hpdf, SynHelper.NativeFilename(filename, true), emb)
+		mreturn SynHelper.ptr_to_string(ptr)
+	    end
+	endmethod
+
+	public method LoadTTFontFromFile2, string
+	    filename, string
+	    index, int
+	    embedding, boolean
+	    endparams
+	proc
+	    begin
+		data ptr, D_ADDR
+		data emb, int
+		if (embedding) then
+		    emb = HPDF_TRUE
+		else
+		    emb = HPDF_FALSE
+		ptr = HPDF_LoadTTFontFromFile2(hpdf, SynHelper.NativeFilename(filename, true), index, emb)
+		mreturn SynHelper.ptr_to_string(ptr)
+	    end
+	endmethod
+
+	public method AddPageLabel, void
+	    page_num, int
+	    style, HPdfPageNumStyle
+	    first_page, int
+	    prefix, string
+	    endparams
+	proc
+	    HPDF_AddPageLabel(hpdf, page_num, style, first_page, prefix)
+	endmethod
+
+	public method UseJPFonts, int
+	    endparams
+	proc
+	    mreturn HPDF_UseJPFonts(hpdf)
+	endmethod
+
+	public method UseKRFonts, int
+	    endparams
+	proc
+	    mreturn HPDF_UseKRFonts(hpdf)
+	endmethod
+
+	public method UseCNSFonts, int
+	    endparams
+	proc
+	    mreturn HPDF_UseCNSFonts(hpdf)
+	endmethod
+
+	public method UseCNTFonts, int
+	    endparams
+	proc
+	    mreturn HPDF_UseCNTFonts(hpdf)
+	endmethod
+
+	public method CreateOutline, @HPdfOutline
+	    a_parent, @HPdfOutline
+	    title, string
+	    encoder, @HPdfEncoder
+	    endparams
+	proc
+	    begin
+		data hparent	,D_ADDR	,0
+		data hencoder	,D_ADDR ,0
+		if (encoder != ^null)
+		    hencoder = encoder.GetHandle()
+		if (a_parent != ^null)
+		    hparent = a_parent.GetHandle()
+		mreturn new HPdfOutline(HPDF_CreateOutline(hpdf, hparent, title, hencoder))
+	    end
+	endmethod
+
+	public method GetEncoder, @HPdfEncoder
+	    encoding_name, string
+	    endparams
+	proc
+	    mreturn new HPdfEncoder(HPDF_GetEncoder(hpdf, encoding_name))
+	endmethod
+
+	public method GetCurrentEncoder, @HPdfEncoder
+	    endparams
+	proc
+	    mreturn new HPdfEncoder(HPDF_GetCurrentEncoder(hpdf))
+	endmethod
+
+	public method SetCurrentEncoder, void
+	    encoding_name, string
+	    endparams
+	proc
+	    HPDF_SetCurrentEncoder(hpdf, encoding_name)
+	endmethod
+
+	public method UseJPEncodings, int
+	    endparams
+	proc
+	    mreturn HPDF_UseJPEncodings(hpdf)
+	endmethod
+
+	public method UseKREncodings, int
+	    endparams
+	proc
+	    mreturn HPDF_UseKREncodings(hpdf)
+	endmethod
+
+	public method UseCNSEncodings, int
+	    endparams
+	proc
+	    mreturn HPDF_UseCNSEncodings(hpdf)
+	endmethod
+
+	public method UseCNTEncodings, int
+	    endparams
+	proc
+	    mreturn HPDF_UseCNTEncodings(hpdf)
+	endmethod
+
+	public method LoadPngImageFromFile, @HPdfImage
+	    filename, string
+	    endparams
+	proc
+	    mreturn new HPdfImage(HPDF_LoadPngImageFromFile(hpdf, SynHelper.NativeFilename(filename, true)))
+	endmethod
+
+	public method LoadPngImageFromFile2, @HPdfImage
+	    filename, string
+	    endparams
+	proc
+	    mreturn new HPdfImage(HPDF_LoadPngImageFromFile2(hpdf, SynHelper.NativeFilename(filename, true)))
+	endmethod
+
+	public method LoadJpegImageFromFile, @HPdfImage
+	    filename, string
+	    endparams
+	proc
+	    mreturn new HPdfImage(HPDF_LoadJpegImageFromFile(hpdf, SynHelper.NativeFilename(filename, true)))
+	endmethod
+
+	public method LoadRawImageFromFile, @HPdfImage
+	    filename, string
+	    width, int
+	    height, int
+	    color_space, HPdfColorSpace
+	    endparams
+	proc
+	    mreturn new HPdfImage(HPDF_LoadRawImageFromFile(hpdf, SynHelper.NativeFilename(filename, true), width, height, color_space))
+	endmethod
+
+	public method LoadRawImageFromMem, @HPdfImage
+	    data, [#]byte
+	    width, int
+	    height, int
+	    color_space, HPdfColorSpace
+	    bits_per_component, int
+	    endparams
+	proc
+	    if ((width * height) < data.Length)
+		throw new Exception(SynHelper.FormatError(4144, 0)) ;; 4144 = 0x1030 (HPDF_INVALID_IMAGE)
+	    mreturn new HPdfImage(HPDF_LoadRawImageFromMem(hpdf, data, width, height, color_space, bits_per_component))
+	endmethod
+
+	public method SetInfoAttr, void
+	    type, HPdfInfoType
+	    value, string
+	    endparams
+	proc
+	    HPDF_SetInfoAttr(hpdf, type, value)
+	endmethod
+
+	public method SetInfoDateAttr, void
+	    type, HPdfInfoType
+	    value, HPdfDate
+	    endparams
+	proc
+	    HPDF_SetInfoDateAttr(hpdf, type, value)
+	endmethod
+
+	public method GetInfoAttr, string
+	    type, HPdfInfoType
+	    endparams
+	record
+	    ptr, D_ADDR
+	endrecord
+	proc
+	    ptr = HPDF_GetInfoAttr(hpdf, type)
+	    mreturn SynHelper.ptr_to_string(ptr)
+	endmethod
+
+	public method SetPassword, void
+	    owner_passwd, string
+	    user_passwd, string
+	    endparams
+	proc
+	    HPDF_SetPassword(hpdf, owner_passwd, user_passwd)
+	endmethod
+
+	public method SetPermission, void
+	    permission, int
+	    endparams
+	proc
+	    HPDF_SetPermission(hpdf, permission)
+	endmethod
+
+	public method SetEncryptionMode, void
+	    mode, HPdfEncryptMode
+	    key_len, int
+	    endparams
+	proc
+	    HPDF_SetEncryptionMode(hpdf, mode, key_len)
+	endmethod
+
+	public method SetCompressionMode, void
+	    mode, int
+	    endparams
+	proc
+	    HPDF_SetCompressionMode(hpdf, mode)
+	endmethod
+
+	public method CreateExtGState, @HPdfExtGState
+	    endparams
+	proc
+	    mreturn new HPdfExtGState(HPDF_CreateExtGState(hpdf))
+	endmethod
+
+.endregion
+
+.region "Synergex added Methods"
+
+	public method AddPage		,@HPdfPage
+	    req in  pageSize		,HPdfPageSizes
+	    req in  pageOrientation	,HPdfPageDirection
+	    record
+		page,	@HPdfPage
+	    endrecord
+	proc
+	    page = this.AddPage()
+	    page.SetSize(pageSize, pageOrientation)
+	    mreturn page
+	endmethod
+
+	public method AddPage		,@HPdfPage
+	    req in  pageSize		,HPdfPageSizes
+	    req in  pageOrientation	,HPdfPageDirection
+	    req out pageHeight		,float
+	    record
+		page,	@HPdfPage
+	    endrecord
+	proc
+	    page = this.AddPage()
+	    page.SetSize(pageSize, pageOrientation)
+	    pageHeight = page.GetHeight()
+	    mreturn page
+	endmethod
+
+	public method AddPage		,@HPdfPage
+	    req in  pageSize		,HPdfPageSizes
+	    req in  pageOrientation	,HPdfPageDirection
+	    req out pageHeight		,float
+	    req out pageWidth		,float
+	    record
+		page,	@HPdfPage
+	    endrecord
+	proc
+	    page = this.AddPage()
+	    page.SetSize(pageSize, pageOrientation)
+	    pageHeight = page.GetHeight()
+	    pageWidth = page.GetWidth()
+	    mreturn page
+	endmethod
+
+	public method AddPagePortraitA4	,@HPdfPage
+	    req out pageHeight		,float
+	    req out pageWidth		,float
+	    endparams
+	proc
+	    mreturn AddPage(HPdfPageSizes.HPDF_PAGE_SIZE_A4, HPdfPageDirection.HPDF_PAGE_PORTRAIT, pageHeight, pageWidth)
+	endmethod
+
+	public method AddPageLandscapeA4	,@HPdfPage
+	    req out pageHeight		,float
+	    req out pageWidth		,float
+	    endparams
+	proc
+	    mreturn AddPage(HPdfPageSizes.HPDF_PAGE_SIZE_A4, HPdfPageDirection.HPDF_PAGE_LANDSCAPE, pageHeight, pageWidth)
+	endmethod
+
+	public method AddPagePortraitLetter	,@HPdfPage
+	    req out pageHeight		,float
+	    req out pageWidth		,float
+	    endparams
+	proc
+	    mreturn AddPage(HPdfPageSizes.HPDF_PAGE_SIZE_LETTER, HPdfPageDirection.HPDF_PAGE_PORTRAIT, pageHeight, pageWidth)
+	endmethod
+
+	public method AddPageLandscapeLetter	,@HPdfPage
+	    req out pageHeight		,float
+	    req out pageWidth		,float
+	    endparams
+	proc
+	    mreturn AddPage(HPdfPageSizes.HPDF_PAGE_SIZE_LETTER, HPdfPageDirection.HPDF_PAGE_LANDSCAPE, pageHeight, pageWidth)
+	endmethod
+
+.endregion
+
+    endclass
+
+.endregion
+
+.region "HPdfPage Class"
+
+    public class HPdfPage
+
+	public const HPDF_TRUE, int, 1
+	public const HPDF_FALSE, int, 0
+
+	private static hpdf_dll,  D_ADDR
+	private pPage,	D_ADDR	    ;; private page number for instance
+
+.region "Helper routines"
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetWidth, int
+	    page, D_ADDR
+	    value, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], value)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetWidth", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetWidth", page, value)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetHeight, int
+	    page, D_ADDR
+	    value, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], value)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetHeight", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetHeight", page, value)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetSize, int
+	    page, D_ADDR
+	    size, HPdfPageSizes
+	    direction, HPdfPageDirection
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_SetSize", HARUPDF_LIB), ^val(page), ^val(size), ^val(direction))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_SetSize", page, (int)size, (int)direction)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetRotate, int
+	    page, D_ADDR
+	    angle, short
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_SetRotate", HARUPDF_LIB), ^val(page), ^val(angle))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_SetRotate", page, angle)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_CreateDestination, D_ADDR
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_CreateDestination", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_CreateDestination", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_CreateTextAnnot, D_ADDR
+	    page, D_ADDR
+	    rect, HPdfRect
+	    text, string
+	    encoder, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+	    str, a65535
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [5]D_ADDR
+	    str = text
+	    if (text.Length .lt. 65535) str(text.Length+1:1) = %char(0)
+	    argblk[1] = 4
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], rect)
+	    xcall set_dscr(argblk[4], str)
+	    xcall set_dscr(argblk[5], encoder)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_CreateTextAnnot", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_CreateTextAnnot", page, rect, (a)text, encoder)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_CreateLinkAnnot, D_ADDR
+	    page, D_ADDR
+	    rect, HPdfRect
+	    dest, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [4]D_ADDR
+	    argblk[1] = 3
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], rect)
+	    xcall set_dscr(argblk[4], dest)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_CreateLinkAnnot", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_CreateLinkAnnot", page, rect, dest)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_CreateURILinkAnnot, D_ADDR
+	    page, D_ADDR
+	    rect, HPdfRect
+	    url, string
+	    endparams
+.ifdef OS_VMS
+	local record
+	    str, a65535
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [4]D_ADDR
+	    str = url
+	    if (url.Length .lt. 65535) str(url.Length+1:1) = %char(0)
+	    argblk[1] = 3
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], rect)
+	    xcall set_dscr(argblk[4], str)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_CreateURILinkAnnot", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_CreateURILinkAnnot", page, rect, (a)url)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_TextWidth, float
+	    page, D_ADDR
+	    text, string
+	    endparams
+.ifdef OS_VMS
+	local record
+	    idvar, float
+	    str, a65535
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [4]D_ADDR
+		str = text
+		if (text.Length .lt. 65535) str(text.Length+1:1) = %char(0)
+		argblk[1] = 3
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], str)
+		xcall set_dscr(argblk[4], idvar)
+		xcall xsubr(%xaddr("SHPDF_Page_TextWidth", HARUPDF_LIB), ^ref(argblk))
+.else
+		data idvar, float
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_TextWidth", page, (a)text, idvar)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_MeasureText, int
+	    page, D_ADDR
+	    text, string
+	    width, float
+	    wordwrap, int
+	    inout real_width, float
+	    endparams
+.ifdef OS_VMS
+	local record
+	    str, a65535
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [6]D_ADDR
+	    str = text
+	    if (text.Length .lt. 65535) str(text.Length+1:1) = %char(0)
+	    argblk[1] = 6
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], str)
+	    xcall set_dscr(argblk[4], width)
+	    xcall set_dscr(argblk[5], wordwrap)
+	    xcall set_dscr(argblk[6], real_width)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_MeasureText", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_MeasureText", page, (a)text, width, wordwrap, real_width)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetWidth, float
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [3]D_ADDR
+		argblk[1] = 2
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idvar)
+		xcall xsubr(%xaddr("SHPDF_Page_GetWidth", HARUPDF_LIB), ^ref(argblk))
+.else
+		data idvar, float
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetWidth", page, idvar)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetHeight, float
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [3]D_ADDR
+		argblk[1] = 2
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idvar)
+		xcall xsubr(%xaddr("SHPDF_Page_GetHeight", HARUPDF_LIB), ^ref(argblk))
+.else
+		data idvar, float
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetHeight", page, idvar)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetGMode, short
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_GetGMode", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_GetGMode", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetCurrentPos, HPdfPoint
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, HPdfPoint
+		idv_x, float
+		idv_y, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [4]D_ADDR
+		argblk[1] = 3
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idv_x)
+		xcall set_dscr(argblk[4], idv_y)
+		xcall xsubr(%xaddr("SHPDF_Page_GetCurrentPos", HARUPDF_LIB), ^ref(argblk))
+		idvar.x = idv_x
+		idvar.y = idv_y
+.else
+		data idvar, HPdfPoint
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetCurrentPos", page, idvar.x, idvar.y)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetCurrentTextPos, HPdfPoint
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, HPdfPoint
+		idv_x, float
+		idv_y, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [4]D_ADDR
+		argblk[1] = 3
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idv_x)
+		xcall set_dscr(argblk[4], idv_y)
+		xcall xsubr(%xaddr("SHPDF_Page_GetCurrentTextPos", HARUPDF_LIB), ^ref(argblk))
+		idvar.x = idv_x
+		idvar.y = idv_y
+.else
+		data idvar, HPdfPoint
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetCurrentTextPos", page, idvar.x, idvar.y)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetCurrentFont, D_ADDR
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_GetCurrentFont", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_GetCurrentFont", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetCurrentFontSize, float
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [3]D_ADDR
+		argblk[1] = 2
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idvar)
+		xcall xsubr(%xaddr("SHPDF_Page_GetCurrentFontSize", HARUPDF_LIB), ^ref(argblk))
+.else
+		data idvar, float
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetCurrentFontSize", page, idvar)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetTransMatrix, HPdfTransMatrix
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, HPdfTransMatrix
+		idv_a, float
+		idv_b, float
+		idv_c, float
+		idv_d, float
+		idv_x, float
+		idv_y, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [8]D_ADDR
+		argblk[1] = 7
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idv_a)
+		xcall set_dscr(argblk[4], idv_b)
+		xcall set_dscr(argblk[5], idv_c)
+		xcall set_dscr(argblk[6], idv_d)
+		xcall set_dscr(argblk[7], idv_x)
+		xcall set_dscr(argblk[8], idv_y)
+		xcall xsubr(%xaddr("SHPDF_Page_GetTransMatrix", HARUPDF_LIB), ^ref(argblk))
+		idvar.a = idv_a
+		idvar.b = idv_b
+		idvar.c = idv_c
+		idvar.d = idv_d
+		idvar.x = idv_x
+		idvar.y = idv_y
+.else
+		data idvar, HPdfTransMatrix
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetTransMatrix", page, idvar.a, idvar.b, idvar.c, idvar.d, idvar.x, idvar.y)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetLineWidth, float
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [3]D_ADDR
+		argblk[1] = 2
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idvar)
+		xcall xsubr(%xaddr("SHPDF_Page_GetLineWidth", HARUPDF_LIB), ^ref(argblk))
+.else
+		data idvar, float
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetLineWidth", page, idvar)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetLineCap, HPdfLineCap
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn (HPdfLineCap)%xsubr(%xaddr("HPDF_Page_GetLineCap", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn (HPdfLineCap)%dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_GetLineCap", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetLineJoin, HPdfLineJoin
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn (HPdfLineJoin)%xsubr(%xaddr("HPDF_Page_GetLineJoin", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn (HPdfLineJoin)%dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_GetLineJoin", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetMiterLimit, float
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [3]D_ADDR
+		argblk[1] = 2
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idvar)
+		xcall xsubr(%xaddr("SHPDF_Page_GetMiterLimit", HARUPDF_LIB), ^ref(argblk))
+.else
+		data idvar, float
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetMiterLimit", page, idvar)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetDash, HPdfDashMode_Internal
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, HPdfDashMode_Internal
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [3]D_ADDR
+		argblk[1] = 2
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idvar)
+		xcall xsubr(%xaddr("SHPDF_Page_GetDash", HARUPDF_LIB), ^ref(argblk))
+.else
+		data idvar, HPdfDashMode_Internal
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetDash", page, idvar)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetFlat, float
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [3]D_ADDR
+		argblk[1] = 2
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idvar)
+		xcall xsubr(%xaddr("SHPDF_Page_GetFlat", HARUPDF_LIB), ^ref(argblk))
+.else
+		data idvar, float
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetFlat", page, idvar)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetCharSpace, float
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [3]D_ADDR
+		argblk[1] = 2
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idvar)
+		xcall xsubr(%xaddr("SHPDF_Page_GetCharSpace", HARUPDF_LIB), ^ref(argblk))
+.else
+		data idvar, float
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetCharSpace", page, idvar)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetWordSpace, float
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [3]D_ADDR
+		argblk[1] = 2
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idvar)
+		xcall xsubr(%xaddr("SHPDF_Page_GetWordSpace", HARUPDF_LIB), ^ref(argblk))
+.else
+		data idvar, float
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetWordSpace", page, idvar)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+.ifdef DBLNET
+	private static method HPDF_Page_GetHorizontalScalling, float
+.else
+	private static method HPDF_Page_GetHorizScalling, float
+.endc
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [3]D_ADDR
+		argblk[1] = 2
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idvar)
+		xcall xsubr(%xaddr("SHPDF_Page_GetHorizScalling", HARUPDF_LIB), ^ref(argblk))
+.else
+		data idvar, float
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetHorizScalling", page, idvar)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetTextLeading, float
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [3]D_ADDR
+		argblk[1] = 2
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idvar)
+		xcall xsubr(%xaddr("SHPDF_Page_GetTextLeading", HARUPDF_LIB), ^ref(argblk))
+.else
+		data idvar, float
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetTextLeading", page, idvar)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetTextRenderingMode, HPdfTextRenderingMode
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn (HPdfTextRenderingMode)%xsubr(%xaddr("HPDF_Page_GetTextRenderingMode", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn (HPdfTextRenderingMode)%dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_GetTextRenderingMode", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetTextRaise, float
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [3]D_ADDR
+		argblk[1] = 2
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idvar)
+		xcall xsubr(%xaddr("SHPDF_Page_GetTextRaise", HARUPDF_LIB), ^ref(argblk))
+.else
+		data idvar, float
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetTextRaise", page, idvar)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetRGBFill, HPdfRGBColor
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, HPdfRGBColor
+		idv_b, float
+		idv_g, float
+		idv_r, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [5]D_ADDR
+		argblk[1] = 4
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idv_b)
+		xcall set_dscr(argblk[4], idv_g)
+		xcall set_dscr(argblk[5], idv_r)
+		xcall xsubr(%xaddr("SHPDF_Page_GetRGBFill", HARUPDF_LIB), ^ref(argblk))
+		idvar.b = idv_b
+		idvar.g = idv_g
+		idvar.r = idv_r
+.else
+		data idvar, HPdfRGBColor
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetRGBFill", page, idvar.b, idvar.g, idvar.r)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetRGBStroke, HPdfRGBColor
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, HPdfRGBColor
+		idv_b, float
+		idv_g, float
+		idv_r, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [5]D_ADDR
+		argblk[1] = 4
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idv_b)
+		xcall set_dscr(argblk[4], idv_g)
+		xcall set_dscr(argblk[5], idv_r)
+		xcall xsubr(%xaddr("SHPDF_Page_GetRGBStroke", HARUPDF_LIB), ^ref(argblk))
+		idvar.b = idv_b
+		idvar.g = idv_g
+		idvar.r = idv_r
+.else
+		data idvar, HPdfRGBColor
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetRGBStroke", page, idvar.b, idvar.g, idvar.r)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetCMYKFill, HPdfCMYKColor
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, HPdfCMYKColor
+		idv_c, float
+		idv_m, float
+		idv_y, float
+		idv_k, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [6]D_ADDR
+		argblk[1] = 5
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idv_c)
+		xcall set_dscr(argblk[4], idv_m)
+		xcall set_dscr(argblk[5], idv_y)
+		xcall set_dscr(argblk[6], idv_k)
+		xcall xsubr(%xaddr("SHPDF_Page_GetCMYKFill", HARUPDF_LIB), ^ref(argblk))
+		idvar.c = idv_c
+		idvar.m = idv_m
+		idvar.y = idv_y
+		idvar.k = idv_k
+.else
+		data idvar, HPdfCMYKColor
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetCMYKFill", page, idvar.c, idvar.m, idvar.y, idvar.k)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetCMYKStroke, HPdfCMYKColor
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, HPdfCMYKColor
+		idv_c, float
+		idv_m, float
+		idv_y, float
+		idv_k, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [6]D_ADDR
+		argblk[1] = 5
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idv_c)
+		xcall set_dscr(argblk[4], idv_m)
+		xcall set_dscr(argblk[5], idv_y)
+		xcall set_dscr(argblk[6], idv_k)
+		xcall xsubr(%xaddr("SHPDF_Page_GetCMYKStroke", HARUPDF_LIB), ^ref(argblk))
+		idvar.c = idv_c
+		idvar.m = idv_m
+		idvar.y = idv_y
+		idvar.k = idv_k
+.else
+		data idvar, HPdfCMYKColor
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetCMYKStroke", page, idvar.c, idvar.m, idvar.y, idvar.k)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetGrayFill, float
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [3]D_ADDR
+		argblk[1] = 2
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idvar)
+		xcall xsubr(%xaddr("SHPDF_Page_GetGrayFill", HARUPDF_LIB), ^ref(argblk))
+.else
+		data idvar, float
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetGrayFill", page, idvar)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetGrayStroke, float
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [3]D_ADDR
+		argblk[1] = 2
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], idvar)
+		xcall xsubr(%xaddr("SHPDF_Page_GetGrayStroke", HARUPDF_LIB), ^ref(argblk))
+.else
+		data idvar, float
+		;; nb implied return extra param
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetGrayStroke", page, idvar)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+.ifdef DBLNET
+	private static method HPDF_Page_GetStrokingColorSpace, HPdfColorSpace
+.else
+	private static method HPDF_Page_GetStColorSpace, HPdfColorSpace
+.endc
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn (HPdfColorSpace)%xsubr(%xaddr("HPDF_Page_GetStrokingColorSpace", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn (HPdfColorSpace)%dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_GetStrokingColorSpace", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetFillingColorSpace, HPdfColorSpace
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn (HPdfColorSpace)%xsubr(%xaddr("HPDF_Page_GetFillingColorSpace", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn (HPdfColorSpace)%dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_GetFillingColorSpace", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetTextMatrix, HPdfTransMatrix
+	    page, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		hc, HPdfTransMatrix
+		hc_a, float
+		hc_b, float
+		hc_c, float
+		hc_d, float
+		hc_x, float
+		hc_y, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [8]D_ADDR
+		argblk[1] = 7
+		xcall set_dscr(argblk[2], page)
+		xcall set_dscr(argblk[3], hc_a)
+		xcall set_dscr(argblk[4], hc_b)
+		xcall set_dscr(argblk[5], hc_c)
+		xcall set_dscr(argblk[6], hc_d)
+		xcall set_dscr(argblk[7], hc_x)
+		xcall set_dscr(argblk[8], hc_y)
+		xcall xsubr(%xaddr("SHPDF_Page_GetTransMatrix", HARUPDF_LIB), ^ref(argblk))
+		hc.a = hc_a
+		hc.b = hc_b
+		hc.c = hc_c
+		hc.d = hc_d
+		hc.x = hc_x
+		hc.y = hc_y
+.else
+		data hc, HPdfTransMatrix
+		xcall dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_GetTransMatrix", page, hc.a, hc.b, hc.c, hc.d, hc.x, hc.y)
+.endc
+		mreturn hc
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GetGStateDepth, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_GetGStateDepth", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_GetGStateDepth", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetLineWidth, int
+	    page, D_ADDR
+	    line_width, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], line_width)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetLineWidth", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetLineWidth", page, line_width)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetLineCap, int
+	    page, D_ADDR
+	    line_cap, HPdfLineCap
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_SetLineCap", HARUPDF_LIB), ^val(page), ^val(line_cap))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_SetLineCap", page, (int)line_cap)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetLineJoin, int
+	    page, D_ADDR
+	    line_join, HPdfLineJoin
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_SetLineJoin", HARUPDF_LIB), ^val(page), ^val(line_join))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_SetLineJoin", page, (int)line_join)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetMiterLimit, int
+	    page, D_ADDR
+	    miter_limit, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], miter_limit)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetMiterLimit", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetMiterLimit", page, miter_limit)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetDash, int
+	    page, D_ADDR
+	    array, [#]short
+	    num_param, int
+	    phase, int
+	    endparams
+	proc
+.ifndef DBLNET
+	    begin
+		data tempa, [8]i2
+		data i, int
+		for i from 1 thru num_param
+		    tempa[i] = array[i]
+.ifdef OS_VMS
+		mreturn %xsubr(%xaddr("HPDF_Page_SetDash", HARUPDF_LIB), ^val(page), ^ref(tempa), ^val(num_param), ^val(phase))
+.else
+		mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_SetDash", page, ^addr(tempa), num_param, phase)
+.endc
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetFlat, int
+	    page, D_ADDR
+	    flatness, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], flatness)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetFlat", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetFlat", page, flatness)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetExtGState, int
+	    page, D_ADDR
+	    ext_gstate, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_SetExtGState", HARUPDF_LIB), ^val(page), ^val(ext_gstate))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_SetExtGState", page, ext_gstate)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GSave, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_GSave", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_GSave", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_GRestore, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_GRestore", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_GRestore", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_Concat, int
+	    page, D_ADDR
+	    a, float
+	    b, float
+	    c, float
+	    d, float
+	    x, float
+	    y, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [8]D_ADDR
+	    argblk[1] = 7
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], a)
+	    xcall set_dscr(argblk[4], b)
+	    xcall set_dscr(argblk[5], c)
+	    xcall set_dscr(argblk[6], d)
+	    xcall set_dscr(argblk[7], x)
+	    xcall set_dscr(argblk[8], y)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_Concat", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_Concat", page, a, b, c, d, x, y)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_MoveTo, int
+	    page, D_ADDR
+	    x, float
+	    y, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [4]D_ADDR
+	    argblk[1] = 3
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], x)
+	    xcall set_dscr(argblk[4], y)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_MoveTo", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_MoveTo", page, x, y)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_LineTo, int
+	    page, D_ADDR
+	    x, float
+	    y, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [4]D_ADDR
+	    argblk[1] = 3
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], x)
+	    xcall set_dscr(argblk[4], y)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_LineTo", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_LineTo", page, x, y)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_CurveTo, int
+	    page, D_ADDR
+	    x1, float
+	    y1, float
+	    x2, float
+	    y2, float
+	    x3, float
+	    y3, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [8]D_ADDR
+	    argblk[1] = 7
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], x1)
+	    xcall set_dscr(argblk[4], y1)
+	    xcall set_dscr(argblk[5], x2)
+	    xcall set_dscr(argblk[6], y2)
+	    xcall set_dscr(argblk[7], x3)
+	    xcall set_dscr(argblk[8], y3)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_CurveTo", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_CurveTo", page, x1, y1, x2, y2, x3, y3)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_CurveTo2, int
+	    page, D_ADDR
+	    x2, float
+	    y2, float
+	    x3, float
+	    y3, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [6]D_ADDR
+	    argblk[1] = 5
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], x2)
+	    xcall set_dscr(argblk[4], y2)
+	    xcall set_dscr(argblk[5], x3)
+	    xcall set_dscr(argblk[6], y3)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_CurveTo2", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_CurveTo2", page, x2, y2, x3, y3)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_CurveTo3, int
+	    page, D_ADDR
+	    x1, float
+	    y1, float
+	    x3, float
+	    y3, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [6]D_ADDR
+	    argblk[1] = 5
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], x1)
+	    xcall set_dscr(argblk[4], y1)
+	    xcall set_dscr(argblk[5], x3)
+	    xcall set_dscr(argblk[6], y3)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_CurveTo3", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_CurveTo3", page, x1, y1, x3, y3)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_ClosePath, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_ClosePath", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_ClosePath", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_Rectangle, int
+	    page, D_ADDR
+	    x, float
+	    y, float
+	    width, float
+	    height, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [6]D_ADDR
+	    argblk[1] = 5
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], x)
+	    xcall set_dscr(argblk[4], y)
+	    xcall set_dscr(argblk[5], width)
+	    xcall set_dscr(argblk[6], height)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_Rectangle", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_Rectangle", page, x, y, width, height)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_Stroke, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_Stroke", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_Stroke", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_ClosePathStroke, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_ClosePathStroke", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_ClosePathStroke", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_Fill, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_Fill", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_Fill", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_Eofill, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_Eofill", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_Eofill", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_FillStroke, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_FillStroke", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_FillStroke", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_EofillStroke, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_EofillStroke", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_EofillStroke", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_ClosePathFillStroke, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_ClosePathFillStroke", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_ClosePathFillStroke", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+.ifdef DBLNET
+	private static method HPDF_Page_ClosePathEofillStroke, int
+.else
+	private static method HPDF_Page_CPathEofillStroke, int
+.endc
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_ClosePathEofillStroke", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_ClosePathEofillStroke", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_EndPath, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_EndPath", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_EndPath", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_Clip, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_Clip", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_Clip", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_Eoclip, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_Eoclip", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_Eoclip", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_BeginText, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_BeginText", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_BeginText", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_EndText, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_EndText", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_EndText", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetCharSpace, int
+	    page, D_ADDR
+	    value, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], value)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetCharSpace", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetCharSpace", page, value)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetWordSpace, int
+	    page, D_ADDR
+	    value, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], value)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetWordSpace", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetWordSpace", page, value)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+.ifdef DBLNET
+	private static method HPDF_Page_SetHorizontalScalling, int
+.else
+	private static method HPDF_Page_SetHorizScalling, int
+.endc
+	    page, D_ADDR
+	    value, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], value)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetHorizScalling", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetHorizScalling", page, value)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetTextLeading, int
+	    page, D_ADDR
+	    value, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], value)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetTextLeading", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetTextLeading", page, value)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetFontAndSize, int
+	    page, D_ADDR
+	    font, D_ADDR
+	    size, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [4]D_ADDR
+	    argblk[1] = 3
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], font)
+	    xcall set_dscr(argblk[4], size)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetFontAndSize", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetFontAndSize", page, font, size)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetTextRenderingMode, int
+	    page, D_ADDR
+	    mode, HPdfTextRenderingMode
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_SetTextRenderingMode", HARUPDF_LIB), ^val(page), ^val(mode))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_SetTextRenderingMode", page, (int)mode)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetTextRaise, int
+	    page, D_ADDR
+	    value, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], value)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetTextRaise", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetTextRaise", page, value)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_MoveTextPos, int
+	    page, D_ADDR
+	    x, float
+	    y, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [4]D_ADDR
+	    argblk[1] = 3
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], x)
+	    xcall set_dscr(argblk[4], y)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_MoveTextPos", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_MoveTextPos", page, x, y)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_MoveTextPos2, int
+	    page, D_ADDR
+	    x, float
+	    y, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [4]D_ADDR
+	    argblk[1] = 3
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], x)
+	    xcall set_dscr(argblk[4], y)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_MoveTextPos2", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_MoveTextPos2", page, x, y)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetTextMatrix, int
+	    page, D_ADDR
+	    a, float
+	    b, float
+	    c, float
+	    d, float
+	    x, float
+	    y, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [8]D_ADDR
+	    argblk[1] = 7
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], a)
+	    xcall set_dscr(argblk[4], b)
+	    xcall set_dscr(argblk[5], c)
+	    xcall set_dscr(argblk[6], d)
+	    xcall set_dscr(argblk[7], x)
+	    xcall set_dscr(argblk[8], y)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetTextMatrix", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetTextMatrix", page, a, b, c, d, x, y)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_MoveToNextLine, int
+	    page, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_MoveToNextLine", HARUPDF_LIB), ^val(page))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_MoveToNextLine", page)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_ShowText, int
+	    page, D_ADDR
+	    text, string
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_ShowText", HARUPDF_LIB), ^val(page), ^ref(SynHelper.String_to_charstar(text)))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_ShowText", page, (a)text)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_ShowTextNextLine, int
+	    page, D_ADDR
+	    text, string
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_ShowTextNextLine", HARUPDF_LIB), ^val(page), ^ref(SynHelper.String_to_charstar(text)))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_ShowTextNextLine", page, (a)text)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_ShowTextNextLineEx, int
+	    page, D_ADDR
+	    word_space, float
+	    char_space, float
+	    text, string
+	    endparams
+.ifdef OS_VMS
+	local record
+	    str, a65535
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [5]D_ADDR
+	    str = text
+	    if (text.Length .lt. 65535) str(text.Length+1:1) = %char(0)
+	    argblk[1] = 4
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], word_space)
+	    xcall set_dscr(argblk[4], char_space)
+	    xcall set_dscr(argblk[5], str)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_ShowTextNextLineEx", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_ShowTextNextLineEx", page, word_space, char_space, (a)text)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetGrayFill, int
+	    page, D_ADDR
+	    gray, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], gray)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetGrayFill", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetGrayFill", page, gray)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetGrayStroke, int
+	    page, D_ADDR
+	    gray, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], gray)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetGrayStroke", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetGrayStroke", page, gray)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetRGBFill, int
+	    page, D_ADDR
+	    r, float
+	    g, float
+	    b, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [5]D_ADDR
+	    argblk[1] = 4
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], r)
+	    xcall set_dscr(argblk[4], g)
+	    xcall set_dscr(argblk[5], b)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetRGBFill", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetRGBFill", page, r, g, b)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetRGBStroke, int
+	    page, D_ADDR
+	    r, float
+	    g, float
+	    b, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [5]D_ADDR
+	    argblk[1] = 4
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], r)
+	    xcall set_dscr(argblk[4], g)
+	    xcall set_dscr(argblk[5], b)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetRGBStroke", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetRGBStroke", page, r, g, b)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetCMYKFill, int
+	    page, D_ADDR
+	    c, float
+	    m, float
+	    y, float
+	    k, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [6]D_ADDR
+	    argblk[1] = 5
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], c)
+	    xcall set_dscr(argblk[4], m)
+	    xcall set_dscr(argblk[5], y)
+	    xcall set_dscr(argblk[6], k)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetCMYKFill", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetCMYKFill", page, c, m, y, k)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetCMYKStroke, int
+	    page, D_ADDR
+	    c, float
+	    m, float
+	    y, float
+	    k, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [6]D_ADDR
+	    argblk[1] = 5
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], c)
+	    xcall set_dscr(argblk[4], m)
+	    xcall set_dscr(argblk[5], y)
+	    xcall set_dscr(argblk[6], k)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetCMYKStroke", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetCMYKStroke", page, c, m, y, k)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_ExecuteXObject, int
+	    page, D_ADDR
+	    obj, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Page_ExecuteXObject", HARUPDF_LIB), ^val(page), ^val(obj))
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_Page_ExecuteXObject", page, obj)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_DrawImage, int
+	    page, D_ADDR
+	    image, D_ADDR
+	    x, float
+	    y, float
+	    width, float
+	    height, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [7]D_ADDR
+	    argblk[1] = 6
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], image)
+	    xcall set_dscr(argblk[4], x)
+	    xcall set_dscr(argblk[5], y)
+	    xcall set_dscr(argblk[6], width)
+	    xcall set_dscr(argblk[7], height)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_DrawImage", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_DrawImage", page, image, x, y, width, height)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_Circle, int
+	    page, D_ADDR
+	    x, float
+	    y, float
+	    ray, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [5]D_ADDR
+	    argblk[1] = 4
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], x)
+	    xcall set_dscr(argblk[4], y)
+	    xcall set_dscr(argblk[5], ray)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_Circle", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_Circle", page, x, y, ray)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_Arc, int
+	    page, D_ADDR
+	    x, float
+	    y, float
+	    ray, float
+	    ang1, float
+	    ang2, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [7]D_ADDR
+	    argblk[1] = 6
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], x)
+	    xcall set_dscr(argblk[4], y)
+	    xcall set_dscr(argblk[5], ray)
+	    xcall set_dscr(argblk[6], ang1)
+	    xcall set_dscr(argblk[7], ang2)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_Arc", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_Arc", page, x, y, ray, ang1, ang2)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_Ellipse, int
+	    page, D_ADDR
+	    x, float
+	    y, float
+	    xray, float
+	    yray, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [6]D_ADDR
+	    argblk[1] = 5
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], x)
+	    xcall set_dscr(argblk[4], y)
+	    xcall set_dscr(argblk[5], xray)
+	    xcall set_dscr(argblk[6], yray)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_Ellipse", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_Ellipse", page, x, y, xray, yray)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_TextOut, int
+	    page, D_ADDR
+	    xpos, float
+	    ypos, float
+	    text, string
+	    endparams
+.ifdef OS_VMS
+	local record
+	   str,	a65535
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [5]D_ADDR
+	    str = text
+	    if (text.Length .lt. 65535) str(text.Length+1:1) = %char(0)
+	    argblk[1] = 4
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], xpos)
+	    xcall set_dscr(argblk[4], ypos)
+	    xcall set_dscr(argblk[5], str)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_TextOut", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_TextOut", page, xpos, ypos, (a)text)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_TextRect, int
+	    page, D_ADDR
+	    left, float
+	    top, float
+	    right, float
+	    bottom, float
+	    text, string
+	    align, HPdfTextAlignment
+	    inout len, int
+	    endparams
+.ifdef OS_VMS
+	local record
+	    str, a65535
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [9]D_ADDR
+	    str = text
+	    if (text.Length .lt. 65535) str(text.Length+1:1) = %char(0)
+	    argblk[1] = 8
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], left)
+	    xcall set_dscr(argblk[4], top)
+	    xcall set_dscr(argblk[5], right)
+	    xcall set_dscr(argblk[6], bottom)
+	    xcall set_dscr(argblk[7], str)
+	    xcall set_dscr(argblk[8], align)
+	    xcall set_dscr(argblk[9], len)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_TextRect", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_TextRect", page, left, top, right, bottom, (a)text, (int)align, len)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Page_SetSlideShow, int
+	    page, D_ADDR
+	    type, HPdfTransitionStyle
+	    disp_time, float
+	    trans_time, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [5]D_ADDR
+	    argblk[1] = 4
+	    xcall set_dscr(argblk[2], page)
+	    xcall set_dscr(argblk[3], type)
+	    xcall set_dscr(argblk[4], disp_time)
+	    xcall set_dscr(argblk[5], trans_time)
+	    mreturn %xsubr(%xaddr("SHPDF_Page_SetSlideShow", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Page_SetSlideShow", page, (int)type, disp_time, trans_time)
+.endc
+.endc
+	endmethod
+
+.endregion
+
+.region "Public methods"
+
+	public method HPdfPage		;; constructor
+	    hpage,	D_ADDR
+	    hdll,	D_ADDR
+	    endparams
+	proc
+	    if (!hpage)
+		throw new Exception("Cannot create HPdfPage object.")
+	    pPage = hpage
+	    hpdf_dll = hdll
+	endmethod
+
+	public method SetWidth, void
+	    value, float
+	    endparams
+	proc
+	    HPDF_Page_SetWidth(pPage, value)
+	endmethod
+
+	public method SetHeight, void
+	    value, float
+	    endparams
+	proc
+	    HPDF_Page_SetHeight(pPage, value)
+	endmethod
+
+	public method SetSize, void
+	    size, HPdfPageSizes
+	    direction, HPdfPageDirection
+	    endparams
+	proc
+	    HPDF_Page_SetSize(pPage, size, direction)
+	endmethod
+
+	public method SetRotate, void
+	    angle, short
+	    endparams
+	proc
+	    HPDF_Page_SetRotate(pPage, angle)
+	endmethod
+
+	public method CreateDestination, @HPdfDestination
+	    endparams
+	proc
+	    mreturn new HPdfDestination(HPDF_Page_CreateDestination(pPage))
+	endmethod
+
+	public method CreateTextAnnot, @HPdfAnnotation
+	    rect, HPdfRect
+	    text, string
+	    encoder, @HPdfEncoder
+	    endparams
+	proc
+	    mreturn new HPdfAnnotation(HPDF_Page_CreateTextAnnot(pPage, rect, text, encoder.GetHandle()))
+	endmethod
+
+	public method CreateLinkAnnot, @HPdfAnnotation
+	    rect, HPdfRect
+	    dest, @HPdfDestination
+	    endparams
+	proc
+	    mreturn new HPdfAnnotation(HPDF_Page_CreateLinkAnnot(pPage, rect, dest.GetHandle()))
+	endmethod
+
+	public method CreateURILinkAnnot, @HPdfAnnotation
+	    rect, HPdfRect
+	    uri, string
+	    endparams
+	proc
+	    mreturn new HPdfAnnotation(HPDF_Page_CreateURILinkAnnot(pPage, rect, uri))
+	endmethod
+
+	public method TextWidth, float
+	    text, string
+	    endparams
+	proc
+	    mreturn HPDF_Page_TextWidth(pPage, text)
+	endmethod
+
+	public method MeasureText, int
+	    text, string
+	    width, float
+	    wordwrap, boolean
+	    byref inout real_width, float
+	    endparams
+	proc
+	    begin
+		data ww, int
+		if (wordwrap) then
+		    ww = HPDF_TRUE
+		else
+		    ww = HPDF_FALSE
+		mreturn HPDF_Page_MeasureText(pPage, text, width, ww, real_width)
+	    end
+	endmethod
+
+	public method MeasureText, int
+	    text, string
+	    width, float
+	    wordwrap, boolean
+	    endparams
+	proc
+	    begin
+		data dummy, float, 0
+		data ww, int
+		if (wordwrap) then
+		    ww = HPDF_TRUE
+		else
+		    ww = HPDF_FALSE
+		mreturn HPDF_Page_MeasureText(pPage, text, width, ww, dummy)
+	    end
+	endmethod
+
+	public method GetWidth, float
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetWidth(pPage)
+	endmethod
+
+	public method GetHeight, float
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetHeight(pPage)
+	endmethod
+
+	public method GetGMode, short
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetGMode(pPage)
+	endmethod
+
+	public method GetCurrentPos, HPdfPoint
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetCurrentPos(pPage)
+	endmethod
+
+	public method GetCurrentTextPos, HPdfPoint
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetCurrentTextPos(pPage)
+	endmethod
+
+	public method GetCurrentFont, @HPdfFont
+	    endparams
+	proc
+	    mreturn new HPdfFont(HPDF_Page_GetCurrentFont(pPage))
+	endmethod
+
+	public method GetCurrentFontSize, float
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetCurrentFontSize(pPage)
+	endmethod
+
+	public method GetTransMatrix, HPdfTransMatrix
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetTransMatrix(pPage)
+	endmethod
+
+	public method GetLineWidth, float
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetLineWidth(pPage)
+	endmethod
+
+	public method GetLineCap, HPdfLineCap
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetLineCap(pPage)
+	endmethod
+
+	public method GetLineJoin, HPdfLineJoin
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetLineJoin(pPage)
+	endmethod
+
+	public method GetMiterLimit, float
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetMiterLimit(pPage)
+	endmethod
+
+	public method GetDash, HPdfDashMode
+	    endparams
+	proc
+	    begin
+		data mode1, HPdfDashMode_Internal
+		data mode2, HPdfDashMode
+		mode1 = HPDF_Page_GetDash(pPage)
+		mode2.phase = mode1.phase
+.ifdef DBLNET
+		mode2.ptn = new short[mode1.num_ptn]
+.endc
+		if (mode1.num_ptn >= 1)
+		    mode2.ptn[1] = mode1.ptn0
+		if (mode1.num_ptn >= 2)
+		    mode2.ptn[2] = mode1.ptn1
+		if (mode1.num_ptn >= 3)
+		    mode2.ptn[3] = mode1.ptn2
+		if (mode1.num_ptn >= 4)
+		    mode2.ptn[4] = mode1.ptn3
+		if (mode1.num_ptn >= 5)
+		    mode2.ptn[5] = mode1.ptn4
+		if (mode1.num_ptn >= 6)
+		    mode2.ptn[6] = mode1.ptn5
+		if (mode1.num_ptn >= 7)
+		    mode2.ptn[7] = mode1.ptn6
+		if (mode1.num_ptn >= 8)
+		    mode2.ptn[8] = mode1.ptn7
+		mreturn mode2
+	    end
+	endmethod
+
+	public method GetFlat, float
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetFlat(pPage)
+	endmethod
+
+	public method GetCharSpace, float
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetCharSpace(pPage)
+	endmethod
+
+	public method GetWordSpace, float
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetWordSpace(pPage)
+	endmethod
+
+	public method GetHorizontalScalling, float
+	    endparams
+	proc
+.ifdef DBLNET
+	    mreturn HPDF_Page_GetHorizontalScalling(pPage)
+.else
+	    mreturn HPDF_Page_GetHorizScalling(pPage)
+.endc
+	endmethod
+
+	public method GetTextLeading, float
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetTextLeading(pPage)
+	endmethod
+
+	public method GetTextRenderingMode, HPdfTextRenderingMode
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetTextRenderingMode(pPage)
+	endmethod
+
+	public method GetTextRaise, float
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetTextRaise(pPage)
+	endmethod
+
+	public method GetRGBFill, HPdfRGBColor
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetRGBFill(pPage)
+	endmethod
+
+	public method GetRGBStroke, HPdfRGBColor
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetRGBStroke(pPage)
+	endmethod
+
+	public method GetCMYKFill, HPdfCMYKColor
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetCMYKFill(pPage)
+	endmethod
+
+	public method GetCMYKStroke, HPdfCMYKColor
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetCMYKStroke(pPage)
+	endmethod
+
+	public method GetGrayFill, float
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetGrayFill(pPage)
+	endmethod
+
+	public method GetGrayStroke, float
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetGrayStroke(pPage)
+	endmethod
+
+	public method GetStrokingColorSpace, HPdfColorSpace
+	    endparams
+	proc
+.ifdef DBLNET
+	    mreturn HPDF_Page_GetStrokingColorSpace(pPage)
+.else
+	    mreturn HPDF_Page_GetStColorSpace(pPage)
+.endc
+	endmethod
+
+	public method GetFillingColorSpace, HPdfColorSpace
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetFillingColorSpace(pPage)
+	endmethod
+
+	public method GetTextMatrix, HPdfTransMatrix
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetTextMatrix(pPage)
+	endmethod
+
+	public method GetGStateDepth, int
+	    endparams
+	proc
+	    mreturn HPDF_Page_GetGStateDepth(pPage)
+	endmethod
+
+	public method SetLineWidth, void
+	    line_width, float
+	    endparams
+	proc
+	    HPDF_Page_SetLineWidth(pPage, line_width)
+	endmethod
+
+	public method SetLineCap, void
+	    line_cap, HPdfLineCap
+	    endparams
+	proc
+	    HPDF_Page_SetLineCap(pPage, line_cap)
+	endmethod
+
+	public method SetLineJoin, void
+	    line_join, HPdfLineJoin
+	    endparams
+	proc
+	    HPDF_Page_SetLineJoin(pPage, line_join)
+	endmethod
+
+	public method SetMiterLimit, void
+	    miter_limit, float
+	    endparams
+	proc
+	    HPDF_Page_SetMiterLimit(pPage, miter_limit)
+	endmethod
+
+	public method SetDash, void
+	    dash_ptn, [#]short
+	    phase, int
+	    endparams
+	proc
+	    if (dash_ptn == ^null) then
+	    begin
+		HPDF_Page_SetDash(pPage, dash_ptn, 0, 0)
+	    end
+	    else
+	    begin
+		data len ,int ,dash_ptn.Length
+		HPDF_Page_SetDash(pPage, dash_ptn, len, phase)
+	    end
+	endmethod
+
+	public method SetFlat, void
+	    flatness, float
+	    endparams
+	proc
+	    HPDF_Page_SetFlat(pPage, flatness)
+	endmethod
+
+	public method SetExtGState, void
+	    gstate, @HPdfExtGState
+	    endparams
+	proc
+	    HPDF_Page_SetExtGState(pPage, gstate.GetHandle())
+	endmethod
+
+	public method GSave, void
+	    endparams
+	proc
+	    HPDF_Page_GSave(pPage)
+	endmethod
+
+	public method GRestore, void
+	    endparams
+	proc
+	    HPDF_Page_GRestore(pPage)
+	endmethod
+
+	public method Concat, void
+	    a, float
+	    b, float
+	    c, float
+	    d, float
+	    x, float
+	    y, float
+	    endparams
+	proc
+	    HPDF_Page_Concat(pPage, a, b, c, d, x, y)
+	endmethod
+
+	public method MoveTo, void
+	    x, float
+	    y, float
+	    endparams
+	proc
+	    HPDF_Page_MoveTo(pPage, x, y)
+	endmethod
+
+	public method LineTo, void
+	    x, float
+	    y, float
+	    endparams
+	proc
+	    HPDF_Page_LineTo(pPage, x, y)
+	endmethod
+
+	public method CurveTo, void
+	    x1, float
+	    y1, float
+	    x2, float
+	    y2, float
+	    x3, float
+	    y3, float
+	    endparams
+	proc
+	    HPDF_Page_CurveTo(pPage, x1, y1, x2, y2, x3, y3)
+	endmethod
+
+	public method CurveTo2, void
+	    x2, float
+	    y2, float
+	    x3, float
+	    y3, float
+	    endparams
+	proc
+	    HPDF_Page_CurveTo2(pPage, x2, y2, x3, y3)
+	endmethod
+
+	public method CurveTo3, void
+	    x1, float
+	    y1, float
+	    x3, float
+	    y3, float
+	    endparams
+	proc
+	    HPDF_Page_CurveTo2(pPage, x1, y1, x3, y3)
+	endmethod
+
+	public method ClosePath, void
+	    endparams
+	proc
+	    HPDF_Page_ClosePath(pPage)
+	endmethod
+
+	public method Rectangle, void
+	    x, float
+	    y, float
+	    width, float
+	    height, float
+	    endparams
+	proc
+	    HPDF_Page_Rectangle(pPage, x, y, width, height)
+	endmethod
+
+	public method Stroke, void
+	    endparams
+	proc
+	    HPDF_Page_Stroke(pPage)
+	endmethod
+
+	public method ClosePathStroke, void
+	    endparams
+	proc
+	    HPDF_Page_ClosePathStroke(pPage)
+	endmethod
+
+	public method Fill, void
+	    endparams
+	proc
+	    HPDF_Page_Fill(pPage)
+	endmethod
+
+	public method Eofill, void
+	    endparams
+	proc
+	    HPDF_Page_Eofill(pPage)
+	endmethod
+
+	public method FillStroke, void
+	    endparams
+	proc
+	    HPDF_Page_FillStroke(pPage)
+	endmethod
+
+	public method EofillStroke, void
+	    endparams
+	proc
+	    HPDF_Page_EofillStroke(pPage)
+	endmethod
+
+	public method ClosePathFillStroke, void
+	    endparams
+	proc
+	    HPDF_Page_ClosePathFillStroke(pPage)
+	endmethod
+
+	public method ClosePathEofillStroke, void
+	    endparams
+	proc
+.ifdef DBLNET
+	    HPDF_Page_ClosePathEofillStroke(pPage)
+.else
+	    HPDF_Page_CPathEofillStroke(pPage)
+.endc
+	endmethod
+
+	public method EndPath, void
+	    endparams
+	proc
+	    HPDF_Page_EndPath(pPage)
+	endmethod
+
+	public method Clip, void
+	    endparams
+	proc
+	    HPDF_Page_Clip(pPage)
+	endmethod
+
+	public method Eoclip, void
+	    endparams
+	proc
+	    HPDF_Page_Eoclip(pPage)
+	endmethod
+
+	public method BeginText, void
+	    endparams
+	proc
+	    HPDF_Page_BeginText(pPage)
+	endmethod
+
+	public method EndText, void
+	    endparams
+	proc
+	    HPDF_Page_EndText(pPage)
+	endmethod
+
+	public method SetCharSpace, void
+	    value, float
+	    endparams
+	proc
+	    HPDF_Page_SetCharSpace(pPage, value)
+	endmethod
+
+	public method SetWordSpace, void
+	    value, float
+	    endparams
+	proc
+	    HPDF_Page_SetWordSpace(pPage, value)
+	endmethod
+
+	public method SetHorizontalScalling, void
+	    value, float
+	    endparams
+	proc
+.ifdef DBLNET
+	    HPDF_Page_SetHorizontalScalling(pPage, value)
+.else
+	    HPDF_Page_SetHorizScalling(pPage, value)
+.endc
+	endmethod
+
+	public method SetTextLeading, void
+	    value, float
+	    endparams
+	proc
+	    HPDF_Page_SetTextLeading(pPage, value)
+	endmethod
+
+	public method SetFontAndSize, void
+	    font, @HPdfFont
+	    size, float
+	    endparams
+	proc
+	    HPDF_Page_SetFontAndSize(pPage, font.GetHandle(), size)
+	endmethod
+
+	public method SetTextRenderingMode, void
+	    mode, HPdfTextRenderingMode
+	    endparams
+	proc
+	    HPDF_Page_SetTextRenderingMode(pPage, mode)
+	endmethod
+
+	public method SetTextRaise, void
+	    value, float
+	    endparams
+	proc
+	    HPDF_Page_SetTextRaise(pPage, value)
+	endmethod
+
+	public method MoveTextPos, void
+	    x, float
+	    y, float
+	    endparams
+	proc
+	    HPDF_Page_MoveTextPos(pPage, x, y)
+	endmethod
+
+	public method MoveTextPos2, void
+	    x, float
+	    y, float
+	    endparams
+	proc
+	    HPDF_Page_MoveTextPos2(pPage, x, y)
+	endmethod
+
+	public method SetTextMatrix, void
+	    a, float
+	    b, float
+	    c, float
+	    d, float
+	    x, float
+	    y, float
+	    endparams
+	proc
+	    HPDF_Page_SetTextMatrix(pPage, a, b, c, d, x, y)
+	endmethod
+
+	public method MoveToNextLine, void
+	    endparams
+	proc
+	    HPDF_Page_MoveToNextLine(pPage)
+	endmethod
+
+	public method ShowText, void
+	    text, string
+	    endparams
+	proc
+	    HPDF_Page_ShowText(pPage, text)
+	endmethod
+
+	public method ShowTextNextLine, void
+	    text, string
+	    endparams
+	proc
+	    HPDF_Page_ShowTextNextLine(pPage, text)
+	endmethod
+
+	public method ShowTextNextLineEx, void
+	    word_space, float
+	    char_space, float
+	    text, string
+	    endparams
+	proc
+	    HPDF_Page_ShowTextNextLineEx(pPage, word_space, char_space, text)
+	endmethod
+
+	public method SetGrayFill, void
+	    gray, float
+	    endparams
+	proc
+	    HPDF_Page_SetGrayFill(pPage, gray)
+	endmethod
+
+	public method SetGrayStroke, void
+	    gray, float
+	    endparams
+	proc
+	    HPDF_Page_SetGrayStroke(pPage, gray)
+	endmethod
+
+	public method SetRGBFill, void
+	    r, float
+	    g, float
+	    b, float
+	    endparams
+	proc
+	    HPDF_Page_SetRGBFill(pPage, r, g, b)
+	endmethod
+
+	public method SetRGBStroke, void
+	    r, float
+	    g, float
+	    b, float
+	    endparams
+	proc
+	    HPDF_Page_SetRGBStroke(pPage, r, g, b)
+	endmethod
+
+	public method SetCMYKFill, void
+	    c, float
+	    m, float
+	    y, float
+	    k, float
+	    endparams
+	proc
+	    HPDF_Page_SetCMYKFill(pPage, c, m, y, k)
+	endmethod
+
+	public method SetCMYKStroke, void
+	    c, float
+	    m, float
+	    y, float
+	    k, float
+	    endparams
+	proc
+	    HPDF_Page_SetCMYKStroke(pPage, c, m, y, k)
+	endmethod
+
+	public method ExecuteXObject, void
+	    xobj, @HPdfImage
+	    endparams
+	proc
+	    HPDF_Page_ExecuteXObject(pPage, xobj.GetHandle())
+	endmethod
+
+	public method DrawImage, void
+	    image, @HPdfImage
+	    x, float
+	    y, float
+	    width, float
+	    height, float
+	    endparams
+	proc
+	    HPDF_Page_DrawImage(pPage, image.GetHandle(), x, y, width, height)
+	endmethod
+
+	public method Circle, void
+	    x, float
+	    y, float
+	    ray, float
+	    endparams
+	proc
+	    HPDF_Page_Circle(pPage, x, y, ray)
+	endmethod
+
+	public method Arc, void
+	    x, float
+	    y, float
+	    ray, float
+	    ang1, float
+	    ang2, float
+	    endparams
+	proc
+	    HPDF_Page_Arc(pPage, x, y, ray, ang1, ang2)
+	endmethod
+
+	public method TextOut, void
+	    xpos, float
+	    ypos, float
+	    text, string
+	    endparams
+	proc
+	    HPDF_Page_TextOut(pPage, xpos, ypos, text)
+	endmethod
+
+	public method TextRect, void
+	    left, float
+	    top, float
+	    right, float
+	    bottom, float
+	    text, string
+	    align, HPdfTextAlignment
+	    byref inout len, int
+	    endparams
+	proc
+	    HPDF_Page_TextRect(pPage, left, top, right, bottom, text, align, len)
+	endmethod
+
+	public method SetSlideShow, void
+	    type, HPdfTransitionStyle
+	    disp_time, float
+	    trans_time, float
+	    endparams
+	proc
+	    HPDF_Page_SetSlideShow(pPage, type, disp_time, trans_time)
+	endmethod
+
+	public method GetHandle, D_ADDR
+	    endparams
+	proc
+	    begin
+		mreturn pPage
+	    end
+	endmethod
+
+.endregion
+
+.region "Synergex added methods"
+
+	public method StartPageWithFont	,Void
+	    req in font		,@HPdfFont
+	    req in fontsize	,float
+	    endparams
+	    record
+		pageheight	,float
+	    endrecord
+	proc
+	    BeginText()
+	    SetFontAndSize(font, fontsize)
+	    pageheight = GetHeight()
+	    SetLineWidth(1.0)
+	    SetTextRenderingMode(HPdfTextRenderingMode.HPDF_FILL)
+	    MoveTextPos(0, pageheight-fontsize)	;; move to top of page
+	    mreturn
+	endmethod
+
+	public method Writes	,int
+	    req in text		,string
+	    endparams
+	    record
+		font_size	,float
+	    endrecord
+	proc
+	    ShowText (text)
+	    font_size = GetCurrentFontSize()
+	    MoveTextPos(0.0, -font_size)	;; move down to next row
+	    mreturn 0
+	endmethod
+
+.endregion
+
+    endclass
+
+.endregion
+
+.region "HPdfFont Class"
+
+    public class HPdfFont
+
+	pFont, D_ADDR
+
+.region "Helper routines"
+
+	DLLIMP_ATTR
+	private static method HPDF_Font_GetFontName, string
+	    hfont, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+	    begin
+		data ptr, D_ADDR
+.ifdef OS_VMS
+		ptr = %xsubr(%xaddr("HPDF_Font_GetFontName", HARUPDF_LIB), ^val(hfont))
+.else
+		ptr = %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Font_GetFontName", hfont)
+.endc
+		mreturn SynHelper.ptr_to_string(ptr)
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Font_GetEncodingName, string
+	    hfont, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+	    begin
+		data ptr, D_ADDR
+.ifdef OS_VMS
+		ptr = %xsubr(%xaddr("HPDF_Font_GetEncodingName", HARUPDF_LIB), ^val(hfont))
+.else
+		ptr = %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Font_GetEncodingName", hfont)
+.endc
+		mreturn SynHelper.ptr_to_string(ptr)
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Font_GetUnicodeWidth, int
+	    hfont, D_ADDR
+	    code, short
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Font_GetUnicodeWidth", HARUPDF_LIB), ^val(hfont), ^val(code))
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Font_GetUnicodeWidth", hfont, code)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Font_GetBBox, HPdfBox
+	    hfont, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		hb, HPdfBox
+		hb_l, float
+		hb_b, float
+		hb_r, float
+		hb_t, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [6]D_ADDR
+		argblk[1] = 5
+		xcall set_dscr(argblk[2], hfont)
+		xcall set_dscr(argblk[3], hb_l)
+		xcall set_dscr(argblk[4], hb_b)
+		xcall set_dscr(argblk[5], hb_r)
+		xcall set_dscr(argblk[6], hb_t)
+		xcall xsubr(%xaddr("SHPDF_Font_GetBBox", HARUPDF_LIB), ^ref(argblk))
+		hb.left = hb_l
+		hb.bottom = hb_b
+		hb.right = hb_r
+		hb.top = hb_t
+.else
+		data hb, HPdfBox
+		;; nb implied return extra param
+		xcall dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Font_GetBBox", hfont, hb.left, hb.bottom, hb.right, hb.top)
+.endc
+		mreturn hb
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Font_GetAscent, int
+	    hfont, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Font_GetAscent", HARUPDF_LIB), ^val(hfont))
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Font_GetAscent", hfont)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Font_GetDescent, int
+	    hfont, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Font_GetDescent", HARUPDF_LIB), ^val(hfont))
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Font_GetDescent", hfont)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Font_GetXHeight, int
+	    hfont, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Font_GetXHeight", HARUPDF_LIB), ^val(hfont))
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Font_GetXHeight", hfont)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Font_GetCapHeight, int
+	    hfont, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Font_GetCapHeight", HARUPDF_LIB), ^val(hfont))
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Font_GetCapHeight", hfont)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Font_TextWidth, HPdfTextWidth
+	    hfont, D_ADDR
+	    text, string
+	    len, int
+	    endparams
+.ifdef OS_VMS
+	local record
+		hc, HPdfTextWidth
+		str, a65535
+		hc_nc, int
+		hc_nw, int
+		hc_wd, int
+		hc_ns, int
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [8]D_ADDR
+		str = text
+		if (text.Length .lt. 65535) str(text.Length+1:1) = %char(0)
+		argblk[1] = 7
+		xcall set_dscr(argblk[2], hfont)
+		xcall set_dscr(argblk[3], str)
+		xcall set_dscr(argblk[4], len)
+		xcall set_dscr(argblk[5], hc_nc)
+		xcall set_dscr(argblk[6], hc_nw)
+		xcall set_dscr(argblk[7], hc_wd)
+		xcall set_dscr(argblk[8], hc_ns)
+		xcall xsubr(%xaddr("SHPDF_Font_TextWidth", HARUPDF_LIB), ^ref(argblk))
+		hc.numchars = hc_nc
+		hc.numwords = hc_nw
+		hc.width = hc_wd
+		hc.numspace = hc_ns
+.else
+		data hc, HPdfTextWidth
+		;; nb implied return extra param
+		xcall dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Font_TextWidth", hfont, (a)text, len, hc.numchars, hc.numwords, hc.width, hc.numspace)
+.endc
+		mreturn hc
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Font_MeasureText, int
+	    hfont, D_ADDR
+	    text, string
+	    len, int
+	    width, float
+	    font_size, float
+	    char_space, float
+	    word_space, float
+	    wordwrap, int
+	    byref inout real_width, float
+	    endparams
+.ifdef OS_VMS
+	local record
+	    str, a65535
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [10]D_ADDR
+	    str = text
+	    if (text.Length .lt. 65535) str(text.Length+1:1) = %char(0)
+	    argblk[1] = 9
+	    xcall set_dscr(argblk[2], hfont)
+	    xcall set_dscr(argblk[3], str)
+	    xcall set_dscr(argblk[4], len)
+	    xcall set_dscr(argblk[5], width)
+	    xcall set_dscr(argblk[6], font_size)
+	    xcall set_dscr(argblk[7], char_space)
+	    xcall set_dscr(argblk[8], word_space)
+	    xcall set_dscr(argblk[9], wordwrap)
+	    xcall set_dscr(argblk[10], real_width)
+	    mreturn %xsubr(%xaddr("SHPDF_Font_MeasureText", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Font_MeasureText", hfont, (a)text, len, width, font_size, char_space, word_space, wordwrap, real_width)
+.endc
+.endc
+	endmethod
+
+.endregion
+
+.region "Public methods"
+
+	public method HPdfFont		;; constructor
+	    hfont, D_ADDR
+	    endparams
+	proc
+	    if (!hfont)
+		throw new Exception("Cannot create HPdfFont object.")
+	    pFont = hfont
+	endmethod
+
+	public method GetHandle, D_ADDR
+	    endparams
+	proc
+	    mreturn pFont
+	endmethod
+
+	public method GetFontName, string
+	    endparams
+	proc
+	    mreturn HPDF_Font_GetFontName(pFont)
+	endmethod
+
+	public method GetEncodingName, string
+	    endparams
+	proc
+	    mreturn HPDF_Font_GetEncodingName(pFont)
+	endmethod
+
+	public method GetUnicodeWidth, int
+	    code, short
+	    endparams
+	proc
+	    mreturn HPDF_Font_GetUnicodeWidth(pFont, code)
+	endmethod
+
+	public method GetBBox, HPdfBox
+	    endparams
+	proc
+	    mreturn HPDF_Font_GetBBox(pFont)
+	endmethod
+
+	public method GetAscent, int
+	    endparams
+	proc
+	    mreturn HPDF_Font_GetAscent(pFont)
+	endmethod
+
+	public method GetDescent, int
+	    endparams
+	proc
+	    mreturn HPDF_Font_GetDescent(pFont)
+	endmethod
+
+	public method GetXHeight, int
+	    endparams
+	proc
+	    mreturn HPDF_Font_GetXHeight(pFont)
+	endmethod
+
+	public method GetCapHeight, int
+	    endparams
+	proc
+	    mreturn HPDF_Font_GetCapHeight(pFont)
+	endmethod
+
+	public method TextWidth, HPdfTextWidth
+	    text, string
+	    len, int
+	    endparams
+	proc
+	    mreturn HPDF_Font_TextWidth(pFont, text, len)
+	endmethod
+
+	public method MeasureText, int
+	    text, string
+	    len, int
+	    width, float
+	    font_size, float
+	    char_space, float
+	    word_space, float
+	    wordwrap, int
+	    byref inout real_width, float
+	    endparams
+	proc
+	    mreturn HPDF_Font_MeasureText(pFont, text, len, width, font_size, char_space, word_space, wordwrap, real_width)
+	endmethod
+.endregion
+
+    endclass
+
+.endregion
+
+.region "HPdfOutline Class"
+
+    public class HPdfOutline
+
+	pOutline, D_ADDR
+
+.region "Helper routines"
+
+	DLLIMP_ATTR
+	private static method HPDF_Outline_SetOpened, int
+	    houtline, D_ADDR
+	    opened, int
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Outline_SetOpened", HARUPDF_LIB), ^val(houtline), ^val(opened))
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Outline_SetOpened", houtline, opened)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Outline_SetDestination, int
+	    houtline, D_ADDR
+	    hdest, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Outline_SetDestination", HARUPDF_LIB), ^val(houtline), ^val(hdest))
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Outline_SetDestination", houtline, hdest)
+.endc
+.endc
+	endmethod
+
+.endregion
+
+.region "Public methods"
+
+	public method HPdfOutline	;; constructor
+	    houtline, D_ADDR
+	    endparams
+	proc
+	    if (!houtline)
+		throw new Exception("Cannot create HPdfOutline object.")
+	    pOutline = houtline
+	endmethod
+
+	public method GetHandle, D_ADDR
+	    endparams
+	proc
+	    mreturn pOutline
+	endmethod
+
+	public method SetOpened, void
+	    opened, boolean
+	    endparams
+	proc
+	    begin
+		data iopened, int
+		if (opened) then
+		    iopened = HPdfDoc.HPDF_TRUE
+		else
+		    iopened = HPdfDoc.HPDF_FALSE
+		HPDF_Outline_SetOpened(pOutline, iopened)
+	    end
+	endmethod
+
+	public method SetDestination, void
+	    dest, @HPdfDestination
+	    endparams
+	proc
+	    HPDF_Outline_SetDestination(pOutline, dest.GetHandle())
+	endmethod
+
+.endregion
+
+    endclass
+
+.endregion
+
+.region "HPdfEncoder Class"
+
+    public class HPdfEncoder
+
+	pEncoder, D_ADDR
+
+.region "Helper routines"
+
+	DLLIMP_ATTR
+	private static method HPDF_Encoder_GetType, HPdfEncoderType
+	    hencoder, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [2]D_ADDR
+	    argblk[1] = 1
+	    xcall set_dscr(argblk[2], hencoder)
+	    mreturn (HPdfEncoderType)%xsubr(%xaddr("SHPDF_Encoder_GetType", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn (HPdfEncoderType)%dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "SHPDF_Encoder_GetType", hencoder)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Encoder_GetByteType, HPdfByteType
+	    hencoder, D_ADDR
+	    text, string
+	    index, int
+	    endparams
+.ifdef OS_VMS
+	local record
+	    str, a65535
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [4]D_ADDR
+	    str = text
+	    if (text.Length .lt. 65535) str(text.Length+1:1) = %char(0)
+	    argblk[1] = 3
+	    xcall set_dscr(argblk[2], hencoder)
+	    xcall set_dscr(argblk[3], str)
+	    xcall set_dscr(argblk[4], index)
+	    mreturn (HPdfByteType)%xsubr(%xaddr("SHPDF_Encoder_GetByteType", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn (HPdfByteType)%dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "SHPDF_Encoder_GetByteType", hencoder, (a)text, index)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Encoder_GetUnicode, short
+	    hencoder, D_ADDR
+	    code, short
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], hencoder)
+	    xcall set_dscr(argblk[3], code)
+	    mreturn %xsubr(%xaddr("SHPDF_Encoder_GetUnicode", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "SHPDF_Encoder_GetUnicode", hencoder, code)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Encoder_GetWritingMode, HPdfWritingMode
+	    hencoder, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [2]D_ADDR
+	    argblk[1] = 1
+	    xcall set_dscr(argblk[2], hencoder)
+	    mreturn (HPdfWritingMode)%xsubr(%xaddr("SHPDF_Encoder_GetWritingMode", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn (HPdfWritingMode)%dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "SHPDF_Encoder_GetWritingMode", hencoder)
+.endc
+.endc
+	endmethod
+
+.endregion
+
+.region "Public methods"
+
+	public method HPdfEncoder	;; constructor
+	    hencoder, D_ADDR
+	    endparams
+	proc
+	    if (!hencoder)
+		throw new Exception("Cannot create HPdfEncoder object.")
+	    pEncoder = hencoder
+	endmethod
+
+	public method GetHandle, D_ADDR
+	    endparams
+	proc
+	    mreturn pEncoder
+	endmethod
+
+	public method GetEncoderType, HPdfEncoderType
+	    endparams
+	proc
+	    mreturn HPDF_Encoder_GetType(pEncoder)
+	endmethod
+
+	public method GetByteType, HPdfByteType
+	    text, string
+	    index, int
+	    endparams
+	proc
+	    mreturn HPDF_Encoder_GetByteType(pEncoder, text, index)
+	endmethod
+
+	public method GetUnicode, short
+	    code, short
+	    endparams
+	proc
+	    mreturn HPDF_Encoder_GetUnicode(pEncoder, code)
+	endmethod
+
+	public method GetWritingMode, HPdfWritingMode
+	    endparams
+	proc
+	    mreturn HPDF_Encoder_GetWritingMode(pEncoder)
+	endmethod
+
+.endregion
+
+    endclass
+
+.endregion
+
+.region "HPdfDestination Class"
+
+    public class HPdfDestination
+
+	pDest, D_ADDR
+
+.region "Helper routines"
+
+	DLLIMP_ATTR
+	private static method HPDF_Destination_SetXYZ, int
+	    hdest, D_ADDR
+	    left, float
+	    top, float
+	    zoom, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [5]D_ADDR
+	    argblk[1] = 4
+	    xcall set_dscr(argblk[2], hdest)
+	    xcall set_dscr(argblk[3], left)
+	    xcall set_dscr(argblk[4], top)
+	    xcall set_dscr(argblk[5], zoom)
+	    mreturn %xsubr(%xaddr("SHPDF_Destination_SetXYZ", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Destination_SetXYZ", hdest, left, top, zoom)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Destination_SetFit, int
+	    hdest, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Destination_SetFit", HARUPDF_LIB), ^val(hdest))
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Destination_SetFit", hdest)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Destination_SetFitH, int
+	    hdest, D_ADDR
+	    top, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], hdest)
+	    xcall set_dscr(argblk[3], top)
+	    mreturn %xsubr(%xaddr("SHPDF_Destination_SetFitH", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "SHPDF_Destination_SetFitH", hdest, top)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Destination_SetFitV, int
+	    hdest, D_ADDR
+	    left, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], hdest)
+	    xcall set_dscr(argblk[3], left)
+	    mreturn %xsubr(%xaddr("SHPDF_Destination_SetFitV", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "SHPDF_Destination_SetFitV", hdest, left)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Destination_SetFitR, int
+	    hdest, D_ADDR
+	    left, float
+	    bottom, float
+	    right, float
+	    top, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [6]D_ADDR
+	    argblk[1] = 5
+	    xcall set_dscr(argblk[2], hdest)
+	    xcall set_dscr(argblk[3], left)
+	    xcall set_dscr(argblk[4], bottom)
+	    xcall set_dscr(argblk[5], right)
+	    xcall set_dscr(argblk[6], top)
+	    mreturn %xsubr(%xaddr("SHPDF_Destination_SetFitR", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "SHPDF_Destination_SetFitR", hdest, left, bottom, right, top)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Destination_SetFitB, int
+	    hdest, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Destination_SetFitB", HARUPDF_LIB), ^val(hdest))
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Destination_SetFitB", hdest)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Destination_SetFitBH, int
+	    hdest, D_ADDR
+	    top, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], hdest)
+	    xcall set_dscr(argblk[3], top)
+	    mreturn %xsubr(%xaddr("SHPDF_Destination_SetFitBH", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "SHPDF_Destination_SetFitBH", hdest, top)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Destination_SetFitBV, int
+	    hdest, D_ADDR
+	    left, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], hdest)
+	    xcall set_dscr(argblk[3], left)
+	    mreturn %xsubr(%xaddr("SHPDF_Destination_SetFitBV", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "SHPDF_Destination_SetFitBV", hdest, left)
+.endc
+.endc
+	endmethod
+
+.endregion
+
+.region "Public methods"
+
+	public method HPdfDestination	;; constructor
+	    hdest, D_ADDR
+	    endparams
+	proc
+	    if (!hdest)
+		throw new Exception("Cannot create HPdfDestination object.")
+	    pDest = hdest
+	endmethod
+
+	public method SetXYZ, void
+	    left, float
+	    top, float
+	    zoom, float
+	    endparams
+	proc
+	    HPDF_Destination_SetXYZ(pDest, left, top, zoom)
+	endmethod
+
+	public method SetFit, void
+	    endparams
+	proc
+	    HPDF_Destination_SetFit(pDest)
+	endmethod
+
+	public method SetFitH, void
+	    top, float
+	    endparams
+	proc
+	    HPDF_Destination_SetFitH(pDest, top)
+	endmethod
+
+	public method SetFitV, void
+	    left, float
+	    endparams
+	proc
+	    HPDF_Destination_SetFitV(pDest, left)
+	endmethod
+
+	public method SetFitR, void
+	    left, float
+	    bottom, float
+	    right, float
+	    top, float
+	    endparams
+	proc
+	    HPDF_Destination_SetFitR(pDest, left, bottom, right, top)
+	endmethod
+
+	public method SetFitB, void
+	    endparams
+	proc
+	    HPDF_Destination_SetFitB(pDest)
+	endmethod
+
+	public method SetFitBH, void
+	    top, float
+	    endparams
+	proc
+	    HPDF_Destination_SetFitBH(pDest, top)
+	endmethod
+
+	public method SetFitBV, void
+	    left, float
+	    endparams
+	proc
+	    HPDF_Destination_SetFitBV(pDest, left)
+	endmethod
+
+	public method GetHandle, D_ADDR
+	    endparams
+	proc
+	    mreturn pDest
+	endmethod
+
+.endregion
+
+    endclass
+
+.endregion
+
+.region "HPdfAnnotation Class"
+
+    public class HPdfAnnotation
+
+	pAnnot, D_ADDR
+
+.region "Helper routines"
+
+	DLLIMP_ATTR
+.ifdef DBLNET
+	private static method HPDF_LinkAnnot_SetHighlightMode, int
+.else
+	private static method HPDF_LinkAnnot_SetHltMode, int
+.endc
+	    hannot, D_ADDR
+	    mode, HPdfAnnotHighlightMode
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], hannot)
+	    xcall set_dscr(argblk[3], mode)
+	    mreturn %xsubr(%xaddr("SHPDF_LinkAnnot_SetHltMode", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_LinkAnnot_SetHltMode", hannot, mode)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_LinkAnnot_SetBorderStyle, int
+	    hannot, D_ADDR
+	    width, float
+	    dash_on, short
+	    dash_off, short
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [5]D_ADDR
+	    argblk[1] = 4
+	    xcall set_dscr(argblk[2], hannot)
+	    xcall set_dscr(argblk[3], width)
+	    xcall set_dscr(argblk[4], dash_on)
+	    xcall set_dscr(argblk[5], dash_off)
+	    mreturn %xsubr(%xaddr("SHPDF_LinkAnnot_SetBorderStyle", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_LinkAnnot_SetBorderStyle", hannot, width, dash_on, dash_off)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_TextAnnot_SetIcon, int
+	    hannot, D_ADDR
+	    icon, HPdfAnnotIcon
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_TextAnnot_SetIcon", HARUPDF_LIB), ^val(hannot), ^val(icon))
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_TextAnnot_SetIcon", hannot, icon)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_TextAnnot_SetOpened, int
+	    hannot, D_ADDR
+	    opened, int
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_TextAnnot_SetOpened", HARUPDF_LIB), ^val(hannot), ^val(opened))
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_TextAnnot_SetOpened", hannot, opened)
+.endc
+.endc
+	endmethod
+
+.endregion
+
+.region "Public methods"
+
+	public method HPdfAnnotation	;; constructor
+	    hannot, D_ADDR
+	    endparams
+	proc
+	    if (!hannot)
+		throw new Exception("Cannot create HPdfAnnotation object.")
+	    pAnnot = hannot
+	endmethod
+
+	public method GetHandle, D_ADDR
+	    endparams
+	proc
+	    mreturn pAnnot
+	endmethod
+
+	public method SetHighlightMode, void
+	    mode, HPdfAnnotHighlightMode
+	    endparams
+	proc
+.ifdef DBLNET
+	    HPDF_LinkAnnot_SetHighlightMode(pAnnot, mode)
+.else
+	    HPDF_LinkAnnot_SetHltMode(pAnnot, mode)
+.endc
+	endmethod
+
+	public method SetBorderStyle, void
+	    width, float
+	    dash_on, short
+	    dash_off, short
+	    endparams
+	proc
+	    HPDF_LinkAnnot_SetBorderStyle(pAnnot, width, dash_on, dash_off)
+	endmethod
+
+	public method SetIcon, void
+	    icon, HPdfAnnotIcon
+	    endparams
+	proc
+	    HPDF_TextAnnot_SetIcon(pAnnot, icon)
+	endmethod
+
+	public method SetOpened, void
+	    opened, boolean
+	    endparams
+	proc
+	    begin
+		data flg, int
+		if (opened) then
+		    flg = HPdfDoc.HPDF_TRUE
+		else
+		    flg = HPdfDoc.HPDF_FALSE
+		HPDF_TextAnnot_SetOpened(pAnnot, flg)
+	    end
+	endmethod
+
+.endregion
+
+    endclass
+
+.endregion
+
+.region "HPdfXobject Class"
+
+    public class HPdfXObject
+
+	protected pObj, D_ADDR
+
+.region "Public methods"
+
+	public method HPdfXObject	;; constructor
+	    hobj, D_ADDR
+	    endparams
+	proc
+	    if (!hobj)
+		throw new Exception("Cannot create HPdfXObject object.")
+	    pObj = hobj
+	endmethod
+
+	public method GetHandle, D_ADDR
+	    endparams
+	proc
+	    mreturn pObj
+	endmethod
+
+.endregion
+
+    endclass
+
+.endregion
+
+.region "HPdfImage Class"
+
+    public class HPdfImage extends HPdfXObject
+
+.region "Helper routines"
+
+	DLLIMP_ATTR
+	private static method HPDF_Image_GetSize, HPdfPoint
+	    image, D_ADDR
+	    endparams
+.ifdef OS_VMS
+	local record
+		idvar, HPdfPoint
+		idv_x, float
+		idv_y, float
+	endrecord
+.endc
+	proc
+.ifndef DBLNET
+	    begin
+.ifdef OS_VMS
+		data argblk, [4]D_ADDR
+		argblk[1] = 3
+		xcall set_dscr(argblk[2], image)
+		xcall set_dscr(argblk[3], idv_x)
+		xcall set_dscr(argblk[4], idv_y)
+		xcall xsubr(%xaddr("SHPDF_Image_GetSize", HARUPDF_LIB), ^ref(argblk))
+		idvar.x = idv_x
+		idvar.y = idv_y
+.else
+		data idvar, HPdfPoint
+		;; nb implied return extra param
+		xcall dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_Image_GetSize", image, idvar.x, idvar.y)
+.endc
+		mreturn idvar
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Image_GetWidth, int
+	    image, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Image_GetWidth", HARUPDF_LIB), ^val(image))
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Image_GetWidth", image)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Image_GetHeight, int
+	    image, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Image_GetHeight", HARUPDF_LIB), ^val(image))
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Image_GetHeight", image)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Image_GetBitsPerComponent, int
+	    image, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Image_GetBitsPerComponent", HARUPDF_LIB), ^val(image))
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Image_GetBitsPerComponent", image)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Image_GetColorSpace, string
+	    image, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+	    begin
+		data ptr, D_ADDR
+.ifdef OS_VMS
+		ptr = %xsubr(%xaddr("HPDF_Image_GetColorSpace", HARUPDF_LIB), ^val(image))
+.else
+		ptr = %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Image_GetColorSpace", image)
+.endc
+		mreturn SynHelper.ptr_to_string(ptr)
+	    end
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Image_SetColorMask, int
+	    image, D_ADDR
+	    rmin, int
+	    rmax, int
+	    gmin, int
+	    gmax, int
+	    bmin, int
+	    bmax, int
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_Image_SetColorMask", HARUPDF_LIB), ^val(image), ^val(rmin), ^val(rmax), ^val(gmin), ^val(gmax), ^val(bmin), ^val(bmax))
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Image_SetColorMask", image, rmin, rmax, gmin, gmax, bmin, bmax)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_Image_SetMaskImage, void
+	    image, D_ADDR
+	    mask_image, D_ADDR
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    xcall xsubr(%xaddr("HPDF_Image_SetMaskImage", HARUPDF_LIB), ^val(image), ^val(mask_image))
+.else
+	    xcall dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Image_SetMaskImage", image, mask_image)
+.endc
+	    mreturn
+.endc
+	endmethod
+
+.endregion
+
+.region "Public methods"
+
+	public method HPdfImage		;; constructor
+	    hobj, D_ADDR
+	    endparams
+	    parent(hobj)
+	proc
+	endmethod
+
+	public method GetSize, HPdfPoint
+	    endparams
+	proc
+	    mreturn HPDF_Image_GetSize(pObj)
+	endmethod
+
+	public method GetWidth, int
+	    endparams
+	proc
+	    mreturn HPDF_Image_GetWidth(pObj)
+	endmethod
+
+	public method GetHeight, int
+	    endparams
+	proc
+	    mreturn HPDF_Image_GetHeight(pObj)
+	endmethod
+
+	public method GetBitsPerComponent, int
+	    endparams
+	proc
+	    mreturn HPDF_Image_GetBitsPerComponent(pObj)
+	endmethod
+
+	public method GetColorSpace, string
+	    endparams
+	proc
+	    mreturn HPDF_Image_GetColorSpace(pObj)
+	endmethod
+
+	public method SetColorMask, void
+	    rmin, int
+	    rmax, int
+	    gmin, int
+	    gmax, int
+	    bmin, int
+	    bmax, int
+	    endparams
+	proc
+	    HPDF_Image_SetColorMask(pObj, rmin, rmax, gmin, gmax, bmin, bmax)
+	endmethod
+
+	public method SetMaskImage, void
+	    mask_image, @HPdfImage
+	    endparams
+	proc
+	    HPDF_Image_SetMaskImage(pObj, mask_image.GetHandle())
+	endmethod
+
+.endregion
+
+    endclass
+
+.endregion
+
+.region "HPdfExtGState Class"
+
+    public class HPdfExtGState
+
+	protected pGState, D_ADDR
+
+.region "Helper routines"
+
+	DLLIMP_ATTR
+	private static method HPDF_ExtGState_SetAlphaStroke, int
+	    gstate, D_ADDR
+	    value, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], gstate)
+	    xcall set_dscr(argblk[3], value)
+	    mreturn %xsubr(%xaddr("SHPDF_ExtGState_SetAlphaStroke", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_ExtGState_SetAlphaStroke", gstate, value)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_ExtGState_SetAlphaFill, int
+	    gstate, D_ADDR
+	    value, float
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	begin
+	    data argblk, [3]D_ADDR
+	    argblk[1] = 2
+	    xcall set_dscr(argblk[2], gstate)
+	    xcall set_dscr(argblk[3], value)
+	    mreturn %xsubr(%xaddr("SHPDF_ExtGState_SetAlphaFill", HARUPDF_LIB), ^ref(argblk))
+	end
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_DBLCALL, "SHPDF_ExtGState_SetAlphaFill", gstate, value)
+.endc
+.endc
+	endmethod
+
+	DLLIMP_ATTR
+	private static method HPDF_ExtGState_SetBlendMode, int
+	    gstate, D_ADDR
+	    mode, HPdfBlendMode
+	    endparams
+	proc
+.ifndef DBLNET
+.ifdef OS_VMS
+	    mreturn %xsubr(%xaddr("HPDF_ExtGState_SetBlendMode", HARUPDF_LIB), ^val(gstate), ^val(mode))
+.else
+	    mreturn %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_ExtGState_SetBlendMode", gstate, (int)mode)
+.endc
+.endc
+	endmethod
+
+.endregion
+
+.region "Public methods"
+
+	public method HPdfExtGState	;; constructor
+	    hgstate, D_ADDR
+	    endparams
+	proc
+	    if (!hgstate)
+		throw new Exception("Cannot create HPdfExtGState object.")
+	    pGState = hgstate
+	endmethod
+
+	public method GetHandle, D_ADDR
+	    endparams
+	proc
+	    mreturn pGState
+	endmethod
+
+	public method SetAlphaStroke, void
+	    value, float
+	    endparams
+	proc
+	    HPDF_ExtGState_SetAlphaStroke(pGState, value)
+	endmethod
+
+	public method SetAlphaFill, void
+	    value, float
+	    endparams
+	proc
+	    HPDF_ExtGState_SetAlphaFill(pGState, value)
+	endmethod
+
+	public method SetBlendMode, void
+	    mode, HPdfBlendMode
+	    endparams
+	proc
+	    HPDF_ExtGState_SetBlendMode(pGState, mode)
+	endmethod
+
+.endregion
+
+    endclass
+
+.endregion
+
+endnamespace
+
+.ifndef DBLNET
+;; needed for error callback
+subroutine ErrorProc
+    error_no    ,int
+    detail_no   ,int
+    user_data   ,D_ADDR
+    endparams
+proc
+    throw new Exception(SynHelper.FormatError(error_no, detail_no))
+endsubroutine
+.endc
+
+.endc ;NO_HPDF
+
+.noproto
+.ifdef OS_VMS
+; Move the address of the descriptor for the second argument
+; into the first argument.
+subroutine set_dscr
+a_arg,		D_ADDR
+^ref(a_dsc),	[*]i4
+proc
+	a_arg = ^addr(a_dsc)
+	xreturn
+endsubroutine
+.else
+.ifndef DBLNET
+function libhpdf_dllname, A
+static record
+	ostyp,	i4, 0
+proc
+	if (.not. ostyp)
+	    xcall envrn(ostyp)
+	if (ostyp .eq. 6) then
+	    freturn("LIBHPDF")
+	else if (ostyp .eq. 8) then
+.if D_ADDRSIZE .eq. 8
+	    freturn("libhpdf64.so")
+.else
+	    freturn("libhpdf.so")
+.endc
+	else
+.if D_ADDRSIZE .eq. 8
+	    freturn("libhpdf64.dll")
+.else
+	    freturn("libhpdf.dll")
+.endc
+endfunction
+.endc
+.endc
+.proto
