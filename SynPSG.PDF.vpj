@@ -130,7 +130,7 @@
             Name="Source Files"
             Filters="*.dbl;*.tpl;*.dbc">
             <F N="src/pdfdbl.dbl"/>
-            <F N="src/SynPSG.PDF.dbl"/>
+            <F N="src/SynPSG_PDF.dbl"/>
         </Folder>
         <Folder
             Name="Header Files"

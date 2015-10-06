@@ -8177,40 +8177,40 @@ namespace SynPSG.PDF
     endenum
 
     public enum PdfPageLayout
-        Single,         HPdfPageLayout.HPDF_PAGE_LAYOUT_SINGLE
-        OneColumn,      HPdfPageLayout.HPDF_PAGE_LAYOUT_ONE_COLUMN
-        TwoColumnLeft,  HPdfPageLayout.HPDF_PAGE_LAYOUT_TWO_C_LEFT
-        TwoColumnRight, HPdfPageLayout.HPDF_PAGE_LAYOUT_TWO_C_RIGHT
-        Eof,            HPdfPageLayout.HPDF_PAGE_LAYOUT_EOF
+        Single,         0
+        OneColumn
+        TwoColumnLeft
+        TwoColumnRight
+        Eof
     endenum
 
     public enum PdfPageMode
-        None,           HPdfPageMode.HPDF_PAGE_MODE_USE_NONE
-        Outline,        HPdfPageMode.HPDF_PAGE_MODE_USE_OUTLINE
-        Thumbs,         HPdfPageMode.HPDF_PAGE_MODE_USE_THUMBS
-        FullScreen,     HPdfPageMode.HPDF_PAGE_MODE_FULL_SCREEN
-        Eof,            HPdfPageMode.HPDF_PAGE_MODE_EOF
+        None,           0
+        Outline
+        Thumbs
+        FullScreen
+        Eof
     endenum
 
     public enum PdfPageSize
-        LETTER,         HPdfPageSizes.HPDF_PAGE_SIZE_LETTER
-        LEGAL,          HPdfPageSizes.HPDF_PAGE_SIZE_LEGAL
-        A3,             HPdfPageSizes.HPDF_PAGE_SIZE_A3
-        A4,             HPdfPageSizes.HPDF_PAGE_SIZE_A4
-        A5,             HPdfPageSizes.HPDF_PAGE_SIZE_A5
-        B4,             HPdfPageSizes.HPDF_PAGE_SIZE_B4
-        B5,             HPdfPageSizes.HPDF_PAGE_SIZE_B5
-        EXECUTIVE,      HPdfPageSizes.HPDF_PAGE_SIZE_EXECUTIVE
-        US4x6,          HPdfPageSizes.HPDF_PAGE_SIZE_US4x6
-        US4x8,          HPdfPageSizes.HPDF_PAGE_SIZE_US4x8
-        US5x7,          HPdfPageSizes.HPDF_PAGE_SIZE_US5x7
-        COMM10,         HPdfPageSizes.HPDF_PAGE_SIZE_COMM10
-        EOF,            HPdfPageSizes.HPDF_PAGE_SIZE_EOF
+        LETTER,         0
+        LEGAL
+        A3
+        A4
+        A5
+        B4
+        B5
+        EXECUTIVE
+        US4x6
+        US4x8
+        US5x7
+        COMM10
+        EOF
     endenum
 
     public enum PdfOrientation
-        Portrait,       HPdfPageDirection.HPDF_PAGE_PORTRAIT
-        Landscape,      HPdfPageDirection.HPDF_PAGE_LANDSCAPE
+        Portrait,       0
+        Landscape
     endenum
 
     public enum PdfColor
