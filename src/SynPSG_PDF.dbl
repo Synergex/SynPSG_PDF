@@ -342,9 +342,21 @@ namespace SynPSG.PDF
             end
             else
             begin
+                ;;No file location passed
+.ifdef D_GUI
+                ;;Windows. Make sure the path ends with a \
                 this.FileLocation = expandLogicalInFileSpec("TEMP:")
                 if (!this.FileLocation.Trim().EndsWith("\"))
                     this.FileLocation = this.FileLocation.Trim() + "\"
+.else
+.ifdef D_VMS
+                ;;VMS. Nothing to do.
+                this.FileLocation = "SYS$DISK:"
+.else
+                ;;Unix/Linux. Make sure the path ends with a /
+                this.FileLocation = "./"
+.endc
+.endc
             end
 
             ;;Make sure the output file location exists
@@ -2881,9 +2893,10 @@ namespace SynPSG.PDF
         ;;********************************************************************************
         ;;PRIVATE METHODS
 
+.ifdef D_GUI
         ;;--------------------------------------------------------------------------------
         ;;; <summary>
-        ;;;Determines whether the given path refers to an existing directory on disk.
+        ;;; Determines whether the given path refers to an existing directory on disk.
         ;;; </summary>
         ;;; <param name="path">The path to test. </param>
         ;;; <returns>true if path refers to an existing directory; false if the directory does not exist or an error occurs when trying to determine if the specified file exists.</returns>
@@ -2891,7 +2904,7 @@ namespace SynPSG.PDF
             required in path, string
             endparams
             stack record
-                dll     ,D_ADDR ;;DLL Handle
+                dll         ,D_ADDR ;;DLL Handle
                 folder      ,a260   ;;Null terminated folder spec
                 attributes  ,i4
             endrecord
@@ -2907,10 +2920,36 @@ namespace SynPSG.PDF
                 mreturn false
             mreturn (attributes & FILE_ATTRIBUTE_DIRECTORY)
         endmethod
+.else
+        ;;--------------------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Determines whether the given path refers to an existing directory on disk.
+        ;;; </summary>
+        ;;; <param name="path">The path to test. </param>
+        ;;; <returns>true if path refers to an existing directory; false if the directory does not exist or an error occurs when trying to determine if the specified file exists.</returns>
+        private method directoryExists, boolean
+            required in path, string
+            endparams
+        proc
+            ;;Try to open a temp file there!
+            try
+            begin
+                data ch, i4, 0
+                open(ch=0,o:s,path.Trim()+"TMP"+%datetime+".TMP")
+                purge ch
+                mreturn true
+            end
+            catch (ex)
+            begin
+                mreturn false
+            end
+            endtry
+        endmethod
+.endc
 
         ;;--------------------------------------------------------------------------------
         ;;
-
+.ifdef D_GUI
         private method expandLogicalInFileSpec, string
             required in fileSpec,               string
             endparams
@@ -2924,7 +2963,6 @@ namespace SynPSG.PDF
         proc
             ;;This routine assumes a file spec like LOGICAL:file.ext
             ;;and returns D:\path\to\file.ext
-
             if ((colon=%instr(1,fileSpec,":")) && (!%instr(1,fileSpec,"\"))) then
             begin
                 ;;We have a : and no \
@@ -2953,9 +2991,62 @@ namespace SynPSG.PDF
                 ;;Don't mess with it!
                 mreturn fileSpec.Trim()
             end
-
         endmethod
+.else
+.ifdef D_VMS
+        ;VMS
+        private method expandLogicalInFileSpec, string
+            required in fileSpec,               string
+            endparams
+        proc
+            mreturn fileSpec.Trim()
+        endmethod
+.else
+        ;Unix or Linux
+        private method expandLogicalInFileSpec, string
+            required in fileSpec,               string
+            endparams
+            stack record
+                colon,                          int
+                file,                           string
+                path,                           string
+                translation,                    a256
+                length,                         i4
+            endrecord
+        proc
+            ;;This routine assumes a file spec like LOGICAL:file.ext
+            ;;and returns /path/to/file.ext
+            if ((colon=%instr(1,fileSpec,":")) && (!%instr(1,fileSpec,"/"))) then
+            begin
+                ;;We have a : and no \
 
+                xcall getlog(fileSpec(1:colon-1),translation,length)
+                path = %atrim(translation)
+
+                ;;Looks like we have a logical name, but is it JUST a logical name, or is there also a file name?
+                if (colon==%trim(fileSpec)) then
+                begin
+                    ;;Just a logical, just return the translation
+                    mreturn path
+                end
+                else
+                begin
+                    ;;Also a file spec
+                    if (path(%trim(path):1)!="/")
+                        path = path + "/"
+                    file = fileSpec(colon+1,%trim(fileSpec))
+                    mreturn path + file
+                end
+            end
+            else
+            begin
+                ;;No : or both : and /
+                ;;Don't mess with it!
+                mreturn fileSpec.Trim()
+            end
+        endmethod
+.endc
+.endc
         ;;--------------------------------------------------------------------------------
         ;;
 
@@ -3074,7 +3165,11 @@ namespace SynPSG.PDF
             endrecord
         proc
             now = %datetime
+.ifdef D_VMS
             mreturn %string(^d(now(1:14)),"XXXX-XX-XX XX.XX.XX")
+.else
+            mreturn %string(^d(now(1:14)),"XXXX-XX-XX_XX-XX-XX")
+.endc
         endmethod
 
         ;;--------------------------------------------------------------------------------
