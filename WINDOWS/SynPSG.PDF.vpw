@@ -2,6 +2,5 @@
 <Workspace Version="10.0" VendorName="SlickEdit" OEMVendorName="Synergy/DE Workbench 10.3.1b">
 	<Projects>
 		<Project File="Examples.vpj"/>
-		<Project File="SynPSG.PDF.vpj"/>
 	</Projects>
 </Workspace>
