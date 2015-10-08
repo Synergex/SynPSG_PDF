@@ -652,6 +652,7 @@
         <ExecMacro CmdLine="syn_set EXE=%(ROOT)exe"/>
         <ExecMacro CmdLine="syn_set SYNEXPDIR=%(ROOT)hdr"/>
         <ExecMacro CmdLine="syn_set SYNIMPDIR=%(ROOT)hdr"/>
+        <ExecMacro CmdLine="syn_set MEDIA=%(ROOT)..\MEDIA"/>
         <ExecMacro CmdLine="syn_set OUTPUT=%(ROOT)output"/>
     </Macro>
 </Project>
