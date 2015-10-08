@@ -129,15 +129,17 @@
         <Folder
             Name="Source Files"
             Filters="*.dbl;*.tpl;*.dbc">
-            <F N="src/pdfdbl.dbl"/>
-            <F N="src/SynPSG_PDF.dbl"/>
+            <F N="../SOURCE/PDF/pdfdbl.dbl"/>
+            <F N="../SOURCE/PDF/SynPSG_PDF.dbl"/>
         </Folder>
         <Folder
             Name="Header Files"
             Filters="*.def;*.dbh"/>
         <Folder
             Name="Other Files"
-            Filters=""/>
+            Filters="">
+            <F N="../readme.txt"/>
+        </Folder>
     </Files>
     <Config
         Name="Debug64"

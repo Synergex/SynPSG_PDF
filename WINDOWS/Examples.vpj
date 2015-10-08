@@ -163,15 +163,15 @@
         <Folder
             Name="Source Files"
             Filters="*.dbl;*.tpl;*.dbc">
-            <F N="examples/AutoItems.dbl"/>
-            <F N="examples/BlueAndRedBox.dbl"/>
-            <F N="examples/DblMessagesReport.dbl"/>
-            <F N="examples/DeliveryTicket.dbl"/>
-            <F N="examples/DesignGrid.dbl"/>
-            <F N="examples/HeaderBodyFooter.dbl"/>
-            <F N="examples/Landscape132.dbl"/>
-            <F N="examples/MixedPageOrientation.dbl"/>
-            <F N="examples/Portrait100.dbl"/>
+            <F N="../SOURCE/EXAMPLES/AutoItems.dbl"/>
+            <F N="../SOURCE/EXAMPLES/BlueAndRedBox.dbl"/>
+            <F N="../SOURCE/EXAMPLES/DblMessagesReport.dbl"/>
+            <F N="../SOURCE/EXAMPLES/DeliveryTicket.dbl"/>
+            <F N="../SOURCE/EXAMPLES/DesignGrid.dbl"/>
+            <F N="../SOURCE/EXAMPLES/HeaderBodyFooter.dbl"/>
+            <F N="../SOURCE/EXAMPLES/Landscape132.dbl"/>
+            <F N="../SOURCE/EXAMPLES/MixedPageOrientation.dbl"/>
+            <F N="../SOURCE/EXAMPLES/Portrait100.dbl"/>
         </Folder>
         <Folder
             Name="Header Files"
@@ -182,7 +182,6 @@
         <Folder
             Name="Other Files"
             Filters="">
-            <F N="readme.txt"/>
         </Folder>
     </Files>
     <Config
