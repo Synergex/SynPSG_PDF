@@ -336,8 +336,16 @@ namespace SynPSG.PDF
                     throw new ApplicationException("Invalid location " + aFileLocation)
                 else
                 begin
+.ifdef D_GUI
                     if (!this.FileLocation.Trim().EndsWith("\"))
                         this.FileLocation = this.FileLocation.Trim() + "\"
+.else
+.ifdef D_VMS
+.else
+                    if (!this.FileLocation.Trim().EndsWith("/"))
+                        this.FileLocation = this.FileLocation.Trim() + "/"
+.endc
+.endc
                 end
             end
             else
@@ -1431,7 +1439,8 @@ namespace SynPSG.PDF
             ok = true
             fontName = ^null
 
-            fileSpec = aFontFile.ToLower()
+            fileSpec = expandLogicalInFileSpec(aFontFile.ToLower())
+
             if (!fileExists(fileSpec) || !fileSpec.EndsWith(".ttf"))
                 ok = false
 
@@ -1600,7 +1609,6 @@ namespace SynPSG.PDF
 
         endmethod
 
-.ifdef D_GUI
         ;;--------------------------------------------------------------------------------
         ;;; <summary>
         ;;; Displays the PDF file using the default application that is registered to handle
@@ -1618,8 +1626,10 @@ namespace SynPSG.PDF
         proc
             if (this.Save(aErrorMessage)) then
             begin
+.ifdef D_GUI
                 ;;And launch the associated application
                 xcall shell(,'"'+this.FileLocation+this.FileName+'"',D_NOCONSOLE|D_NOWAIT)
+.endc
                 errorMessage = ""
                 ok = true
             end
@@ -1628,11 +1638,10 @@ namespace SynPSG.PDF
                 ;;Error message has already been set by Save()
                 ok = false
             end
-
             mreturn ok
-
         endmethod
 
+.ifdef D_GUI
         ;;--------------------------------------------------------------------------------
         ;;; <summary>
         ;;; Print the PDF file to a printer.
