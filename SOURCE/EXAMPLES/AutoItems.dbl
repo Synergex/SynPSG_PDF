@@ -9,7 +9,10 @@ proc
     xcall flags(7004020,1)
 
     ;;Create a PDF document and specify that we want 2 header rows and 2 footer rows
-    pdf = new PdfFile(,,,,,,,,,2,2)
+    pdf = new PdfFile(,,,,,,,,,2,2,"OUTPUT:")
+
+    ;;Override the default file to prevent the date/time stamp prefix.
+    pdf.FileName = "AutoItems.pdf"
 
     ;;Ask reader applications to display a single page at a time
     pdf.PageLayout = PdfPageLayout.Single

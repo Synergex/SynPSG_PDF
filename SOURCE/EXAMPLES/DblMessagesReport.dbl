@@ -39,7 +39,10 @@ proc
 
 
     ;;Create a PDF document and specify that we want 2 header rows and 2 footer rows
-    pdf = new PdfFile(,PdfOrientation.Landscape,132,,,,,,,2,2,,"DBL Error Messages")
+    pdf = new PdfFile(,PdfOrientation.Landscape,132,,,,,,,2,2,"OUTPUT:")
+
+    ;;Override the default file to prevent the date/time stamp prefix.
+    pdf.FileName = "DBLMessages.pdf"
 
     ;;Define the content for the header rows
     pdf.HeaderText[1] = "Synergy DBL Error Messages                                                                               Printed MM/DD/YYYY at HH:MM"

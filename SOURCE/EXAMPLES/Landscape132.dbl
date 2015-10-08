@@ -9,7 +9,10 @@ proc
     xcall flags(7004020,1)
 
     ;;Create a new PDF document and specify landscape mode and 132 columns wide
-    pdf = new PdfFile(,PdfOrientation.Landscape,132)
+    pdf = new PdfFile(,PdfOrientation.Landscape,132,,,,,,,,,"OUTPUT:")
+
+    ;;Override the default file to prevent the date/time stamp prefix.
+    pdf.FileName = "Landscape132.pdf"
 
     ;;Add some content
     pdf.DrawTextRC("This document is 132 characters wide in landscape mode.")
