@@ -340,7 +340,7 @@ namespace SynPSG.PDF
                     if (!this.FileLocation.Trim().EndsWith("\"))
                         this.FileLocation = this.FileLocation.Trim() + "\"
 .else
-.ifdef D_VMS
+.ifdef OS_VMS
 .else
                     if (!this.FileLocation.Trim().EndsWith("/"))
                         this.FileLocation = this.FileLocation.Trim() + "/"
@@ -357,7 +357,7 @@ namespace SynPSG.PDF
                 if (!this.FileLocation.Trim().EndsWith("\"))
                     this.FileLocation = this.FileLocation.Trim() + "\"
 .else
-.ifdef D_VMS
+.ifdef OS_VMS
                 ;;VMS. Nothing to do.
                 this.FileLocation = "SYS$DISK:"
 .else
@@ -1439,9 +1439,9 @@ namespace SynPSG.PDF
             ok = true
             fontName = ^null
 
-            fileSpec = expandLogicalInFileSpec(aFontFile.ToLower())
+            fileSpec = expandLogicalInFileSpec(aFontFile)
 
-            if (!fileExists(fileSpec) || !fileSpec.EndsWith(".ttf"))
+            if (!fileExists(fileSpec) || !fileSpec.ToLower().EndsWith(".ttf"))
                 ok = false
 
             if (ok)
@@ -2570,7 +2570,11 @@ namespace SynPSG.PDF
             endmethod
             method set
             proc
+                .ifdef OS_VMS
+                ;TODO: Figure out why this crashes on VMS
+                .else
                 doc.SetPageLayout((HPdfPageLayout)value)
+                .endc
             endmethod
         endproperty
 
@@ -3002,7 +3006,7 @@ namespace SynPSG.PDF
             end
         endmethod
 .else
-.ifdef D_VMS
+.ifdef OS_VMS
         ;VMS
         private method expandLogicalInFileSpec, string
             required in fileSpec,               string
@@ -3174,7 +3178,7 @@ namespace SynPSG.PDF
             endrecord
         proc
             now = %datetime
-.ifdef D_VMS
+.ifdef OS_VMS
             mreturn %string(^d(now(1:14)),"XXXX-XX-XX XX.XX.XX")
 .else
             mreturn %string(^d(now(1:14)),"XXXX-XX-XX_XX-XX-XX")

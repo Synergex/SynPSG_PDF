@@ -25,8 +25,8 @@ proc
     pdf.PageLayout = PdfPageLayout.Single
 
     ;;Load and embed custom fonts
-    arialNarrow     = pdf.LoadTrueTypeFont("C:\Windows\Fonts\ARIALN.TTF")
-    arialNarrowBold = pdf.LoadTrueTypeFont("C:\Windows\Fonts\ARIALNB.TTF")
+    arialNarrow     = pdf.LoadTrueTypeFont("MEDIA:ARIALN.TTF")
+    arialNarrowBold = pdf.LoadTrueTypeFont("MEDIA:ARIALNB.TTF")
 
     ;;Top line titles
     pdf.SelectFont(arialNarrowBold,22)

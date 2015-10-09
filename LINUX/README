@@ -1,0 +1,41 @@
+
+To build and test SynPSG_PDF on Linux:
+
+1. Open a BASH shell and cd to this directory
+2. Execute the build.sh script, like this:
+
+   .  ./build.sh
+
+   You should see this output:
+
+      Extracting 64-bit HARU library...
+
+      Prototyping PDF code...
+      Compiling PDF code...
+      Linking PDF code to PDF_EXE:SynPSG_PDF.elb...
+
+      Building example programs...
+      - AutoItems.dbl
+      - BlueAndRedBox.dbl
+      - DblMessagesReport.dbl
+      - DeliveryTicket.dbl
+      - DesignGrid.dbl
+      - HeaderBodyFooter.dbl
+      - Landscape132.dbl
+      - MixedPageOrientation.dbl
+      - Portrait100.dbl
+
+      Running example programs...
+      - AutoItems.DBR
+      - BlueAndRedBox.DBR
+      - DblMessagesReport.DBR
+      - DeliveryTicket.DBR
+      - DesignGrid.DBR
+      - HeaderBodyFooter.DBR
+      - Landscape132.DBR
+      - MixedPageOrientation.DBR
+      - Portrait100.DBR
+
+      Example PDF files are in the out folder
+
+3. Look in the "out" folder for the PDF files that were created.
