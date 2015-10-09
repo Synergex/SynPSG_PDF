@@ -42,11 +42,9 @@ proc
     pdf.AutoItems.Add(new AutoBoxRowCol(12,41,14,80,5,PdfColor.Orange,true,PdfColor.Pink))
     pdf.AutoItems.Add(new AutoTextRowCol("This is an auto box",13,42))
 
-.ifndef OS_VMS
     ;;Draw an auto image
     pdf.AutoItems.Add(new AutoImage("MEDIA:sdelogo.png",200,300))
     pdf.AutoItems.Add(new AutoTextAbsolute("This is an auto image",225,285))
-.endc
 
     ;;Add three pages. All pages should have the header, footer and auto items drawn automatically
     pdf.NewPage()

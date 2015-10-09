@@ -924,6 +924,10 @@ namespace SynPSG.PDF
 
             if (fileExists(fileSpec)) then
             begin
+                .ifdef OS_VMS
+                ;TODO: Figure out why this crashes on VMS
+                ok = false
+                .else
                 if (fileSpec.ToLower().EndsWith(".jpg") || fileSpec.ToLower().EndsWith(".jpeg")) then
                     image = doc.LoadJpegImageFromFile(fileSpec)
                 else if (fileSpec.ToLower().EndsWith(".png")) then
@@ -933,6 +937,7 @@ namespace SynPSG.PDF
                     errorMessage = "Unsupported image format!"
                     ok = false
                 end
+                .endc
             end
             else
             begin
@@ -1446,9 +1451,13 @@ namespace SynPSG.PDF
 
             if (ok)
             begin
+                .ifdef OS_VMS
+                ;TODO: Figure out why this crashes on VMS
+                .else
                 fontName = doc.LoadTTFontFromFile(fileSpec,true)
                 if (fontName!=^null)
                     mAvailableFonts.Add(fontName)
+                .endc
             end
 
             mreturn fontName
@@ -3011,8 +3020,21 @@ namespace SynPSG.PDF
         private method expandLogicalInFileSpec, string
             required in fileSpec,               string
             endparams
+            stack record
+                expandedFileSpec, a256
+                tmpFileSpec, string
+            endrecord
         proc
-            mreturn fileSpec.Trim()
+            xcall setdfn(".",0)
+            xcall parse(fileSpec,,,,,,,,expandedFileSpec)
+            tmpFileSpec = %atrim(expandedFileSpec)
+            if (tmpFileSpec.EndsWith(".;")) then
+                tmpFileSpec = tmpFileSpec.Replace(".;","")
+            else if (tmpFileSpec.EndsWith(";")) then
+                tmpFileSpec = tmpFileSpec.Replace(";","")
+            else if (tmpFileSpec.Contains(";"))
+                tmpFileSpec = tmpFileSpec(1:%instr(1,tmpFileSpec,";")-1)
+            mreturn %atrim(tmpFileSpec)
         endmethod
 .else
         ;Unix or Linux
