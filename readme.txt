@@ -12,7 +12,7 @@ Description:    A collection of Synergy DBL classes that facilitate the easy
                 libraries from PDFKIT. For your convenience we have included
                 both with the SynPSG.PDF distribution.
 
-Requirements    SynPSG.PDF requires Synergy/DE V10.3.1b on a Windows system.
+Requirements    SynPSG.PDF requires Synergy/DE V10.3.1b.
 
 For additional information please refer to the documentation in SynPSG.PDF.chm
 
