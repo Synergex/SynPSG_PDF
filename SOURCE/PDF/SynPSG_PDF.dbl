@@ -123,6 +123,23 @@ namespace SynPSG.PDF
         ;;; <param name="aPartialFileName">Words to be included in the file name. Don't use characters that are not valid in file specifications.</param>
         ;;; <param name="aBackgroundColor">Establishes a custom page background color and implements that color on the first page. The default page background color is white.</param>
         public method PdfFile
+.ifdef DBLNET
+            default in aPageSize,          PdfPageSize,         PdfPageSize.LETTER
+            default in aOrientation,       PdfOrientation,      PdfOrientation.Portrait
+            default in aMinimumColumns,    int,                 80
+            default in aMaxFontSize,       int,                 100
+            default in aCenterBodyInPage,  boolean,             true
+            default in aLeftMargin,        float,               0.16
+            default in aTopMargin,         float,               0.16
+            default in aRightMargin,       float,               0.16
+            default in aBottomMargin,      float,               0.16
+            default in aHeaderRows,        int,                 0
+            default in aFooterRows,        int,                 0
+            default in aFileLocation,      string,              ""
+            default in aPartialFileName,   string,              ""
+            default in aBackgroundColor,   PdfColor,            PdfColor.White
+            default in aExtraRowSpacing,   float,               0
+.else
             optional in aPageSize,          PdfPageSize
             optional in aOrientation,       PdfOrientation
             optional in aMinimumColumns,    int
@@ -138,6 +155,7 @@ namespace SynPSG.PDF
             optional in aPartialFileName,   string
             optional in aBackgroundColor,   PdfColor
             optional in aExtraRowSpacing,   float
+.endc
             endparams
 
             record
@@ -711,10 +729,17 @@ namespace SynPSG.PDF
             required in aFromY,       float
             required in aToX,         float
             required in aToY,         float
+.ifdef DBLNET
+            default  in aWidth,       float,        1
+            default  in aStrokeColor, PdfColor,     PdfColor.DefaultColor
+            default  in aFill,        boolean,      false
+            default  in aFillColor,   PdfColor,     PdfColor.DefaultColor
+.else
             optional in aWidth,       float
             optional in aStrokeColor, PdfColor
             optional in aFill,        boolean
             optional in aFillColor,   PdfColor
+.endc
             endparams
             record
                 penWidth,       float
@@ -729,12 +754,20 @@ namespace SynPSG.PDF
             pg.SetLineWidth(penWidth)
 
             ;;If we were passed a specific stroke color then use it
+.ifdef DBLNET
+            if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
+.else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
-                setCustomStrokeColor(aStrokeColor)
+.endc
+            setCustomStrokeColor(aStrokeColor)
 
             ;;If we were passed a specific fill color then use it
+.ifdef DBLNET
+            if ((aFillColor != PdfColor.DefaultColor) && (aFillColor!= this.StrokeColor))
+.else
             if (^passed(aFillColor) && (aFillColor != this.FillColor))
-                setCustomFillColor(aFillColor)
+.endc
+            setCustomFillColor(aFillColor)
 
             ;;Define the box (this enters graphics mode)
             pg.Rectangle(aFromX,aFromY,aToX-aFromX,aToY-aFromY)
@@ -746,14 +779,23 @@ namespace SynPSG.PDF
                 pg.Stroke()
 
             ;;If we changed the stroke color then revert back to the default color
+.ifdef DBLNET
+            if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
+.else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
+.endc
                 resetStrokeColor()
 
             ;;If we changed the fill color then revert back to the default color
+.ifdef DBLNET
+            if ((aFillColor != PdfColor.DefaultColor) && (aFillColor!= this.StrokeColor))
+.else
             if (^passed(aFillColor) && (aFillColor != this.FillColor))
+.endc
                 resetFillColor()
 
         endmethod
+
 
         ;;--------------------------------------------------------------------------------
         ;;; <summary>
@@ -784,14 +826,21 @@ namespace SynPSG.PDF
         ;;; <param name="aFill">Should the box be filled?</param>
         ;;; <param name="aFillColor">Custom fill color.</param>
         public method DrawBoxRC, void
-            optional in aFromRow,       int
-            optional in aFromColumn,    int
-            optional in aToRow,         int
-            optional in aToColumn,      int
+            optional in aFromRow,       n
+            optional in aFromColumn,    n
+            optional in aToRow,         n
+            optional in aToColumn,      n
+.ifdef DBLNET
+            default  in aWidth,         float,      1
+            default  in aStrokeColor,   PdfColor,   PdfColor.DefaultColor
+            default  in aFill,          boolean,    false
+            default  in aFillColor,     PdfColor,   PdfColor.DefaultColor
+.else
             optional in aWidth,         float
             optional in aStrokeColor,   PdfColor
             optional in aFill,          boolean
             optional in aFillColor,     PdfColor
+.endc
             endparams
             record
                 lFromRow,               int
@@ -838,11 +887,19 @@ namespace SynPSG.PDF
             pg.SetLineWidth(penWidth)
 
             ;;If we were passed a specific stroke color then use it
+.ifdef DBLNET
+            if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
+.else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
+.endc
                 setCustomStrokeColor(aStrokeColor)
 
             ;;If we were passed a specific fill color then use it
+.ifdef DBLNET
+            if ((aFillColor!=PdfColor.DefaultColor) && (aFillColor != this.FillColor))
+.else
             if (^passed(aFillColor) && (aFillColor != this.FillColor))
+.endc
                 setCustomFillColor(aFillColor)
 
             ;;Calculate the start and end points for a center cell to center cell line
@@ -861,11 +918,19 @@ namespace SynPSG.PDF
                 pg.Stroke()
 
             ;;If we changed the stroke color then revert back to the default color
+.ifdef DBLNET
+            if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
+.else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
+.endc
                 resetStrokeColor()
 
             ;;If we changed the fill color then revert back to the default color
+.ifdef DBLNET
+            if ((aFillColor!=PdfColor.DefaultColor) && (aFillColor != this.FillColor))
+.else
             if (^passed(aFillColor) && (aFillColor != this.FillColor))
+.endc
                 resetFillColor()
 
         endmethod
@@ -899,9 +964,14 @@ namespace SynPSG.PDF
             required in  aFileSpec,     string
             required in  aX,            float
             required in  aY,            float
+.ifdef DBLNET
+            default  in  aWidth,        float,      0
+            default  in  aHeight,       float,      0
+.else
             optional in  aWidth,        float
             optional in  aHeight,       float
-            optional out aErrorMessage, string
+.endc
+            optional out aErrorMessage, a
             endparams
             record
                 ok, boolean
@@ -974,7 +1044,7 @@ namespace SynPSG.PDF
         ;;; <param name="aImage">AutoImage object to be drawn.</param>
         public method DrawImageObject,  boolean
             required in  aImage,        @AutoImage
-            optional out aErrorMessage, string
+            optional out aErrorMessage, a
             endparams
         proc
             mreturn DrawImage(aImage.FileSpec,aImage.X,aImage.Y,aImage.Width,aImage.Height,aErrorMessage)
@@ -996,8 +1066,13 @@ namespace SynPSG.PDF
             required in aFromY,       float
             required in aToX,         float
             required in aToY,         float
+.ifdef DBLNET
+            default  in aWidth,       float,        1
+            default  in aStrokeColor, PdfColor,     PdfColor.DefaultColor
+.else
             optional in aWidth,       float
             optional in aStrokeColor, PdfColor
+.endc
             endparams
             record
                 penWidth,   float
@@ -1012,7 +1087,11 @@ namespace SynPSG.PDF
             pg.SetLineWidth(penWidth)
 
             ;;If we were passed a specific stroke color then use it
+.ifdef DBLNET
+            if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
+.else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
+.endc
                 setCustomStrokeColor(aStrokeColor)
 
             ;;Draw the line
@@ -1021,7 +1100,11 @@ namespace SynPSG.PDF
             pg.Stroke()
 
             ;;If we changed the stroke color then revert back to the default color
+.ifdef DBLNET
+            if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
+.else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
+.endc
                 resetStrokeColor()
 
         endmethod
@@ -1069,8 +1152,13 @@ namespace SynPSG.PDF
             required in aFromCol,     int
             required in aToRow,       int
             required in aToCol,       int
+.ifdef DBLNET
+            default  in aWidth,       float,        1
+            default  in aStrokeColor, PdfColor,     PdfColor.DefaultColor
+.else
             optional in aWidth,       float
             optional in aStrokeColor, PdfColor
+.endc
             endparams
             record
                 penWidth,   float
@@ -1089,7 +1177,11 @@ namespace SynPSG.PDF
             pg.SetLineWidth(penWidth)
 
             ;;If we were passed a specific stroke color then use it
+.ifdef DBLNET
+            if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
+.else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
+.endc
                 setCustomStrokeColor(aStrokeColor)
 
             ;;Calculate the start and end points for a center cell to center cell line
@@ -1104,7 +1196,11 @@ namespace SynPSG.PDF
             pg.Stroke()
 
             ;;If we changed the stroke color then revert back to the default color
+.ifdef DBLNET
+            if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
+.else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
+.endc
                 resetStrokeColor()
 
         endmethod
@@ -1122,9 +1218,15 @@ namespace SynPSG.PDF
         ;;; <param name="aStrokeColor">Custom stroke color.</param>
         ;;; <returns>Returns the new current row number.</returns>
         public method DrawLineRow,    int
+.ifdef DBLNET
+            default  in aFullWidth,   boolean,      false
+            default  in aWidth,       int,          1
+            default  in aStrokeColor, PdfColor,     PdfColor.DefaultColor
+.else
             optional in aFullWidth,   boolean
             optional in aWidth,       int
             optional in aStrokeColor, PdfColor
+.endc
             endparams
             record
                 penWidth,   float
@@ -1148,7 +1250,11 @@ namespace SynPSG.PDF
             pg.SetLineWidth(penWidth)
 
             ;;If we were passed a specific stroke color then use it
+.ifdef DBLNET
+            if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
+.else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
+.endc
                 setCustomStrokeColor(aStrokeColor)
 
             ;;Calculate the start and end points for a center cell to center cell line
@@ -1170,7 +1276,11 @@ namespace SynPSG.PDF
             pg.Stroke()
 
             ;;If we changed the stroke color then revert back to the default color
+.ifdef DBLNET
+            if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
+.else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
+.endc
                 resetStrokeColor()
 
             ;;Update current position
@@ -1196,17 +1306,28 @@ namespace SynPSG.PDF
             required in aText,      string
             required in aX,         float
             required in aY,         float
+.ifdef DBLNET
+            default  in aColor,     PdfColor,   PdfColor.DefaultColor
+            default  in aFontName,  string,     ^null
+            default  in aFontSize,  int,        0
+            default  in aUnderline, boolean,    false
+.else
             optional in aColor,     PdfColor
             optional in aFontName,  string
             optional in aFontSize,  int
             optional in aUnderline, boolean
+.endc
             endparams
         proc
             ;;If we don't have a first page then add one
             if (this.PageNumber==0)
                 NewPage()
 
+.ifdef DBLNET
+            if ((aColor!=PdfColor.DefaultColor) && (aColor != mFillColor))
+.else
             if (^passed(aColor) && (aColor != mFillColor))
+.endc
             begin
                 setCustomStrokeColor(aColor)
                 setCustomFillColor(aColor)
@@ -1245,7 +1366,11 @@ namespace SynPSG.PDF
             if ((^passed(aFontName) && (aFontName!=^null)) || (^passed(aFontSize) && (aFontSize>0)))
                 ResetFont()
 
-            if (^passed(aColor) && (aColor != this.FillColor))
+.ifdef DBLNET
+            if ((aColor!=PdfColor.DefaultColor) && (aColor != mFillColor))
+.else
+            if (^passed(aColor) && (aColor != mFillColor))
+.endc
             begin
                 resetStrokeColor()
                 resetFillColor()
@@ -1293,13 +1418,21 @@ namespace SynPSG.PDF
         ;;; <returns>Returns the new current column position.</returns>
         public method DrawTextRC,   int
             required in aText,      string
-            optional in aRow,       int
-            optional in aCol,       int
+            optional in aRow,       n
+            optional in aCol,       n
+.ifdef DBLNET
+            default  in aBold,      boolean,    false
+            default  in aItalic,    boolean,    false
+            default  in aColor,     PdfColor,   PdfColor.DefaultColor
+            default  in aNewLine,   boolean,    false
+            default  in aUnderline, boolean,    false
+.else
             optional in aBold,      boolean
             optional in aItalic,    boolean
             optional in aColor,     PdfColor
             optional in aNewLine,   boolean
             optional in aUnderline, boolean
+.endc
             endparams
             record
                 row,                int
@@ -1338,7 +1471,11 @@ namespace SynPSG.PDF
 
             setFontAttributes(aBold,aItalic)
 
+.ifdef DBLNET
+            if ((aColor!=PdfColor.DefaultColor) && (aColor != mFillColor))
+.else
             if (^passed(aColor) && (aColor != mFillColor))
+.endc
             begin
                 setCustomStrokeColor(aColor)
                 setCustomFillColor(aColor)
@@ -1375,7 +1512,11 @@ namespace SynPSG.PDF
 
             resetFontAttributes(aBold,aItalic)
 
-            if (^passed(aColor) && (aColor != this.FillColor))
+.ifdef DBLNET
+            if ((aColor!=PdfColor.DefaultColor) && (aColor != mFillColor))
+.else
+            if (^passed(aColor) && (aColor != mFillColor))
+.endc
             begin
                 resetStrokeColor()
                 resetFillColor()
@@ -1472,7 +1613,7 @@ namespace SynPSG.PDF
         ;;; <param name="aNumberOfLines">Number of blank lines to throw.</param>
         ;;; <returns>Returns the new current row number.</returns>
         public method NewLine, int
-            optional in aNumberOfLines, int
+            optional in aNumberOfLines, n
             endparams
             record
                 lines, int
@@ -1483,7 +1624,10 @@ namespace SynPSG.PDF
             if (this.PageNumber==0)
                 NewPage()
 
-            lines = ^passed(aNumberOfLines) ? aNumberOfLines : 1
+            if (^passed(aNumberOfLines)) then
+                lines = aNumberOfLines
+            else
+                lines = 1
 
             for ix from 1 thru lines
             begin
@@ -1511,8 +1655,12 @@ namespace SynPSG.PDF
         ;;; </summary>
         ;;; <returns>Returns the new page number.</returns>
         public method NewPage, int
+.ifdef DBLNET
+            default  in aOrientation, PdfOrientation,   PdfOrientation.DefaultOrientation
+.else
             optional in aOrientation, PdfOrientation
-            optional in aOutlineText, string
+.endc
+            optional in aOutlineText, a
             endparams
             record
                 orientation, PdfOrientation
@@ -1529,7 +1677,11 @@ namespace SynPSG.PDF
             orientation = this.DefaultOrientation
 
             ;;Determine the page orientation of the new page
+.ifdef DBLNET
+            if ((aOrientation!=PdfOrientation.DefaultOrientation) && (this.Orientation!=aOrientation)) then
+.else
             if (^passed(aOrientation) && (this.Orientation!=aOrientation)) then
+.endc
             begin
                 orientation = aOrientation
                 if (this.Orientation == this.DefaultOrientation) then
@@ -1598,12 +1750,12 @@ namespace SynPSG.PDF
             end
 
             ;;Add the outline item for the page
-            if (this.CreateOutline && ((!^passed(aOutlineText)) || (aOutlineText!=^null)))
+            if (this.CreateOutline && ((!^passed(aOutlineText)) || aOutlineText))
             begin
                 ;;Define the text to use for the page outline
                 data outlineText, string
-                if (^passed(aOutlineText) && (aOutlineText!=^null) && (aOutlineText.Length>0)) then
-                    outlineText = aOutlineText
+                if (^passed(aOutlineText) && aOutlineText) then
+                    outlineText = %atrim(aOutlineText)
                 else
                     outlineText = "Page " + %string(this.PageNumber)
                 ;;Create a new destination object as the target for an outline object
@@ -1626,7 +1778,7 @@ namespace SynPSG.PDF
         ;;; </summary>
         ;;; <returns>Returns true if the PDF file was saved and launched.</returns>
         public method Preview, boolean
-            optional out aErrorMessage, string
+            optional out aErrorMessage, a
             endparams
             record
                 ok, boolean
@@ -1659,28 +1811,28 @@ namespace SynPSG.PDF
         ;;; <param name="aErrorMessage">Optional returned error message.</param>
         ;;; <returns></returns>
         public method Print, boolean
-            optional in  aPrinterName,  string
-            optional out aErrorMessage, string
+            optional in  aPrinterName,  a
+            optional out aErrorMessage, a
             endparams
             .define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
             record
                 ok, boolean
-                pdffile, string
+                pdfFileSpec, string
                 command, string
                 errorMessage, string
             endrecord
         proc
             if (this.Save(aErrorMessage)) then
             begin
-                pdffile = this.FileLocation + this.FileName
-                if (fileExists(pdffile)) then
+                pdfFileSpec = this.FileLocation + this.FileName
+                if (fileExists(pdfFileSpec)) then
                 begin
                     if (fileExists(D_SUMATRA_EXE)) then
                     begin
-                        if (^passed(aPrinterName) && (aPrinterName.Trim().Length>0)) then
-                            command = D_SUMATRA_EXE + ' -print-to "'+aPrinterName.Trim()+'" -silent -exit-on-print ' + '"' + pdffile + '"'
+                        if (^passed(aPrinterName) && aPrinterName) then
+                            command = D_SUMATRA_EXE + ' -print-to "' + %atrim(aPrinterName) + '" -silent -exit-on-print ' + '"' + pdfFileSpec + '"'
                         else
-                            command = D_SUMATRA_EXE + ' -print-to-default -silent -exit-on-print ' + '"' + pdffile + '"'
+                            command = D_SUMATRA_EXE + ' -print-to-default -silent -exit-on-print ' + '"' + pdfFileSpec + '"'
                         try
                         begin
                             xcall spawn(command,D_NOCONSOLE|D_NOWINDOW)
@@ -1702,7 +1854,7 @@ namespace SynPSG.PDF
                 end
                 else
                 begin
-                    errorMessage = "PDF file " + pdffile + " not found!"
+                    errorMessage = "PDF file " + pdfFileSpec + " not found!"
                     ok = false
                 end
             end
@@ -1726,24 +1878,24 @@ namespace SynPSG.PDF
         ;;; <param name="aErrorMessage">Optional returned error message.</param>
         ;;; <returns></returns>
         public method PrintDialog, boolean
-            optional out aErrorMessage, string
+            optional out aErrorMessage, a
             endparams
             .define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
             record
                 ok, boolean
-                pdffile, string
+                pdfFileSpec, string
                 command, string
                 errorMessage, string
             endrecord
         proc
             if (this.Save(aErrorMessage)) then
             begin
-                pdffile = this.FileLocation + this.FileName
-                if (fileExists(pdffile)) then
+                pdfFileSpec = this.FileLocation + this.FileName
+                if (fileExists(pdfFileSpec)) then
                 begin
                     if (fileExists(D_SUMATRA_EXE)) then
                     begin
-                        command = D_SUMATRA_EXE + ' -print-dialog -silent -exit-on-print ' + '"' + pdffile + '"'
+                        command = D_SUMATRA_EXE + ' -print-dialog -silent -exit-on-print ' + '"' + pdfFileSpec + '"'
                         try
                         begin
                             xcall spawn(command,D_NOCONSOLE|D_NOWINDOW)
@@ -1765,7 +1917,7 @@ namespace SynPSG.PDF
                 end
                 else
                 begin
-                    errorMessage = "PDF file " + pdffile + " not found!"
+                    errorMessage = "PDF file " + pdfFileSpec + " not found!"
                     ok = false
                 end
             end
@@ -1801,7 +1953,7 @@ namespace SynPSG.PDF
         ;;; </summary>
         ;;; <returns>Returns true if the PDF file was successfully saved.</returns>
         public method Save, boolean
-            optional out aErrorMessage, string
+            optional out aErrorMessage, a
             endparams
             record
                 ok, boolean
@@ -1869,9 +2021,9 @@ namespace SynPSG.PDF
         ;;; </summary>
         ;;; <param name="aRow">Row position, between 1 and Rows.</param>
         ;;; <param name="aColumn">Column position, between 1 and Columns.</param>
-        public method SetPosition, void
-            optional in aRow, int
-            optional in aColumn, int
+        public method SetPosition,  void
+            optional in aRow,       n
+            optional in aColumn,    n
             endparams
         proc
             ;;If we don't have a first page then add one
@@ -3389,8 +3541,13 @@ namespace SynPSG.PDF
         ;;
 
         private method resetFontAttributes, void
-            optional in aBold, boolean
-            optional in aItalic, boolean
+.ifdef DBLNET
+            default  in aBold,      boolean, false
+            default  in aItalic,    boolean, false
+.else
+            optional in aBold,      boolean
+            optional in aItalic,    boolean
+.endc
         proc
             if ((^passed(aBold) && aBold) || (^passed(aItalic) && aItalic))
                 resetFont()
@@ -7501,8 +7658,13 @@ namespace SynPSG.PDF
         ;;
 
         private method setFontAttributes, void
-            optional in aBold, boolean
-            optional in aItalic, boolean
+.ifdef DBLNET
+            default  in aBold,      boolean, false
+            default  in aItalic,    boolean, false
+.else
+            optional in aBold,      boolean
+            optional in aItalic,    boolean
+.endc
         proc
             if (^passed(aBold) && aBold && ^passed(aItalic) && aItalic) then
             begin
@@ -7532,9 +7694,17 @@ namespace SynPSG.PDF
     public abstract class AutoItem
 
         public method AutoItem
+.ifdef DBLNET
+            default  in aMode, AutoItemMode,    AutoItemMode.DefaultMode
+.else
             optional in aMode, AutoItemMode
+.endc
         proc
+.ifdef DBLNET
+            if ((aMode!=AutoItemMode.DefaultMode)) then
+.else
             if (^passed(aMode)) then
+.endc
                 mMode = aMode
             else
                 mMode = AutoItemMode.EndPage
@@ -7561,14 +7731,24 @@ namespace SynPSG.PDF
     public abstract class AutoLine extends AutoItem
 
         public method AutoLine
+.ifdef DBLNET
+            default  in aWidth,       float,        1
+            default  in aStrokeColor, PdfColor,     PdfColor.DefaultColor
+            default  in aMode,        AutoItemMode, AutoItemMode.DefaultMode
+.else
             optional in aWidth,       float
             optional in aStrokeColor, PdfColor
             optional in aMode,        AutoItemMode
+.endc
             endparams
             parent(aMode)
         proc
             Width = ^passed(aWidth) ? aWidth : 1
+.ifdef DBLNET
+            if ((aStrokeColor!=PdfColor.DefaultColor)) then
+.else
             if (^passed(aStrokeColor)) then
+.endc
                 StrokeColor = aStrokeColor
             else
                 StrokeColor = PdfColor.Black
@@ -7608,17 +7788,29 @@ namespace SynPSG.PDF
     public abstract class AutoBox extends AutoLine
 
         public method AutoBox
+.ifdef DBLNET
+            default  in aWidth,       float,        1
+            default  in aStrokeColor, PdfColor,     PdfColor.DefaultColor
+            default  in aFill,        boolean,      false
+            default  in aFillColor,   PdfColor,     PdfColor.DefaultColor
+            default  in aMode,        AutoItemMode, AutoItemMode.DefaultMode
+.else
             optional in aWidth,       float
             optional in aStrokeColor, PdfColor
             optional in aFill,        boolean
             optional in aFillColor,   PdfColor
             optional in aMode,        AutoItemMode
+.endc
             endparams
             parent(aWidth,aStrokeColor,aMode)
         proc
             if (^passed(aFill))
                 mFill = aFill
+.ifdef DBLNET
+            if (aFillColor!=PdfColor.DefaultColor)
+.else
             if (^passed(aFillColor))
+.endc
                 mFillColor = aFillColor
         endmethod
 
@@ -7657,14 +7849,24 @@ namespace SynPSG.PDF
 
         public method AutoText
             required in aText,      string
+.ifdef DBLNET
+            default  in aColor,     PdfColor,       PdfColor.DefaultColor
+            default  in aUnderline, boolean,        false
+            default  in aMode,      AutoItemMode,   AutoItemMode.DefaultMode
+.else
             optional in aColor,     PdfColor
             optional in aUnderline, boolean
             optional in aMode,      AutoItemMode
+.endc
             endparams
             parent(aMode)
         proc
             mText = aText
+.ifdef DBLNET
+            if (aColor!=PdfColor.DefaultColor) then
+.else
             if (^passed(aColor)) then
+.endc
                 mColor = aColor
             else
                 mColor = PdfColor.Black
@@ -7725,11 +7927,19 @@ namespace SynPSG.PDF
             required in aFromY,       float
             required in aToX,         float
             required in aToY,         float
+.ifdef DBLNET
+            default  in aWidth,       float,        1
+            default  in aStrokeColor, PdfColor,     PdfColor.DefaultColor
+            default  in aFill,        boolean,      false
+            default  in aFillColor,   PdfColor,     PdfColor.DefaultColor
+            default  in aMode,        AutoItemMode, AutoItemMode.DefaultMode
+.else
             optional in aWidth,       float
             optional in aStrokeColor, PdfColor
             optional in aFill,        boolean
             optional in aFillColor,   PdfColor
             optional in aMode,        AutoItemMode
+.endc
             endparams
             parent(aWidth,aStrokeColor,aFill,aFillColor,aMode)
         proc
@@ -7799,15 +8009,23 @@ namespace SynPSG.PDF
     public class AutoBoxRowCol extends AutoBox
 
         public method AutoBoxRowCol
-            optional in aFromRow,     int
-            optional in aFromCol,     int
-            optional in aToRow,       int
-            optional in aToCol,       int
+            optional in aFromRow,     n
+            optional in aFromCol,     n
+            optional in aToRow,       n
+            optional in aToCol,       n
+.ifdef DBLNET
+            default  in aWidth,       float,        1
+            default  in aStrokeColor, PdfColor,     PdfColor.DefaultColor
+            default  in aFill,        boolean,      false
+            default  in aFillColor,   PdfColor,     PdfColor.DefaultColor
+            default  in aMode,        AutoItemMode, AutoItemMode.DefaultMode
+.else
             optional in aWidth,       float
             optional in aStrokeColor, PdfColor
             optional in aFill,        boolean
             optional in aFillColor,   PdfColor
             optional in aMode,        AutoItemMode
+.endc
             endparams
             parent(aWidth,aStrokeColor,aFill,aFillColor,aMode)
         proc
@@ -7884,9 +8102,15 @@ namespace SynPSG.PDF
             required in aFileSpec, string
             required in aX, float
             required in aY, float
+.ifdef DBLNET
+            default  in aWidth, float,          0
+            default  in aHeight, float,         0
+            default  in aMode, AutoItemMode,    AutoItemMode.DefaultMode
+.else
             optional in aWidth, float
             optional in aHeight, float
             optional in aMode, AutoItemMode
+.endc
             endparams
             parent(aMode)
         proc
@@ -7980,9 +8204,15 @@ namespace SynPSG.PDF
             required in aFromY,       float
             required in aToX,         float
             required in aToY,         float
+.ifdef DBLNET
+            default  in aWidth,       float,        1
+            default  in aStrokeColor, PdfColor,     PdfColor.DefaultColor
+            default  in aMode,        AutoItemMode, AutoItemMode.DefaultMode
+.else
             optional in aWidth,       float
             optional in aStrokeColor, PdfColor
             optional in aMode,        AutoItemMode
+.endc
             endparams
             parent(aWidth,aStrokeColor,aMode)
         proc
@@ -8056,9 +8286,15 @@ namespace SynPSG.PDF
             required in aFromCol,     int
             required in aToRow,       int
             required in aToCol,       int
+.ifdef DBLNET
+            default  in aWidth,       float,        1
+            default  in aStrokeColor, PdfColor,     PdfColor.DefaultColor
+            default  in aMode,        AutoItemMode, AutoItemMode.DefaultMode
+.else
             optional in aWidth,       float
             optional in aStrokeColor, PdfColor
             optional in aMode,        AutoItemMode
+.endc
             endparams
             parent(aWidth,aStrokeColor,aMode)
         proc
@@ -8131,11 +8367,19 @@ namespace SynPSG.PDF
             required in aText,      string
             required in aX,         float
             required in aY,         float
+.ifdef DBLNET
+            default  in aColor,     PdfColor,       PdfColor.DefaultColor
+            default  in aFontName,  string,         ^null
+            default  in aFontSize,  int,            0
+            default  in aMode,      AutoItemMode,   AutoItemMode.DefaultMode
+            default  in aUnderline, boolean,        false
+.else
             optional in aColor,     PdfColor
             optional in aFontName,  string
             optional in aFontSize,  int
             optional in aMode,      AutoItemMode
             optional in aUnderline, boolean
+.endc
             endparams
             parent(aText,aColor,aUnderline,aMode)
         proc
@@ -8208,14 +8452,23 @@ namespace SynPSG.PDF
 
         public method AutoTextRowCol
             required in aText,      string
-            optional in aRow,       int
-            optional in aCol,       int
+            optional in aRow,       n
+            optional in aCol,       n
+.ifdef DBLNET
+            default  in aBold,      boolean,        false
+            default  in aItalic,    boolean,        false
+            default  in aColor,     PdfColor,       PdfColor.DefaultColor
+            default  in aNewLine,   boolean,        false
+            default  in aMode,      AutoItemMode,   AutoItemMode.DefaultMode
+            default  in aUnderline, boolean,        false
+.else
             optional in aBold,      boolean
             optional in aItalic,    boolean
             optional in aColor,     PdfColor
             optional in aNewLine,   boolean
             optional in aMode,      AutoItemMode
             optional in aUnderline, boolean
+.endc
             endparams
             parent(aText,aColor,aUnderline,aMode)
         proc
@@ -8302,6 +8555,9 @@ namespace SynPSG.PDF
     ;;ENUMERATIONS
 
     public enum AutoItemMode
+.ifdef DBLNET
+        DefaultMode, -1
+.endc
         BeginPage, 0
         EndPage
     endenum
@@ -8339,12 +8595,18 @@ namespace SynPSG.PDF
     endenum
 
     public enum PdfOrientation
+.ifdef DBLNET
+        DefaultOrientation, -1
+.endc
         Portrait,       0
         Landscape
     endenum
 
     public enum PdfColor
-        AirForceblue,   1
+.ifdef DBLNET
+        DefaultColor
+.endc
+        AirForceblue, 1
         AliceBlue
         AlizarinCrimson
         Almond
