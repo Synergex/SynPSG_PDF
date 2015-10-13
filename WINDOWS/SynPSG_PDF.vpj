@@ -138,6 +138,7 @@
         <Folder
             Name="Other Files"
             Filters="">
+            <F N="DeployHaru.bat"/>
             <F N="../readme.txt"/>
         </Folder>
     </Files>

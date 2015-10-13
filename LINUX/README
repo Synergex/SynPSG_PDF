@@ -2,17 +2,31 @@
 To build and test SynPSG_PDF on Linux:
 
 1. Open a BASH shell and cd to this directory
-2. Execute the build.sh script, like this:
 
-   .  ./build.sh
+2. Execute the script to deploy the libHaru shared object library:
 
-   You should see this output:
+      . DeployHaru.sh
 
-      Extracting 64-bit HARU library...
+   You should see output like this (for a 64-bit system):
+
+      Extracting the 64-bit libHaru shared object library...
+      Copying shared object libhpdf64.so library to /synergy/1031/dbl/bin
+
+3. Execute the script to build the SynPSG_PDF code
+
+      .  BuildPdf.sh
+
+   You should see output like this:
 
       Prototyping PDF code...
       Compiling PDF code...
-      Linking PDF code to PDF_EXE:SynPSG_PDF.elb...
+      Linking executable library PDF_EXE:SynPSG_PDF.elb...
+
+4. Execute the script to build the example programs:
+
+      .  BuildExamples.sh
+
+   You should see output like this:
 
       Building example programs...
       - AutoItems.dbl
@@ -24,6 +38,12 @@ To build and test SynPSG_PDF on Linux:
       - Landscape132.dbl
       - MixedPageOrientation.dbl
       - Portrait100.dbl
+
+5. Execute the script to run the example programs:
+
+      .  RunExamples.sh
+
+   You should see output like this:
 
       Running example programs...
       - AutoItems.DBR
@@ -38,4 +58,3 @@ To build and test SynPSG_PDF on Linux:
 
       Example PDF files are in the out folder
 
-3. Look in the "out" folder for the PDF files that were created.
