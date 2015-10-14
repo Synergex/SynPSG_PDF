@@ -735,7 +735,7 @@ namespace HPdf
 	proc
 .ifndef DBLNET
 .ifdef OS_VMS
-	    mreturn %xsubr(%xaddr("HPDF_SetPageLayout", HARUPDF_LIB), ^val(pdf), ^ref(layout))
+	    mreturn %xsubr(%xaddr("HPDF_SetPageLayout", HARUPDF_LIB), ^val(pdf), ^val(layout))
 .else
 	    mreturn %dll_call(hpdf_dll, DLL_TYPE_C, "HPDF_SetPageLayout", pdf, layout)
 .endc
@@ -1456,7 +1456,9 @@ namespace HPdf
 	endrecord
 	proc
 	    ptr = HPDF_GetVersion()
-	    mreturn SynHelper.ptr_to_string(ptr)
+	    if (ptr)
+		mreturn SynHelper.ptr_to_string(ptr)
+	    mreturn ""
 	endmethod
 
 .ifdef DBLNET
@@ -1616,7 +1618,9 @@ namespace HPdf
 	endrecord
 	proc
 	    ptr = HPDF_LoadType1FontFromFile(hpdf, SynHelper.NativeFilename(afmfilename, true), SynHelper.NativeFilename(pfmfilename, true))
-	    mreturn SynHelper.ptr_to_string(ptr)
+	    if (ptr)
+		mreturn SynHelper.ptr_to_string(ptr)
+	    mreturn ""
 	endmethod
 
 	public method LoadTTFontFromFile, string
@@ -1632,7 +1636,9 @@ namespace HPdf
 		else
 		    emb = HPDF_FALSE
 		ptr = HPDF_LoadTTFontFromFile(hpdf, SynHelper.NativeFilename(filename, true), emb)
-		mreturn SynHelper.ptr_to_string(ptr)
+		if (ptr)
+		    mreturn SynHelper.ptr_to_string(ptr)
+		mreturn ""
 	    end
 	endmethod
 
@@ -1650,7 +1656,9 @@ namespace HPdf
 		else
 		    emb = HPDF_FALSE
 		ptr = HPDF_LoadTTFontFromFile2(hpdf, SynHelper.NativeFilename(filename, true), index, emb)
-		mreturn SynHelper.ptr_to_string(ptr)
+		if (ptr)
+		    mreturn SynHelper.ptr_to_string(ptr)
+		mreturn ""
 	    end
 	endmethod
 
@@ -1817,7 +1825,9 @@ namespace HPdf
 	endrecord
 	proc
 	    ptr = HPDF_GetInfoAttr(hpdf, type)
-	    mreturn SynHelper.ptr_to_string(ptr)
+	    if (ptr)
+		mreturn SynHelper.ptr_to_string(ptr)
+	    mreturn ""
 	endmethod
 
 	public method SetPassword, void
@@ -5070,7 +5080,7 @@ namespace HPdf
 .region "Helper routines"
 
 	DLLIMP_ATTR
-	private static method HPDF_Font_GetFontName, string
+	private static method HPDF_Font_GetFontName, D_ADDR
 	    hfont, D_ADDR
 	    endparams
 	proc
@@ -5082,13 +5092,13 @@ namespace HPdf
 .else
 		ptr = %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Font_GetFontName", hfont)
 .endc
-		mreturn SynHelper.ptr_to_string(ptr)
+		mreturn ptr
 	    end
 .endc
 	endmethod
 
 	DLLIMP_ATTR
-	private static method HPDF_Font_GetEncodingName, string
+	private static method HPDF_Font_GetEncodingName, D_ADDR
 	    hfont, D_ADDR
 	    endparams
 	proc
@@ -5100,7 +5110,7 @@ namespace HPdf
 .else
 		ptr = %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Font_GetEncodingName", hfont)
 .endc
-		mreturn SynHelper.ptr_to_string(ptr)
+		mreturn ptr
 	    end
 .endc
 	endmethod
@@ -5325,13 +5335,25 @@ namespace HPdf
 	public method GetFontName, string
 	    endparams
 	proc
-	    mreturn HPDF_Font_GetFontName(pFont)
+	    begin
+		data ptr, D_ADDR
+		ptr = HPDF_Font_GetFontName(pFont)
+		if ptr
+		    mreturn SynHelper.ptr_to_string(ptr)
+		mreturn ""
+	    end
 	endmethod
 
 	public method GetEncodingName, string
 	    endparams
 	proc
-	    mreturn HPDF_Font_GetEncodingName(pFont)
+	    begin
+		data ptr, D_ADDR
+		ptr = HPDF_Font_GetEncodingName(pFont)
+		if (ptr)
+		    mreturn SynHelper.ptr_to_string(ptr)
+		mreturn ""
+	    end
 	endmethod
 
 	public method GetUnicodeWidth, int
@@ -6152,7 +6174,7 @@ namespace HPdf
 	endmethod
 
 	DLLIMP_ATTR
-	private static method HPDF_Image_GetColorSpace, string
+	private static method HPDF_Image_GetColorSpace, D_ADDR
 	    image, D_ADDR
 	    endparams
 	proc
@@ -6164,7 +6186,7 @@ namespace HPdf
 .else
 		ptr = %dll_call(HPdfDoc.hpdf_dll, DLL_TYPE_C, "HPDF_Image_GetColorSpace", image)
 .endc
-		mreturn SynHelper.ptr_to_string(ptr)
+		mreturn ptr
 	    end
 .endc
 	endmethod
@@ -6243,7 +6265,13 @@ namespace HPdf
 	public method GetColorSpace, string
 	    endparams
 	proc
-	    mreturn HPDF_Image_GetColorSpace(pObj)
+	    begin
+		data ptr, D_ADDR
+		ptr = HPDF_Image_GetColorSpace(pObj)
+		if (ptr)
+		    mreturn SynHelper.ptr_to_string(ptr)
+		mreturn ""
+	    end
 	endmethod
 
 	public method SetColorMask, void
