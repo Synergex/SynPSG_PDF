@@ -306,7 +306,7 @@ proc
 
     ;;Upper box
     begin
-        data ix, float
+        data ix, int
         for ix from 569 thru 400 by -12
         begin
             pdf.DrawText("XXXXXXXXX",6,ix)                          ;;No of pkgs
@@ -322,7 +322,7 @@ proc
 
     ;;Lower box
     begin
-        data ix, float
+        data ix, int
         for ix from 365 thru 125 by -12
         begin
             pdf.DrawText("XXXXXXXXX",6,ix)
