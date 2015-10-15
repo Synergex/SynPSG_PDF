@@ -20,6 +20,7 @@
     <DBL_unQulRecStm>Stack</DBL_unQulRecStm>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <ProjEnvVars>MEDIA=$(SolutionDir)..\MEDIA;OUTPUT=$(SolutionDir)output;</ProjEnvVars>
+    <RunPostBuildEvent>On successful build</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <IncludeDebugInformation>true</IncludeDebugInformation>
@@ -128,7 +129,7 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>copy $(SolutionDir)..\WINDOWS\X86\*.* $(SolutionDir)bin
+copy $(SolutionDir)..\WINDOWS\X64\*.* $(SolutionDir)bin</PostBuildEvent>
   </PropertyGroup>
 </Project>
