@@ -163,6 +163,7 @@
         <Folder
             Name="Source Files"
             Filters="*.dbl;*.tpl;*.dbc">
+            <F N="../SOURCE/EXAMPLES/AttachFileTest.dbl"/>
             <F N="../SOURCE/EXAMPLES/AutoItems.dbl"/>
             <F N="../SOURCE/EXAMPLES/BlueAndRedBox.dbl"/>
             <F N="../SOURCE/EXAMPLES/DblMessagesReport.dbl"/>
@@ -182,7 +183,9 @@
             Filters="*.wsc"/>
         <Folder
             Name="Other Files"
-            Filters=""/>
+            Filters="">
+            <F N="/EXPERIMENTAL/TEST.TXT"/>
+        </Folder>
     </Files>
     <Config
         Name="Debug64"
@@ -653,5 +656,6 @@
         <ExecMacro CmdLine="syn_set SYNIMPDIR=%(ROOT)hdr"/>
         <ExecMacro CmdLine="syn_set MEDIA=%(ROOT)..\MEDIA"/>
         <ExecMacro CmdLine="syn_set OUTPUT=%(ROOT)output"/>
+        <ExecMacro CmdLine="syn_set PATH=%(PATH);%(ROOT)X86;%(ROOT)X64"/>
     </Macro>
 </Project>

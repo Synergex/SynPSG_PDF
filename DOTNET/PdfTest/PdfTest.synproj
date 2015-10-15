@@ -58,6 +58,9 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="../../SOURCE/EXAMPLES/AttachFileTest.dbl">
+      <Link>AttachFileTest.dbl</Link>
+    </Compile>
     <Compile Include="../../SOURCE/EXAMPLES/AutoItems.dbl">
       <Link>AutoItems.dbl</Link>
     </Compile>

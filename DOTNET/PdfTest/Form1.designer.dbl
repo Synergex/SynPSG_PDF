@@ -12,6 +12,7 @@ namespace PdfTest
 		private btnHeaderBodyFooterTest, @System.Windows.Forms.Button
 		private btnDblMessagesReportTest, @System.Windows.Forms.Button
 		private btnDeliveryTicketTest, @System.Windows.Forms.Button
+		private btnAttachFileTest, @System.Windows.Forms.Button
 
 		private method InitializeComponent, void
 			endparams
@@ -25,101 +26,113 @@ namespace PdfTest
 			this.btnLandscape132Test = new System.Windows.Forms.Button()
 			this.btnMixedPageOrientationTest = new System.Windows.Forms.Button()
 			this.btnPortrait100Test = new System.Windows.Forms.Button()
+			this.btnAttachFileTest = new System.Windows.Forms.Button()
 			this.SuspendLayout()
 			;; 
 			;; btnAutoItemsTest
 			;; 
-			this.btnAutoItemsTest.Location = new System.Drawing.Point(22, 24)
+			this.btnAutoItemsTest.Location = new System.Drawing.Point(12, 61)
 			this.btnAutoItemsTest.Name = "btnAutoItemsTest"
 			this.btnAutoItemsTest.Size = new System.Drawing.Size(153, 40)
-			this.btnAutoItemsTest.TabIndex = 0
+			this.btnAutoItemsTest.TabIndex = 2
 			this.btnAutoItemsTest.Text = "Auto Items Test"
 			this.btnAutoItemsTest.UseVisualStyleBackColor = true
 			addhandler(this.btnAutoItemsTest.Click, new System.EventHandler(this.btnAutoItemsTest_Click))
 			;; 
 			;; btnBlueAndRedBoxTest
 			;; 
-			this.btnBlueAndRedBoxTest.Location = new System.Drawing.Point(22, 70)
+			this.btnBlueAndRedBoxTest.Location = new System.Drawing.Point(12, 107)
 			this.btnBlueAndRedBoxTest.Name = "btnBlueAndRedBoxTest"
 			this.btnBlueAndRedBoxTest.Size = new System.Drawing.Size(153, 40)
-			this.btnBlueAndRedBoxTest.TabIndex = 1
+			this.btnBlueAndRedBoxTest.TabIndex = 3
 			this.btnBlueAndRedBoxTest.Text = "Blue and Red Box Test"
 			this.btnBlueAndRedBoxTest.UseVisualStyleBackColor = true
 			addhandler(this.btnBlueAndRedBoxTest.Click, new System.EventHandler(this.btnBlueAndRedBoxTest_Click))
 			;; 
 			;; btnDblMessagesReportTest
 			;; 
-			this.btnDblMessagesReportTest.Location = new System.Drawing.Point(22, 116)
+			this.btnDblMessagesReportTest.Location = new System.Drawing.Point(12, 153)
 			this.btnDblMessagesReportTest.Name = "btnDblMessagesReportTest"
 			this.btnDblMessagesReportTest.Size = new System.Drawing.Size(153, 40)
-			this.btnDblMessagesReportTest.TabIndex = 2
+			this.btnDblMessagesReportTest.TabIndex = 4
 			this.btnDblMessagesReportTest.Text = "DBL Messages Report Test"
 			this.btnDblMessagesReportTest.UseVisualStyleBackColor = true
 			addhandler(this.btnDblMessagesReportTest.Click, new System.EventHandler(this.btnDblMessagesReportTest_Click))
 			;; 
 			;; btnDeliveryTicketTest
 			;; 
-			this.btnDeliveryTicketTest.Location = new System.Drawing.Point(22, 162)
+			this.btnDeliveryTicketTest.Location = new System.Drawing.Point(12, 199)
 			this.btnDeliveryTicketTest.Name = "btnDeliveryTicketTest"
 			this.btnDeliveryTicketTest.Size = new System.Drawing.Size(153, 40)
-			this.btnDeliveryTicketTest.TabIndex = 3
+			this.btnDeliveryTicketTest.TabIndex = 5
 			this.btnDeliveryTicketTest.Text = "Delivery Ticket Test"
 			this.btnDeliveryTicketTest.UseVisualStyleBackColor = true
 			addhandler(this.btnDeliveryTicketTest.Click, new System.EventHandler(this.btnDeliveryTicketTest_Click))
 			;; 
 			;; btnDesignGridTest
 			;; 
-			this.btnDesignGridTest.Location = new System.Drawing.Point(22, 208)
+			this.btnDesignGridTest.Location = new System.Drawing.Point(12, 245)
 			this.btnDesignGridTest.Name = "btnDesignGridTest"
 			this.btnDesignGridTest.Size = new System.Drawing.Size(153, 40)
-			this.btnDesignGridTest.TabIndex = 4
+			this.btnDesignGridTest.TabIndex = 6
 			this.btnDesignGridTest.Text = "Design Grid Test"
 			this.btnDesignGridTest.UseVisualStyleBackColor = true
 			addhandler(this.btnDesignGridTest.Click, new System.EventHandler(this.btnDesignGridTest_Click))
 			;; 
 			;; btnHeaderBodyFooterTest
 			;; 
-			this.btnHeaderBodyFooterTest.Location = new System.Drawing.Point(22, 254)
+			this.btnHeaderBodyFooterTest.Location = new System.Drawing.Point(12, 291)
 			this.btnHeaderBodyFooterTest.Name = "btnHeaderBodyFooterTest"
 			this.btnHeaderBodyFooterTest.Size = new System.Drawing.Size(153, 40)
-			this.btnHeaderBodyFooterTest.TabIndex = 5
+			this.btnHeaderBodyFooterTest.TabIndex = 7
 			this.btnHeaderBodyFooterTest.Text = "Header Body Footer Test"
 			this.btnHeaderBodyFooterTest.UseVisualStyleBackColor = true
 			addhandler(this.btnHeaderBodyFooterTest.Click, new System.EventHandler(this.btnHeaderBodyFooterTest_Click))
 			;; 
 			;; btnLandscape132Test
 			;; 
-			this.btnLandscape132Test.Location = new System.Drawing.Point(22, 300)
+			this.btnLandscape132Test.Location = new System.Drawing.Point(12, 337)
 			this.btnLandscape132Test.Name = "btnLandscape132Test"
 			this.btnLandscape132Test.Size = new System.Drawing.Size(153, 40)
-			this.btnLandscape132Test.TabIndex = 6
+			this.btnLandscape132Test.TabIndex = 8
 			this.btnLandscape132Test.Text = "Landscape 132 Test"
 			this.btnLandscape132Test.UseVisualStyleBackColor = true
 			addhandler(this.btnLandscape132Test.Click, new System.EventHandler(this.btnLandscape132Test_Click))
 			;; 
 			;; btnMixedPageOrientationTest
 			;; 
-			this.btnMixedPageOrientationTest.Location = new System.Drawing.Point(22, 346)
+			this.btnMixedPageOrientationTest.Location = new System.Drawing.Point(12, 383)
 			this.btnMixedPageOrientationTest.Name = "btnMixedPageOrientationTest"
 			this.btnMixedPageOrientationTest.Size = new System.Drawing.Size(153, 40)
-			this.btnMixedPageOrientationTest.TabIndex = 7
+			this.btnMixedPageOrientationTest.TabIndex = 9
 			this.btnMixedPageOrientationTest.Text = "Mixed Page Orientation Test"
 			this.btnMixedPageOrientationTest.UseVisualStyleBackColor = true
 			addhandler(this.btnMixedPageOrientationTest.Click, new System.EventHandler(this.btnMixedPageOrientationTest_Click))
 			;; 
 			;; btnPortrait100Test
 			;; 
-			this.btnPortrait100Test.Location = new System.Drawing.Point(22, 392)
+			this.btnPortrait100Test.Location = new System.Drawing.Point(12, 429)
 			this.btnPortrait100Test.Name = "btnPortrait100Test"
 			this.btnPortrait100Test.Size = new System.Drawing.Size(153, 40)
-			this.btnPortrait100Test.TabIndex = 8
+			this.btnPortrait100Test.TabIndex = 10
 			this.btnPortrait100Test.Text = "Portrait 100 Test"
 			this.btnPortrait100Test.UseVisualStyleBackColor = true
 			addhandler(this.btnPortrait100Test.Click, new System.EventHandler(this.btnPortrait100Test_Click))
 			;; 
+			;; btnAttachFileTest
+			;; 
+			this.btnAttachFileTest.Location = new System.Drawing.Point(12, 15)
+			this.btnAttachFileTest.Name = "btnAttachFileTest"
+			this.btnAttachFileTest.Size = new System.Drawing.Size(153, 40)
+			this.btnAttachFileTest.TabIndex = 1
+			this.btnAttachFileTest.Text = "Attach File Test"
+			this.btnAttachFileTest.UseVisualStyleBackColor = true
+			addhandler(this.btnAttachFileTest.Click, new System.EventHandler(this.btnAttachFileTest_Click))
+			;; 
 			;; Form1
 			;; 
-			this.ClientSize = new System.Drawing.Size(202, 457)
+			this.ClientSize = new System.Drawing.Size(182, 486)
+			this.Controls.Add(this.btnAttachFileTest)
 			this.Controls.Add(this.btnPortrait100Test)
 			this.Controls.Add(this.btnMixedPageOrientationTest)
 			this.Controls.Add(this.btnLandscape132Test)

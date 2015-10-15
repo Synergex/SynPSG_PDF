@@ -15,65 +15,81 @@ proc
     xcall w_caption(WC_SET,"SynPSG_PDF Test Program")
 
     xcall w_disp(wid,
-    &   WD_POS, 2,10,"1.  Auto Items Test",
-    &   WD_POS, 3,10,"2.  Blue and Red Boxes Test",
-    &   WD_POS, 4,10,"3.  DBL Messages Report Test",
-    &   WD_POS, 5,10,"4.  Delivery Ticket Test",
-    &   WD_POS, 6,10,"5.  Design Grid Test",
-    &   WD_POS, 7,10,"6.  Header, Body and Footer Test",
-    &   WD_POS, 8,10,"7.  Landscape 132 Column Test",
-    &   WD_POS, 9,10,"8.  Mixed Page Orientation Test",
-    &   WD_POS,10,10,"9.  Portrait 100 Column Test",
-    &   WD_POS,12,10,"Select an option (E to exit): ")
+    &   WD_POS, 2,10,"1.  Attach File Test",
+    &   WD_POS, 3,10,"2.  Auto Items Test",
+    &   WD_POS, 4,10,"3.  Blue and Red Boxes Test",
+    &   WD_POS, 5,10,"4.  DBL Messages Report Test",
+    &   WD_POS, 6,10,"5.  Delivery Ticket Test",
+    &   WD_POS, 7,10,"6.  Design Grid Test",
+    &   WD_POS, 8,10,"7.  Header, Body and Footer Test",
+    &   WD_POS, 9,10,"8.  Landscape 132 Column Test",
+    &   WD_POS,10,10,"9.  Mixed Page Orientation Test",
+    &   WD_POS,11,10,"10.  Portrait 100 Column Test",
+    &   WD_POS,13,10,"Select an option (E to exit): ")
 
     repeat
     begin
-        xcall w_disp(wid,WD_POS,12,40,"  ",WD_POS,12,40,WD_READS,aoption)
+        xcall w_disp(wid,WD_POS,13,40,"  ",WD_POS,13,40,WD_READS,aoption)
         upcase aoption
 
         using aoption select
         ("1 "),
         begin
-            xcall AutoItems
+            call StartTestMessage
+            xcall AttachFileTest
             call CompletionMessage
         end
         ("2 "),
         begin
-            xcall BlueAndRedBox
+            call StartTestMessage
+            xcall AutoItems
             call CompletionMessage
         end
         ("3 "),
         begin
-            xcall DblMessagesReport
+            call StartTestMessage
+            xcall BlueAndRedBox
             call CompletionMessage
         end
         ("4 "),
         begin
-            xcall DeliveryTicket
+            call StartTestMessage
+            xcall DblMessagesReport
             call CompletionMessage
         end
         ("5 "),
         begin
-            xcall DesignGrid
+            call StartTestMessage
+            xcall DeliveryTicket
             call CompletionMessage
         end
         ("6 "),
         begin
-            xcall HeaderBodyFooter
+            call StartTestMessage
+            xcall DesignGrid
             call CompletionMessage
         end
         ("7 "),
         begin
-            xcall Landscape132
+            call StartTestMessage
+            xcall HeaderBodyFooter
             call CompletionMessage
         end
         ("8 "),
         begin
-            xcall MixedPageOrientation
+            call StartTestMessage
+            xcall Landscape132
             call CompletionMessage
         end
         ("9 "),
         begin
+            call StartTestMessage
+            xcall MixedPageOrientation
+            call CompletionMessage
+        end
+        ("10"),
+        begin
+            call StartTestMessage
             xcall Portrait100
             call CompletionMessage
         end
@@ -87,13 +103,18 @@ proc
 
     stop
 
+StartTestMessage,
+
+    xcall w_disp(wid,WD_POS,14,10,"Running test...")
+    xcall w_updt
+    return
+
 CompletionMessage,
 
     xcall w_disp(wid,WD_POS,14,10,"PDF created, check the output folder.")
     xcall w_updt
-    sleep 0.5
+    sleep 0.7
     xcall w_disp(wid,WD_POS,14,10,WD_CLR,WDC_EOL)
-
     return
 
 endmain

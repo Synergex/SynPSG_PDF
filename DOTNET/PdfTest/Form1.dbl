@@ -15,6 +15,14 @@ namespace PdfTest
             this.InitializeComponent()
         endmethod
 		
+		private method btnAttachFileTest_Click, void
+			sender, @object 
+			e, @System.EventArgs 
+			endparams
+		proc
+			xcall AttachFileTest
+		endmethod
+		
 		private method btnAutoItemsTest_Click, void
 			sender, @object 
 			e, @System.EventArgs 
