@@ -1,13 +1,11 @@
 
 import SynPSG.PDF
 
-main MixedPageOrientation
+subroutine MixedPageOrientation
     record
         pdf, @PdfFile
     endrecord
 proc
-    xcall flags(7004020,1)
-
     ;;Create a new PDF document
     pdf = new PdfFile(,,,,,,,,,,,"OUTPUT:")
 
@@ -39,7 +37,7 @@ proc
     ;;Save the document and show the results
     pdf.Preview()
 
-    stop
+    xreturn
 
-endmain
+endsubroutine
 

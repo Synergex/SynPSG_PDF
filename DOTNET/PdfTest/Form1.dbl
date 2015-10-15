@@ -1,0 +1,92 @@
+import System
+import System.Collections.Generic
+import System.ComponentModel
+import System.Data
+import System.Drawing
+import System.Windows.Forms
+
+namespace PdfTest
+
+    public partial class Form1 extends System.Windows.Forms.Form
+    
+        public method Form1
+            endparams
+        proc
+            this.InitializeComponent()
+        endmethod
+		
+		private method btnAutoItemsTest_Click, void
+			sender, @object 
+			e, @System.EventArgs 
+			endparams
+		proc
+				xcall AutoItems
+		endmethod
+		
+		private method btnBlueAndRedBoxTest_Click, void
+			sender, @object 
+			e, @System.EventArgs 
+			endparams
+		proc
+				xcall BlueAndRedBox
+		endmethod
+		
+		private method btnDblMessagesReportTest_Click, void
+			sender, @object 
+			e, @System.EventArgs 
+			endparams
+		proc
+				xcall DblMessagesReport
+		endmethod
+		
+		private method btnDeliveryTicketTest_Click, void
+			sender, @object 
+			e, @System.EventArgs 
+			endparams
+		proc
+				xcall DeliveryTicket
+		endmethod
+		
+		private method btnDesignGridTest_Click, void
+			sender, @object 
+			e, @System.EventArgs 
+			endparams
+		proc
+				xcall DesignGrid
+		endmethod
+		
+		private method btnHeaderBodyFooterTest_Click, void
+			sender, @object 
+			e, @System.EventArgs 
+			endparams
+		proc
+				xcall HeaderBodyFooter
+		endmethod
+		
+		private method btnLandscape132Test_Click, void
+			sender, @object 
+			e, @System.EventArgs 
+			endparams
+		proc
+				xcall Landscape132
+		endmethod
+		
+		private method btnMixedPageOrientationTest_Click, void
+			sender, @object 
+			e, @System.EventArgs 
+			endparams
+		proc
+			xcall MixedPageOrientation
+		endmethod
+		
+		private method btnPortrait100Test_Click, void
+			sender, @object 
+			e, @System.EventArgs 
+			endparams
+		proc
+				xcall Portrait100
+		endmethod
+		
+    endclass
+
+endnamespace

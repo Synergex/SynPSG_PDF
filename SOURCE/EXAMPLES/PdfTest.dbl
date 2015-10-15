@@ -1,0 +1,99 @@
+main PdfTest
+
+    .include "WND:windows.def"
+
+    record
+        tt,         i4
+        wid,        i4
+        aoption,    a2
+    endrecord
+proc
+    xcall flags(7004020,1)
+    open(tt=0,i,"tt:")
+    xcall w_init(0,tt,5,24,80)
+    xcall w_proc(WP_CREATE,wid,"",24,80,WP_PLACE,wid,1,1)
+    xcall w_caption(WC_SET,"SynPSG_PDF Test Program")
+
+    xcall w_disp(wid,
+    &   WD_POS, 2,10,"1.  Auto Items Test",
+    &   WD_POS, 3,10,"2.  Blue and Red Boxes Test",
+    &   WD_POS, 4,10,"3.  DBL Messages Report Test",
+    &   WD_POS, 5,10,"4.  Delivery Ticket Test",
+    &   WD_POS, 6,10,"5.  Design Grid Test",
+    &   WD_POS, 7,10,"6.  Header, Body and Footer Test",
+    &   WD_POS, 8,10,"7.  Landscape 132 Column Test",
+    &   WD_POS, 9,10,"8.  Mixed Page Orientation Test",
+    &   WD_POS,10,10,"9.  Portrait 100 Column Test",
+    &   WD_POS,12,10,"Select an option (E to exit): ")
+
+    repeat
+    begin
+        xcall w_disp(wid,WD_POS,12,40,"  ",WD_POS,12,40,WD_READS,aoption)
+        upcase aoption
+
+        using aoption select
+        ("1 "),
+        begin
+            xcall AutoItems
+            call CompletionMessage
+        end
+        ("2 "),
+        begin
+            xcall BlueAndRedBox
+            call CompletionMessage
+        end
+        ("3 "),
+        begin
+            xcall DblMessagesReport
+            call CompletionMessage
+        end
+        ("4 "),
+        begin
+            xcall DeliveryTicket
+            call CompletionMessage
+        end
+        ("5 "),
+        begin
+            xcall DesignGrid
+            call CompletionMessage
+        end
+        ("6 "),
+        begin
+            xcall HeaderBodyFooter
+            call CompletionMessage
+        end
+        ("7 "),
+        begin
+            xcall Landscape132
+            call CompletionMessage
+        end
+        ("8 "),
+        begin
+            xcall MixedPageOrientation
+            call CompletionMessage
+        end
+        ("9 "),
+        begin
+            xcall Portrait100
+            call CompletionMessage
+        end
+        ("E "),
+            exitloop
+        endusing
+    end
+
+    xcall w_exit
+    close tt
+
+    stop
+
+CompletionMessage,
+
+    xcall w_disp(wid,WD_POS,14,10,"PDF created, check the output folder.")
+    xcall w_updt
+    sleep 0.5
+    xcall w_disp(wid,WD_POS,14,10,WD_CLR,WDC_EOL)
+
+    return
+
+endmain

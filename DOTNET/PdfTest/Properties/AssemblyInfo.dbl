@@ -5,11 +5,11 @@ import System.Runtime.InteropServices
 ; General Information about an assembly is controlled through the following
 ; set of attributes. Change these attribute values to modify the information
 ; associated with an assembly.
-{assembly: AssemblyTitle("DeliveryTicket")}
+{assembly: AssemblyTitle("PdfTest")}
 {assembly: AssemblyDescription("")}
 {assembly: AssemblyConfiguration("")}
 {assembly: AssemblyCompany("")}
-{assembly: AssemblyProduct("DeliveryTicket")}
+{assembly: AssemblyProduct("PdfTest")}
 {assembly: AssemblyCopyright("Copyright ©  2015")}
 {assembly: AssemblyTrademark("")}
 {assembly: AssemblyCulture("")}
@@ -20,7 +20,7 @@ import System.Runtime.InteropServices
 {assembly: ComVisible(Synergex.SynergyDE.false)}
 
 ; The following GUID is for the ID of the typelib if this project is exposed to COM
-{assembly: GuidAttribute("317a33b6-457c-46b3-8683-073a3fb9df58")}
+{assembly: GuidAttribute("27e3703c-377a-4ede-960d-4a76c0112181")}
 
 ; Version information for an assembly consists of the following four values:
 ;

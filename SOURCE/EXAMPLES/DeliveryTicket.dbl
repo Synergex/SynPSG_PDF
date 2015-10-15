@@ -2,7 +2,7 @@
 import System
 import SynPSG.PDF
 
-main TestDeliveryTicket
+subroutine DeliveryTicket
     record
         pdf,        @PdfFile
         x1,     float
@@ -14,8 +14,6 @@ main TestDeliveryTicket
         arialNarrowBold,string
     endrecord
 proc
-    xcall flags(7004020,1)
-
     pdf = new PdfFile(,,,,,,,,,,,"OUTPUT:")
 
     ;;Override the default file to prevent the date/time stamp prefix.
@@ -309,14 +307,15 @@ proc
         data ix, int
         for ix from 569 thru 400 by -12
         begin
-            pdf.DrawText("XXXXXXXXX",6,ix)                          ;;No of pkgs
-            pdf.DrawText("XXXXXXX",77,ix)                           ;;Pkg size
-            pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",134,ix)  ;;Prod name / desc
-            pdf.DrawText("XXXXXX",363,ix)                           ;;Product no
-            pdf.DrawText("XX",413,ix)                               ;;Ver
-            pdf.DrawText("XXXXXXXXXXXX",435,ix)                     ;;Quantity shipped
-            pdf.DrawText("XXX",529,ix)                              ;;Unit
-            pdf.DrawText("XXXXXX",558,ix)                           ;;Van Diest Order Number
+            data yPos, float, ix
+            pdf.DrawText("XXXXXXXXX",6,yPos)                          ;;No of pkgs
+            pdf.DrawText("XXXXXXX",77,yPos)                           ;;Pkg size
+            pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",134,yPos)  ;;Prod name / desc
+            pdf.DrawText("XXXXXX",363,yPos)                           ;;Product no
+            pdf.DrawText("XX",413,yPos)                               ;;Ver
+            pdf.DrawText("XXXXXXXXXXXX",435,yPos)                     ;;Quantity shipped
+            pdf.DrawText("XXX",529,yPos)                              ;;Unit
+            pdf.DrawText("XXXXXX",558,yPos)                           ;;Van Diest Order Number
         end
     end
 
@@ -325,11 +324,12 @@ proc
         data ix, int
         for ix from 365 thru 125 by -12
         begin
-            pdf.DrawText("XXXXXXXXX",6,ix)
-            pdf.DrawText("XXX",77,ix)
-            pdf.DrawText("XX",103,ix)
-            pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",125,ix)
-            pdf.DrawText("XXXXXXX",443,ix)
+            data yPos, float, ix
+            pdf.DrawText("XXXXXXXXX",6,yPos)
+            pdf.DrawText("XXX",77,yPos)
+            pdf.DrawText("XX",103,yPos)
+            pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",125,yPos)
+            pdf.DrawText("XXXXXXX",443,yPos)
         end
     end
 
@@ -371,4 +371,6 @@ proc
 
     pdf.Preview()
 
-endmain
+    xreturn
+
+endsubroutine

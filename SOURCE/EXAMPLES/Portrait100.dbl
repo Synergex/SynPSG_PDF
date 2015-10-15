@@ -1,13 +1,11 @@
 
 import SynPSG.PDF
 
-main Portrait100
+subroutine Portrait100
     record
         pdf, @PdfFile
     endrecord
 proc
-    xcall flags(7004020,1)
-
     ;;Create a new PDF document and specify 100 columns wide
     pdf = new PdfFile(,,100,,,,,,,,,"OUTPUT:")
 
@@ -21,7 +19,7 @@ proc
     ;;Save the document and show the results
     pdf.Preview()
 
-    stop
+    xreturn
 
-endmain
+endsubroutine
 

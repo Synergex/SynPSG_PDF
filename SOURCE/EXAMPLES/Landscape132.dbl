@@ -1,13 +1,11 @@
 
 import SynPSG.PDF
 
-main Landscape132
+subroutine Landscape132
     record
         pdf, @PdfFile
     endrecord
 proc
-    xcall flags(7004020,1)
-
     ;;Create a new PDF document and specify landscape mode and 132 columns wide
     pdf = new PdfFile(,PdfOrientation.Landscape,132,,,,,,,,,"OUTPUT:")
 
@@ -21,7 +19,7 @@ proc
     ;;Save the document and show the results
     pdf.Preview()
 
-    stop
+    xreturn
 
-endmain
+endsubroutine
 

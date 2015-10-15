@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>"PdfTest"</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{a6bbfb0e-893c-47d0-9eee-4f20fe6da9f5}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>PdfTest</RootNamespace>
+    <AssemblyName>PdfTest</AssemblyName>
+    <MainFile>Program.dbl</MainFile>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <TargetPlatform>v452</TargetPlatform>
+    <DBL_qWarnLevel>3 - Don't display warning levels higher than 3</DBL_qWarnLevel>
+    <DBL_qWarn>True</DBL_qWarn>
+    <DBLCmdOptions> -W3 -qstack</DBLCmdOptions>
+    <Language>Synergy</Language>
+    <DBL_unQulRecStm>Stack</DBL_unQulRecStm>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <ProjEnvVars>MEDIA=$(SolutionDir)..\MEDIA;OUTPUT=$(SolutionDir)output;</ProjEnvVars>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+    <OutputPath>..\bin</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DebugOptimize>Debug</DebugOptimize>
+    <DocumentationFile>
+    </DocumentationFile>
+    <Prefer32Bit Condition=" '$(TargetFrameworkVersion)'  != 'v4.0' AND '$(Prefer32Bit)' != 'false' ">true</Prefer32Bit>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <SerializeAssembly>Auto</SerializeAssembly>
+    <Prefer32bit>false</Prefer32bit>
+    <LanguageCompatibilityLevel>100301</LanguageCompatibilityLevel>
+    <TargetRuntimeLevel>100301</TargetRuntimeLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+    <OutputPath>bin\Release\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DebugOptimize>Optimize</DebugOptimize>
+    <DocumentationFile>bin\Release\PdfTest.xml</DocumentationFile>
+    <Prefer32Bit Condition=" '$(TargetFrameworkVersion)'  != 'v4.0' AND '$(Prefer32Bit)' != 'false' ">true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="synrnt">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="../../SOURCE/EXAMPLES/AutoItems.dbl">
+      <Link>AutoItems.dbl</Link>
+    </Compile>
+    <Compile Include="../../SOURCE/EXAMPLES/BlueAndRedBox.dbl">
+      <Link>BlueAndRedBox.dbl</Link>
+    </Compile>
+    <Compile Include="../../SOURCE/EXAMPLES/DblMessagesReport.dbl">
+      <Link>DblMessagesReport.dbl</Link>
+    </Compile>
+    <Compile Include="../../SOURCE/EXAMPLES/DeliveryTicket.dbl">
+      <Link>DeliveryTicket.dbl</Link>
+    </Compile>
+    <Compile Include="../../SOURCE/EXAMPLES/DesignGrid.dbl">
+      <Link>DesignGrid.dbl</Link>
+    </Compile>
+    <Compile Include="../../SOURCE/EXAMPLES/HeaderBodyFooter.dbl">
+      <Link>HeaderBodyFooter.dbl</Link>
+    </Compile>
+    <Compile Include="../../SOURCE/EXAMPLES/Landscape132.dbl">
+      <Link>Landscape132.dbl</Link>
+    </Compile>
+    <Compile Include="../../SOURCE/EXAMPLES/MixedPageOrientation.dbl">
+      <Link>MixedPageOrientation.dbl</Link>
+    </Compile>
+    <Compile Include="../../SOURCE/EXAMPLES/Portrait100.dbl">
+      <Link>Portrait100.dbl</Link>
+    </Compile>
+    <Compile Include="Form1.dbl">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.designer.dbl">
+      <DependentUpon>Form1.dbl</DependentUpon>
+    </Compile>
+    <Compile Include="Program.dbl" />
+    <Compile Include="Properties\AssemblyInfo.dbl" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.dbl</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.designer.dbl</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.designer.dbl">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Properties\Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Properties\Settings.designer.dbl</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.designer.dbl">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Properties\Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SynPSG_PDF\SynPSG_PDF.synproj">
+      <Name>SynPSG_PDF</Name>
+      <Project>{983878dd-a853-400c-bf89-88f291a5bad4}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Synergex\VS2010\Synergex.SynergyDE.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

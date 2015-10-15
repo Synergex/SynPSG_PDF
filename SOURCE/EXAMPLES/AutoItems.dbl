@@ -1,13 +1,11 @@
 
 import SynPSG.PDF
 
-main AutoItems
+subroutine AutoItems
     record
         pdf, @PdfFile
     endrecord
 proc
-    xcall flags(7004020,1)
-
     ;;Create a PDF document and specify that we want 2 header rows and 2 footer rows
     pdf = new PdfFile(,,,,,,,,,2,2,"OUTPUT:")
 
@@ -54,7 +52,7 @@ proc
     ;;Show the results
     pdf.Preview()
 
-    stop
+    xreturn
 
-endmain
+endsubroutine
 

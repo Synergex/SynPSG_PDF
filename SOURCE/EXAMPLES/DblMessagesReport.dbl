@@ -1,7 +1,7 @@
 
 import SynPSG.PDF
 
-main DblMessagesReport
+subroutine DblMessagesReport
 
     record syntxt   ;218
         facility,   a3
@@ -35,8 +35,6 @@ main DblMessagesReport
 proc
 
     open(ch=0,i:i,"DBLDIR:syntxt.ism")
-    xcall flags(7004020,1)
-
 
     ;;Create a PDF document and specify that we want 2 header rows and 2 footer rows
     pdf = new PdfFile(,PdfOrientation.Landscape,132,,,,,,,2,2,"OUTPUT:")
@@ -94,7 +92,7 @@ eof,
     ;;Show the results
     pdf.Preview()
 
-    stop
+    xreturn
 
-endmain
+endsubroutine
 

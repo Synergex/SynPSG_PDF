@@ -18,14 +18,27 @@ else
 
     #Build the sample programs
     echo
-    echo Building example programs...
+    echo Building examples...
+    dblibr -c $OBJ/PdfTests.olb
     for f in $PDF_SRC/*.dbl
     do
         FILE=`basename $f`
-        echo - $FILE
-        dbl -do $OBJ/${FILE%.dbl}.dbo $f
-        dblink -do PDF_EXE:${FILE%.dbl}.DBR $OBJ/${FILE%.dbl}.dbo PDF_EXE:SynPSG_PDF.elb
+
+        if [ ! "$FILE" == "PdfTest.dbl" ];
+        then
+            echo - $FILE
+            dbl -do $OBJ/${FILE%.dbl}.dbo $f
+            dblibr -a $OBJ/PdfTests.olb $OBJ/${FILE%.dbl}.dbo
+        fi
+
     done
+
+    echo
+    echo Building test program PDF_EXE:PdfTest.dbr...
+    echo
+    dbl -do $OBJ/PdfTest.dbo $PDF_SRC/PdfTest.dbl
+    dblink -do PDF_EXE:PdfTest.dbr $OBJ/PdfTest.dbo $OBJ/PdfTests.olb PDF_EXE:SynPSG_PDF.elb
+
 fi
 
 #Go back to the folder we were in before we were called

@@ -62,14 +62,14 @@
                 MenuCaption="&amp;Debug"
                 SaveOption="SaveCurrent"
                 RunFromDir="%rw">
-                <Exec CmdLine="dbr -d EXE:%n.dbr"/>
+                <Exec CmdLine="dbr -d EXE:%rn.dbr"/>
             </Target>
             <Target
                 Name="Execute"
                 MenuCaption="E&amp;xecute"
                 SaveOption="SaveCurrent"
                 RunFromDir="%rw">
-                <Exec CmdLine="dbr EXE:%n.dbr"/>
+                <Exec CmdLine="dbr EXE:%rn.dbr"/>
             </Target>
             <Target
                 Name="Synergy/DE Options"
@@ -114,13 +114,13 @@
                 Value="dblproto %p%n%e"/>
             <SynSetting
                 Name="compile_command_line"
-                Value='dbl -T -d -qcheck -qalign -o OBJ: "%p%n%e"'/>
+                Value='dbl -T -d -qcheck -qalign -o OBJ:%rn.dbo "%p%n%e"'/>
             <SynSetting
                 Name="linklibr_command_line"
-                Value="dblink -d -o EXE:%n.dbr OBJ:%n EXE:SynPSG_PDF.elb"/>
+                Value="dblink -d -o EXE:%rn.dbr OBJ:%rn.dbo EXE:SynPSG_PDF.elb"/>
             <SynSetting
                 Name="proto_clear_dbh"
-                Value="0"/>
+                Value="1"/>
             <SynSetting
                 Name="build_prototype"
                 Value="0"/>
@@ -129,7 +129,7 @@
                 Value="0"/>
             <SynSetting
                 Name="compile_single"
-                Value="0"/>
+                Value="1"/>
             <SynSetting
                 Name="object_name"
                 Value="%rn.dbo"/>
@@ -156,7 +156,7 @@
                 Value="OBJ:"/>
             <SynSetting
                 Name="build_complink_single"
-                Value="1"/>
+                Value="0"/>
         </SynSettings>
     </Config>
     <Files>
@@ -171,6 +171,7 @@
             <F N="../SOURCE/EXAMPLES/HeaderBodyFooter.dbl"/>
             <F N="../SOURCE/EXAMPLES/Landscape132.dbl"/>
             <F N="../SOURCE/EXAMPLES/MixedPageOrientation.dbl"/>
+            <F N="../SOURCE/EXAMPLES/PdfTest.dbl"/>
             <F N="../SOURCE/EXAMPLES/Portrait100.dbl"/>
         </Folder>
         <Folder
@@ -181,8 +182,7 @@
             Filters="*.wsc"/>
         <Folder
             Name="Other Files"
-            Filters="">
-        </Folder>
+            Filters=""/>
     </Files>
     <Config
         Name="Debug64"
@@ -241,14 +241,14 @@
                 MenuCaption="&amp;Debug"
                 SaveOption="SaveCurrent"
                 RunFromDir="%rw">
-                <Exec CmdLine="dbr -d EXE:%n.dbr"/>
+                <Exec CmdLine="dbr -d EXE:%rn.dbr"/>
             </Target>
             <Target
                 Name="Execute"
                 MenuCaption="E&amp;xecute"
                 SaveOption="SaveCurrent"
                 RunFromDir="%rw">
-                <Exec CmdLine="dbr EXE:%n.dbr"/>
+                <Exec CmdLine="dbr EXE:%rn.dbr"/>
             </Target>
             <Target
                 Name="Synergy/DE Options"
@@ -293,13 +293,13 @@
                 Value="dblproto %p%n%e"/>
             <SynSetting
                 Name="compile_command_line"
-                Value='dbl -T -d -qcheck -qalign -o OBJ: "%p%n%e"'/>
+                Value='dbl -T -d -qcheck -qalign -o OBJ:%rn.dbo "%p%n%e"'/>
             <SynSetting
                 Name="linklibr_command_line"
-                Value="dblink -d -o EXE:%n.dbr OBJ:%n EXE:SynPSG_PDF.elb"/>
+                Value="dblink -d -o EXE:%rn.dbr OBJ:%rn.dbo EXE:SynPSG_PDF.elb"/>
             <SynSetting
                 Name="proto_clear_dbh"
-                Value="0"/>
+                Value="1"/>
             <SynSetting
                 Name="build_prototype"
                 Value="0"/>
@@ -308,7 +308,7 @@
                 Value="0"/>
             <SynSetting
                 Name="compile_single"
-                Value="0"/>
+                Value="1"/>
             <SynSetting
                 Name="object_name"
                 Value="%rn.dbo"/>
@@ -335,7 +335,7 @@
                 Value="OBJ:"/>
             <SynSetting
                 Name="build_complink_single"
-                Value="1"/>
+                Value="0"/>
         </SynSettings>
     </Config>
     <Config
@@ -395,14 +395,14 @@
                 MenuCaption="&amp;Debug"
                 SaveOption="SaveCurrent"
                 RunFromDir="%rw">
-                <Exec CmdLine="dbr -d EXE:%n.dbr"/>
+                <Exec CmdLine="dbr -d EXE:%rn.dbr"/>
             </Target>
             <Target
                 Name="Execute"
                 MenuCaption="E&amp;xecute"
                 SaveOption="SaveCurrent"
                 RunFromDir="%rw">
-                <Exec CmdLine="dbr EXE:%n.dbr"/>
+                <Exec CmdLine="dbr EXE:%rn.dbr"/>
             </Target>
             <Target
                 Name="Synergy/DE Options"
@@ -447,13 +447,13 @@
                 Value="dblproto %p%n%e"/>
             <SynSetting
                 Name="compile_command_line"
-                Value='dbl -T -qstrict -qalign -o OBJ: "%p%n%e"'/>
+                Value='dbl -T -qstrict -qalign -o OBJ:%rn.dbo "%p%n%e"'/>
             <SynSetting
                 Name="linklibr_command_line"
-                Value="dblink -o EXE:%n.dbr OBJ:%n EXE:SynPSG_PDF.elb"/>
+                Value="dblink -o EXE:%rn.dbr OBJ:%rn.dbo EXE:SynPSG_PDF.elb"/>
             <SynSetting
                 Name="proto_clear_dbh"
-                Value="0"/>
+                Value="1"/>
             <SynSetting
                 Name="build_prototype"
                 Value="0"/>
@@ -462,7 +462,7 @@
                 Value="0"/>
             <SynSetting
                 Name="compile_single"
-                Value="0"/>
+                Value="1"/>
             <SynSetting
                 Name="object_name"
                 Value="%rn.dbo"/>
@@ -489,7 +489,7 @@
                 Value="OBJ:"/>
             <SynSetting
                 Name="build_complink_single"
-                Value="1"/>
+                Value="0"/>
         </SynSettings>
     </Config>
     <Config
@@ -549,14 +549,14 @@
                 MenuCaption="&amp;Debug"
                 SaveOption="SaveCurrent"
                 RunFromDir="%rw">
-                <Exec CmdLine="dbr -d EXE:%n.dbr"/>
+                <Exec CmdLine="dbr -d EXE:%rn.dbr"/>
             </Target>
             <Target
                 Name="Execute"
                 MenuCaption="E&amp;xecute"
                 SaveOption="SaveCurrent"
                 RunFromDir="%rw">
-                <Exec CmdLine="dbr EXE:%n.dbr"/>
+                <Exec CmdLine="dbr EXE:%rn.dbr"/>
             </Target>
             <Target
                 Name="Synergy/DE Options"
@@ -601,13 +601,13 @@
                 Value="dblproto %p%n%e"/>
             <SynSetting
                 Name="compile_command_line"
-                Value='dbl -T -qstrict -qalign -o OBJ: "%p%n%e"'/>
+                Value='dbl -T -qstrict -qalign -o OBJ:%rn.dbo "%p%n%e"'/>
             <SynSetting
                 Name="linklibr_command_line"
-                Value="dblink -o EXE:%n.dbr OBJ:%n EXE:SynPSG_PDF.elb"/>
+                Value="dblink -o EXE:%rn.dbr OBJ:%rn.dbo EXE:SynPSG_PDF.elb"/>
             <SynSetting
                 Name="proto_clear_dbh"
-                Value="0"/>
+                Value="1"/>
             <SynSetting
                 Name="build_prototype"
                 Value="0"/>
@@ -616,7 +616,7 @@
                 Value="0"/>
             <SynSetting
                 Name="compile_single"
-                Value="0"/>
+                Value="1"/>
             <SynSetting
                 Name="object_name"
                 Value="%rn.dbo"/>
@@ -643,14 +643,13 @@
                 Value="OBJ:"/>
             <SynSetting
                 Name="build_complink_single"
-                Value="1"/>
+                Value="0"/>
         </SynSettings>
     </Config>
     <Macro>
         <ExecMacro CmdLine="syn_set ROOT=%wp"/>
         <ExecMacro CmdLine="syn_set OBJ=%(ROOT)obj"/>
         <ExecMacro CmdLine="syn_set EXE=%(ROOT)exe"/>
-        <ExecMacro CmdLine="syn_set SYNEXPDIR=%(ROOT)hdr"/>
         <ExecMacro CmdLine="syn_set SYNIMPDIR=%(ROOT)hdr"/>
         <ExecMacro CmdLine="syn_set MEDIA=%(ROOT)..\MEDIA"/>
         <ExecMacro CmdLine="syn_set OUTPUT=%(ROOT)output"/>

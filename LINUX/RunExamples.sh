@@ -13,19 +13,8 @@ else
     export OUTPUT=$ROOT/out
     export MEDIA=$ROOT/../MEDIA
 
-    #Run the sample programs
-    echo
-    echo Running example programs...
-    for f in $PDF_EXE/*.DBR
-    do
-        FILE=`basename $f`
-        echo - $FILE
-        dbr PDF_EXE:$FILE
-    done
-
-    echo
-    echo Example PDF files are in the out folder
-    echo
+    #Run the sample program menu
+    dbr PDF_EXE:PdfTest.dbr
 fi
 
 #Go back to the folder we were in before we were called
