@@ -8,8 +8,7 @@ subroutine AttachFileTest
 proc
 
     ;;Create a PDF document and attach an existing text file
-    ;pdf = new PdfFile("DBLDIR:REL_DBL.TXT",,,,,,,,,"OUTPUT:")
-    pdf = new PdfFile("C:\EXPERIMENTAL\REL_DBL.TXT",,,,,,,,,"OUTPUT:")
+    pdf = new PdfFile("DBLDIR:REL_DBL.TXT",,,,,,,,,"OUTPUT:")
     pdf.FileName = "AttachFile.pdf"
     pdf.PageLayout = PdfPageLayout.Single
 
