@@ -2234,6 +2234,59 @@ eof,
 
         endmethod
 
+		;;---------------------------------------------------------------------
+		;;; <summary>
+		;;; Displays the PDF file using the default application that is registered to handle
+		;;; PDF files. The Dispose method is automatically called so after calling this method
+		;;; the PdfFile object is no longer valid.
+		;;; </summary>
+		;;; <returns>Returns true if the PDF file was saved and launched.</returns>
+		public static method PreviewFile, boolean
+			required in  aPdfFileSpec, string
+			optional out aErrorMessage, a
+			endparams
+			record
+				ok, boolean
+				pdfFileSpec, string
+				errorMessage, string
+			endrecord
+		proc
+
+.ifndef D_GUI
+			errorMessage = "PreviewFile is not supported on this system!"
+			ok = false
+.else
+			errorMessage = ""
+			pdfFileSpec = expandLogicalInFileSpec(aPdfFileSpec)
+
+			if (fileExists(pdfFileSpec)) then
+			begin
+				try
+				begin
+					;;Launch the associated application
+					xcall shell(,'"'+pdfFileSpec+'"',D_NOCONSOLE|D_NOWAIT)
+					ok = true
+				end
+				catch (ex)
+				begin
+					errorMessage = "Failed to launch PDF viewer. Error was " + ex.Message
+					ok = false
+				end
+				endtry
+			end
+			else
+			begin
+				errorMessage = "PDF file " + pdfFileSpec + " not found!"
+				ok = false
+			end
+.endc
+			if (^passed(aErrorMessage))
+				aErrorMessage = errorMessage
+
+			mreturn ok
+
+		endmethod
+
         ;;---------------------------------------------------------------------
         ;;; <summary>
         ;;; Print the PDF file to a printer.
@@ -2245,7 +2298,7 @@ eof,
             optional in  aPrinterName,  a
             optional out aErrorMessage, a
             endparams
-.define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
+			.define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
             record
                 ok,             boolean
                 pdfFileSpec,    string
@@ -2253,6 +2306,7 @@ eof,
                 errorMessage,   a256
             endrecord
         proc
+
 .ifndef D_GUI
             ;;Print is Windows only; best we can do is save the file.
             if (this.Save(errorMessage)) then
@@ -2309,6 +2363,79 @@ eof,
 
         endmethod
 
+		;;---------------------------------------------------------------------
+		;;; <summary>
+		;;; Print a PDF file directly from disk.
+		;;; </summary>
+		;;; <param name="aPPdfFileName">Name of PDF file to be printed.</param>
+		;;; <param name="aPrinterName">Optional printer name. If not passed then the users default printer is used.</param>
+		;;; <param name="aErrorMessage">Optional returned error message.</param>
+		;;; <returns></returns>
+		public static method PrintFile, boolean
+			required in  aPdfFileSpec,	a
+			optional in  aPrinterName,  a
+			optional out aErrorMessage, a
+			endparams
+
+			.define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
+
+			record
+				ok,             boolean
+				pdfFileSpec,	string
+				command,        string
+				errorMessage,   string
+			endrecord
+
+		proc
+
+.ifdef D_GUI
+			errorMessage = "PrintFile is not supported on this system!"
+			ok = false
+.else
+			errorMessage = ""
+
+			pdfFileSpec = expandLogicalInFileSpec(aPdfFileSpec)
+
+			if (fileExists(pdfFileSpec)) then
+			begin
+				if (fileExists(D_SUMATRA_EXE)) then
+				begin
+					if (^passed(aPrinterName) && aPrinterName) then
+						command = D_SUMATRA_EXE + ' -print-to "' + %atrim(aPrinterName) + '" -silent -exit-on-print ' + '"' + pdfFileSpec + '"'
+					else
+						command = D_SUMATRA_EXE + ' -print-to-default -silent -exit-on-print ' + '"' + pdfFileSpec + '"'
+
+					try
+					begin
+						xcall spawn(command,D_NOCONSOLE|D_NOWINDOW)
+						ok = true
+					end
+					catch (ex)
+					begin
+						errorMessage = "Failed to launch SumatraPDF. Error was " + ex.Message
+						ok = false
+					end
+					endtry
+				end
+				else
+				begin
+					errorMessage = "SumartaPDF was not found!"
+					ok = false
+				end
+			end
+			else
+			begin
+				errorMessage = "PDF file " + pdfFileSpec + " not found!"
+				ok = false
+			end
+.endc
+			if (^passed(aErrorMessage))
+				aErrorMessage = errorMessage
+
+			mreturn ok
+
+		endmethod
+
         ;;---------------------------------------------------------------------
         ;;; <summary>
         ;;; Show a SumartsPDF Print Dialog to print the PDF document.
@@ -2318,7 +2445,7 @@ eof,
         public method PrintDialog, boolean
             optional out aErrorMessage, a
             endparams
-.define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
+			.define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
             record
                 ok,             boolean
                 pdfFileSpec,    string
@@ -2899,6 +3026,19 @@ eof,
                 mFileName = value
             endmethod
         endproperty
+
+        ;;---------------------------------------------------------------------
+        ;;
+	;;; <summary>
+	;;; Gets the full file spec of the PDF file being created.
+	;;; </summary>
+
+	public property FileSpec, string
+	    method get
+	    proc
+		mreturn mFileLocation + mFileName
+	    endmethod
+	endproperty
 
         ;;---------------------------------------------------------------------
         ;;
@@ -3564,7 +3704,7 @@ eof,
         ;;---------------------------------------------------------------------
         ;;
 .ifdef D_GUI
-        private method expandLogicalInFileSpec, string
+        private static method expandLogicalInFileSpec, string
             required in fileSpec,               string
             endparams
             stack record
@@ -3609,7 +3749,7 @@ eof,
 .else
 .ifdef OS_VMS
         ;VMS
-        private method expandLogicalInFileSpec, string
+        private static method expandLogicalInFileSpec, string
             required in fileSpec,               string
             endparams
             stack record
@@ -3630,7 +3770,7 @@ eof,
         endmethod
 .else
         ;Unix or Linux
-        private method expandLogicalInFileSpec, string
+        private static method expandLogicalInFileSpec, string
             required in fileSpec,               string
             endparams
             stack record
@@ -3712,7 +3852,7 @@ eof,
         ;;---------------------------------------------------------------------
         ;;
 
-        private method fileExists, boolean
+        private static method fileExists, boolean
             required in path, string
             endparams
         proc
