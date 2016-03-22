@@ -662,7 +662,7 @@ eof,
 
             ;;Make sure the output file location exists
             if (!directoryExists(this.FileLocation))
-                throw new ApplicationException("Destination folder " + mFileLocation + " does not exist!")
+                throw new ApplicationException("Destination folder " + this.FileLocation + " does not exist!")
 
             ;;Define the output file name
             attempts = 0
@@ -3161,6 +3161,19 @@ eof,
             endmethod
         endproperty
 
+        ;;---------------------------------------------------------------------
+        ;;
+		
+		;;; <summary>
+		;;; Exposes the underlying HaruPDF document so that PDFDBL can be used to implement functionality not directly supported by this class.
+		;;; </summary>
+		public property HaruDocument, @HPdfDoc
+			method get
+			proc
+				mreturn doc
+			endmethod
+		endproperty
+		
         ;;---------------------------------------------------------------------
         ;;
 
