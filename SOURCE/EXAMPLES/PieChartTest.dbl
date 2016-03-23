@@ -1,0 +1,38 @@
+
+import SynPSG.PDF
+
+subroutine PieChartTest
+    record
+        pdf, @PdfFile
+		slices, [#]@PieSlice
+    endrecord
+proc
+    ;;Create a new PDF document
+    pdf = new PdfFile(,,,,,,,,,,,"OUTPUT:")
+
+    ;;Override the default file to prevent the date/time stamp prefix.
+    pdf.FileName = "PieChartTest.pdf"
+
+    ;;Ask reader applications to display a single page at a time
+    pdf.PageLayout = PdfPageLayout.Single
+
+	;;Add a title
+	pdf.DrawText("Let's Draw a Pie Chart",50,pdf.Height-100,PdfColor.DarkCandyapplered,"Courier-Bold",36)
+	
+	;;Define the slices of the pie
+	slices = new PieSlice[4]
+	slices[1] = new PieSlice(10,PdfColor.Red)
+	slices[2] = new PieSlice(20,PdfColor.Orange)
+	slices[3] = new PieSlice(30,PdfColor.Yellow)
+	slices[4] = new PieSlice(40,PdfColor.Green)
+
+    ;;Draw a pie chart
+	pdf.DrawPieChart(300,300,200,slices)
+
+    ;;Save the document and show the results
+    pdf.Preview()
+
+    xreturn
+
+endsubroutine
+

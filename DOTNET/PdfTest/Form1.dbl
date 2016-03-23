@@ -103,6 +103,14 @@ namespace PdfTest
 			xcall CirclesTest
 		endmethod
 		
+		private method btnPieChartTest_Click, void
+			sender, @object 
+			e, @System.EventArgs 
+			endparams
+		proc
+			xcall PieChartTest()
+		endmethod
+		
 	endclass
 	
 endnamespace

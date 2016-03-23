@@ -1770,6 +1770,83 @@ eof,
 
         endmethod
 
+		;;---------------------------------------------------------------------
+		;;; <summary>
+		;;; Draws a pie chart
+		;;; </summary>
+		;;; <param name="aCenterX">X coordinate of center point</param>
+		;;; <param name="aCenterY">Y coordinate of center point</param>
+		;;; <param name="aRadius">Radius of arc.</param>
+		;;; <param name="aSlices">Array of PieSlice objects that define the slices of the pie.</param>
+		;;; <param name="aWidth">Optional line width (default 1).</param>
+		;;; <param name="aStrokeColor">Optional line color (default black).</param>
+		;;; <param name="aFill">Fill circle with fill color (default false).</param>
+		;;; <param name="aFillColor">Optional fill color (default black).</param>
+		public method DrawPieChart, void
+			required in aCenterX,   float
+			required in aCenterY,   float
+			required in aRadius,    float
+			required in aSlices,	[#]@PieSlice
+			endparams
+			record
+				ix,					int
+				startPercent,		int
+				endPercent,			int
+				startAngle,			float
+				endAngle,			float
+				lastPoint,			HPdfPoint
+			endrecord
+		proc
+			;;If we don't have a first page then add one
+			if (this.PageNumber==0)
+				NewPage()
+
+			;;Set the line width
+			pg.SetLineWidth(1)
+
+			startPercent = 0
+			startAngle = 0
+			lastPoint.x = aCenterX
+			lastPoint.y = aCenterY-aRadius
+			
+			for ix from 1 thru aSlices.GetLength(1)
+			begin
+				;Set the fill color for this slice. This must be done before we start drawing.
+				;TODO: BUG: The PieSlice.Color property should really be of type PdfColor, but
+				;can't be bacause of a really bad DBL compiler bug related to using large enums
+				;(over 127 members) anywhere near a System.Array. That's why the (PdfColor)
+				;cast is necessary here.
+				setCustomFillColor((PdfColor)(aSlices[ix].Color))
+				
+				;;Calculate the number of percent we will have covered after this slice,
+				;;and the compass angle of the end of the arc associated with this slice
+				endPercent = startPercent + aSlices[ix].Percentage
+				endAngle = ((360.0/100)*endPercent)
+				
+				;;Draw a line from the center to the arc
+				pg.MoveTo(aCenterX,aCenterY)
+				pg.LineTo(lastPoint.x,lastPoint.y)
+				
+				;;Then draw the arc and record the position of the point at the end of the arc
+				pg.Arc(aCenterX,aCenterY,aRadius,startAngle,endAngle)
+				lastPoint = pg.GetCurrentPos()
+				
+				;;Then draw a line back to the center point
+				pg.LineTo(aCenterX,aCenterY)
+				
+				;;And fill the arc with the appropriate color for the slice
+				pg.Fill()
+			
+				;;Get ready for the next slice
+				startPercent = endPercent
+				startAngle = ((360.0/100)*startPercent)
+			end
+
+			;;Revert to the default fill color
+			resetFillColor()
+
+		endmethod
+
         ;;---------------------------------------------------------------------
         ;;; <summary>
         ;;; Draws text at the specified absolute position. The current row /
@@ -9324,6 +9401,39 @@ eof,
 
     endclass
 
+	;;; <summary>
+	;;; Represents a slice of pie in a pie chart.
+	;;; </summary>
+	public class PieSlice
+		
+		public method PieSlice
+			required in aPercentage, float
+			required in aColor, PdfColor
+		proc
+			Percentage = aPercentage
+			Color = (int)aColor
+		endmethod
+		
+		public property Percentage, float
+			method get
+			endmethod
+			private method set
+			endmethod
+		endproperty
+		
+		;TODO: BUG: This property should really be of type PdfColor, but can't because of
+		;a pretty bad DBL compiler bug related to using large ENUMS (over 127 members)
+		;anywhere in the proximity of a System.Array, and objects of this type are passed
+		;around in a System.Array.
+		public property Color, int
+			method get
+			endmethod
+			private method set
+			endmethod
+		endproperty
+
+	endclass
+	
     ;;*********************************************************************
     ;;ENUMERATIONS
 

@@ -88,6 +88,9 @@
     <Compile Include="../../SOURCE/EXAMPLES/MixedPageOrientation.dbl">
       <Link>MixedPageOrientation.dbl</Link>
     </Compile>
+    <Compile Include="../../SOURCE/EXAMPLES/PieChartTest.dbl">
+      <Link>PieChartTest.dbl</Link>
+    </Compile>
     <Compile Include="../../SOURCE/EXAMPLES/Portrait100.dbl">
       <Link>Portrait100.dbl</Link>
     </Compile>
