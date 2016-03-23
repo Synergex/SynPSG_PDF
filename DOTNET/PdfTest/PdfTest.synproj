@@ -67,6 +67,9 @@
     <Compile Include="../../SOURCE/EXAMPLES/BlueAndRedBox.dbl">
       <Link>BlueAndRedBox.dbl</Link>
     </Compile>
+    <Compile Include="../../SOURCE/EXAMPLES/CirclesTest.dbl">
+      <Link>CirclesTest.dbl</Link>
+    </Compile>
     <Compile Include="../../SOURCE/EXAMPLES/DblMessagesReport.dbl">
       <Link>DblMessagesReport.dbl</Link>
     </Compile>

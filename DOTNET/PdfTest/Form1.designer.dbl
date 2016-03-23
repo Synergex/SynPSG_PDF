@@ -12,6 +12,7 @@ namespace PdfTest
 		private btnHeaderBodyFooterTest, @System.Windows.Forms.Button
 		private btnDblMessagesReportTest, @System.Windows.Forms.Button
 		private btnDeliveryTicketTest, @System.Windows.Forms.Button
+		private btnDrawCirclesTest, @System.Windows.Forms.Button
 		private btnAttachFileTest, @System.Windows.Forms.Button
 
 		private method InitializeComponent, void
@@ -27,6 +28,7 @@ namespace PdfTest
 			this.btnMixedPageOrientationTest = new System.Windows.Forms.Button()
 			this.btnPortrait100Test = new System.Windows.Forms.Button()
 			this.btnAttachFileTest = new System.Windows.Forms.Button()
+			this.btnDrawCirclesTest = new System.Windows.Forms.Button()
 			this.SuspendLayout()
 			;; 
 			;; btnAutoItemsTest
@@ -81,7 +83,7 @@ namespace PdfTest
 			;; 
 			;; btnHeaderBodyFooterTest
 			;; 
-			this.btnHeaderBodyFooterTest.Location = new System.Drawing.Point(12, 291)
+			this.btnHeaderBodyFooterTest.Location = new System.Drawing.Point(171, 15)
 			this.btnHeaderBodyFooterTest.Name = "btnHeaderBodyFooterTest"
 			this.btnHeaderBodyFooterTest.Size = new System.Drawing.Size(153, 40)
 			this.btnHeaderBodyFooterTest.TabIndex = 7
@@ -91,7 +93,7 @@ namespace PdfTest
 			;; 
 			;; btnLandscape132Test
 			;; 
-			this.btnLandscape132Test.Location = new System.Drawing.Point(12, 337)
+			this.btnLandscape132Test.Location = new System.Drawing.Point(171, 61)
 			this.btnLandscape132Test.Name = "btnLandscape132Test"
 			this.btnLandscape132Test.Size = new System.Drawing.Size(153, 40)
 			this.btnLandscape132Test.TabIndex = 8
@@ -101,7 +103,7 @@ namespace PdfTest
 			;; 
 			;; btnMixedPageOrientationTest
 			;; 
-			this.btnMixedPageOrientationTest.Location = new System.Drawing.Point(12, 383)
+			this.btnMixedPageOrientationTest.Location = new System.Drawing.Point(171, 107)
 			this.btnMixedPageOrientationTest.Name = "btnMixedPageOrientationTest"
 			this.btnMixedPageOrientationTest.Size = new System.Drawing.Size(153, 40)
 			this.btnMixedPageOrientationTest.TabIndex = 9
@@ -111,7 +113,7 @@ namespace PdfTest
 			;; 
 			;; btnPortrait100Test
 			;; 
-			this.btnPortrait100Test.Location = new System.Drawing.Point(12, 429)
+			this.btnPortrait100Test.Location = new System.Drawing.Point(171, 153)
 			this.btnPortrait100Test.Name = "btnPortrait100Test"
 			this.btnPortrait100Test.Size = new System.Drawing.Size(153, 40)
 			this.btnPortrait100Test.TabIndex = 10
@@ -129,9 +131,20 @@ namespace PdfTest
 			this.btnAttachFileTest.UseVisualStyleBackColor = true
 			addhandler(this.btnAttachFileTest.Click, new System.EventHandler(this.btnAttachFileTest_Click))
 			;; 
+			;; btnDrawCirclesTest
+			;; 
+			this.btnDrawCirclesTest.Location = new System.Drawing.Point(171, 199)
+			this.btnDrawCirclesTest.Name = "btnDrawCirclesTest"
+			this.btnDrawCirclesTest.Size = new System.Drawing.Size(153, 40)
+			this.btnDrawCirclesTest.TabIndex = 11
+			this.btnDrawCirclesTest.Text = "Draw Circles Test"
+			this.btnDrawCirclesTest.UseVisualStyleBackColor = true
+			addhandler(this.btnDrawCirclesTest.Click, new System.EventHandler(this.btnDrawCirclesTest_Click))
+			;; 
 			;; Form1
 			;; 
-			this.ClientSize = new System.Drawing.Size(182, 486)
+			this.ClientSize = new System.Drawing.Size(336, 302)
+			this.Controls.Add(this.btnDrawCirclesTest)
 			this.Controls.Add(this.btnAttachFileTest)
 			this.Controls.Add(this.btnPortrait100Test)
 			this.Controls.Add(this.btnMixedPageOrientationTest)

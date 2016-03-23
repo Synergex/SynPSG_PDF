@@ -1272,6 +1272,101 @@ eof,
 
         ;;---------------------------------------------------------------------
         ;;; <summary>
+        ;;; Draws a circle from a specified center point at a specified radius.
+        ;;; </summary>
+        ;;; <param name="aFromX">X coordinate of center point</param>
+        ;;; <param name="aFromY">Y coordinate of center point</param>
+        ;;; <param name="aRadius">Radius of arc.</param>
+        ;;; <param name="aWidth">Optional line width (default 1).</param>
+        ;;; <param name="aStrokeColor">Optional line color (default black).</param>
+        ;;; <param name="aFill">Fill circle with fill color (default false).</param>
+        ;;; <param name="aFillColor">Optional fill color (default black).</param>
+        public method DrawCircle,       void
+            required in aCenterX,       float
+            required in aCenterY,       float
+            required in aRadius,        float
+.ifdef DBLNET
+            default  in aWidth,         float,	    0
+            default  in aStrokeColor,   PdfColor,   PdfColor.DefaultColor
+            default  in aFill,          boolean,    false
+            default  in aFillColor,     PdfColor,   PdfColor.DefaultColor
+.else
+            optional in aWidth,         float
+            optional in aStrokeColor,   PdfColor
+            optional in aFill,          boolean
+            optional in aFillColor,     PdfColor
+.endc
+            endparams
+            record
+                penWidth,               float
+            endrecord
+        proc
+            ;;If we don't have a first page then add one
+            if (this.PageNumber==0)
+                NewPage()
+
+            ;;Determine the line width
+.ifdef DBLNET
+            if (aWidth>0) then
+.else
+            if (^passed(aWidth) && (aWidth>0)) then
+.endc
+                penWidth = aWidth
+            else
+                penWidth = 1
+
+            ;;And set it
+            pg.SetLineWidth(penWidth)
+
+            ;;If we were passed a specific stroke color then use it
+.ifdef DBLNET
+            if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
+.else
+            if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
+.endc
+                setCustomStrokeColor(aStrokeColor)
+
+            ;;If we were passed a specific fill color then use it
+.ifdef DBLNET
+            if ((aFillColor != PdfColor.DefaultColor) && (aFillColor!= this.StrokeColor))
+.else
+            if (^passed(aFillColor) && (aFillColor != this.FillColor))
+.endc
+                setCustomFillColor(aFillColor)
+
+            ;;Define the circle (this enters graphics mode)
+            pg.Circle(aCenterX,aCenterY,aRadius)
+
+            ;;Draw the circle (this exits graphics mode and returns to text mode)
+.ifdef DBLNET
+            if (aFill) then
+.else
+            if (^passed(aFill) && aFill) then
+.endc
+                pg.FillStroke()
+            else
+                pg.Stroke()
+
+            ;;If we changed the stroke color then revert back to the default color
+.ifdef DBLNET
+            if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
+.else
+            if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
+.endc
+                resetStrokeColor()
+
+            ;;If we changed the fill color then revert back to the default color
+.ifdef DBLNET
+            if ((aFillColor != PdfColor.DefaultColor) && (aFillColor!= this.StrokeColor))
+.else
+            if (^passed(aFillColor) && (aFillColor != this.FillColor))
+.endc
+                resetFillColor()
+
+        endmethod
+
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
         ;;; Loads a JPEG or PNG image and displays it at a specified position
         ;;; on the current page. Note that if you specify height and width then
         ;;; you should try to maintain the same ratio as the dimensions of the
@@ -2234,58 +2329,58 @@ eof,
 
         endmethod
 
-		;;---------------------------------------------------------------------
-		;;; <summary>
-		;;; Displays the PDF file using the default application that is registered to handle
-		;;; PDF files. The Dispose method is automatically called so after calling this method
-		;;; the PdfFile object is no longer valid.
-		;;; </summary>
-		;;; <returns>Returns true if the PDF file was saved and launched.</returns>
-		public static method PreviewFile, boolean
-			required in  aPdfFileSpec, string
-			optional out aErrorMessage, a
-			endparams
-			record
-				ok, boolean
-				pdfFileSpec, string
-				errorMessage, string
-			endrecord
-		proc
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Displays the PDF file using the default application that is registered to handle
+        ;;; PDF files. The Dispose method is automatically called so after calling this method
+        ;;; the PdfFile object is no longer valid.
+        ;;; </summary>
+        ;;; <returns>Returns true if the PDF file was saved and launched.</returns>
+        public static method PreviewFile, boolean
+            required in  aPdfFileSpec, string
+            optional out aErrorMessage, a
+            endparams
+            record
+                ok, boolean
+                pdfFileSpec, string
+                errorMessage, string
+            endrecord
+        proc
 
 .ifndef D_GUI
-			errorMessage = "PreviewFile is not supported on this system!"
-			ok = false
+            errorMessage = "PreviewFile is not supported on this system!"
+            ok = false
 .else
-			errorMessage = ""
-			pdfFileSpec = expandLogicalInFileSpec(aPdfFileSpec)
+            errorMessage = ""
+            pdfFileSpec = expandLogicalInFileSpec(aPdfFileSpec)
 
-			if (fileExists(pdfFileSpec)) then
-			begin
-				try
-				begin
-					;;Launch the associated application
-					xcall shell(,'"'+pdfFileSpec+'"',D_NOCONSOLE|D_NOWAIT)
-					ok = true
-				end
-				catch (ex)
-				begin
-					errorMessage = "Failed to launch PDF viewer. Error was " + ex.Message
-					ok = false
-				end
-				endtry
-			end
-			else
-			begin
-				errorMessage = "PDF file " + pdfFileSpec + " not found!"
-				ok = false
-			end
+            if (fileExists(pdfFileSpec)) then
+            begin
+                try
+                begin
+                    ;;Launch the associated application
+                    xcall shell(,'"'+pdfFileSpec+'"',D_NOCONSOLE|D_NOWAIT)
+                    ok = true
+                end
+                catch (ex)
+                begin
+                    errorMessage = "Failed to launch PDF viewer. Error was " + ex.Message
+                    ok = false
+                end
+                endtry
+            end
+            else
+            begin
+                errorMessage = "PDF file " + pdfFileSpec + " not found!"
+                ok = false
+            end
 .endc
-			if (^passed(aErrorMessage))
-				aErrorMessage = errorMessage
+            if (^passed(aErrorMessage))
+                aErrorMessage = errorMessage
 
-			mreturn ok
+            mreturn ok
 
-		endmethod
+        endmethod
 
         ;;---------------------------------------------------------------------
         ;;; <summary>
@@ -2298,7 +2393,7 @@ eof,
             optional in  aPrinterName,  a
             optional out aErrorMessage, a
             endparams
-			.define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
+            .define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
             record
                 ok,             boolean
                 pdfFileSpec,    string
@@ -2363,78 +2458,78 @@ eof,
 
         endmethod
 
-		;;---------------------------------------------------------------------
-		;;; <summary>
-		;;; Print a PDF file directly from disk.
-		;;; </summary>
-		;;; <param name="aPPdfFileName">Name of PDF file to be printed.</param>
-		;;; <param name="aPrinterName">Optional printer name. If not passed then the users default printer is used.</param>
-		;;; <param name="aErrorMessage">Optional returned error message.</param>
-		;;; <returns></returns>
-		public static method PrintFile, boolean
-			required in  aPdfFileSpec,	a
-			optional in  aPrinterName,  a
-			optional out aErrorMessage, a
-			endparams
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Print a PDF file directly from disk.
+        ;;; </summary>
+        ;;; <param name="aPPdfFileName">Name of PDF file to be printed.</param>
+        ;;; <param name="aPrinterName">Optional printer name. If not passed then the users default printer is used.</param>
+        ;;; <param name="aErrorMessage">Optional returned error message.</param>
+        ;;; <returns></returns>
+        public static method PrintFile, boolean
+            required in  aPdfFileSpec,  a
+            optional in  aPrinterName,  a
+            optional out aErrorMessage, a
+            endparams
 
-			.define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
+            .define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
 
-			record
-				ok,             boolean
-				pdfFileSpec,	string
-				command,        string
-				errorMessage,   string
-			endrecord
+            record
+                ok,             boolean
+                pdfFileSpec,    string
+                command,        string
+                errorMessage,   string
+            endrecord
 
-		proc
+        proc
 
 .ifdef D_GUI
-			errorMessage = "PrintFile is not supported on this system!"
-			ok = false
+            errorMessage = "PrintFile is not supported on this system!"
+            ok = false
 .else
-			errorMessage = ""
+            errorMessage = ""
 
-			pdfFileSpec = expandLogicalInFileSpec(aPdfFileSpec)
+            pdfFileSpec = expandLogicalInFileSpec(aPdfFileSpec)
 
-			if (fileExists(pdfFileSpec)) then
-			begin
-				if (fileExists(D_SUMATRA_EXE)) then
-				begin
-					if (^passed(aPrinterName) && aPrinterName) then
-						command = D_SUMATRA_EXE + ' -print-to "' + %atrim(aPrinterName) + '" -silent -exit-on-print ' + '"' + pdfFileSpec + '"'
-					else
-						command = D_SUMATRA_EXE + ' -print-to-default -silent -exit-on-print ' + '"' + pdfFileSpec + '"'
+            if (fileExists(pdfFileSpec)) then
+            begin
+                if (fileExists(D_SUMATRA_EXE)) then
+                begin
+                    if (^passed(aPrinterName) && aPrinterName) then
+                        command = D_SUMATRA_EXE + ' -print-to "' + %atrim(aPrinterName) + '" -silent -exit-on-print ' + '"' + pdfFileSpec + '"'
+                    else
+                        command = D_SUMATRA_EXE + ' -print-to-default -silent -exit-on-print ' + '"' + pdfFileSpec + '"'
 
-					try
-					begin
-						xcall spawn(command,D_NOCONSOLE|D_NOWINDOW)
-						ok = true
-					end
-					catch (ex)
-					begin
-						errorMessage = "Failed to launch SumatraPDF. Error was " + ex.Message
-						ok = false
-					end
-					endtry
-				end
-				else
-				begin
-					errorMessage = "SumartaPDF was not found!"
-					ok = false
-				end
-			end
-			else
-			begin
-				errorMessage = "PDF file " + pdfFileSpec + " not found!"
-				ok = false
-			end
+                    try
+                    begin
+                        xcall spawn(command,D_NOCONSOLE|D_NOWINDOW)
+                        ok = true
+                    end
+                    catch (ex)
+                    begin
+                        errorMessage = "Failed to launch SumatraPDF. Error was " + ex.Message
+                        ok = false
+                    end
+                    endtry
+                end
+                else
+                begin
+                    errorMessage = "SumartaPDF was not found!"
+                    ok = false
+                end
+            end
+            else
+            begin
+                errorMessage = "PDF file " + pdfFileSpec + " not found!"
+                ok = false
+            end
 .endc
-			if (^passed(aErrorMessage))
-				aErrorMessage = errorMessage
+            if (^passed(aErrorMessage))
+                aErrorMessage = errorMessage
 
-			mreturn ok
+            mreturn ok
 
-		endmethod
+        endmethod
 
         ;;---------------------------------------------------------------------
         ;;; <summary>
@@ -2445,7 +2540,7 @@ eof,
         public method PrintDialog, boolean
             optional out aErrorMessage, a
             endparams
-			.define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
+            .define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
             record
                 ok,             boolean
                 pdfFileSpec,    string
@@ -3029,16 +3124,16 @@ eof,
 
         ;;---------------------------------------------------------------------
         ;;
-	;;; <summary>
-	;;; Gets the full file spec of the PDF file being created.
-	;;; </summary>
+        ;;; <summary>
+        ;;; Gets the full file spec of the PDF file being created.
+        ;;; </summary>
 
-	public property FileSpec, string
-	    method get
-	    proc
-		mreturn mFileLocation + mFileName
-	    endmethod
-	endproperty
+        public property FileSpec, string
+            method get
+            proc
+                mreturn mFileLocation + mFileName
+            endmethod
+        endproperty
 
         ;;---------------------------------------------------------------------
         ;;
@@ -3163,17 +3258,16 @@ eof,
 
         ;;---------------------------------------------------------------------
         ;;
-		
-		;;; <summary>
-		;;; Exposes the underlying HaruPDF document so that PDFDBL can be used to implement functionality not directly supported by this class.
-		;;; </summary>
-		public property HaruDocument, @HPdfDoc
-			method get
-			proc
-				mreturn doc
-			endmethod
-		endproperty
-		
+        ;;; <summary>
+        ;;; Exposes the underlying HaruPDF document so that PDFDBL can be used to implement functionality not directly supported by this class.
+        ;;; </summary>
+        public property HaruDocument, @HPdfDoc
+            method get
+            proc
+                mreturn doc
+            endmethod
+        endproperty
+
         ;;---------------------------------------------------------------------
         ;;
 

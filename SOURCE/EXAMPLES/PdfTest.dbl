@@ -24,7 +24,8 @@ proc
     &   WD_POS, 8,10,"7.  Header, Body and Footer Test",
     &   WD_POS, 9,10,"8.  Landscape 132 Column Test",
     &   WD_POS,10,10,"9.  Mixed Page Orientation Test",
-    &   WD_POS,11,10,"10.  Portrait 100 Column Test",
+    &   WD_POS,11,10,"10. Portrait 100 Column Test",
+    &   WD_POS,11,10,"11. Circles Test",
     &   WD_POS,13,10,"Select an option (E to exit): ")
 
     repeat
@@ -93,6 +94,12 @@ proc
             xcall Portrait100
             call CompletionMessage
         end
+		("11"),
+		begin
+			call StartTestMessage
+			xcall CirclesTest
+			call CompletionMessage
+		end
         ("E "),
             exitloop
         endusing
