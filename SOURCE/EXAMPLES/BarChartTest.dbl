@@ -1,11 +1,11 @@
 
 import SynPSG.PDF
 
-subroutine BarChartTest
+subroutine SingleSeriesBarChart
     record
-        pdf, @PdfFile
-        bars, [#]@ChartData
-        bottom, XYcoordinate
+        pdf,        @PdfFile
+        chartData,  @ChartSeries
+        bottom,     XYcoordinate
     endrecord
 proc
     ;;Create a new PDF document
@@ -19,21 +19,21 @@ proc
 
     ;;Add a title
     pdf.DrawText("Let's Draw a Bar Chart",50,pdf.Height-100,PdfColor.DarkCandyapplered,"Courier-Bold",36)
-    
+
     ;;Define the slices of the pie
-    bars = new ChartData[4]
-    bars[1] = new ChartData(10,PdfColor.Red,"Sales three years ago")
-    bars[2] = new ChartData(20,PdfColor.Orange,"Sales two years ago")
-    bars[3] = new ChartData(30,PdfColor.Yellow,"Sales one year ago")
-    bars[4] = new ChartData(40,PdfColor.Green,"Sales so far this year!")
+    chartData = new ChartSeries(4)
+    chartData.Items[1] = new ChartItem(10,"Sales three years ago",PdfColor.Red)
+    chartData.Items[2] = new ChartItem(20,"Sales two years ago",PdfColor.Orange)
+    chartData.Items[3] = new ChartItem(30,"Sales one year ago",PdfColor.Yellow)
+    chartData.Items[4] = new ChartItem(40,"Sales so far this year!",PdfColor.Green)
 
     ;;Draw a bar chart
-    pdf.DrawBarChart(50,pdf.Height-300,pdf.Width-50,pdf.Height-600,10,bars)
-    
+    pdf.DrawSingleSeriesBarChart(50,pdf.Height-300,pdf.Width-50,pdf.Height-600,10,chartData,PdfColor.AntiqueWhite)
+
     ;Add a chart legend and draw a box around it
-    bottom = pdf.DrawChartLegend(215,620,bars,true)
+    bottom = pdf.DrawSingleSeriesChartLegend(215,620,chartData,true)
     pdf.DrawBox(210,625,bottom.X+5,bottom.Y-5)
-    
+
     ;;Save the document and show the results
     pdf.Preview()
 
