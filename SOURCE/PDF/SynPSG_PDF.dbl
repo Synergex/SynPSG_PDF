@@ -1286,7 +1286,7 @@ eof,
             required in aCenterY,       float
             required in aRadius,        float
 .ifdef DBLNET
-            default  in aWidth,         float,	    0
+            default  in aWidth,         float,      0
             default  in aStrokeColor,   PdfColor,   PdfColor.DefaultColor
             default  in aFill,          boolean,    false
             default  in aFillColor,     PdfColor,   PdfColor.DefaultColor
@@ -1770,223 +1770,246 @@ eof,
 
         endmethod
 
-		;;---------------------------------------------------------------------
-		;;; <summary>
-		;;; Draws a bar chart
-		;;; </summary>
-		;;; <param name="aTopX">X coordinate of the top left corner of the chart.</param>
-		;;; <param name="aTopY">X coordinate of the top left corner of the chart.</param>
-		;;; <param name="aBottomX">X coordinate of the bottom right corner of the chart.</param>
-		;;; <param name="aBottomY">X coordinate of the bottom right corner of the chart.</param>
-		;;; <param name="aMarginAroundBars">Number of pixels to leave blank around the whole chart (inside the border box).</param>
-		;;; <param name="aSpaceBetweenBars">Number of pixels to leave between data bars.</param>
-		;;; <param name="aChartData">Array of PieSlice objects that define the slices of the pie.</param>
-		public method DrawBarChart, 		void
-			required in aTopX,      		float
-			required in aTopY,      		float
-			required in aBottomX,   		float
-			required in aBottomY,			float
-			required in aSpaceBetweenBars,	float
-			required in aChartData,			[#]@ChartData
-			endparams
-			record
-				ix,				int
-				numberOfBars,	int
-				maxBarHeight,	float
-				highestValue,	float
-				barWidth,		float
-			endrecord
-		proc
-			;;If we don't have a first page then add one
-			if (this.PageNumber==0)
-				NewPage()
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Draws a bar chart
+        ;;; </summary>
+        ;;; <param name="aTopX">X coordinate of the top left corner of the chart.</param>
+        ;;; <param name="aTopY">X coordinate of the top left corner of the chart.</param>
+        ;;; <param name="aBottomX">X coordinate of the bottom right corner of the chart.</param>
+        ;;; <param name="aBottomY">X coordinate of the bottom right corner of the chart.</param>
+        ;;; <param name="aMarginAroundBars">Number of pixels to leave blank around the whole chart (inside the border box).</param>
+        ;;; <param name="aSpaceBetweenBars">Number of pixels to leave between data bars.</param>
+        ;;; <param name="aChartData">Array of PieSlice objects that define the slices of the pie.</param>
+        public method DrawBarChart,         void
+            required in aTopX,              float
+            required in aTopY,              float
+            required in aBottomX,           float
+            required in aBottomY,           float
+            required in aSpaceBetweenBars,  float
+            required in aChartData,         [#]@ChartData
+            endparams
+            record
+                ix,             int
+                numberOfBars,   int
+                maxBarHeight,   float
+                highestValue,   float
+                barWidth,       float
+            endrecord
+        proc
+            ;;If we don't have a first page then add one
+            if (this.PageNumber==0)
+                NewPage()
 
-			;;Set the line width
-			pg.SetLineWidth(1)
+            ;;Set the line width
+            pg.SetLineWidth(1)
 
-			;;How many bars will we be drawing
-			numberOfBars = aChartData.GetLength(1)
-			
-			;;Find the highest data value
-			highestValue = 0
-			for ix from 1 thru numberOfBars
-				if (aChartData[ix].DataValue > highestValue)
-					highestValue = aChartData[ix].DataValue
+            ;;How many bars will we be drawing
+            numberOfBars = aChartData.GetLength(1)
+            
+            ;;Find the highest data value
+            highestValue = 0
+            for ix from 1 thru numberOfBars
+                if (aChartData[ix].DataValue > highestValue)
+                    highestValue = aChartData[ix].DataValue
 
-			;;Calculate the maximum height of a bar
-			maxBarHeight = aTopY - aBottomY - 1
+            ;;Calculate the maximum height of a bar
+            maxBarHeight = aTopY - aBottomY - 1
 
-			;;Calculate the width of each bar
-			;;Width within box  -  space between bars  /  number of bars
-			barWidth = ((aBottomX-aTopX-1) - (aSpaceBetweenBars*(numberOfBars-1))) / numberOfBars
-			
-			;;Draw the bars
-			for ix from 1 thru numberOfBars
-			begin
-				data barHeight, float
-				data barStartX, float
-				
-				;Set the fill color for this slice. This must be done before we start drawing.
-				;TODO: BUG: The PieSlice.Color property should really be of type PdfColor, but
-				;can't be bacause of a really bad DBL compiler bug related to using large enums
-				;(over 127 members) anywhere near a System.Array. That's why the (PdfColor)
-				;cast is necessary here.
-				setCustomFillColor((PdfColor)(aChartData[ix].Color))
+            ;;Calculate the width of each bar
+            ;;Width within box  -  space between bars  /  number of bars
+            barWidth = ((aBottomX-aTopX-1) - (aSpaceBetweenBars*(numberOfBars-1))) / numberOfBars
+            
+            ;;Draw the bars
+            for ix from 1 thru numberOfBars
+            begin
+                data barHeight, float
+                data barStartX, float
+                
+                ;Set the fill color for this slice. This must be done before we start drawing.
+                ;TODO: BUG: The PieSlice.Color property should really be of type PdfColor, but
+                ;can't be bacause of a really bad DBL compiler bug related to using large enums
+                ;(over 127 members) anywhere near a System.Array. That's why the (PdfColor)
+                ;cast is necessary here.
+                setCustomFillColor((PdfColor)(aChartData[ix].Color))
 
-				;;Calculate the height of the bar for the current data item
-				barHeight = maxBarHeight * (aChartData[ix].DataValue / highestValue)
-				
-				;;Calculate the starting X coordinate for this bar
-				barStartX = aTopX + (barWidth*(ix-1)) + (aSpaceBetweenBars*(ix-1))
-				
-				;;Draw the bar
-				pg.Rectangle(barStartX,aBottomY,barWidth,barHeight)
-				pg.Fill()
-				
-			end
+                ;;Calculate the height of the bar for the current data item
+                barHeight = maxBarHeight * (aChartData[ix].DataValue / highestValue)
+                
+                ;;Calculate the starting X coordinate for this bar
+                barStartX = aTopX + (barWidth*(ix-1)) + (aSpaceBetweenBars*(ix-1))
+                
+                ;;Draw the bar
+                pg.Rectangle(barStartX,aBottomY,barWidth,barHeight)
+                pg.Fill()
+                
+            end
 
-			;;Revert to the default fill color
-			resetFillColor()
+            ;;Revert to the default fill color
+            resetFillColor()
 
-		endmethod
+        endmethod
 
-		;;---------------------------------------------------------------------
-		;;; <summary>
-		;;; Draws a pie chart
-		;;; </summary>
-		;;; <param name="aCenterX">X coordinate of center point</param>
-		;;; <param name="aCenterY">Y coordinate of center point</param>
-		;;; <param name="aRadius">Radius of arc.</param>
-		;;; <param name="aChartData">Array of PieSlice objects that define the slices of the pie.</param>
-		public method DrawPieChart, void
-			required in aCenterX,   float
-			required in aCenterY,   float
-			required in aRadius,    float
-			required in aChartData,	[#]@ChartData
-			endparams
-			record
-				ix,					int
-				startPercent,		float
-				endPercent,			float
-				totalDataValue,		float
-				startAngle,			float
-				endAngle,			float
-				lastPoint,			HPdfPoint
-			endrecord
-		proc
-			;;If we don't have a first page then add one
-			if (this.PageNumber==0)
-				NewPage()
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Draws a pie chart
+        ;;; </summary>
+        ;;; <param name="aCenterX">X coordinate of center point</param>
+        ;;; <param name="aCenterY">Y coordinate of center point</param>
+        ;;; <param name="aRadius">Radius of arc.</param>
+        ;;; <param name="aChartData">Array of PieSlice objects that define the slices of the pie.</param>
+        public method DrawPieChart, void
+            required in aCenterX,   float
+            required in aCenterY,   float
+            required in aRadius,    float
+            required in aChartData, [#]@ChartData
+            endparams
+            record
+                ix,                 int
+                startPercent,       float
+                endPercent,         float
+                totalDataValue,     float
+                startAngle,         float
+                endAngle,           float
+                lastPoint,          HPdfPoint
+            endrecord
+        proc
+            ;;If we don't have a first page then add one
+            if (this.PageNumber==0)
+                NewPage()
 
-			;;Set the line width
-			pg.SetLineWidth(1)
+            ;;Set the line width
+            pg.SetLineWidth(1)
 
-			startPercent = 0
-			startAngle = 0
-			lastPoint.x = aCenterX
-			lastPoint.y = aCenterY-aRadius
-			
-			;;Calculate the total of all data values
-			totalDataValue = 0
-			for ix from 1 thru aChartData.GetLength(1)
-				totalDataValue += aChartData[ix].DataValue
+            startPercent = 0
+            startAngle = 0
+            lastPoint.x = aCenterX
+            lastPoint.y = aCenterY-aRadius
+            
+            ;;Calculate the total of all data values
+            totalDataValue = 0
+            for ix from 1 thru aChartData.GetLength(1)
+                totalDataValue += aChartData[ix].DataValue
 
-			for ix from 1 thru aChartData.GetLength(1)
-			begin
-				;Set the fill color for this slice. This must be done before we start drawing.
-				;TODO: BUG: The PieSlice.Color property should really be of type PdfColor, but
-				;can't be bacause of a really bad DBL compiler bug related to using large enums
-				;(over 127 members) anywhere near a System.Array. That's why the (PdfColor)
-				;cast is necessary here.
-				setCustomFillColor((PdfColor)(aChartData[ix].Color))
-				
-				;;Calculate the number of percent we will have covered after this slice,
-				;;and the compass angle of the end of the arc associated with this slice
-				endPercent = startPercent + ((aChartData[ix].DataValue / totalDataValue) * 100)
-				endAngle = (endPercent * 3.6)
-				
-				;;Draw a line from the center to the arc
-				pg.MoveTo(aCenterX,aCenterY)
-				pg.LineTo(lastPoint.x,lastPoint.y)
-				
-				;;Then draw the arc and record the position of the point at the end of the arc
-				pg.Arc(aCenterX,aCenterY,aRadius,startAngle,endAngle)
-				lastPoint = pg.GetCurrentPos()
-				
-				;;Then draw a line back to the center point
-				pg.LineTo(aCenterX,aCenterY)
-				
-				;;And fill the arc with the appropriate color for the slice
-				pg.Fill()
-			
-				;;Get ready for the next slice
-				startPercent = endPercent
-				startAngle = ((360.0/100)*startPercent)
-			end
+            for ix from 1 thru aChartData.GetLength(1)
+            begin
+                ;Set the fill color for this slice. This must be done before we start drawing.
+                ;TODO: BUG: The PieSlice.Color property should really be of type PdfColor, but
+                ;can't be bacause of a really bad DBL compiler bug related to using large enums
+                ;(over 127 members) anywhere near a System.Array. That's why the (PdfColor)
+                ;cast is necessary here.
+                setCustomFillColor((PdfColor)(aChartData[ix].Color))
+                
+                ;;Calculate the number of percent we will have covered after this slice,
+                ;;and the compass angle of the end of the arc associated with this slice
+                endPercent = startPercent + ((aChartData[ix].DataValue / totalDataValue) * 100)
+                endAngle = (endPercent * 3.6)
+                
+                ;;Draw a line from the center to the arc
+                pg.MoveTo(aCenterX,aCenterY)
+                pg.LineTo(lastPoint.x,lastPoint.y)
+                
+                ;;Then draw the arc and record the position of the point at the end of the arc
+                pg.Arc(aCenterX,aCenterY,aRadius,startAngle,endAngle)
+                lastPoint = pg.GetCurrentPos()
+                
+                ;;Then draw a line back to the center point
+                pg.LineTo(aCenterX,aCenterY)
+                
+                ;;And fill the arc with the appropriate color for the slice
+                pg.Fill()
+            
+                ;;Get ready for the next slice
+                startPercent = endPercent
+                startAngle = ((360.0/100)*startPercent)
+            end
 
-			;;Revert to the default fill color
-			resetFillColor()
+            ;;Revert to the default fill color
+            resetFillColor()
 
-		endmethod
+        endmethod
 
-		;;---------------------------------------------------------------------
-		;;; <summary>
-		;;; Draws a chart legend.
-		;;; </summary>
-		;;; <param name="aTopX">X coordinate for the top left corner of the legend box.</param>
-		;;; <param name="aTopY">Y coordinate for the top left corner of the legend box.</param>
-		;;; <param name="aChartData">Array of ChartData objects that define the legend to draw.</param>
-		;;; <returns>Returns the width of the legend</returns>
-		public method DrawChartLegend, XYcoordinate
-			required in aTopX,		float
-			required in aTopY,  	float
-			required in aChartData,	[#]@ChartData
-			endparams
-			record
-				ix,			int
-				dataItems,	int
-				maxWidth,	float
-				bottom,		XYcoordinate
-			endrecord
-		proc
-			;;If we don't have a first page then add one
-			if (this.PageNumber==0)
-				NewPage()
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Draws a chart legend.
+        ;;; </summary>
+        ;;; <param name="aTopX">X coordinate for the top left corner of the legend box.</param>
+        ;;; <param name="aTopY">Y coordinate for the top left corner of the legend box.</param>
+        ;;; <param name="aChartData">Array of ChartData objects that define the legend to draw.</param>
+        ;;; <returns>Returns the width of the legend</returns>
+        public method DrawChartLegend, XYcoordinate
+            required in aTopX,       float
+            required in aTopY,       float
+            required in aChartData,  [#]@ChartData
+.ifdef DBLNET
+            default in aShowValues, boolean, false
+.else
+            optional in aShowValues, boolean
+.endc
+            endparams
+            record
+                showValues, boolean
+                ix,         int
+                dataItems,  int
+                maxWidth,   float
+                bottom,     XYcoordinate
+            endrecord
+        proc
+            ;;If we don't have a first page then add one
+            if (this.PageNumber==0)
+                NewPage()
 
-			dataItems = aChartData.GetLength(1)
-			maxWidth = 0
-			
-			for ix from 1 thru dataItems
-			begin
-				data boxX, float, aTopX
-				data boxY, float, aTopY - (ix*15)
-				data labelX, float, boxX + 20
-				data labelY, float, boxY + 3
-				data thisWidth, float, pg.TextWidth(aChartData[ix].Label) + 20
-				
-				if (thisWidth > maxWidth)
-					maxWidth = thisWidth
+.ifdef DBLNET
+            showValues = aShowValues
+.else
+            if (^passed(aShowValues)) then 
+                showValues = aShowValues
+            else
+                showValues = false
+.endc
 
-				setCustomFillColor((PdfColor)(aChartData[ix].Color))
-				
-				pg.Rectangle(boxX,boxY,15,15)
-				pg.Fill()
-				
-				resetFillColor()
+            dataItems = aChartData.GetLength(1)
+            maxWidth = 0
+            
+            for ix from 1 thru dataItems
+            begin
+                data boxX, float, aTopX
+                data boxY, float, aTopY - (ix*15)
+                data labelX, float, boxX + 20
+                data labelY, float, boxY + 3
+                data thisLabel, string
+                data thisWidth, float
+                
+                if (showValues) then 
+                    thisLabel = aChartData[ix].Label + " (" + %string(aChartData[ix].DataValue) + ")"
+                else
+                    thisLabel = aChartData[ix].Label
+                
+                thisWidth = pg.TextWidth(thisLabel) + 20
+                
+                if (thisWidth > maxWidth)
+                    maxWidth = thisWidth
 
-				pg.BeginText()
-				pg.MoveTextPos(labelX,labelY)
-				pg.ShowText(aChartData[ix].Label)
-				pg.EndText()
-				
-			end
+                setCustomFillColor((PdfColor)(aChartData[ix].Color))
+                
+                pg.Rectangle(boxX,boxY,15,15)
+                pg.Fill()
+                
+                resetFillColor()
 
-			bottom.X = aTopX + maxWidth
-			bottom.Y = aTopY - (dataItems*15)
-			
-			mreturn bottom
-			
-		endmethod
+                pg.BeginText()
+                pg.MoveTextPos(labelX,labelY)
+                pg.ShowText(thisLabel)
+                pg.EndText()
+                
+            end
+
+            bottom.X = aTopX + maxWidth
+            bottom.Y = aTopY - (dataItems*15)
+            
+            mreturn bottom
+            
+        endmethod
 
         ;;---------------------------------------------------------------------
         ;;; <summary>
@@ -8614,12 +8637,12 @@ eof,
 
     ;;*********************************************************************
     ;;STRUCTURES
-		
-	public structure XYcoordinate
-		X, float
-		Y, float
-	endstructure
-	
+        
+    public structure XYcoordinate
+        X, float
+        Y, float
+    endstructure
+    
     ;;*********************************************************************
     ;;SUPPORTING CLASSES
 
@@ -9562,48 +9585,48 @@ eof,
     endclass
 
     ;;*********************************************************************
-	;;; <summary>
-	;;; Represents an item of data for a chart.
-	;;; </summary>
-	public class ChartData
-		
-		public method ChartData
-			required in aDataValue, float
-			required in aColor, PdfColor
-			required in aLabel, string
-		proc
-			DataValue = aDataValue
-			Color = (int)aColor
-			Label = aLabel
-		endmethod
-		
-		public property DataValue, float
-			method get
-			endmethod
-			private method set
-			endmethod
-		endproperty
-		
-		;TODO: BUG: This property should really be of type PdfColor, but can't because of
-		;a pretty bad DBL compiler bug related to using large ENUMS (over 127 members)
-		;anywhere in the proximity of a System.Array, and objects of this type are passed
-		;around in a System.Array.
-		public property Color, int
-			method get
-			endmethod
-			private method set
-			endmethod
-		endproperty
-		
-		public property Label, string
-			method get
-			endmethod
-			private method set
-			endmethod
-		endproperty
+    ;;; <summary>
+    ;;; Represents an item of data for a chart.
+    ;;; </summary>
+    public class ChartData
+        
+        public method ChartData
+            required in aDataValue, int
+            required in aColor, PdfColor
+            required in aLabel, string
+        proc
+            DataValue = aDataValue
+            Color = (int)aColor
+            Label = aLabel
+        endmethod
+        
+        public property DataValue, int
+            method get
+            endmethod
+            private method set
+            endmethod
+        endproperty
+        
+        ;TODO: BUG: This property should really be of type PdfColor, but can't because of
+        ;a pretty bad DBL compiler bug related to using large ENUMS (over 127 members)
+        ;anywhere in the proximity of a System.Array, and objects of this type are passed
+        ;around in a System.Array.
+        public property Color, int
+            method get
+            endmethod
+            private method set
+            endmethod
+        endproperty
+        
+        public property Label, string
+            method get
+            endmethod
+            private method set
+            endmethod
+        endproperty
 
-	endclass
-	
+    endclass
+    
     ;;*********************************************************************
     ;;ENUMERATIONS
 
