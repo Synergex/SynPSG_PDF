@@ -1,0 +1,43 @@
+
+import SynPSG.PDF
+
+subroutine BarChartTest
+    record
+        pdf, @PdfFile
+		bars, [#]@ChartData
+		bottom, XYcoordinate
+    endrecord
+proc
+    ;;Create a new PDF document
+    pdf = new PdfFile(,,,,,,,,,,,"OUTPUT:")
+
+    ;;Override the default file to prevent the date/time stamp prefix.
+    pdf.FileName = "BarChartTest.pdf"
+
+    ;;Ask reader applications to display a single page at a time
+    pdf.PageLayout = PdfPageLayout.Single
+
+	;;Add a title
+	pdf.DrawText("Let's Draw a Bar Chart",50,pdf.Height-100,PdfColor.DarkCandyapplered,"Courier-Bold",36)
+	
+	;;Define the slices of the pie
+	bars = new ChartData[4]
+	bars[1] = new ChartData(10,PdfColor.Red,"Sales three years ago")
+	bars[2] = new ChartData(20,PdfColor.Orange,"Sales two years ago")
+	bars[3] = new ChartData(30,PdfColor.Yellow,"Sales one year ago")
+	bars[4] = new ChartData(40,PdfColor.Green,"Sales so far this year!")
+
+    ;;Draw a bar chart
+	pdf.DrawBarChart(50,pdf.Height-300,pdf.Width-50,pdf.Height-600,0,bars)
+	
+	;Add a chart legend and draw a box around it
+	bottom = pdf.DrawChartLegend(215,620,bars)
+	pdf.DrawBox(210,625,bottom.X+5,bottom.Y-5)
+	
+    ;;Save the document and show the results
+    pdf.Preview()
+
+    xreturn
+
+endsubroutine
+

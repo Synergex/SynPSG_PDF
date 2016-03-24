@@ -165,6 +165,7 @@
             Filters="*.dbl;*.tpl;*.dbc">
             <F N="../SOURCE/EXAMPLES/AttachFileTest.dbl"/>
             <F N="../SOURCE/EXAMPLES/AutoItems.dbl"/>
+            <F N="../SOURCE/EXAMPLES/BarChartTest.dbl"/>
             <F N="../SOURCE/EXAMPLES/BlueAndRedBox.dbl"/>
             <F N="../SOURCE/EXAMPLES/CirclesTest.dbl"/>
             <F N="../SOURCE/EXAMPLES/DblMessagesReport.dbl"/>

@@ -4,16 +4,17 @@ namespace PdfTest
 
 		private btnAutoItemsTest, @System.Windows.Forms.Button
 		private btnBlueAndRedBoxTest, @System.Windows.Forms.Button
-		private btnDesignGridTest, @System.Windows.Forms.Button
 		private btnMixedPageOrientationTest, @System.Windows.Forms.Button
+		private btnDesignGridTest, @System.Windows.Forms.Button
 		private btnLandscape132Test, @System.Windows.Forms.Button
 		private components, @System.ComponentModel.IContainer
-		private btnDblMessagesReportTest, @System.Windows.Forms.Button
-		private btnHeaderBodyFooterTest, @System.Windows.Forms.Button
 		private btnPortrait100Test, @System.Windows.Forms.Button
+		private btnHeaderBodyFooterTest, @System.Windows.Forms.Button
+		private btnDblMessagesReportTest, @System.Windows.Forms.Button
 		private btnDeliveryTicketTest, @System.Windows.Forms.Button
-		private btnDrawCirclesTest, @System.Windows.Forms.Button
 		private btnPieChartTest, @System.Windows.Forms.Button
+		private btnDrawCirclesTest, @System.Windows.Forms.Button
+		private btnBarChartTest, @System.Windows.Forms.Button
 		private btnAttachFileTest, @System.Windows.Forms.Button
 
 		private method InitializeComponent, void
@@ -31,6 +32,7 @@ namespace PdfTest
 			this.btnAttachFileTest = new System.Windows.Forms.Button()
 			this.btnDrawCirclesTest = new System.Windows.Forms.Button()
 			this.btnPieChartTest = new System.Windows.Forms.Button()
+			this.btnBarChartTest = new System.Windows.Forms.Button()
 			this.SuspendLayout()
 			;; 
 			;; btnAutoItemsTest
@@ -75,7 +77,7 @@ namespace PdfTest
 			;; 
 			;; btnDesignGridTest
 			;; 
-			this.btnDesignGridTest.Location = new System.Drawing.Point(12, 245)
+			this.btnDesignGridTest.Location = new System.Drawing.Point(171, 199)
 			this.btnDesignGridTest.Name = "btnDesignGridTest"
 			this.btnDesignGridTest.Size = new System.Drawing.Size(153, 40)
 			this.btnDesignGridTest.TabIndex = 6
@@ -135,7 +137,7 @@ namespace PdfTest
 			;; 
 			;; btnDrawCirclesTest
 			;; 
-			this.btnDrawCirclesTest.Location = new System.Drawing.Point(171, 199)
+			this.btnDrawCirclesTest.Location = new System.Drawing.Point(330, 15)
 			this.btnDrawCirclesTest.Name = "btnDrawCirclesTest"
 			this.btnDrawCirclesTest.Size = new System.Drawing.Size(153, 40)
 			this.btnDrawCirclesTest.TabIndex = 11
@@ -145,7 +147,7 @@ namespace PdfTest
 			;; 
 			;; btnPieChartTest
 			;; 
-			this.btnPieChartTest.Location = new System.Drawing.Point(171, 245)
+			this.btnPieChartTest.Location = new System.Drawing.Point(330, 61)
 			this.btnPieChartTest.Name = "btnPieChartTest"
 			this.btnPieChartTest.Size = new System.Drawing.Size(153, 40)
 			this.btnPieChartTest.TabIndex = 12
@@ -153,9 +155,20 @@ namespace PdfTest
 			this.btnPieChartTest.UseVisualStyleBackColor = true
 			addhandler(this.btnPieChartTest.Click, new System.EventHandler(this.btnPieChartTest_Click))
 			;; 
+			;; btnBarChartTest
+			;; 
+			this.btnBarChartTest.Location = new System.Drawing.Point(330, 107)
+			this.btnBarChartTest.Name = "btnBarChartTest"
+			this.btnBarChartTest.Size = new System.Drawing.Size(153, 40)
+			this.btnBarChartTest.TabIndex = 13
+			this.btnBarChartTest.Text = "Bar Chart Test"
+			this.btnBarChartTest.UseVisualStyleBackColor = true
+			addhandler(this.btnBarChartTest.Click, new System.EventHandler(this.btnBarChartTest_Click))
+			;; 
 			;; Form1
 			;; 
-			this.ClientSize = new System.Drawing.Size(336, 302)
+			this.ClientSize = new System.Drawing.Size(490, 247)
+			this.Controls.Add(this.btnBarChartTest)
 			this.Controls.Add(this.btnPieChartTest)
 			this.Controls.Add(this.btnDrawCirclesTest)
 			this.Controls.Add(this.btnAttachFileTest)

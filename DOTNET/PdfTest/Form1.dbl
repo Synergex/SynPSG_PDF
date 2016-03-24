@@ -111,6 +111,14 @@ namespace PdfTest
 			xcall PieChartTest()
 		endmethod
 		
+		private method btnBarChartTest_Click, void
+			sender, @object 
+			e, @System.EventArgs 
+			endparams
+		proc
+			xcall BarChartTest()
+		endmethod
+		
 	endclass
 	
 endnamespace

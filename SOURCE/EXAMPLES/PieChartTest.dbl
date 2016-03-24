@@ -4,7 +4,8 @@ import SynPSG.PDF
 subroutine PieChartTest
     record
         pdf, @PdfFile
-		slices, [#]@PieSlice
+		slices, [#]@ChartData
+		bottom, XYcoordinate
     endrecord
 proc
     ;;Create a new PDF document
@@ -20,14 +21,18 @@ proc
 	pdf.DrawText("Let's Draw a Pie Chart",50,pdf.Height-100,PdfColor.DarkCandyapplered,"Courier-Bold",36)
 	
 	;;Define the slices of the pie
-	slices = new PieSlice[4]
-	slices[1] = new PieSlice(10,PdfColor.Red)
-	slices[2] = new PieSlice(20,PdfColor.Orange)
-	slices[3] = new PieSlice(30,PdfColor.Yellow)
-	slices[4] = new PieSlice(40,PdfColor.Green)
+	slices = new ChartData[4]
+	slices[1] = new ChartData(10,PdfColor.Red,"Sales three years ago")
+	slices[2] = new ChartData(20,PdfColor.Orange,"Sales two years ago")
+	slices[3] = new ChartData(30,PdfColor.Yellow,"Sales one year ago")
+	slices[4] = new ChartData(40,PdfColor.Green,"Sales so far this year!")
 
     ;;Draw a pie chart
 	pdf.DrawPieChart(300,300,200,slices)
+	
+	;Add a chart legend and draw a box around it
+	bottom = pdf.DrawChartLegend(215,620,slices)
+	pdf.DrawBox(210,625,bottom.X+5,bottom.Y-5)
 
     ;;Save the document and show the results
     pdf.Preview()
