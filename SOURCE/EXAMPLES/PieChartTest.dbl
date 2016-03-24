@@ -4,8 +4,8 @@ import SynPSG.PDF
 subroutine PieChartTest
     record
         pdf, @PdfFile
-		slices, [#]@ChartData
-		bottom, XYcoordinate
+        slices, @ChartSeries
+        bottom, XYcoordinate
     endrecord
 proc
     ;;Create a new PDF document
@@ -17,22 +17,22 @@ proc
     ;;Ask reader applications to display a single page at a time
     pdf.PageLayout = PdfPageLayout.Single
 
-	;;Add a title
-	pdf.DrawText("Let's Draw a Pie Chart",50,pdf.Height-100,PdfColor.DarkCandyapplered,"Courier-Bold",36)
-	
-	;;Define the slices of the pie
-	slices = new ChartData[4]
-	slices[1] = new ChartData(10,PdfColor.Red,"Sales three years ago")
-	slices[2] = new ChartData(20,PdfColor.Orange,"Sales two years ago")
-	slices[3] = new ChartData(30,PdfColor.Yellow,"Sales one year ago")
-	slices[4] = new ChartData(40,PdfColor.Green,"Sales so far this year!")
+    ;;Add a title
+    pdf.DrawText("Let's Draw a Pie Chart",50,pdf.Height-100,PdfColor.DarkCandyapplered,"Courier-Bold",36)
+    
+    ;;Define the slices of the pie
+    slices = new ChartSeries(4)
+    slices.Items[1] = new ChartItem(10,"Sales three years ago",PdfColor.Red)
+    slices.Items[2] = new ChartItem(20,"Sales two years ago",PdfColor.Orange)
+    slices.Items[3] = new ChartItem(30,"Sales one year ago",PdfColor.Yellow)
+    slices.Items[4] = new ChartItem(40,"Sales so far this year!",PdfColor.Green)
 
     ;;Draw a pie chart
-	pdf.DrawPieChart(300,300,200,slices)
-	
-	;Add a chart legend and draw a box around it
-	bottom = pdf.DrawChartLegend(215,620,slices)
-	pdf.DrawBox(210,625,bottom.X+5,bottom.Y-5)
+    pdf.DrawPieChart(300,300,200,slices,PdfColor.PaleGold)
+    
+    ;Add a chart legend and draw a box around it
+    bottom = pdf.DrawSingleSeriesChartLegend(215,620,slices)
+    pdf.DrawBox(210,625,bottom.X+5,bottom.Y-5)
 
     ;;Save the document and show the results
     pdf.Preview()

@@ -116,7 +116,15 @@ namespace PdfTest
 			e, @System.EventArgs 
 			endparams
 		proc
-			xcall BarChartTest()
+			xcall SingleSeriesBarChart()
+		endmethod
+		
+		private method btnBarChartTest2_Click, void
+			sender, @object 
+			e, @System.EventArgs 
+			endparams
+		proc
+			xcall MultiSeriesBarChart()
 		endmethod
 		
 	endclass

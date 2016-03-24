@@ -165,7 +165,6 @@
             Filters="*.dbl;*.tpl;*.dbc">
             <F N="../SOURCE/EXAMPLES/AttachFileTest.dbl"/>
             <F N="../SOURCE/EXAMPLES/AutoItems.dbl"/>
-            <F N="../SOURCE/EXAMPLES/BarChartTest.dbl"/>
             <F N="../SOURCE/EXAMPLES/BlueAndRedBox.dbl"/>
             <F N="../SOURCE/EXAMPLES/CirclesTest.dbl"/>
             <F N="../SOURCE/EXAMPLES/DblMessagesReport.dbl"/>
@@ -174,9 +173,11 @@
             <F N="../SOURCE/EXAMPLES/HeaderBodyFooter.dbl"/>
             <F N="../SOURCE/EXAMPLES/Landscape132.dbl"/>
             <F N="../SOURCE/EXAMPLES/MixedPageOrientation.dbl"/>
+            <F N="../SOURCE/EXAMPLES/MultiSeriesBarChart.dbl"/>
             <F N="../SOURCE/EXAMPLES/PdfTest.dbl"/>
             <F N="../SOURCE/EXAMPLES/PieChartTest.dbl"/>
             <F N="../SOURCE/EXAMPLES/Portrait100.dbl"/>
+            <F N="../SOURCE/EXAMPLES/SingleSeriesBarChart.dbl"/>
         </Folder>
         <Folder
             Name="Header Files"

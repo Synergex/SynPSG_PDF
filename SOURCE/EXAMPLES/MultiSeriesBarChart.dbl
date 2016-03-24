@@ -1,0 +1,94 @@
+import SynPSG.PDF
+
+subroutine MultiSeriesBarChart
+    record
+        pdf,        @PdfFile
+        chartData,  @ChartMultiSeries
+        bottom,     XYcoordinate
+    endrecord
+proc
+    ;;Create a new PDF document
+    pdf = new PdfFile()
+
+    ;;Add a title
+    pdf.DrawText("Multiple-Series Bar Chart Example",50,pdf.Height-70,PdfColor.DarkCandyapplered,"Courier-Bold",24)
+
+    ;;Create a chart data object to contain 3 series of data with 12 items per series
+    chartData = new ChartMultiSeries(3,12)
+
+    ;;Specify the labels to be displayed below each group
+    chartData.GroupLabel[1] = "Jan"
+    chartData.GroupLabel[2] = "Feb"
+    chartData.GroupLabel[3] = "Mar"
+    chartData.GroupLabel[4] = "Apr"
+    chartData.GroupLabel[5] = "May"
+    chartData.GroupLabel[6] = "Jun"
+    chartData.GroupLabel[7] = "Jul"
+    chartData.GroupLabel[8] = "Aug"
+    chartData.GroupLabel[9] = "Sep"
+    chartData.GroupLabel[10] = "Oct"
+    chartData.GroupLabel[11] = "Nov"
+    chartData.GroupLabel[12] = "Dec"
+    
+    ;;Specify the data for the second series
+    chartData.Series[1].Label = "Last year"
+    chartData.Series[1].Color = (int)PdfColor.DarkGreen
+    chartData.Series[1].Items[1].DataValue = 9
+    chartData.Series[1].Items[2].DataValue = 14
+    chartData.Series[1].Items[3].DataValue = 23
+    chartData.Series[1].Items[4].DataValue = 18
+    chartData.Series[1].Items[5].DataValue = 17
+    chartData.Series[1].Items[6].DataValue = 9
+    chartData.Series[1].Items[7].DataValue = 4
+    chartData.Series[1].Items[8].DataValue = 5
+    chartData.Series[1].Items[9].DataValue = 20
+    chartData.Series[1].Items[10].DataValue = 23
+    chartData.Series[1].Items[11].DataValue = 17
+    chartData.Series[1].Items[12].DataValue = 12
+
+    ;;Specify the data for the first series
+    chartData.Series[2].Label = "Current year goal"
+    chartData.Series[2].Color = (int)PdfColor.Red
+    chartData.Series[2].Items[1].DataValue = 10
+    chartData.Series[2].Items[2].DataValue = 15
+    chartData.Series[2].Items[3].DataValue = 23
+    chartData.Series[2].Items[4].DataValue = 19
+    chartData.Series[2].Items[5].DataValue = 18
+    chartData.Series[2].Items[6].DataValue = 10
+    chartData.Series[2].Items[7].DataValue = 5
+    chartData.Series[2].Items[8].DataValue = 7
+    chartData.Series[2].Items[9].DataValue = 22
+    chartData.Series[2].Items[10].DataValue = 23
+    chartData.Series[2].Items[11].DataValue = 17
+    chartData.Series[2].Items[12].DataValue = 14
+    
+    ;;Specify the data for the second series
+    chartData.Series[3].Label = "Current year actual"
+    chartData.Series[3].Color = (int)PdfColor.DarkBlue
+    chartData.Series[3].Items[1].DataValue = 12
+    chartData.Series[3].Items[2].DataValue = 14
+    chartData.Series[3].Items[3].DataValue = 24
+    chartData.Series[3].Items[4].DataValue = 12
+    chartData.Series[3].Items[5].DataValue = 15
+    chartData.Series[3].Items[6].DataValue = 14
+    chartData.Series[3].Items[7].DataValue = 7
+    chartData.Series[3].Items[8].DataValue = 9
+    chartData.Series[3].Items[9].DataValue = 0
+    chartData.Series[3].Items[10].DataValue = 0
+    chartData.Series[3].Items[11].DataValue = 0
+    chartData.Series[3].Items[12].DataValue = 0
+
+    ;;Draw the bar chart
+    pdf.DrawMultiSeriesBarChart(50,pdf.Height-100,pdf.Width-50,pdf.Height-400,5,chartData,PdfColor.PaleGold)
+
+    ;Add a chart legend and draw a box around it
+    bottom = pdf.DrawMultiSeriesChartLegend(55,pdf.Height-430,chartData)
+    pdf.DrawBox(50,pdf.Height-425,bottom.X+5,bottom.Y-5)
+
+    ;;Save the document and show the results
+    pdf.Preview()
+
+    xreturn
+
+endsubroutine
+

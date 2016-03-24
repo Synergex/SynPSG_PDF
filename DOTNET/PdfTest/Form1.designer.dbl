@@ -14,7 +14,8 @@ namespace PdfTest
 		private btnDeliveryTicketTest, @System.Windows.Forms.Button
 		private btnPieChartTest, @System.Windows.Forms.Button
 		private btnDrawCirclesTest, @System.Windows.Forms.Button
-		private btnBarChartTest, @System.Windows.Forms.Button
+		private btnBarChartTest1, @System.Windows.Forms.Button
+		private btnBarChartTest2, @System.Windows.Forms.Button
 		private btnAttachFileTest, @System.Windows.Forms.Button
 
 		private method InitializeComponent, void
@@ -32,7 +33,8 @@ namespace PdfTest
 			this.btnAttachFileTest = new System.Windows.Forms.Button()
 			this.btnDrawCirclesTest = new System.Windows.Forms.Button()
 			this.btnPieChartTest = new System.Windows.Forms.Button()
-			this.btnBarChartTest = new System.Windows.Forms.Button()
+			this.btnBarChartTest1 = new System.Windows.Forms.Button()
+			this.btnBarChartTest2 = new System.Windows.Forms.Button()
 			this.SuspendLayout()
 			;; 
 			;; btnAutoItemsTest
@@ -155,20 +157,31 @@ namespace PdfTest
 			this.btnPieChartTest.UseVisualStyleBackColor = true
 			addhandler(this.btnPieChartTest.Click, new System.EventHandler(this.btnPieChartTest_Click))
 			;; 
-			;; btnBarChartTest
+			;; btnBarChartTest1
 			;; 
-			this.btnBarChartTest.Location = new System.Drawing.Point(330, 107)
-			this.btnBarChartTest.Name = "btnBarChartTest"
-			this.btnBarChartTest.Size = new System.Drawing.Size(153, 40)
-			this.btnBarChartTest.TabIndex = 13
-			this.btnBarChartTest.Text = "Bar Chart Test"
-			this.btnBarChartTest.UseVisualStyleBackColor = true
-			addhandler(this.btnBarChartTest.Click, new System.EventHandler(this.btnBarChartTest_Click))
+			this.btnBarChartTest1.Location = new System.Drawing.Point(330, 107)
+			this.btnBarChartTest1.Name = "btnBarChartTest1"
+			this.btnBarChartTest1.Size = new System.Drawing.Size(153, 40)
+			this.btnBarChartTest1.TabIndex = 13
+			this.btnBarChartTest1.Text = "Bar Chart (Single)"
+			this.btnBarChartTest1.UseVisualStyleBackColor = true
+			addhandler(this.btnBarChartTest1.Click, new System.EventHandler(this.btnBarChartTest_Click))
+			;; 
+			;; btnBarChartTest2
+			;; 
+			this.btnBarChartTest2.Location = new System.Drawing.Point(330, 153)
+			this.btnBarChartTest2.Name = "btnBarChartTest2"
+			this.btnBarChartTest2.Size = new System.Drawing.Size(153, 40)
+			this.btnBarChartTest2.TabIndex = 14
+			this.btnBarChartTest2.Text = "Bar Chart (Multiple)"
+			this.btnBarChartTest2.UseVisualStyleBackColor = true
+			addhandler(this.btnBarChartTest2.Click, new System.EventHandler(this.btnBarChartTest2_Click))
 			;; 
 			;; Form1
 			;; 
 			this.ClientSize = new System.Drawing.Size(490, 247)
-			this.Controls.Add(this.btnBarChartTest)
+			this.Controls.Add(this.btnBarChartTest2)
+			this.Controls.Add(this.btnBarChartTest1)
 			this.Controls.Add(this.btnPieChartTest)
 			this.Controls.Add(this.btnDrawCirclesTest)
 			this.Controls.Add(this.btnAttachFileTest)

@@ -28,7 +28,7 @@ proc
     chartData.Items[4] = new ChartItem(40,"Sales so far this year!",PdfColor.Green)
 
     ;;Draw a bar chart
-    pdf.DrawSingleSeriesBarChart(50,pdf.Height-300,pdf.Width-50,pdf.Height-600,10,chartData,PdfColor.AntiqueWhite)
+    pdf.DrawSingleSeriesBarChart(50,pdf.Height-300,pdf.Width-50,pdf.Height-600,10,chartData,PdfColor.Palegold)
 
     ;Add a chart legend and draw a box around it
     bottom = pdf.DrawSingleSeriesChartLegend(215,620,chartData,true)
