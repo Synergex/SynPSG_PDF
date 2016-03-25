@@ -8,7 +8,13 @@ subroutine MultiSeriesBarChart
     endrecord
 proc
     ;;Create a new PDF document
-    pdf = new PdfFile()
+    pdf = new PdfFile(,,,,,,,,,,,"OUTPUT:")
+
+    ;;Override the default file to prevent the date/time stamp prefix.
+    pdf.FileName = "MultiSeriesBarChart.pdf"
+
+    ;;Ask reader applications to display a single page at a time
+    pdf.PageLayout = PdfPageLayout.Single
 
     ;;Add a title
     pdf.DrawText("Multiple-Series Bar Chart Example",50,pdf.Height-70,PdfColor.DarkCandyapplered,"Courier-Bold",24)

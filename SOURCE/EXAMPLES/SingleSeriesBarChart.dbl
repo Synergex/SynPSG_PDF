@@ -12,7 +12,7 @@ proc
     pdf = new PdfFile(,,,,,,,,,,,"OUTPUT:")
 
     ;;Override the default file to prevent the date/time stamp prefix.
-    pdf.FileName = "BarChartTest.pdf"
+    pdf.FileName = "SingleSeriesBarChart.pdf"
 
     ;;Ask reader applications to display a single page at a time
     pdf.PageLayout = PdfPageLayout.Single
