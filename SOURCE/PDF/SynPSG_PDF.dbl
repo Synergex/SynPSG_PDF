@@ -4541,11 +4541,7 @@ eof,
             endrecord
         proc
             now = %datetime
-.ifdef OS_VMS
-            mreturn %string(^d(now(1:14)),"XXXX-XX-XX XX.XX.XX")
-.else
             mreturn %string(^d(now(1:14)),"XXXX-XX-XX_XX-XX-XX")
-.endc
         endmethod
 
         ;;---------------------------------------------------------------------
