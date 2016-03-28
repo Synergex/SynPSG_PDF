@@ -1884,11 +1884,7 @@ eof,
                     barStartY += 15
                 
                 ;Set the fill color for this slice. This must be done before we start drawing.
-                ;TODO: BUG: The PieSlice.Color property should really be of type PdfColor, but
-                ;can't be bacause of a really bad DBL compiler bug related to using large enums
-                ;(over 127 members) anywhere near a System.Array. That's why the (PdfColor)
-                ;cast is necessary here.
-                setCustomFillColor((PdfColor)(aChartData.Series[ixSeries].Color))
+                setCustomFillColor(aChartData.Series[ixSeries].Color)
 
                 for ixSeriesMember from 1 thru aChartData.Series[ixSeries].Items.GetLength(1)
                 begin
@@ -2068,11 +2064,7 @@ eof,
             for ix from 1 thru aChartData.Items.GetLength(1)
             begin
                 ;Set the fill color for this slice. This must be done before we start drawing.
-                ;TODO: BUG: The PieSlice.Color property should really be of type PdfColor, but
-                ;can't be bacause of a really bad DBL compiler bug related to using large enums
-                ;(over 127 members) anywhere near a System.Array. That's why the (PdfColor)
-                ;cast is necessary here.
-                setCustomFillColor((PdfColor)(aChartData.Items[ix].Color))
+                setCustomFillColor(aChartData.Items[ix].Color)
                 
                 ;;Calculate the number of percent we will have covered after this slice,
                 ;;and the compass angle of the end of the arc associated with this slice
@@ -2179,11 +2171,7 @@ eof,
                 data barStartX, float
 
                 ;Set the fill color for this slice. This must be done before we start drawing.
-                ;TODO: BUG: The PieSlice.Color property should really be of type PdfColor, but
-                ;can't be bacause of a really bad DBL compiler bug related to using large enums
-                ;(over 127 members) anywhere near a System.Array. That's why the (PdfColor)
-                ;cast is necessary here.
-                setCustomFillColor((PdfColor)(aChartSeries.Items[ix].Color))
+                setCustomFillColor(aChartSeries.Items[ix].Color)
 
                 ;;Calculate the height of the bar for the current data item
                 barHeight = maxBarHeight * (aChartSeries.Items[ix].DataValue / highestValue)
@@ -9870,7 +9858,7 @@ eof,
         proc
             DataValue = aDataValue
             Label = aLabel
-            Color = (int)PdfColor.Black
+            Color = PdfColor.Black
         endmethod
         
         public method ChartItem
@@ -9880,7 +9868,7 @@ eof,
             endparams
             this(aDataValue,aLabel)
         proc
-            Color = (int)aColor
+            Color = aColor
         endmethod
 
         public method ChartItem
@@ -9888,29 +9876,43 @@ eof,
             this(0,"")
         proc
         endmethod
-
+        
+        private mDataValue, int
+        
         public property DataValue, int
             method get
+            proc
+                mreturn mDataValue
             endmethod
             method set
+            proc
+                mDataValue = value
             endmethod
         endproperty
         
-        ;TODO: BUG: This property should really be of type PdfColor, but can't because of
-        ;a pretty bad DBL compiler bug related to using large ENUMS (over 127 members)
-        ;anywhere in the proximity of a System.Array, and objects of this type are passed
-        ;around in a System.Array.
-        public property Color, int
+        private mColor, PdfColor
+        
+        public property Color, PdfColor
             method get
+            proc
+                mreturn mColor
             endmethod
             method set
+            proc
+                mColor = value
             endmethod
         endproperty
-        
+
+        private mLabel, string
+
         public property Label, string
             method get
+            proc
+                mreturn mLabel
             endmethod
             method set
+            proc
+                mLabel = value
             endmethod
         endproperty
 
@@ -9947,21 +9949,29 @@ eof,
             endmethod
         endproperty
         
-        ;TODO: BUG: This property should really be of type PdfColor, but can't because of
-        ;a pretty bad DBL compiler bug related to using large ENUMS (over 127 members)
-        ;anywhere in the proximity of a System.Array, and objects of this type are passed
-        ;around in a System.Array.
-        public property Color, int
+        private mColor, PdfColor
+
+        public property Color, PdfColor
             method get
+            proc
+                mreturn mColor
             endmethod
             method set
+            proc
+                mColor = value
             endmethod
         endproperty
-
+        
+        private mLabel, string
+        
         public property Label, string
             method get
+            proc
+                mreturn mLabel
             endmethod
             method set
+            proc
+                mLabel = value
             endmethod
         endproperty
         

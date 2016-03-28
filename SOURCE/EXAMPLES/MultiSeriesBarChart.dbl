@@ -38,7 +38,7 @@ proc
     
     ;;Specify the data for the second series
     chartData.Series[1].Label = "Last Year"
-    chartData.Series[1].Color = (int)PdfColor.Red
+    chartData.Series[1].Color = PdfColor.Red
     chartData.Series[1].Items[1].DataValue = 9
     chartData.Series[1].Items[2].DataValue = 14
     chartData.Series[1].Items[3].DataValue = 23
@@ -54,7 +54,7 @@ proc
 
     ;;Specify the data for the first series
     chartData.Series[2].Label = "Current Year Plan"
-    chartData.Series[2].Color = (int)PdfColor.DarkGreen
+    chartData.Series[2].Color = PdfColor.DarkGreen
     chartData.Series[2].Items[1].DataValue = 10
     chartData.Series[2].Items[2].DataValue = 15
     chartData.Series[2].Items[3].DataValue = 23
@@ -70,7 +70,7 @@ proc
     
     ;;Specify the data for the second series
     chartData.Series[3].Label = "Current Year Actual"
-    chartData.Series[3].Color = (int)PdfColor.Blue
+    chartData.Series[3].Color = PdfColor.Blue
     chartData.Series[3].Items[1].DataValue = 12
     chartData.Series[3].Items[2].DataValue = 14
     chartData.Series[3].Items[3].DataValue = 24
