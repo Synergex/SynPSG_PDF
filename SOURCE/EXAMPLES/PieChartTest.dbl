@@ -18,7 +18,7 @@ proc
     pdf.PageLayout = PdfPageLayout.Single
 
     ;;Add a title
-    pdf.DrawText("Let's Draw a Pie Chart",50,pdf.Height-100,PdfColor.DarkCandyapplered,"Courier-Bold",36)
+    pdf.DrawText("Sales YTD vs Recent Years",50,pdf.Height-100,PdfColor.DarkCandyapplered,"Courier-Bold",24)
     
     ;;Define the slices of the pie
     slices = new ChartSeries(4)
@@ -28,11 +28,11 @@ proc
     slices.Items[4] = new ChartItem(40,"Sales so far this year!",PdfColor.Green)
 
     ;;Draw a pie chart
-    pdf.DrawPieChart(300,300,200,slices,PdfColor.PaleGold)
+    pdf.DrawPieChart(250,pdf.Height-330,200,slices,PdfColor.LightBlue)
     
     ;Add a chart legend and draw a box around it
-    bottom = pdf.DrawSingleSeriesChartLegend(215,620,slices)
-    pdf.DrawBox(210,625,bottom.X+5,bottom.Y-5)
+    bottom = pdf.DrawSingleSeriesChartLegend(55,230,slices,true)
+    pdf.DrawBox(50,235,bottom.X+5,bottom.Y-5)
 
     ;;Save the document and show the results
     pdf.Preview()

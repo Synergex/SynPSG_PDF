@@ -17,7 +17,7 @@ proc
     pdf.PageLayout = PdfPageLayout.Single
 
     ;;Add a title
-    pdf.DrawText("Multiple-Series Bar Chart Example",50,pdf.Height-70,PdfColor.DarkCandyapplered,"Courier-Bold",24)
+    pdf.DrawText("Current Sales vs Last Year and Plan",50,pdf.Height-70,PdfColor.DarkCandyapplered,"Courier-Bold",24)
 
     ;;Create a chart data object to contain 3 series of data with 12 items per series
     chartData = new ChartMultiSeries(3,12)
@@ -37,8 +37,8 @@ proc
     chartData.GroupLabel[12] = "Dec"
     
     ;;Specify the data for the second series
-    chartData.Series[1].Label = "Last year"
-    chartData.Series[1].Color = (int)PdfColor.DarkGreen
+    chartData.Series[1].Label = "Last Year"
+    chartData.Series[1].Color = (int)PdfColor.Red
     chartData.Series[1].Items[1].DataValue = 9
     chartData.Series[1].Items[2].DataValue = 14
     chartData.Series[1].Items[3].DataValue = 23
@@ -53,8 +53,8 @@ proc
     chartData.Series[1].Items[12].DataValue = 12
 
     ;;Specify the data for the first series
-    chartData.Series[2].Label = "Current year goal"
-    chartData.Series[2].Color = (int)PdfColor.Red
+    chartData.Series[2].Label = "Current Year Plan"
+    chartData.Series[2].Color = (int)PdfColor.DarkGreen
     chartData.Series[2].Items[1].DataValue = 10
     chartData.Series[2].Items[2].DataValue = 15
     chartData.Series[2].Items[3].DataValue = 23
@@ -69,8 +69,8 @@ proc
     chartData.Series[2].Items[12].DataValue = 14
     
     ;;Specify the data for the second series
-    chartData.Series[3].Label = "Current year actual"
-    chartData.Series[3].Color = (int)PdfColor.DarkBlue
+    chartData.Series[3].Label = "Current Year Actual"
+    chartData.Series[3].Color = (int)PdfColor.Blue
     chartData.Series[3].Items[1].DataValue = 12
     chartData.Series[3].Items[2].DataValue = 14
     chartData.Series[3].Items[3].DataValue = 24
@@ -85,7 +85,7 @@ proc
     chartData.Series[3].Items[12].DataValue = 0
 
     ;;Draw the bar chart
-    pdf.DrawMultiSeriesBarChart(50,pdf.Height-100,pdf.Width-50,pdf.Height-400,5,chartData,PdfColor.PaleGold)
+    pdf.DrawMultiSeriesBarChart(50,pdf.Height-100,pdf.Width-50,pdf.Height-400,10,chartData,PdfColor.LightBlue)
 
     ;Add a chart legend and draw a box around it
     bottom = pdf.DrawMultiSeriesChartLegend(55,pdf.Height-430,chartData)
