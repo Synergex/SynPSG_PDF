@@ -6,6 +6,7 @@ main PdfTest
         tt,         i4
         wid,        i4
         aoption,    a2
+		demoname,	string
     endrecord
 proc
     xcall flags(7004020,1)
@@ -29,101 +30,42 @@ proc
     &   WD_POS,13,10,"12. Pie Chart Test",
     &   WD_POS,14,10,"13. Bar Chart Test (Single data series)",
     &   WD_POS,15,10,"14. Bar Chart Test (Multiple data series)",
-    &   WD_POS,17,10,"Select an option (E to exit): ")
+    &   WD_POS,16,10,"15. Information Page",
+    &   WD_POS,18,10,"Select an option (E to exit): ")
 
     repeat
     begin
-        xcall w_disp(wid,WD_POS,17,40,"  ",WD_POS,17,40,WD_READS,aoption)
+        xcall w_disp(wid,WD_POS,18,40,"  ",WD_POS,18,40,WD_READS,aoption)
         upcase aoption
 
+		demoname = ""
+		
         using aoption select
-        ("1 "),
-        begin
-            call StartTestMessage
-            xcall AttachFileTest
-            call CompletionMessage
-        end
-        ("2 "),
-        begin
-            call StartTestMessage
-            xcall AutoItems
-            call CompletionMessage
-        end
-        ("3 "),
-        begin
-            call StartTestMessage
-            xcall BlueAndRedBox
-            call CompletionMessage
-        end
-        ("4 "),
-        begin
-            call StartTestMessage
-            xcall DblMessagesReport
-            call CompletionMessage
-        end
-        ("5 "),
-        begin
-            call StartTestMessage
-            xcall DeliveryTicket
-            call CompletionMessage
-        end
-        ("6 "),
-        begin
-            call StartTestMessage
-            xcall DesignGrid
-            call CompletionMessage
-        end
-        ("7 "),
-        begin
-            call StartTestMessage
-            xcall HeaderBodyFooter
-            call CompletionMessage
-        end
-        ("8 "),
-        begin
-            call StartTestMessage
-            xcall Landscape132
-            call CompletionMessage
-        end
-        ("9 "),
-        begin
-            call StartTestMessage
-            xcall MixedPageOrientation
-            call CompletionMessage
-        end
-        ("10"),
-        begin
-            call StartTestMessage
-            xcall Portrait100
-            call CompletionMessage
-        end
-        ("11"),
-        begin
-            call StartTestMessage
-            xcall CirclesTest
-            call CompletionMessage
-        end
-        ("12"),
-        begin
-            call StartTestMessage
-            xcall PieChartTest
-            call CompletionMessage
-        end
-        ("13"),
-        begin
-            call StartTestMessage
-            xcall SingleSeriesBarChart
-            call CompletionMessage
-        end
-        ("14"),
-        begin
-            call StartTestMessage
-            xcall MultiSeriesBarChart
-            call CompletionMessage
-        end
-        ("E "),
-            exitloop
+        ("1 "),	demoname = "AttachFileTest"
+        ("2 "), demoname = "AutoItems"
+        ("3 "), demoname = "xcall BlueAndRedBox"
+        ("4 "), demoname = "DblMessagesReport"
+        ("5 "), demoname = "DeliveryTicket"
+        ("6 "), demoname = "DesignGrid"
+        ("7 "), demoname = "HeaderBodyFooter"
+        ("8 "), demoname = "Landscape132"
+        ("9 "), demoname = "MixedPageOrientation"
+        ("10"), demoname = "Portrait100"
+        ("11"), demoname = "CirclesTest"
+        ("12"), demoname = "PieChartTest"
+        ("13"), demoname = "SingleSeriesBarChart"
+        ("14"), demoname = "MultiSeriesBarChart"
+		("15"), demoname = "InfoPage"
+        ("E "), exitloop
         endusing
+
+		if (demoname.Length > 0)
+		begin
+			call StartTestMessage
+			xcall xsubr(demoname)
+			call CompletionMessage
+		end
+
     end
 
     xcall w_exit
@@ -133,16 +75,16 @@ proc
 
 StartTestMessage,
 
-    xcall w_disp(wid,WD_POS,19,10,"Running test...")
+    xcall w_disp(wid,WD_POS,20,10,"Running test...")
     xcall w_updt
     return
 
 CompletionMessage,
 
-    xcall w_disp(wid,WD_POS,19,10,"PDF created, check the output folder.")
+    xcall w_disp(wid,WD_POS,20,10,"PDF created, check the output folder.")
     xcall w_updt
     sleep 0.7
-    xcall w_disp(wid,WD_POS,19,10,WD_CLR,WDC_EOL)
+    xcall w_disp(wid,WD_POS,20,10,WD_CLR,WDC_EOL)
     return
 
 endmain
