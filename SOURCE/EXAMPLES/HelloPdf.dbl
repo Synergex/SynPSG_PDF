@@ -1,0 +1,21 @@
+
+import SynPSG.PDF
+
+subroutine HelloPdf
+    record
+        pdf, @PdfFile
+    endrecord
+proc
+    ;;Create a new PDF document
+    pdf = new PdfFile()
+
+    ;;Add some content
+    pdf.DrawTextRC("Hello PDF!")
+
+    ;;Save the document and show the results
+    pdf.Preview()
+
+    xreturn
+
+endsubroutine
+

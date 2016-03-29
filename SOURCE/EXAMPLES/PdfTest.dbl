@@ -1,3 +1,4 @@
+
 main PdfTest
 
     .include "WND:windows.def"
@@ -6,7 +7,7 @@ main PdfTest
         tt,         i4
         wid,        i4
         aoption,    a2
-		demoname,	string
+		demo,		string
     endrecord
 proc
     xcall flags(7004020,1)
@@ -16,75 +17,120 @@ proc
     xcall w_caption(WC_SET,"SynPSG_PDF Test Program")
 
     xcall w_disp(wid,
-    &   WD_POS, 2,10,"1.  Attach File Test",
-    &   WD_POS, 3,10,"2.  Auto Items Test",
-    &   WD_POS, 4,10,"3.  Blue and Red Boxes Test",
-    &   WD_POS, 5,10,"4.  DBL Messages Report Test",
-    &   WD_POS, 6,10,"5.  Delivery Ticket Test",
-    &   WD_POS, 7,10,"6.  Design Grid Test",
-    &   WD_POS, 8,10,"7.  Header, Body and Footer Test",
-    &   WD_POS, 9,10,"8.  Landscape 132 Column Test",
-    &   WD_POS,10,10,"9.  Mixed Page Orientation Test",
-    &   WD_POS,11,10,"10. Portrait 100 Column Test",
-    &   WD_POS,12,10,"11. Circles Test",
-    &   WD_POS,13,10,"12. Pie Chart Test",
-    &   WD_POS,14,10,"13. Bar Chart Test (Single data series)",
-    &   WD_POS,15,10,"14. Bar Chart Test (Multiple data series)",
-    &   WD_POS,16,10,"15. Information Page",
-    &   WD_POS,18,10,"Select an option (E to exit): ")
+    &   WD_POS, 2, 2,"1.  Hello PDF",
+    &   WD_POS, 3, 2,"2.  Attach File Test",
+    &   WD_POS, 4, 2,"3.  Auto Items Test",
+    &   WD_POS, 5, 2,"4.  Blue and Red Boxes Test",
+    &   WD_POS, 6, 2,"5.  DBL Messages Report Test",
+    &   WD_POS, 7, 2,"6.  Delivery Ticket Test",
+    &   WD_POS, 8, 2,"7.  Design Grid Test",
+    &   WD_POS, 9, 2,"8.  Header, Body and Footer Test",
+    &   WD_POS,10, 2,"9.  Landscape 132 Column Test",
+    &   WD_POS,11, 2,"10. Mixed Page Orientation Test",
+    &   WD_POS,12, 2,"11. Portrait 100 Column Test",
+    &   WD_POS,13, 2,"12. Circles Test",
+    &   WD_POS,14, 2,"13. Pie Chart Test",
+    &   WD_POS,15, 2,"14. Bar Chart Test (1 data series)",
+    &   WD_POS,16, 2,"15. Bar Chart Test (3 data series)",
+    &   WD_POS,17, 2,"16. Information Page",
+    &   WD_POS,18, 2,"17. ",
+    &   WD_POS,19, 2,"18. ",
+    &   WD_POS,20, 2,"19. ",
+    &   WD_POS,21, 2,"20. ",
+    &   WD_POS, 2,40,"21. ",
+    &   WD_POS, 3,40,"22. ",
+    &   WD_POS, 4,40,"23. ",
+    &   WD_POS, 5,40,"24. ",
+    &   WD_POS, 6,40,"25. ",
+    &   WD_POS, 7,40,"26. ",
+    &   WD_POS, 8,40,"27. ",
+    &   WD_POS, 9,40,"28. ",
+    &   WD_POS,10,40,"29. ",
+    &   WD_POS,11,40,"30. ",
+    &   WD_POS,12,40,"31. ",
+    &   WD_POS,13,40,"32. ",
+    &   WD_POS,14,40,"33. ",
+    &   WD_POS,15,40,"34. ",
+    &   WD_POS,16,40,"35. ",
+    &   WD_POS,17,40,"36. ",
+    &   WD_POS,18,40,"37. ",
+    &   WD_POS,19,40,"38. ",
+    &   WD_POS,20,40,"39. ",
+    &   WD_POS,21,40,"40. ",
+    &   WD_POS,23,2,"Select an option (E to exit): ")
 
     repeat
     begin
-        xcall w_disp(wid,WD_POS,18,40,"  ",WD_POS,18,40,WD_READS,aoption)
-        upcase aoption
+        xcall w_disp(wid,WD_POS,23,32,"  ",WD_POS,23,32,WD_READS,aoption)
 
-		demoname = ""
-		
         using aoption select
-        ("1 "),	demoname = "AttachFileTest"
-        ("2 "), demoname = "AutoItems"
-        ("3 "), demoname = "xcall BlueAndRedBox"
-        ("4 "), demoname = "DblMessagesReport"
-        ("5 "), demoname = "DeliveryTicket"
-        ("6 "), demoname = "DesignGrid"
-        ("7 "), demoname = "HeaderBodyFooter"
-        ("8 "), demoname = "Landscape132"
-        ("9 "), demoname = "MixedPageOrientation"
-        ("10"), demoname = "Portrait100"
-        ("11"), demoname = "CirclesTest"
-        ("12"), demoname = "PieChartTest"
-        ("13"), demoname = "SingleSeriesBarChart"
-        ("14"), demoname = "MultiSeriesBarChart"
-		("15"), demoname = "InfoPage"
-        ("E "), exitloop
+		("E ","e "),
+			exitloop
+		("1 "),	demo = "HelloPdf"
+        ("2 "),	demo = "AttachFileTest"
+        ("3 "), demo = "AutoItems"
+        ("4 "), demo = "xcall BlueAndRedBox"
+        ("5 "), demo = "DblMessagesReport"
+        ("6 "), demo = "DeliveryTicket"
+        ("7 "), demo = "DesignGrid"
+        ("8 "), demo = "HeaderBodyFooter"
+        ("9 "), demo = "Landscape132"
+        ("10"), demo = "MixedPageOrientation"
+        ("11"), demo = "Portrait100"
+        ("12"), demo = "CirclesTest"
+        ("13"), demo = "PieChartTest"
+        ("14"), demo = "SingleSeriesBarChart"
+        ("15"), demo = "MultiSeriesBarChart"
+		("16"), demo = "InfoPage"
+		("17"), demo = ""
+		("18"), demo = ""
+		("19"), demo = ""
+		("20"), demo = ""
+		("21"), demo = ""
+		("22"), demo = ""
+		("23"), demo = ""
+		("24"), demo = ""
+		("25"), demo = ""
+		("26"), demo = ""
+		("27"), demo = ""
+		("28"), demo = ""
+		("29"), demo = ""
+		("30"), demo = ""
+		("31"), demo = ""
+		("32"), demo = ""
+		("33"), demo = ""
+		("34"), demo = ""
+		("35"), demo = ""
+		("36"), demo = ""
+		("37"), demo = ""
+		("38"), demo = ""
+		("39"), demo = ""
+		("40"), demo = ""
+		(),		demo = ""
         endusing
 
-		if (demoname.Length > 0)
+		if (demo.Length > 0) then
 		begin
-			call StartTestMessage
-			xcall xsubr(demoname)
-			call CompletionMessage
+			xcall w_disp(wid,WD_POS,23,40,"Running test...")
+			xcall w_updt
+
+			xcall xsubr(demo)
+
+			xcall w_disp(wid,WD_POS,23,40,"PDF created, check the output folder.")
+		end
+		else
+		begin
+			xcall w_disp(wid,WD_POS,23,40,"Err, that one doesn't exist!")
 		end
 
+		xcall w_updt
+		sleep 0.5
+		xcall w_disp(wid,WD_POS,23,40,WD_CLR,WDC_EOL)
     end
 
     xcall w_exit
     close tt
 
     stop
-
-StartTestMessage,
-
-    xcall w_disp(wid,WD_POS,20,10,"Running test...")
-    xcall w_updt
-    return
-
-CompletionMessage,
-
-    xcall w_disp(wid,WD_POS,20,10,"PDF created, check the output folder.")
-    xcall w_updt
-    sleep 0.7
-    xcall w_disp(wid,WD_POS,20,10,WD_CLR,WDC_EOL)
-    return
 
 endmain
