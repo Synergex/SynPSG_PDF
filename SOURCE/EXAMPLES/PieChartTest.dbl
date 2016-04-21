@@ -4,7 +4,7 @@ import SynPSG.PDF
 subroutine PieChartTest
     record
         pdf, @PdfFile
-        slices, @ChartSeries
+        slices, @ChartDataSet
         bottom, XYcoordinate
     endrecord
 proc
@@ -20,11 +20,11 @@ proc
     pdf.DrawText("Sales YTD vs Recent Years",50,pdf.Height-100,PdfColor.DarkCandyapplered,"Courier-Bold",24)
     
     ;;Define the slices of the pie
-    slices = new ChartSeries(4)
-    slices.Items[1] = new ChartItem(10,"Sales three years ago",PdfColor.Red)
-    slices.Items[2] = new ChartItem(20,"Sales two years ago",PdfColor.Orange)
-    slices.Items[3] = new ChartItem(30,"Sales one year ago",PdfColor.Yellow)
-    slices.Items[4] = new ChartItem(40,"Sales so far this year!",PdfColor.Green)
+    slices = new ChartDataSet(1,4)
+    slices.Series[1].Items[1] = new ChartItem(10,"Sales three years ago     ",PdfColor.Red)
+    slices.Series[1].Items[2] = new ChartItem(20,"Sales two years ago       ",PdfColor.Orange)
+    slices.Series[1].Items[3] = new ChartItem(30,"Sales one year ago        ",PdfColor.Yellow)
+    slices.Series[1].Items[4] = new ChartItem(40,"Sales current year to date",PdfColor.Green)
 
     ;;Draw a pie chart
     pdf.DrawPieChart(250,pdf.Height-330,200,slices,PdfColor.LightBlue)

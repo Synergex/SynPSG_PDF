@@ -14,21 +14,22 @@ proc
     pdf.FileName = "MixedPageOrientation.pdf"
     pdf.PageLayout = PdfPageLayout.Single
     pdf.PageMode = PdfPageMode.Outline
+    pdf.OutlineRootText = "Mixed Page Orientation Document"
 
     ;;Add page one content
-    pdf.NewPage()
+    pdf.NewPage(,"Portrait page")
     pdf.DrawTextRC("This page is portrait",,,,,,true)
     pdf.DrawTextRC("The page is " + %string(pdf.Width,"XXX.X") + " pixels wide and " + %string(pdf.Height,"XXX.X") + " pixels high.",,,,,,true)
     pdf.DrawTextRC("The page body is " + %string(pdf.Columns) + " columns wide and " + %string(pdf.Rows) + " rows high.")
 
     ;;Add a new landscape page and some content
-    pdf.NewPage(PdfOrientation.Landscape)
+    pdf.NewPage(PdfOrientation.Landscape,"Landscape page")
     pdf.DrawTextRC("This page is landscape",,,,,,true)
     pdf.DrawTextRC("The page is " + %string(pdf.Width,"XXX.X") + " pixels wide and " + %string(pdf.Height,"XXX.X") + " pixels high.",,,,,,true)
     pdf.DrawTextRC("The page body is " + %string(pdf.Columns) + " columns wide and " + %string(pdf.Rows) + " rows high.")
 
     ;;Add a portrait page and some content
-    pdf.NewPage()
+    pdf.NewPage(,"Another portrait page")
     pdf.DrawTextRC("This page is portrait",,,,,,true)
     pdf.DrawTextRC("The page is " + %string(pdf.Width,"XXX.X") + " pixels wide and " + %string(pdf.Height,"XXX.X") + " pixels high.",,,,,,true)
     pdf.DrawTextRC("The page body is " + %string(pdf.Columns) + " columns wide and " + %string(pdf.Rows) + " rows high.")

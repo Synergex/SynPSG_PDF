@@ -834,6 +834,9 @@ eof,
             fontItalic = doc.GetFont("Courier-Oblique", ^null)
             fontBoldItalic = doc.GetFont("Courier-BoldOblique", ^null)
 
+            ;;Set the default outline root node text
+            this.OutlineRootText = "Home"
+            
         endmethod
 
         ;;*********************************************************************
@@ -1794,18 +1797,19 @@ eof,
         ;;; <param name="aBottomY">Y coordinate of the bottom right corner of the chart.</param>
         ;;; <param name="aMarginAroundBars">Number of pixels to leave blank around the whole chart (inside the border box).</param>
         ;;; <param name="aSpaceBetweenGroups">Number of pixels to leave between data groups.</param>
-        ;;; <param name="aChartData">ChartMultiSeries object that defines the data for the chart.</param>
-        public method DrawMultiSeriesBarChart,  void
+        ;;; <param name="aChartData">ChartDataSet object that defines the data for the chart.</param>
+        ;;; <param name="aBackgroundColor">The background color for the chart.</param>
+        public method DrawBarChart,             void
             required in aTopX,                  float
             required in aTopY,                  float
             required in aBottomX,               float
             required in aBottomY,               float
             required in aSpaceBetweenGroups,    float
-            required in aChartData,             @ChartMultiSeries
+            required in aChartData,             @ChartDataSet
 .ifdef DBLNET
-            default  in aBackgroundColor,   PdfColor,   PdfColor.DefaultColor
+            default  in aBackgroundColor,       PdfColor,   PdfColor.DefaultColor
 .else
-            optional in aBackgroundColor,   PdfColor
+            optional in aBackgroundColor,       PdfColor
 .endc
             endparams
             record
@@ -1819,8 +1823,6 @@ eof,
                 highestValue,   float
                 barWidth,       float
                 groupWidth,     float
-                dataSeries,     @ChartSeries
-                dataItem,       @ChartItem
                 drawGroupLabels,boolean
             endrecord
         proc
@@ -1868,12 +1870,12 @@ eof,
             highestValue = 0
             for ixSeries from 1 thru aChartData.Series.GetLength(1)
             begin
-                dataSeries = aChartData.Series[ixSeries]
-                for ixSeriesMember from 1 thru dataSeries.Items.GetLength(1)
+                for ixSeriesMember from 1 thru aChartData.Series[ixSeries].Items.GetLength(1)
                 begin
-                    dataItem = dataSeries.Items[ixSeriesMember]
-                    if (dataItem.DataValue > highestValue)
-                        highestValue = dataItem.DataValue
+                    if (aChartData.Series[ixSeries].Items[ixSeriesMember].DataValue > highestValue)
+                    begin
+                        highestValue = aChartData.Series[ixSeries].Items[ixSeriesMember].DataValue
+                    end
                 end
             end
 
@@ -1897,19 +1899,21 @@ eof,
                 if (drawGroupLabels)
                     barStartY += 15
                 
-                ;Set the fill color for this slice. This must be done before we start drawing.
-                setCustomFillColor(aChartData.Series[ixSeries].Color)
+                ;If the series specifies a color then set it.
+                if (aChartData.Series[ixSeries].Color != PdfColor.NotSpecified)
+                    setCustomFillColor(aChartData.Series[ixSeries].Color)
 
                 for ixSeriesMember from 1 thru aChartData.Series[ixSeries].Items.GetLength(1)
                 begin
                     data barHeight, float
                     data barStartX, float
 
-                    ;;Get the data item
-                    dataItem = aChartData.Series[ixSeries].Items[ixSeriesMember]
+                    ;If the data item specifies a color then set it.
+                    if (aChartData.Series[ixSeries].Items[ixSeriesMember].Color != PdfColor.NotSpecified)
+                        setCustomFillColor(aChartData.Series[ixSeries].Items[ixSeriesMember].Color)
 
                     ;;Calculate the height of the bar for the current data item
-                    barHeight = maxBarHeight * (dataItem.DataValue / highestValue)
+                    barHeight = maxBarHeight * (aChartData.Series[ixSeries].Items[ixSeriesMember].DataValue / highestValue)
 
                     ;;Calculate the starting X coordinate for this bar
                     barStartX = aTopX + margin + (groupWidth*(ixSeriesMember-1)) + (aSpaceBetweenGroups*(ixSeriesMember-1)) + (barWidth*(ixSeries-1))
@@ -1955,12 +1959,13 @@ eof,
         ;;; <param name="aBottomRight">X/Y coordinates of the bottom right corner of the chart.</param>
         ;;; <param name="aMarginAroundBars">Number of pixels to leave blank around the whole chart (inside the border box).</param>
         ;;; <param name="aSpaceBetweenGroups">Number of pixels to leave between data groups.</param>
-        ;;; <param name="aChartData">ChartMultiSeries object that defines the data for the chart.</param>
-        public method DrawMultiSeriesBarChart,  void
+        ;;; <param name="aChartData">ChartDataSet object that defines the data for the chart.</param>
+        ;;; <param name="aBackgroundColor">The background color for the chart.</param>
+        public method DrawBarChart,  void
             required in aTopLeft,               XYcoordinate
             required in aBottomRight,           XYcoordinate
             required in aSpaceBetweenGroups,    float
-            required in aChartData,             @ChartMultiSeries
+            required in aChartData,             @ChartDataSet
 .ifdef DBLNET
             default  in aBackgroundColor,   PdfColor,   PdfColor.DefaultColor
 .else
@@ -1968,7 +1973,7 @@ eof,
 .endc
             endparams
         proc
-            this.DrawMultiSeriesBarChart(aTopLeft.X,aTopLeft.Y,aBottomRight.X,aBottomRight.Y,aSpaceBetweenGroups,aChartData,aBackgroundColor)
+            this.DrawBarChart(aTopLeft.X,aTopLeft.Y,aBottomRight.X,aBottomRight.Y,aSpaceBetweenGroups,aChartData,aBackgroundColor)
         endmethod
         
         ;;---------------------------------------------------------------------
@@ -1981,14 +1986,15 @@ eof,
         ;;; <param name="aToCol">Column number of the bottom right corner of the chart.</param>
         ;;; <param name="aMarginAroundBars">Number of pixels to leave blank around the whole chart (inside the border box).</param>
         ;;; <param name="aSpaceBetweenGroups">Number of pixels to leave between data groups.</param>
-        ;;; <param name="aChartData">ChartMultiSeries object that defines the data for the chart.</param>
-        public method DrawMultiSeriesBarChartRC,    void
-            required in aFromRow,                   int
-            required in aFromCol,                   int
-            required in aToRow,                     int
-            required in aToCol,                     int
-            required in aSpaceBetweenGroups,        float
-            required in aChartData,                 @ChartMultiSeries
+        ;;; <param name="aChartData">ChartDataSet object that defines the data for the chart.</param>
+        ;;; <param name="aBackgroundColor">The background color for the chart.</param>
+        public method DrawBarChartRC,       void
+            required in aFromRow,           int
+            required in aFromCol,           int
+            required in aToRow,             int
+            required in aToCol,             int
+            required in aSpaceBetweenGroups,float
+            required in aChartData,         @ChartDataSet
 .ifdef DBLNET
             default  in aBackgroundColor,   PdfColor,   PdfColor.DefaultColor
 .else
@@ -2004,28 +2010,29 @@ eof,
             topLeft.Y     = YfromBodyRow(aFromRow) + ((this.RowHeight-this.ExtraRowSpacing)/2)
             bottomRight.X = XfromColumn(aToCol) + (this.ColumnWidth/2)
             bottomRight.Y = YfromBodyRow(aToRow) + ((this.RowHeight-this.ExtraRowSpacing)/2)
-            this.DrawMultiSeriesBarChart(topLeft.X,topLeft.Y,bottomRight.X,bottomRight.Y,aSpaceBetweenGroups,aChartData,aBackgroundColor)
+            this.DrawBarChart(topLeft.X,topLeft.Y,bottomRight.X,bottomRight.Y,aSpaceBetweenGroups,aChartData,aBackgroundColor)
         endmethod        
         
         ;;---------------------------------------------------------------------
         ;;; <summary>
-        ;;; Draws a chart legend for a ChartSeries.
+        ;;; Draws a chart legend for a chart that displays multiple data series.
+        ;;; The legend text is based on the label for each data series.
         ;;; </summary>
         ;;; <param name="aTopX">X coordinate for the top left corner of the legend box.</param>
         ;;; <param name="aTopY">Y coordinate for the top left corner of the legend box.</param>
-        ;;; <param name="aChartData">ChartMultiSeries object that defines data for a multi-series chart.</param>
-        ;;; <returns>Returns the width of the legend</returns>
+        ;;; <param name="aChartData">ChartDataSet object that defines data for a multi-series chart.</param>
+        ;;; <returns>Returns the X/Y coordinates of the bottom right corner of the legend that was drawn.</returns>
         public method DrawMultiSeriesChartLegend, XYcoordinate
             required in aTopX,      float
             required in aTopY,      float
-            required in aChartData, @ChartMultiSeries
+            required in aChartData, @ChartDataSet
             endparams
             record
-                seriesCount,int
-                ix,         int
-                dataItems,  int
-                maxWidth,   float
-                bottom,     XYcoordinate
+                seriesCount,    int
+                ix,             int
+                dataItems,      int
+                maxWidth,       float
+                bottomRight,    XYcoordinate
             endrecord
         proc
             ;;If we don't have a first page then add one
@@ -2065,11 +2072,27 @@ eof,
 
             end
 
-            bottom.X = aTopX + maxWidth
-            bottom.Y = aTopY - (seriesCount*15)
+            bottomRight.X = aTopX + maxWidth
+            bottomRight.Y = aTopY - (seriesCount*15)
 
-            mreturn bottom
+            mreturn bottomRight
 
+        endmethod
+
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Draws a chart legend for a chart that displays multiple data series.
+        ;;; The legend text is based on the label for each data series.
+        ;;; </summary>
+        ;;; <param name="aTopLeft">X/Y coordinates for the top left corner of the legend box.</param>
+        ;;; <param name="aChartData">ChartDataSet object that defines data for a multi-series chart.</param>
+        ;;; <returns>Returns the X/Y coordinates of the bottom right corner of the legend that was drawn.</returns>
+        public method DrawMultiSeriesChartLegend, XYcoordinate
+            required in aTopLeft,   XYcoordinate
+            required in aChartData, @ChartDataSet
+            endparams
+        proc
+            mreturn this.DrawMultiSeriesChartLegend(aTopLeft.X,aTopLeft.Y,aChartData)
         endmethod
 
         ;;---------------------------------------------------------------------
@@ -2081,11 +2104,11 @@ eof,
         ;;; <param name="aRadius">Radius of arc.</param>
         ;;; <param name="aChartData">Array of PieSlice objects that define the slices of the pie.</param>
         ;;; <param name="aBackgroundColor">Optional background color to draw behind the chart.</param>
-        public method DrawPieChart, void
-            required in aCenterX,   float
-            required in aCenterY,   float
-            required in aRadius,    float
-            required in aChartData, @ChartSeries
+        public method DrawPieChart,         void
+            required in aCenterX,           float
+            required in aCenterY,           float
+            required in aRadius,            float
+            required in aChartData,         @ChartDataSet
 .ifdef DBLNET
             default  in aBackgroundColor,   PdfColor,   PdfColor.DefaultColor
 .else
@@ -2132,17 +2155,17 @@ eof,
             
             ;;Calculate the total of all data values
             totalDataValue = 0
-            for ix from 1 thru aChartData.Items.GetLength(1)
-                totalDataValue += aChartData.Items[ix].DataValue
+            for ix from 1 thru aChartData.Series[1].Items.GetLength(1)
+                totalDataValue += aChartData.Series[1].Items[ix].DataValue
 
-            for ix from 1 thru aChartData.Items.GetLength(1)
+            for ix from 1 thru aChartData.Series[1].Items.GetLength(1)
             begin
                 ;Set the fill color for this slice. This must be done before we start drawing.
-                setCustomFillColor(aChartData.Items[ix].Color)
+                setCustomFillColor(aChartData.Series[1].Items[ix].Color)
                 
                 ;;Calculate the number of percent we will have covered after this slice,
                 ;;and the compass angle of the end of the arc associated with this slice
-                endPercent = startPercent + ((aChartData.Items[ix].DataValue / totalDataValue) * 100)
+                endPercent = startPercent + ((aChartData.Series[1].Items[ix].DataValue / totalDataValue) * 100)
                 endAngle = (endPercent * 3.6)
                 
                 ;;Draw a line from the center to the arc
@@ -2180,7 +2203,7 @@ eof,
         public method DrawPieChart,     void
             required in aCenterPoint,   XYcoordinate
             required in aRadius,        float
-            required in aChartData,     @ChartSeries
+            required in aChartData,     @ChartDataSet
 .ifdef DBLNET
             default  in aBackgroundColor,   PdfColor,   PdfColor.DefaultColor
 .else
@@ -2193,172 +2216,17 @@ eof,
 
         ;;---------------------------------------------------------------------
         ;;; <summary>
-        ;;; Draws a bar chart with a single data series
-        ;;; </summary>
-        ;;; <param name="aTopX">X coordinate of the top left corner of the chart.</param>
-        ;;; <param name="aTopY">X coordinate of the top left corner of the chart.</param>
-        ;;; <param name="aBottomX">X coordinate of the bottom right corner of the chart.</param>
-        ;;; <param name="aBottomY">X coordinate of the bottom right corner of the chart.</param>
-        ;;; <param name="aMarginAroundBars">Number of pixels to leave blank around the whole chart (inside the border box).</param>
-        ;;; <param name="aSpaceBetweenBars">Number of pixels to leave between data bars.</param>
-        ;;; <param name="aChartSeries">ChartDataSeries object that defines the data for the chart.</param>
-        public method DrawSingleSeriesBarChart, void
-            required in aTopX,                  float
-            required in aTopY,                  float
-            required in aBottomX,               float
-            required in aBottomY,               float
-            required in aSpaceBetweenBars,      float
-            required in aChartSeries,           @ChartSeries
-.ifdef DBLNET
-            default  in aBackgroundColor,   PdfColor,   PdfColor.DefaultColor
-.else
-            optional in aBackgroundColor,   PdfColor
-.endc
-            endparams
-            record
-                ix,             int
-                numberOfBars,   int
-                margin,         int
-                maxBarHeight,   float
-                highestValue,   float
-                barWidth,       float
-            endrecord
-        proc
-            ;;If we don't have a first page then add one
-            if (this.PageNumber==0)
-                NewPage()
-
-            margin = 0
-.ifdef DBLNET
-            if (aBackgroundColor!=PdfColor.DefaultColor)
-            begin
-                this.DrawBox(aTopX,aTopY,aBottomX,aBottomY,,aBackgroundColor,true,aBackgroundColor)
-                margin = 5
-            end
-.else
-            if (^passed(aBackgroundColor))
-            begin
-                this.DrawBox(aTopX,aTopY,aBottomX,aBottomY,,aBackgroundColor,true,aBackgroundColor)
-                margin = 5
-            end
-.endc
-            ;;Set the line width
-            pg.SetLineWidth(1)
-
-            ;;How many bars will we be drawing
-            numberOfBars = aChartSeries.Items.GetLength(1)
-
-            ;;Find the highest data value
-            highestValue = 0
-            for ix from 1 thru numberOfBars
-                if (aChartSeries.Items[ix].DataValue > highestValue)
-                    highestValue = aChartSeries.Items[ix].DataValue
-
-            ;;Calculate the maximum height of a bar
-            maxBarHeight = aTopY - aBottomY - 1 - (margin*2)
-
-            ;;Calculate the width of each bar
-            barWidth = ((aBottomX-aTopX-1) - (margin*2) - (aSpaceBetweenBars*(numberOfBars-1))) / numberOfBars
-
-            ;;Draw the bars
-            for ix from 1 thru numberOfBars
-            begin
-                data barHeight, float
-                data barStartX, float
-
-                ;Set the fill color for this slice. This must be done before we start drawing.
-                setCustomFillColor(aChartSeries.Items[ix].Color)
-
-                ;;Calculate the height of the bar for the current data item
-                barHeight = maxBarHeight * (aChartSeries.Items[ix].DataValue / highestValue)
-
-                ;;Calculate the starting X coordinate for this bar
-                barStartX = aTopX + margin + (barWidth*(ix-1)) + (aSpaceBetweenBars*(ix-1))
-
-                ;;Draw the bar
-                pg.Rectangle(barStartX,aBottomY+margin,barWidth,barHeight)
-                pg.Fill()
-
-            end
-
-            ;;Revert to the default fill color
-            resetFillColor()
-
-        endmethod
-        
-        ;;---------------------------------------------------------------------
-        ;;; <summary>
-        ;;; Draws a bar chart with a single data series
-        ;;; </summary>
-        ;;; <param name="aTopLeft">X/Y coordinates of the top left corner of the chart.</param>
-        ;;; <param name="aBottomRight">X/Y coordinates of the bottom right corner of the chart.</param>
-        ;;; <param name="aMarginAroundBars">Number of pixels to leave blank around the whole chart (inside the border box).</param>
-        ;;; <param name="aSpaceBetweenBars">Number of pixels to leave between data bars.</param>
-        ;;; <param name="aChartSeries">ChartDataSeries object that defines the data for the chart.</param>
-        public method DrawSingleSeriesBarChart, void
-            required in aTopLeft,               XYcoordinate
-            required in aBottomRight,           XYcoordinate
-            required in aSpaceBetweenBars,      float
-            required in aChartSeries,           @ChartSeries
-.ifdef DBLNET
-            default  in aBackgroundColor,   PdfColor,   PdfColor.DefaultColor
-.else
-            optional in aBackgroundColor,   PdfColor
-.endc
-            endparams
-            
-        proc
-            this.DrawSingleSeriesBarChart(aTopLeft.X,aTopLeft.Y,aBottomRight.X,aBottomRight.Y,aSpaceBetweenBars,aChartSeries,aBackgroundColor)
-        endmethod
-        
-        ;;---------------------------------------------------------------------
-        ;;; <summary>
-        ;;; Draws a bar chart with a single data series
-        ;;; </summary>
-        ;;; <param name="aFromRow">Row number of the top left corner of the chart.</param>
-        ;;; <param name="aFromCol">Column number of the top left corner of the chart.</param>
-        ;;; <param name="aToRow">Row number of the bottom right corner of the chart.</param>
-        ;;; <param name="aToCol">Column number of the bottom right corner of the chart.</param>
-        ;;; <param name="aMarginAroundBars">Number of pixels to leave blank around the whole chart (inside the border box).</param>
-        ;;; <param name="aSpaceBetweenBars">Number of pixels to leave between data bars.</param>
-        ;;; <param name="aChartSeries">ChartDataSeries object that defines the data for the chart.</param>
-        public method DrawSingleSeriesBarChartRC,   void
-            required in aFromRow,                   int
-            required in aFromCol,                   int
-            required in aToRow,                     int
-            required in aToCol,                     int
-            required in aSpaceBetweenBars,          float
-            required in aChartSeries,               @ChartSeries
-.ifdef DBLNET
-            default  in aBackgroundColor,           PdfColor,   PdfColor.DefaultColor
-.else
-            optional in aBackgroundColor,           PdfColor
-.endc
-            endparams
-            record 
-                topLeft,        XYcoordinate
-                bottomRight,    XYcoordinate
-            endrecord
-        proc
-            topLeft.X     = XfromColumn(aFromCol) + (this.ColumnWidth/2)
-            topLeft.Y     = YfromBodyRow(aFromRow) + ((this.RowHeight-this.ExtraRowSpacing)/2)
-            bottomRight.X = XfromColumn(aToCol) + (this.ColumnWidth/2)
-            bottomRight.Y = YfromBodyRow(aToRow) + ((this.RowHeight-this.ExtraRowSpacing)/2)
-            this.DrawSingleSeriesBarChart(topLeft.X,topLeft.Y,bottomRight.X,bottomRight.Y,aSpaceBetweenBars,aChartSeries,aBackgroundColor)
-        endmethod
-
-        ;;---------------------------------------------------------------------
-        ;;; <summary>
-        ;;; Draws a chart legend for a ChartSeries.
+        ;;; Draws a legend for a chart that displays a single series of data.
+        ;;; The legend text is based on the label for individual data items in the first data series.
         ;;; </summary>
         ;;; <param name="aTopX">X coordinate for the top left corner of the legend box.</param>
         ;;; <param name="aTopY">Y coordinate for the top left corner of the legend box.</param>
-        ;;; <param name="aChartSeries">Array of ChartData objects that define the legend to draw.</param>
-        ;;; <returns>Returns the coordinate of the lower right corner of the legend</returns>
+        ;;; <param name="aChartData">ChartDataSet object that defines the legend to draw.</param>
+        ;;; <returns>Returns the X/Y coordinates of the lower right corner of the legend that was drawn.</returns>
         public method DrawSingleSeriesChartLegend, XYcoordinate
             required in aTopX,       float
             required in aTopY,       float
-            required in aChartSeries,  @ChartSeries
+            required in aChartData,  @ChartDataSet
 .ifdef DBLNET
             default in aShowValues, boolean, false
 .else
@@ -2370,7 +2238,7 @@ eof,
                 ix,         int
                 dataItems,  int
                 maxWidth,   float
-                bottom,     XYcoordinate
+                bottomRight,XYcoordinate
             endrecord
         proc
             ;;If we don't have a first page then add one
@@ -2386,7 +2254,7 @@ eof,
                 showValues = false
 .endc
 
-            dataItems = aChartSeries.Items.GetLength(1)
+            dataItems = aChartData.Series[1].Items.GetLength(1)
             maxWidth = 0
 
             for ix from 1 thru dataItems
@@ -2399,16 +2267,16 @@ eof,
                 data thisWidth, float
 
                 if (showValues) then 
-                    thisLabel = aChartSeries.Items[ix].Label + " (" + %string(aChartSeries.Items[ix].DataValue) + ")"
+                    thisLabel = aChartData.Series[1].Items[ix].Label + " (" + %string(aChartData.Series[1].Items[ix].DataValue) + ")"
                 else
-                    thisLabel = aChartSeries.Items[ix].Label
+                    thisLabel = aChartData.Series[1].Items[ix].Label
 
                 thisWidth = pg.TextWidth(thisLabel) + 20
 
                 if (thisWidth > maxWidth)
                     maxWidth = thisWidth
 
-                setCustomFillColor((PdfColor)(aChartSeries.Items[ix].Color))
+                setCustomFillColor((PdfColor)(aChartData.Series[1].Items[ix].Color))
 
                 pg.Rectangle(boxX,boxY,15,15)
                 pg.Fill()
@@ -2422,31 +2290,32 @@ eof,
 
             end
 
-            bottom.X = aTopX + maxWidth
-            bottom.Y = aTopY - (dataItems*15)
+            bottomRight.X = aTopX + maxWidth
+            bottomRight.Y = aTopY - (dataItems*15)
 
-            mreturn bottom
+            mreturn bottomRight
 
         endmethod
 
         ;;---------------------------------------------------------------------
         ;;; <summary>
-        ;;; Draws a chart legend for a ChartSeries.
+        ;;; Draws a legend for a chart that displays a single series of data.
+        ;;; The legend text is based on the label for individual data items in the first data series.
         ;;; </summary>
         ;;; <param name="aTopLeft">X/Y coordinates for the top left corner of the legend box.</param>
-        ;;; <param name="aChartSeries">Array of ChartData objects that define the legend to draw.</param>
-        ;;; <returns>Returns the coordinate of the lower right corner of the legend</returns>
+        ;;; <param name="aChartData">ChartDataSet object that defines the legend to draw.</param>
+        ;;; <returns>Returns the X/Y coordinates of the lower right corner of the legend that was drawn.</returns>
         public method DrawSingleSeriesChartLegend, XYcoordinate
             required in aTopLeft,       XYcoordinate
-            required in aChartSeries,   @ChartSeries
+            required in aChartData,     @ChartDataSet
 .ifdef DBLNET
-            default in aShowValues, boolean, false
+            default in aShowValues,     boolean, false
 .else
-            optional in aShowValues, boolean
+            optional in aShowValues,    boolean
 .endc
             endparams
         proc
-            mreturn this.DrawSingleSeriesChartLegend(aTopLeft.X,aTopLeft.Y,aChartSeries,aShowValues)
+            mreturn this.DrawSingleSeriesChartLegend(aTopLeft.X,aTopLeft.Y,aChartData,aShowValues)
         endmethod
 
         ;;---------------------------------------------------------------------
@@ -2851,11 +2720,7 @@ eof,
         ;;; </summary>
         ;;; <returns>Returns the new page number.</returns>
         public method NewPage, int
-.ifdef DBLNET
-            default  in aOrientation, PdfOrientation,   PdfOrientation.DefaultOrientation
-.else
             optional in aOrientation, PdfOrientation
-.endc
             optional in aOutlineText, a
             endparams
             record
@@ -2941,7 +2806,7 @@ eof,
             ;;If this is the first page, and we're creating an outline, create the root outline object
             if ((this.PageNumber==1) && (this.CreateOutline == true))
             begin
-                ol = doc.CreateOutline(^null,"Home",^null)
+                ol = doc.CreateOutline(^null,this.OutlineRootText,^null)
                 ol.SetOpened(true)
             end
 
@@ -4085,6 +3950,25 @@ eof,
             private method set
             proc
                 mOrientation = value
+            endmethod
+        endproperty
+
+        ;;---------------------------------------------------------------------
+        ;;
+
+        private mOutlineRootText, string
+
+        ;;; <summary>
+        ;;; Gets the page orientation (portrait or landscape) of the current page. The page orientation is defined when a new page is added to the document.
+        ;;; </summary>
+        public property OutlineRootText, string
+            method get
+            proc
+                mreturn mOutlineRootText
+            endmethod
+            public method set
+            proc
+                mOutlineRootText = value
             endmethod
         endproperty
 
@@ -10031,7 +9915,7 @@ eof,
         proc
             DataValue = aDataValue
             Label = aLabel
-            Color = PdfColor.Black
+            Color = PdfColor.NotSpecified
         endmethod
         
         public method ChartItem
@@ -10105,6 +9989,7 @@ eof,
             endrecord
         proc
             mItems = new ChartItem[aItemCount]
+            mColor = PdfColor.NotSpecified
             for ix from 1 thru aItemCount
                 mItems[ix] = new ChartItem()
         endmethod
@@ -10152,11 +10037,11 @@ eof,
     
     ;;*********************************************************************
     ;;; <summary>
-    ;;; Represents a series collection of data for charts that support multiple data series
+    ;;; Represents a data set from which to draw a chart.
     ;;; </summary>
-    public class ChartMultiSeries
+    public class ChartDataSet
 
-        public method ChartMultiSeries
+        public method ChartDataSet
             required in aSeriesCount, int
             required in aItemsPerSeries, int
             endparams
@@ -10252,10 +10137,11 @@ eof,
     endenum
 
     public enum PdfColor
+        NotSpecified,   -1
 .ifdef DBLNET
-        DefaultColor
+        DefaultColor,   0
 .endc
-        AirForceblue, 1
+        AirForceblue,   1
         AliceBlue
         AlizarinCrimson
         Almond

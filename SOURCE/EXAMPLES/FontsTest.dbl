@@ -1,0 +1,48 @@
+
+import SynPSG.PDF
+
+subroutine FontsTest
+    record
+        pdf,                @PdfFile
+        arialNarrow,        string
+        arialNarrowBold,    string
+    endrecord
+proc
+    ;;Create a new PDF document
+    pdf = new PdfFile(,,,,,,,,,,,"OUTPUT:")
+
+    ;;Override default name to suppress date/time prefix, and and ask reader
+    ;;apps to display the file in full page view.
+    pdf.FileName = "FontsTest.pdf"
+    pdf.PageLayout = PdfPageLayout.Single
+
+    ;;Use some of the built-in fonts
+
+    pdf.DrawTextRC("Default font ... Courier " + %string(pdf.CurrentFontSize) +" point")
+    
+    pdf.SelectFont("Courier",24)
+    pdf.DrawTextRC("Bigger ... Courier 24 point",3,1)
+
+    pdf.SelectFont("Times-Roman",18)
+    pdf.DrawTextRC("Times roman 18 point",5,1)
+    
+    pdf.SelectFont("Helvetica",6)
+    pdf.DrawTextRC("Helvetica 6 point",7,1)
+
+    ;;Load, embed and use two TrueType fonts
+    arialNarrow     = pdf.LoadTrueTypeFont("MEDIA:ARIALN.TTF")
+    arialNarrowBold = pdf.LoadTrueTypeFont("MEDIA:ARIALNB.TTF")
+
+    pdf.SelectFont(arialNarrow,12)
+    pdf.DrawTextRC("Arial Narrow 12 point (TrueType)",9,1)
+
+    pdf.SelectFont(arialNarrowBold,14)
+    pdf.DrawTextRC("Arial Narrow Bold 14 point (TrueType)",11,1)
+
+    ;;Save the document and show the results.
+    pdf.Preview()
+
+    xreturn
+
+endsubroutine
+

@@ -34,7 +34,7 @@ proc
     &   WD_POS,16, 2,"15. Bar Chart Test (1 data series)",
     &   WD_POS,17, 2,"16. Bar Chart Test (2 data series)",
     &   WD_POS,18, 2,"17. Information Page",
-    &   WD_POS,19, 2,"18. ",
+    &   WD_POS,19, 2,"18. Fonts Test",
     &   WD_POS,20, 2,"19. ",
     &   WD_POS,21, 2,"20. ",
     &   WD_POS, 2,40,"21. ",
@@ -83,7 +83,7 @@ proc
         ("15"), demo = "SingleSeriesBarChart"
         ("16"), demo = "MultiSeriesBarChart"
         ("17"), demo = "InfoPage"
-        ("18"), demo = ""
+        ("18"), demo = "FontsTest"
         ("19"), demo = ""
         ("20"), demo = ""
         ("21"), demo = ""

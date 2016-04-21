@@ -4,7 +4,7 @@ import SynPSG.PDF
 subroutine SingleSeriesBarChart
     record
         pdf,        @PdfFile
-        chartData,  @ChartSeries
+        chartData,  @ChartDataSet
         bottom,     XYcoordinate
     endrecord
 proc
@@ -19,15 +19,17 @@ proc
     ;;Add a title
     pdf.DrawText("Sales YTD vs Recent Years",50,pdf.Height-70,PdfColor.DarkCandyapplered,"Courier-Bold",24)
 
-    ;;Define the slices of the pie
-    chartData = new ChartSeries(4)
-    chartData.Items[1] = new ChartItem(10,"Sales three years ago",PdfColor.Red)
-    chartData.Items[2] = new ChartItem(20,"Sales two years ago",PdfColor.Orange)
-    chartData.Items[3] = new ChartItem(30,"Sales one year ago",PdfColor.Yellow)
-    chartData.Items[4] = new ChartItem(40,"Sales so far this year!",PdfColor.Green)
+    ;;Configure a data set for a single series of data containing four items
+    chartData = new ChartDataSet(1,4)
 
+    ;;Populate the data set
+    chartData.Series[1].Items[1] = new ChartItem(10,"Sales three years ago ",PdfColor.Red)
+    chartData.Series[1].Items[2] = new ChartItem(20,"Sales two years ago   ",PdfColor.Orange)
+    chartData.Series[1].Items[3] = new ChartItem(30,"Sales one year ago    ",PdfColor.Yellow)
+    chartData.Series[1].Items[4] = new ChartItem(40,"Sales so far this year",PdfColor.Green)
+    
     ;;Draw a bar chart
-    pdf.DrawSingleSeriesBarChart(50,pdf.Height-100,pdf.Width-50,pdf.Height-400,10,chartData,PdfColor.LightBlue)
+    pdf.DrawBarChart(50,pdf.Height-100,pdf.Width-50,pdf.Height-400,10,chartData,PdfColor.LightBlue)
 
     ;Add a chart legend and draw a box around it
     bottom = pdf.DrawSingleSeriesChartLegend(55,pdf.Height-430,chartData,true)
