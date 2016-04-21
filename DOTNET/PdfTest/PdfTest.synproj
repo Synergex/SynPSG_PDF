@@ -100,6 +100,9 @@
     <Compile Include="../../SOURCE/EXAMPLES/SingleSeriesBarChart.dbl">
       <Link>SingleSeriesBarChart.dbl</Link>
     </Compile>
+    <Compile Include="../../SOURCE/EXAMPLES/WritesModeTest.dbl">
+      <Link>WritesModeTest.dbl</Link>
+    </Compile>
     <Compile Include="Form1.dbl">
       <SubType>Form</SubType>
     </Compile>

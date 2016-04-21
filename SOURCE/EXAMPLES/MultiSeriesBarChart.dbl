@@ -1,100 +1,267 @@
 import SynPSG.PDF
 
 subroutine MultiSeriesBarChart
-    record
-        pdf,        @PdfFile
-        chartData,  @ChartMultiSeries
-        bottom,     XYcoordinate
+    record 
+        plan,   [#]int
+        actual, [#]int
     endrecord
 proc
+
+    plan = new int[12]
+    plan[1]  = 10
+    plan[2]  = 15
+    plan[3]  = 23
+    plan[4]  = 19
+    plan[5]  = 18
+    plan[6]  = 10
+    plan[7]  = 5
+    plan[8]  = 7
+    plan[9]  = 22
+    plan[10] = 23
+    plan[11] = 17
+    plan[12] = 14
+
+    actual = new int[8]
+    actual[1]  = 12
+    actual[2]  = 14
+    actual[3]  = 24
+    actual[4]  = 12
+    actual[5]  = 15
+    actual[6]  = 14
+    actual[7]  = 7
+    actual[8]  = 9
+
+    xcall ChartSalesVsPlanYTD(plan,actual)
+    
+    xreturn
+    
+endsubroutine
+
+subroutine ChartSalesVsPlanYTD
+    required in plan,  [#]int
+    required in sales, [#]int
+    endparams
+    record
+        totalPlan,      int, 0
+        totalSales,     int, 0
+        pdf,            @PdfFile
+    endrecord
+proc
+
+    ;;-------------------------------------------------------------------------
+    ;;Calculate totals
+
+    begin
+        data value, int
+        
+        foreach value in plan
+            totalPlan += value
+
+        foreach value in sales
+            totalSales += value
+    end
+
+    ;;-------------------------------------------------------------------------
     ;;Create a new PDF document
+
     pdf = new PdfFile(,,,,,,,,,,,"OUTPUT:")
 
-    ;;Override the default file to prevent the date/time stamp prefix.
+    ;;Override default name to suppress date/time prefix, and and ask reader
+    ;;apps to display the file in full page view.
     pdf.FileName = "MultiSeriesBarChart.pdf"
-
-    ;;Ask reader applications to display a single page at a time
     pdf.PageLayout = PdfPageLayout.Single
 
+    ;;-------------------------------------------------------------------------
     ;;Add a title
-    pdf.DrawText("Current Sales vs Last Year and Plan",50,pdf.Height-70,PdfColor.DarkCandyapplered,"Courier-Bold",24)
 
-    ;;Create a chart data object to contain 3 series of data with 12 items per series
-    chartData = new ChartMultiSeries(3,12)
+    pdf.SelectFont("Courier-Bold",24)
+    pdf.DrawTextRC("Current Year Sales vs. Plan",3,1,,,PdfColor.DarkCandyapplered)
+    pdf.ResetFont()
 
-    ;;Specify the labels to be displayed below each group
-    chartData.GroupLabel[1] = "Jan"
-    chartData.GroupLabel[2] = "Feb"
-    chartData.GroupLabel[3] = "Mar"
-    chartData.GroupLabel[4] = "Apr"
-    chartData.GroupLabel[5] = "May"
-    chartData.GroupLabel[6] = "Jun"
-    chartData.GroupLabel[7] = "Jul"
-    chartData.GroupLabel[8] = "Aug"
-    chartData.GroupLabel[9] = "Sep"
-    chartData.GroupLabel[10] = "Oct"
-    chartData.GroupLabel[11] = "Nov"
-    chartData.GroupLabel[12] = "Dec"
+    ;;-------------------------------------------------------------------------
+    ;;Draw a multi-series bar chart to present the data
     
-    ;;Specify the data for the second series
-    chartData.Series[1].Label = "Last Year"
-    chartData.Series[1].Color = PdfColor.Red
-    chartData.Series[1].Items[1].DataValue = 9
-    chartData.Series[1].Items[2].DataValue = 14
-    chartData.Series[1].Items[3].DataValue = 23
-    chartData.Series[1].Items[4].DataValue = 18
-    chartData.Series[1].Items[5].DataValue = 17
-    chartData.Series[1].Items[6].DataValue = 9
-    chartData.Series[1].Items[7].DataValue = 4
-    chartData.Series[1].Items[8].DataValue = 5
-    chartData.Series[1].Items[9].DataValue = 20
-    chartData.Series[1].Items[10].DataValue = 23
-    chartData.Series[1].Items[11].DataValue = 17
-    chartData.Series[1].Items[12].DataValue = 12
+    begin
+        data ix,            int
+        data topLeft,       XYcoordinate
+        data bottomRight,   XYcoordinate
+        
+        ;;Create a chart data object to contain 3 series of data with 12 items per series
+        data chartData = new ChartMultiSeries(2,12)
 
-    ;;Specify the data for the first series
-    chartData.Series[2].Label = "Current Year Plan"
-    chartData.Series[2].Color = PdfColor.DarkGreen
-    chartData.Series[2].Items[1].DataValue = 10
-    chartData.Series[2].Items[2].DataValue = 15
-    chartData.Series[2].Items[3].DataValue = 23
-    chartData.Series[2].Items[4].DataValue = 19
-    chartData.Series[2].Items[5].DataValue = 18
-    chartData.Series[2].Items[6].DataValue = 10
-    chartData.Series[2].Items[7].DataValue = 5
-    chartData.Series[2].Items[8].DataValue = 7
-    chartData.Series[2].Items[9].DataValue = 22
-    chartData.Series[2].Items[10].DataValue = 23
-    chartData.Series[2].Items[11].DataValue = 17
-    chartData.Series[2].Items[12].DataValue = 14
+        ;;Specify the labels to be displayed below each group
+        for ix from 1 thru 12
+            chartData.GroupLabel[ix] = %monthName(ix)
+
+        ;;Specify the data for the first series
+        chartData.Series[1].Label = "Business plan sales"
+        chartData.Series[1].Color = PdfColor.Blue
+        for ix from 1 thru plan.GetLength(1)
+            chartData.Series[1].Items[ix].DataValue = plan[ix]
+
+        ;;Specify the data for the second series
+        chartData.Series[2].Label = "Actual sales"
+        chartData.Series[2].Color = PdfColor.Red
+        for ix from 1 thru sales.GetLength(1)
+            chartData.Series[2].Items[ix].DataValue = sales[ix]
+
+        ;;Draw the bar chart
+        pdf.DrawMultiSeriesBarChartRC(8,1,33,pdf.Columns,10,chartData,PdfColor.LightBlue)
+
+        ;;Add a chart legend and draw a box around it
+        topLeft.X = pdf.XfromColumn(2)
+        topLeft.Y = pdf.YfromBodyRow(35)
+        bottomRight = pdf.DrawMultiSeriesChartLegend(topLeft.X,topLeft.Y,chartData)
+        pdf.DrawBox(topLeft.X-5,topLeft.Y+5,bottomRight.X+5,bottomRight.Y-5)
+    end
+
+    ;;-------------------------------------------------------------------------
+    ;;Draw a table to display the raw data
+
+    ;40,1    9        18       27       40,38
+    ;.------------------------------------. 40
+    ;| Month |   Plan | Actual | Variance | 41
+    ;|------------------------------------| 42
+    ;| Jan   | XXXXXX | XXXXXX |    XXXXX | 43
+    ;| Feb   | XXXXXX | XXXXXX |    XXXXX |
+    ;| Mar   | XXXXXX | XXXXXX |    XXXXX |
+    ;| Apr   | XXXXXX | XXXXXX |    XXXXX |
+    ;| May   | XXXXXX | XXXXXX |    XXXXX |
+    ;| Jun   | XXXXXX | XXXXXX |    XXXXX |
+    ;| Jul   | XXXXXX | XXXXXX |    XXXXX |
+    ;| Aug   | XXXXXX | XXXXXX |    XXXXX |
+    ;| Sep   | XXXXXX | XXXXXX |    XXXXX |
+    ;| Oct   | XXXXXX | XXXXXX |    XXXXX |
+    ;| Nov   | XXXXXX | XXXXXX |    XXXXX |
+    ;| Dec   | XXXXXX | XXXXXX |    XXXXX |
+    ;|------------------------------------| 55
+    ;| Total |   XXXX | XXXXXX |    XXXXX | 56
+    ;'------------------------------------' 57
+    ;57,1                               57,38
     
-    ;;Specify the data for the second series
-    chartData.Series[3].Label = "Current Year Actual"
-    chartData.Series[3].Color = PdfColor.Blue
-    chartData.Series[3].Items[1].DataValue = 12
-    chartData.Series[3].Items[2].DataValue = 14
-    chartData.Series[3].Items[3].DataValue = 24
-    chartData.Series[3].Items[4].DataValue = 12
-    chartData.Series[3].Items[5].DataValue = 15
-    chartData.Series[3].Items[6].DataValue = 14
-    chartData.Series[3].Items[7].DataValue = 7
-    chartData.Series[3].Items[8].DataValue = 9
-    chartData.Series[3].Items[9].DataValue = 0
-    chartData.Series[3].Items[10].DataValue = 0
-    chartData.Series[3].Items[11].DataValue = 0
-    chartData.Series[3].Items[12].DataValue = 0
+    begin
+        data ix, int
+        
+        pdf.DrawBoxRC(40,1,57,38)
 
-    ;;Draw the bar chart
-    pdf.DrawMultiSeriesBarChart(50,pdf.Height-100,pdf.Width-50,pdf.Height-400,10,chartData,PdfColor.LightBlue)
+        pdf.DrawTextRC("Month     Plan   Actual   Variance",41,3)
+        pdf.DrawTextRC("Total",56,3)
 
-    ;Add a chart legend and draw a box around it
-    bottom = pdf.DrawMultiSeriesChartLegend(55,pdf.Height-430,chartData)
-    pdf.DrawBox(50,pdf.Height-425,bottom.X+5,bottom.Y-5)
+        pdf.DrawLineRC(42,1,42,38)  ;Horizontal line below titles
+        pdf.DrawLineRC(55,1,55,38)  ;Horizontal line above totals
+        pdf.DrawLineRC(40,9,57,9)   ;Vertical line right of months
+        pdf.DrawLineRC(40,18,57,18) ;Vertical line right of plan
+        pdf.DrawLineRC(40,27,57,27) ;Vertical line right of actual
 
+        for ix from 1 thru 12
+        begin
+            data tmpval, a6
+            data iy, int
+            data variance, int
+            data color, PdfColor
+            ;;Month name
+            pdf.DrawTextRC(%monthName(ix),42+ix,3)
+            ;;Plan amount
+            for iy from 1 thru plan.GetLength(1)
+            begin
+                tmpval = plan[iy]
+                pdf.DrawTextRC(tmpval,42+iy,11)
+            end
+            ;;Actual amount
+            for iy from 1 thru sales.GetLength(1)
+            begin
+                tmpval = sales[iy]
+                pdf.DrawTextRC(tmpval,42+iy,20)
+            end
+            ;;Variance amount
+            for iy from 1 thru sales.GetLength(1)
+            begin
+                if ((variance=sales[iy]-plan[iy]) >= 0) then
+                    color = PdfColor.Black
+                else
+                    color = PdfColor.Red
+                tmpval = sales[iy] - plan[iy], "ZZZZX-"
+                pdf.DrawTextRC(tmpval,42+iy,32,,,color)
+            end
+            ;;Totals
+            pdf.DrawTextRC(tmpval=totalPlan,56,11)
+            pdf.DrawTextRC(tmpval=totalSales,56,20)
+            if ((variance=totalSales-totalPlan) >= 0) then
+                color = PdfColor.Black
+            else
+                color = PdfColor.Red
+            tmpval = totalSales - totalPlan, "ZZZZX-"
+            pdf.DrawTextRC(tmpval,56,32,,,color)
+        end
+    end
+
+    ;;-------------------------------------------------------------------------
+    ;;Draw a pie chart to display YTD progress towards plan
+    begin
+        data slices,        @ChartSeries
+        data centerPoint,   XYcoordinate
+        data radius,        float
+
+        ;;Are we under plan?
+        if (totalSales < totalPlan) then 
+        begin
+            ;;Under plan; showing progress to plan
+            slices = new ChartSeries(2)
+            slices.Items[1] = new ChartItem(totalPlan-totalSales,"Remaining Plan",PdfColor.Blue)
+            slices.Items[2] = new ChartItem(totalSales,          "Sales YTD     ",PdfColor.Red)
+            pdf.DrawText("Progress to Plan",420,335,PdfColor.DarkCandyapplered,"Courier-Bold",14)
+        end
+        else
+        begin
+            ;;Met or over plan; show a full circle of sales
+            slices = new ChartSeries(1)
+            slices.Items[1] = new ChartItem(totalSales,"Sales",PdfColor.Red)
+            pdf.DrawText("Sales Exceed Plan",420,335,PdfColor.DarkCandyapplered,"Courier-Bold",14)
+        end
+        
+        ;;Draw the pie chart
+        centerPoint.X = 487
+        centerPoint.Y = 250
+        radius = 75
+        pdf.DrawPieChart(centerPoint,radius,slices,PdfColor.LightBlue)
+
+        ;Add a chart legend and draw a box around it
+        begin
+            data topLeft,       XYcoordinate
+            data bottomRight,   XYcoordinate
+            topLeft.X = centerPoint.X - radius + 5
+            topLeft.Y = centerpoint.Y - radius - 15
+            bottomRight = pdf.DrawSingleSeriesChartLegend(topLeft,slices,true)
+            pdf.DrawBox(topLeft.X-5,topLeft.Y+5,bottomRight.X+5,bottomRight.Y-5)
+        end
+        
+    end
+    
+    ;;-------------------------------------------------------------------------
     ;;Save the document and show the results
+
     pdf.Preview()
 
     xreturn
 
 endsubroutine
 
+function monthName, string
+    required in aMonthNumber, int
+proc
+    using aMonthNumber select
+    (1),    freturn "Jan"
+    (2),    freturn "Feb"
+    (3),    freturn "Mar"
+    (4),    freturn "Apr"
+    (5),    freturn "May"
+    (6),    freturn "Jun"
+    (7),    freturn "Jul"
+    (8),    freturn "Aug"
+    (9),    freturn "Sep"
+    (10),   freturn "Oct"
+    (11),   freturn "Nov"
+    (12),   freturn "Dec"
+    endusing
+    freturn ""
+endfunction

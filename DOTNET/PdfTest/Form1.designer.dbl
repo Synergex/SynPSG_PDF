@@ -2,20 +2,21 @@ namespace PdfTest
 
 	public partial class Form1 extends System.Windows.Forms.Form
 
+		private btnBarChartTest1, @System.Windows.Forms.Button
+		private btnBarChartTest2, @System.Windows.Forms.Button
 		private btnAutoItemsTest, @System.Windows.Forms.Button
 		private btnBlueAndRedBoxTest, @System.Windows.Forms.Button
-		private btnMixedPageOrientationTest, @System.Windows.Forms.Button
 		private btnDesignGridTest, @System.Windows.Forms.Button
+		private btnMixedPageOrientationTest, @System.Windows.Forms.Button
 		private btnLandscape132Test, @System.Windows.Forms.Button
 		private components, @System.ComponentModel.IContainer
-		private btnPortrait100Test, @System.Windows.Forms.Button
-		private btnHeaderBodyFooterTest, @System.Windows.Forms.Button
 		private btnDblMessagesReportTest, @System.Windows.Forms.Button
+		private btnHeaderBodyFooterTest, @System.Windows.Forms.Button
+		private btnPortrait100Test, @System.Windows.Forms.Button
 		private btnDeliveryTicketTest, @System.Windows.Forms.Button
 		private btnPieChartTest, @System.Windows.Forms.Button
 		private btnDrawCirclesTest, @System.Windows.Forms.Button
-		private btnBarChartTest1, @System.Windows.Forms.Button
-		private btnBarChartTest2, @System.Windows.Forms.Button
+		private btnWritesModeTest, @System.Windows.Forms.Button
 		private btnAttachFileTest, @System.Windows.Forms.Button
 
 		private method InitializeComponent, void
@@ -35,6 +36,7 @@ namespace PdfTest
 			this.btnPieChartTest = new System.Windows.Forms.Button()
 			this.btnBarChartTest1 = new System.Windows.Forms.Button()
 			this.btnBarChartTest2 = new System.Windows.Forms.Button()
+			this.btnWritesModeTest = new System.Windows.Forms.Button()
 			this.SuspendLayout()
 			;; 
 			;; btnAutoItemsTest
@@ -177,9 +179,20 @@ namespace PdfTest
 			this.btnBarChartTest2.UseVisualStyleBackColor = true
 			addhandler(this.btnBarChartTest2.Click, new System.EventHandler(this.btnBarChartTest2_Click))
 			;; 
+			;; btnWritesModeTest
+			;; 
+			this.btnWritesModeTest.Location = new System.Drawing.Point(330, 199)
+			this.btnWritesModeTest.Name = "btnWritesModeTest"
+			this.btnWritesModeTest.Size = new System.Drawing.Size(153, 40)
+			this.btnWritesModeTest.TabIndex = 15
+			this.btnWritesModeTest.Text = "WRITES Mode Test"
+			this.btnWritesModeTest.UseVisualStyleBackColor = true
+			addhandler(this.btnWritesModeTest.Click, new System.EventHandler(this.btnWritesModeTest_Click))
+			;; 
 			;; Form1
 			;; 
 			this.ClientSize = new System.Drawing.Size(490, 247)
+			this.Controls.Add(this.btnWritesModeTest)
 			this.Controls.Add(this.btnBarChartTest2)
 			this.Controls.Add(this.btnBarChartTest1)
 			this.Controls.Add(this.btnPieChartTest)

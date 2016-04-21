@@ -9,6 +9,9 @@ proc
 
     ;;Create a PDF document and attach an existing text file
     pdf = new PdfFile("OUTPUT:REPORT.TXT",,,,,,,,,"OUTPUT:")
+    
+    ;;Override default name to suppress date/time prefix, and and ask reader
+    ;;apps to display the file in full page view.
     pdf.FileName = "AttachFile.pdf"
     pdf.PageLayout = PdfPageLayout.Single
 

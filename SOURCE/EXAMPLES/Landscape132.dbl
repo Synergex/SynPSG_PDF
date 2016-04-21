@@ -9,8 +9,10 @@ proc
     ;;Create a new PDF document and specify landscape mode and 132 columns wide
     pdf = new PdfFile(,PdfOrientation.Landscape,132,,,,,,,,,"OUTPUT:")
 
-    ;;Override the default file to prevent the date/time stamp prefix.
+    ;;Override default name to suppress date/time prefix, and and ask reader
+    ;;apps to display the file in full page view.
     pdf.FileName = "Landscape132.pdf"
+    pdf.PageLayout = PdfPageLayout.Single
 
     ;;Add some content
     pdf.DrawTextRC("This document is 132 characters wide in landscape mode.")

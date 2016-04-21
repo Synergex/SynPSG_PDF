@@ -1,0 +1,39 @@
+
+import SynPSG.PDF
+
+subroutine WritesModeTest
+    record
+        pdf,    @PdfFile
+        ch,     i4
+        buffer, a512
+    endrecord
+proc
+    ;;Create a new PDF document
+    pdf = new PdfFile(,,,,,,,,,,,"OUTPUT:")
+
+    ;;Override default name to suppress date/time prefix, and and ask reader
+    ;;apps to display the file in full page view.
+    pdf.FileName = "WritesModeTest.pdf"
+    pdf.PageLayout = PdfPageLayout.Single
+
+    ;;Open a sequential file
+    open(ch=0,i:s,"DBLDIR:REL_DBL.TXT")
+
+    ;;Read through the file and add the content to the PDF
+    repeat
+    begin
+        reads(ch,buffer,eof)
+        pdf.DrawTextRC(%atrim(buffer),,,,,,true)
+    end
+eof,
+    
+    ;;Close the sequential file
+    close ch
+    
+    ;;Save the document and show the results
+    pdf.Preview()
+
+    xreturn
+    
+endsubroutine
+

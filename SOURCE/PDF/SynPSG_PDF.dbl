@@ -1009,15 +1009,13 @@ eof,
 
         ;;---------------------------------------------------------------------
         ;;; <summary>
-        ;;; Draws a box from the center of specified start and end cells.
-        ;;; The default from point is the current position.
-        ;;; The default end point is the bottom right corner of the page.
+        ;;; Draws a box defined by two X/Y points on the page.
         ;;; The current position is NOT updated by this method.
         ;;; </summary>
-        ;;; <param name="aFromX">Top left corner X coordinate.</param>
-        ;;; <param name="aFromY">Top left corner Y coordinate.</param>
-        ;;; <param name="aToX">Bottom right corner X coordinate.</param>
-        ;;; <param name="aToY">Bottom right corner Y coordinate.</param>
+        ;;; <param name="aFromX">X coordinate of one corner of the box.</param>
+        ;;; <param name="aFromY">Y coordinate of one corner of the box.</param>
+        ;;; <param name="aToX">X coordinate of the opposite corner of the box.</param>
+        ;;; <param name="aToY">Y coordinate of the opposite corner of the box.</param>
         ;;; <param name="aWidth">Line width in pixels. Default is 1.</param>
         ;;; <param name="aStrokeColor">Custom stroke color.</param>
         ;;; <param name="aFill">Should the box be filled?</param>
@@ -1106,6 +1104,35 @@ eof,
 
         endmethod
 
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Draws a box defined by two X/Y points on the page.
+        ;;; The current position is NOT updated by this method.
+        ;;; </summary>
+        ;;; <param name="aFrom">X/Y coordinates of one corner of the box.</param>
+        ;;; <param name="aTo">X/Y coordinates of the opposite corner of the box.</param>
+        ;;; <param name="aWidth">Line width in pixels. Default is 1.</param>
+        ;;; <param name="aStrokeColor">Custom stroke color.</param>
+        ;;; <param name="aFill">Should the box be filled?</param>
+        ;;; <param name="aFillColor">Custom fill color.</param>
+        public method DrawBox,        void
+            required in aFrom,        XYcoordinate
+            required in aTo,          XYcoordinate
+.ifdef DBLNET
+            default  in aWidth,       float,        0
+            default  in aStrokeColor, PdfColor,     PdfColor.DefaultColor
+            default  in aFill,        boolean,      false
+            default  in aFillColor,   PdfColor,     PdfColor.DefaultColor
+.else
+            optional in aWidth,       float
+            optional in aStrokeColor, PdfColor
+            optional in aFill,        boolean
+            optional in aFillColor,   PdfColor
+.endc
+            endparams
+        proc
+            this.DrawBox(aFrom.X,aFrom.Y,aTo.X,aTo.Y,aWidth,aStrokeColor,aFill,aFillColor)
+        endmethod
 
         ;;---------------------------------------------------------------------
         ;;; <summary>
@@ -1373,23 +1400,12 @@ eof,
         ;;; actual image, otherwise the image will be stretched or shrunk in
         ;;; order to achieve the dimensions that you specify.
         ;;; </summary>
-        ;;; <param name="aFileSpec">
-        ;;; Full or relative file spec of image to load (.jpg, .jpeg or .png).
-        ;;; </param>
-        ;;; <param name="aX">
-        ;;; X position of bottom left corner of image on the current page.
-        ;;; </param>
-        ;;; <param name="aY">
-        ;;; Y position of bottom left corner of image on the current page.
-        ;;; </param>
-        ;;; <param name="aWidth">
-        ;;; Width to occupy in device independent pixels (defaults to the pixel
-        ;;; width of the image).
-        ;;; </param>
-        ;;; <param name="aWidth">
-        ;;; Height to occupy in device independent pixels (defaults to the
-        ;;; pixel height of the image).
-        ;;; </param>
+        ;;; <param name="aFileSpec">Full or relative file spec of image to load (.jpg, .jpeg or .png).</param>
+        ;;; <param name="aX">X position of bottom left corner of image on the current page.</param>
+        ;;; <param name="aY">Y position of bottom left corner of image on the current page.</param>
+        ;;; <param name="aWidth">Width to occupy in device independent pixels (defaults to the pixel width of the image).</param>
+        ;;; <param name="aWidth">Height to occupy in device independent pixels (defaults to the pixel height of the image).</param>
+        ;;; <returns>Returns true on success, false if an error occurs.</returns>
         public method DrawImage,        boolean
             required in  aFileSpec,     string
             required in  aX,            float
@@ -1678,9 +1694,7 @@ eof,
         ;;; right side of the last cell. The current position set to the
         ;;; beginning of the next line.
         ;;; </summary>
-        ;;; <param name="aFullWidth">
-        ;;; Draw the line the full width of the cells.
-        ;;; </param>
+        ;;; <param name="aFullWidth">Draw the line the full width of the cells.</param>
         ;;; <param name="aWidth">Line width in pixels. Default is 5.</param>
         ;;; <param name="aStrokeColor">Custom stroke color.</param>
         ;;; <returns>Returns the new current row number.</returns>
@@ -1775,9 +1789,9 @@ eof,
         ;;; Draws a bar chart with multiple data series
         ;;; </summary>
         ;;; <param name="aTopX">X coordinate of the top left corner of the chart.</param>
-        ;;; <param name="aTopY">X coordinate of the top left corner of the chart.</param>
+        ;;; <param name="aTopY">Y coordinate of the top left corner of the chart.</param>
         ;;; <param name="aBottomX">X coordinate of the bottom right corner of the chart.</param>
-        ;;; <param name="aBottomY">X coordinate of the bottom right corner of the chart.</param>
+        ;;; <param name="aBottomY">Y coordinate of the bottom right corner of the chart.</param>
         ;;; <param name="aMarginAroundBars">Number of pixels to leave blank around the whole chart (inside the border box).</param>
         ;;; <param name="aSpaceBetweenGroups">Number of pixels to leave between data groups.</param>
         ;;; <param name="aChartData">ChartMultiSeries object that defines the data for the chart.</param>
@@ -1933,6 +1947,66 @@ eof,
             
         endmethod
 
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Draws a bar chart with multiple data series
+        ;;; </summary>
+        ;;; <param name="aTopLeft">X/Y coordinates of the top left corner of the chart.</param>
+        ;;; <param name="aBottomRight">X/Y coordinates of the bottom right corner of the chart.</param>
+        ;;; <param name="aMarginAroundBars">Number of pixels to leave blank around the whole chart (inside the border box).</param>
+        ;;; <param name="aSpaceBetweenGroups">Number of pixels to leave between data groups.</param>
+        ;;; <param name="aChartData">ChartMultiSeries object that defines the data for the chart.</param>
+        public method DrawMultiSeriesBarChart,  void
+            required in aTopLeft,               XYcoordinate
+            required in aBottomRight,           XYcoordinate
+            required in aSpaceBetweenGroups,    float
+            required in aChartData,             @ChartMultiSeries
+.ifdef DBLNET
+            default  in aBackgroundColor,   PdfColor,   PdfColor.DefaultColor
+.else
+            optional in aBackgroundColor,   PdfColor
+.endc
+            endparams
+        proc
+            this.DrawMultiSeriesBarChart(aTopLeft.X,aTopLeft.Y,aBottomRight.X,aBottomRight.Y,aSpaceBetweenGroups,aChartData,aBackgroundColor)
+        endmethod
+        
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Draws a bar chart with multiple data series
+        ;;; </summary>
+        ;;; <param name="aFromRow">Row number of the top left corner of the chart.</param>
+        ;;; <param name="aFromCol">Column number of the top left corner of the chart.</param>
+        ;;; <param name="aToRow">Row number of the bottom right corner of the chart.</param>
+        ;;; <param name="aToCol">Column number of the bottom right corner of the chart.</param>
+        ;;; <param name="aMarginAroundBars">Number of pixels to leave blank around the whole chart (inside the border box).</param>
+        ;;; <param name="aSpaceBetweenGroups">Number of pixels to leave between data groups.</param>
+        ;;; <param name="aChartData">ChartMultiSeries object that defines the data for the chart.</param>
+        public method DrawMultiSeriesBarChartRC,    void
+            required in aFromRow,                   int
+            required in aFromCol,                   int
+            required in aToRow,                     int
+            required in aToCol,                     int
+            required in aSpaceBetweenGroups,        float
+            required in aChartData,                 @ChartMultiSeries
+.ifdef DBLNET
+            default  in aBackgroundColor,   PdfColor,   PdfColor.DefaultColor
+.else
+            optional in aBackgroundColor,   PdfColor
+.endc
+            endparams
+            record 
+                topLeft,        XYcoordinate
+                bottomRight,    XYcoordinate
+            endrecord
+        proc
+            topLeft.X     = XfromColumn(aFromCol) + (this.ColumnWidth/2)
+            topLeft.Y     = YfromBodyRow(aFromRow) + ((this.RowHeight-this.ExtraRowSpacing)/2)
+            bottomRight.X = XfromColumn(aToCol) + (this.ColumnWidth/2)
+            bottomRight.Y = YfromBodyRow(aToRow) + ((this.RowHeight-this.ExtraRowSpacing)/2)
+            this.DrawMultiSeriesBarChart(topLeft.X,topLeft.Y,bottomRight.X,bottomRight.Y,aSpaceBetweenGroups,aChartData,aBackgroundColor)
+        endmethod        
+        
         ;;---------------------------------------------------------------------
         ;;; <summary>
         ;;; Draws a chart legend for a ChartSeries.
@@ -2097,6 +2171,28 @@ eof,
 
         ;;---------------------------------------------------------------------
         ;;; <summary>
+        ;;; Draws a pie chart
+        ;;; </summary>
+        ;;; <param name="aCenterPoint">X/Y coordinates of center point</param>
+        ;;; <param name="aRadius">Radius of arc.</param>
+        ;;; <param name="aChartData">Array of PieSlice objects that define the slices of the pie.</param>
+        ;;; <param name="aBackgroundColor">Optional background color to draw behind the chart.</param>
+        public method DrawPieChart,     void
+            required in aCenterPoint,   XYcoordinate
+            required in aRadius,        float
+            required in aChartData,     @ChartSeries
+.ifdef DBLNET
+            default  in aBackgroundColor,   PdfColor,   PdfColor.DefaultColor
+.else
+            optional in aBackgroundColor,   PdfColor
+.endc
+            endparams
+        proc
+            this.DrawPieChart(aCenterPoint.X,aCenterPoint.Y,aRadius,aChartData,aBackgroundColor)
+        endmethod
+
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
         ;;; Draws a bar chart with a single data series
         ;;; </summary>
         ;;; <param name="aTopX">X coordinate of the top left corner of the chart.</param>
@@ -2189,6 +2285,67 @@ eof,
             resetFillColor()
 
         endmethod
+        
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Draws a bar chart with a single data series
+        ;;; </summary>
+        ;;; <param name="aTopLeft">X/Y coordinates of the top left corner of the chart.</param>
+        ;;; <param name="aBottomRight">X/Y coordinates of the bottom right corner of the chart.</param>
+        ;;; <param name="aMarginAroundBars">Number of pixels to leave blank around the whole chart (inside the border box).</param>
+        ;;; <param name="aSpaceBetweenBars">Number of pixels to leave between data bars.</param>
+        ;;; <param name="aChartSeries">ChartDataSeries object that defines the data for the chart.</param>
+        public method DrawSingleSeriesBarChart, void
+            required in aTopLeft,               XYcoordinate
+            required in aBottomRight,           XYcoordinate
+            required in aSpaceBetweenBars,      float
+            required in aChartSeries,           @ChartSeries
+.ifdef DBLNET
+            default  in aBackgroundColor,   PdfColor,   PdfColor.DefaultColor
+.else
+            optional in aBackgroundColor,   PdfColor
+.endc
+            endparams
+            
+        proc
+            this.DrawSingleSeriesBarChart(aTopLeft.X,aTopLeft.Y,aBottomRight.X,aBottomRight.Y,aSpaceBetweenBars,aChartSeries,aBackgroundColor)
+        endmethod
+        
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Draws a bar chart with a single data series
+        ;;; </summary>
+        ;;; <param name="aFromRow">Row number of the top left corner of the chart.</param>
+        ;;; <param name="aFromCol">Column number of the top left corner of the chart.</param>
+        ;;; <param name="aToRow">Row number of the bottom right corner of the chart.</param>
+        ;;; <param name="aToCol">Column number of the bottom right corner of the chart.</param>
+        ;;; <param name="aMarginAroundBars">Number of pixels to leave blank around the whole chart (inside the border box).</param>
+        ;;; <param name="aSpaceBetweenBars">Number of pixels to leave between data bars.</param>
+        ;;; <param name="aChartSeries">ChartDataSeries object that defines the data for the chart.</param>
+        public method DrawSingleSeriesBarChartRC,   void
+            required in aFromRow,                   int
+            required in aFromCol,                   int
+            required in aToRow,                     int
+            required in aToCol,                     int
+            required in aSpaceBetweenBars,          float
+            required in aChartSeries,               @ChartSeries
+.ifdef DBLNET
+            default  in aBackgroundColor,           PdfColor,   PdfColor.DefaultColor
+.else
+            optional in aBackgroundColor,           PdfColor
+.endc
+            endparams
+            record 
+                topLeft,        XYcoordinate
+                bottomRight,    XYcoordinate
+            endrecord
+        proc
+            topLeft.X     = XfromColumn(aFromCol) + (this.ColumnWidth/2)
+            topLeft.Y     = YfromBodyRow(aFromRow) + ((this.RowHeight-this.ExtraRowSpacing)/2)
+            bottomRight.X = XfromColumn(aToCol) + (this.ColumnWidth/2)
+            bottomRight.Y = YfromBodyRow(aToRow) + ((this.RowHeight-this.ExtraRowSpacing)/2)
+            this.DrawSingleSeriesBarChart(topLeft.X,topLeft.Y,bottomRight.X,bottomRight.Y,aSpaceBetweenBars,aChartSeries,aBackgroundColor)
+        endmethod
 
         ;;---------------------------------------------------------------------
         ;;; <summary>
@@ -2197,7 +2354,7 @@ eof,
         ;;; <param name="aTopX">X coordinate for the top left corner of the legend box.</param>
         ;;; <param name="aTopY">Y coordinate for the top left corner of the legend box.</param>
         ;;; <param name="aChartSeries">Array of ChartData objects that define the legend to draw.</param>
-        ;;; <returns>Returns the width of the legend</returns>
+        ;;; <returns>Returns the coordinate of the lower right corner of the legend</returns>
         public method DrawSingleSeriesChartLegend, XYcoordinate
             required in aTopX,       float
             required in aTopY,       float
@@ -2270,6 +2427,26 @@ eof,
 
             mreturn bottom
 
+        endmethod
+
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Draws a chart legend for a ChartSeries.
+        ;;; </summary>
+        ;;; <param name="aTopLeft">X/Y coordinates for the top left corner of the legend box.</param>
+        ;;; <param name="aChartSeries">Array of ChartData objects that define the legend to draw.</param>
+        ;;; <returns>Returns the coordinate of the lower right corner of the legend</returns>
+        public method DrawSingleSeriesChartLegend, XYcoordinate
+            required in aTopLeft,       XYcoordinate
+            required in aChartSeries,   @ChartSeries
+.ifdef DBLNET
+            default in aShowValues, boolean, false
+.else
+            optional in aShowValues, boolean
+.endc
+            endparams
+        proc
+            mreturn this.DrawSingleSeriesChartLegend(aTopLeft.X,aTopLeft.Y,aChartSeries,aShowValues)
         endmethod
 
         ;;---------------------------------------------------------------------
@@ -3243,7 +3420,7 @@ eof,
         ;;; </summary>
         ;;; <param name="aRow"></param>
         ;;; <returns></returns>
-        private method YfromBodyRow, float
+        public method YfromBodyRow, float
             required in aBodyRow, int
             endparams
         proc
@@ -8894,7 +9071,7 @@ eof,
 
     ;;*********************************************************************
     ;;STRUCTURES
-        
+
     public structure XYcoordinate
         X, float
         Y, float

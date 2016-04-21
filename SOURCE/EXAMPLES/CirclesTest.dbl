@@ -9,18 +9,17 @@ proc
     ;;Create a new PDF document
     pdf = new PdfFile(,,,,,,,,,,,"OUTPUT:")
 
-    ;;Override the default file to prevent the date/time stamp prefix.
+    ;;Override default name to suppress date/time prefix, and and ask reader
+    ;;apps to display the file in full page view.
     pdf.FileName = "CirclesTest.pdf"
-
-    ;;Ask reader applications to display a single page at a time
     pdf.PageLayout = PdfPageLayout.Single
 
-	;;Add a title
-	pdf.DrawText("Let's Draw Some Circles",50,pdf.Height-100,PdfColor.DarkCandyapplered,"Courier-Bold",36)
-	
+    ;;Add a title
+    pdf.DrawText("Let's Draw Some Circles",50,pdf.Height-100,PdfColor.DarkCandyapplered,"Courier-Bold",36)
+    
     ;;Draw some circles
-	pdf.DrawCircle(0,0,pdf.Width,,PdfColor.GrannySmithApple,true,PdfColor.GrannySmithApple)
-	pdf.DrawCircle(450,450,100,5,PdfColor.Red,true,PdfColor.SchoolBusYellow)
+    pdf.DrawCircle(0,0,pdf.Width,,PdfColor.GrannySmithApple,true,PdfColor.GrannySmithApple)
+    pdf.DrawCircle(450,450,100,5,PdfColor.Red,true,PdfColor.SchoolBusYellow)
 
     ;;Save the document and show the results
     pdf.Preview()

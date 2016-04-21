@@ -11,8 +11,10 @@ proc
     ;;Create a PDF document and specify that we want 2 header rows and 2 footer rows
     pdf = new PdfFile(,,,,,,,,,2,2,"OUTPUT:")
 
-    ;;Override the default file to prevent the date/time stamp prefix.
+    ;;Override default name to suppress date/time prefix, and and ask reader
+    ;;apps to display the file in full page view.
     pdf.FileName = "HeaderBodyFooter.pdf"
+    pdf.PageLayout = PdfPageLayout.Single
 
     ;;Define the content for the header rows
     if (pdf.HeaderRows)

@@ -7,12 +7,17 @@ subroutine HelloPdf
     endrecord
 proc
     ;;Create a new PDF document
-    pdf = new PdfFile()
+    pdf = new PdfFile(,,,,,,,,,,,"OUTPUT:")
 
-    ;;Add some content
+    ;;Override default name to suppress date/time prefix, and and ask reader
+    ;;apps to display the file in full page view.
+    pdf.FileName = "HelloPdf.pdf"
+    pdf.PageLayout = PdfPageLayout.Single
+
+    ;;Add some content at "current position", currently body row 1, column 1.
     pdf.DrawTextRC("Hello PDF!")
 
-    ;;Save the document and show the results
+    ;;Save the document and show the results.
     pdf.Preview()
 
     xreturn

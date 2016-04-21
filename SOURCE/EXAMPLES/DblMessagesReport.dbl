@@ -39,8 +39,10 @@ proc
     ;;Create PDF document, 132 columns in landscape mode, 2 header and 2 footer lines
     pdf = new PdfFile(,PdfOrientation.Landscape,132,,,,,,,2,2,"OUTPUT:")
 
-    ;;Override default file name (suppresses date/time prefix)
+    ;;Override default name to suppress date/time prefix, and and ask reader
+    ;;apps to display the file in full page view.
     pdf.FileName = "DBLMessages.pdf"
+    pdf.PageLayout = PdfPageLayout.Single
 
     ;;Setup header and footer content
     pdf.HeaderText[1] = "Synergy Message File Report                                                                              Printed MM/DD/YYYY at HH:MM"

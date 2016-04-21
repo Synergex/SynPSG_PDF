@@ -127,6 +127,14 @@ namespace PdfTest
 			xcall MultiSeriesBarChart()
 		endmethod
 		
+		private method btnWritesModeTest_Click, void
+			sender, @object 
+			e, @System.EventArgs 
+			endparams
+		proc
+			xcall WritesModeTest()
+		endmethod
+		
 	endclass
 	
 endnamespace

@@ -180,6 +180,7 @@
             <F N="../SOURCE/EXAMPLES/PieChartTest.dbl"/>
             <F N="../SOURCE/EXAMPLES/Portrait100.dbl"/>
             <F N="../SOURCE/EXAMPLES/SingleSeriesBarChart.dbl"/>
+            <F N="../SOURCE/EXAMPLES/WritesModeTest.dbl"/>
         </Folder>
         <Folder
             Name="Header Files"
