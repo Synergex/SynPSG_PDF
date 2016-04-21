@@ -29,7 +29,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <IncludeDebugInformation>true</IncludeDebugInformation>
-    <OutputPath>bin</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DebugOptimize>Debug</DebugOptimize>
@@ -44,7 +44,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <IncludeDebugInformation>true</IncludeDebugInformation>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DebugOptimize>Optimize</DebugOptimize>
@@ -68,64 +68,64 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="../../SOURCE/EXAMPLES/AttachFileTest.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/AttachFileTest.dbl">
       <Link>AttachFileTest.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/AutoItems.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/AutoItems.dbl">
       <Link>AutoItems.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/BlueAndRedBox.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/BlueAndRedBox.dbl">
       <Link>BlueAndRedBox.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/CirclesTest.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/CirclesTest.dbl">
       <Link>CirclesTest.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/DblMessagesReport.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/DblMessagesReport.dbl">
       <Link>DblMessagesReport.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/DeliveryTicket.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/DeliveryTicket.dbl">
       <Link>DeliveryTicket.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/DesignGrid.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/DesignGrid.dbl">
       <Link>DesignGrid.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/HeaderBodyFooter.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/HeaderBodyFooter.dbl">
       <Link>HeaderBodyFooter.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/HelloPdf.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/HelloPdf.dbl">
       <Link>HelloPdf.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/InfoPage.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/InfoPage.dbl">
       <Link>InfoPage.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/Landscape132.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/Landscape132.dbl">
       <Link>Landscape132.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/MixedPageOrientation.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/MixedPageOrientation.dbl">
       <Link>MixedPageOrientation.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/MultiSeriesBarChart.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/MultiSeriesBarChart.dbl">
       <Link>MultiSeriesBarChart.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/PdfTest.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/PdfTest.dbl">
       <Link>PdfTest.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/PieChartTest.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/PieChartTest.dbl">
       <Link>PieChartTest.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/Portrait100.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/Portrait100.dbl">
       <Link>Portrait100.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/SingleSeriesBarChart.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/SingleSeriesBarChart.dbl">
       <Link>SingleSeriesBarChart.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/EXAMPLES/WritesModeTest.dbl">
+    <Compile Include="../SOURCE/EXAMPLES/WritesModeTest.dbl">
       <Link>WritesModeTest.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/PDF/pdfdbl.dbl">
+    <Compile Include="../SOURCE/PDF/pdfdbl.dbl">
       <Link>pdfdbl.dbl</Link>
     </Compile>
-    <Compile Include="../../SOURCE/PDF/SynPSG_PDF.dbl">
+    <Compile Include="../SOURCE/PDF/SynPSG_PDF.dbl">
       <Link>SynPSG_PDF.dbl</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.dbl" />
@@ -155,7 +155,7 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>copy $(SolutionDir)..\WINDOWS\X86\*.* $(SolutionDir)bin
-copy $(SolutionDir)..\WINDOWS\X64\*.* $(SolutionDir)bin</PostBuildEvent>
+    <PostBuildEvent>copy $(SolutionDir)..\WINDOWS\X86\*.* $(SolutionDir)bin\$(Configuration)
+copy $(SolutionDir)..\WINDOWS\X64\*.* $(SolutionDir)bin\$(Configuration)</PostBuildEvent>
   </PropertyGroup>
 </Project>
