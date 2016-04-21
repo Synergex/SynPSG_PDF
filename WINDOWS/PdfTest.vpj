@@ -662,7 +662,7 @@
         <ExecMacro CmdLine="syn_set EXE=%(ROOT)exe"/>
         <ExecMacro CmdLine="syn_set SYNIMPDIR=%(ROOT)hdr"/>
         <ExecMacro CmdLine="syn_set MEDIA=%(ROOT)..\MEDIA"/>
-        <ExecMacro CmdLine="syn_set OUTPUT=%(ROOT)output"/>
+        <ExecMacro CmdLine="syn_set OUTPUT=%(ROOT)..\OUTPUT"/>
         <ExecMacro CmdLine="syn_set PATH=%(PATH);%(ROOT)X86;%(ROOT)X64"/>
     </Macro>
 </Project>

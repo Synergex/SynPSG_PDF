@@ -19,7 +19,7 @@
     <Language>Synergy</Language>
     <DBL_unQulRecStm>Stack</DBL_unQulRecStm>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-    <ProjEnvVars>MEDIA=$(SolutionDir)..\MEDIA;OUTPUT=$(SolutionDir)output;</ProjEnvVars>
+    <ProjEnvVars>MEDIA=$(SolutionDir)..\MEDIA;OUTPUT=$(SolutionDir)..\OUTPUT;</ProjEnvVars>
     <RunPostBuildEvent>On successful build</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
