@@ -21,6 +21,11 @@
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <ProjEnvVars>MEDIA=$(SolutionDir)..\MEDIA;OUTPUT=$(SolutionDir)..\OUTPUT;</ProjEnvVars>
     <RunPostBuildEvent>On successful build</RunPostBuildEvent>
+    <StartupObject>PdfTest</StartupObject>
+    <ApplicationIcon />
+    <ResourceType>Icon</ResourceType>
+    <ResourceName />
+    <NoWin32Manifest />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <IncludeDebugInformation>true</IncludeDebugInformation>
@@ -82,6 +87,12 @@
     <Compile Include="../../SOURCE/EXAMPLES/HeaderBodyFooter.dbl">
       <Link>HeaderBodyFooter.dbl</Link>
     </Compile>
+    <Compile Include="../../SOURCE/EXAMPLES/HelloPdf.dbl">
+      <Link>HelloPdf.dbl</Link>
+    </Compile>
+    <Compile Include="../../SOURCE/EXAMPLES/InfoPage.dbl">
+      <Link>InfoPage.dbl</Link>
+    </Compile>
     <Compile Include="../../SOURCE/EXAMPLES/Landscape132.dbl">
       <Link>Landscape132.dbl</Link>
     </Compile>
@@ -90,6 +101,9 @@
     </Compile>
     <Compile Include="../../SOURCE/EXAMPLES/MultiSeriesBarChart.dbl">
       <Link>MultiSeriesBarChart.dbl</Link>
+    </Compile>
+    <Compile Include="../../SOURCE/EXAMPLES/PdfTest.dbl">
+      <Link>PdfTest.dbl</Link>
     </Compile>
     <Compile Include="../../SOURCE/EXAMPLES/PieChartTest.dbl">
       <Link>PieChartTest.dbl</Link>
@@ -103,17 +117,13 @@
     <Compile Include="../../SOURCE/EXAMPLES/WritesModeTest.dbl">
       <Link>WritesModeTest.dbl</Link>
     </Compile>
-    <Compile Include="Form1.dbl">
-      <SubType>Form</SubType>
+    <Compile Include="../../SOURCE/PDF/pdfdbl.dbl">
+      <Link>pdfdbl.dbl</Link>
     </Compile>
-    <Compile Include="Form1.designer.dbl">
-      <DependentUpon>Form1.dbl</DependentUpon>
+    <Compile Include="../../SOURCE/PDF/SynPSG_PDF.dbl">
+      <Link>SynPSG_PDF.dbl</Link>
     </Compile>
-    <Compile Include="Program.dbl" />
     <Compile Include="Properties\AssemblyInfo.dbl" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.dbl</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.designer.dbl</LastGenOutput>
@@ -135,13 +145,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SynPSG_PDF\SynPSG_PDF.synproj">
-      <Name>SynPSG_PDF</Name>
-      <Project>{983878dd-a853-400c-bf89-88f291a5bad4}</Project>
-      <Private>True</Private>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Synergex\VS2010\Synergex.SynergyDE.targets" />
   <PropertyGroup>
