@@ -89,6 +89,9 @@
     <Compile Include="../SOURCE/EXAMPLES/DesignGrid.dbl">
       <Link>DesignGrid.dbl</Link>
     </Compile>
+    <Compile Include="../SOURCE/EXAMPLES/FontsTest.dbl">
+      <Link>FontsTest.dbl</Link>
+    </Compile>
     <Compile Include="../SOURCE/EXAMPLES/HeaderBodyFooter.dbl">
       <Link>HeaderBodyFooter.dbl</Link>
     </Compile>
