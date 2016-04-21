@@ -29,7 +29,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <IncludeDebugInformation>true</IncludeDebugInformation>
-    <OutputPath>..\bin</OutputPath>
+    <OutputPath>bin</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DebugOptimize>Debug</DebugOptimize>
@@ -44,12 +44,17 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <IncludeDebugInformation>true</IncludeDebugInformation>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DebugOptimize>Optimize</DebugOptimize>
-    <DocumentationFile>bin\Release\PdfTest.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <Prefer32Bit Condition=" '$(TargetFrameworkVersion)'  != 'v4.0' AND '$(Prefer32Bit)' != 'false' ">true</Prefer32Bit>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <SerializeAssembly>Auto</SerializeAssembly>
+    <LanguageCompatibilityLevel>100301</LanguageCompatibilityLevel>
+    <TargetRuntimeLevel>100301</TargetRuntimeLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
