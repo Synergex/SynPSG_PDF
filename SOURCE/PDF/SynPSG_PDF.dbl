@@ -2719,8 +2719,12 @@ eof,
         ;;; Starts a new page.
         ;;; </summary>
         ;;; <returns>Returns the new page number.</returns>
-        public method NewPage, int
-            optional in aOrientation, PdfOrientation
+		public method NewPage, int
+.ifdef DBLNET
+			default  in aOrientation, PdfOrientation, PdfOrientation.DefaultOrientation
+.else
+			optional in aOrientation, PdfOrientation
+.endc
             optional in aOutlineText, a
             endparams
             record
