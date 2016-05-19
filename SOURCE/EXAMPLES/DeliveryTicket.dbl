@@ -2,14 +2,98 @@
 import System
 import SynPSG.PDF
 
+subroutine TestDeliveryTicket
+    record 
+        ticketData      ,strTicketData
+        ticketItem      ,[#]strTicketItem
+        ticketHazmat    ,[#]strHazmat
+        analysis        ,strAnalysis
+    endrecord
+proc
+
+    ticketData.ticketNumber         = "12345"
+    ticketData.customerNumber       = "27850000"
+    ticketData.shipDate             = "05/18/16"
+    ticketData.soldTo[1]            = "Some Company, Inc"
+    ticketData.soldTo[2]            = "1234 Any Street"
+    ticketData.soldTo[3]            = "Some Town, CA, 95377"
+    ticketData.soldTo[4]            = "U.S.A."
+    ticketData.shipTo[1]            = "Some Company, Inc."
+    ticketData.shipTo[2]            = "8765 Other Lane"
+    ticketData.shipTo[3]            = "Other City, CA, 93775"
+    ticketData.shipTo[4]            = "U.S.A."
+    ticketData.orderNumber          = "AGS8888432"
+    ticketData.salesCode            = "AB53"
+    ticketData.creditApproval       = "9724"
+    ticketData.typedBy              = "RND"
+    ticketData.loadedBy             = "EGF"
+    ticketData.checkedBy            = "PSW"
+    ticketData.truckNumber          = "AB77772263"
+    ticketData.driverName           = "JOHN DOE"
+    ticketData.invoiceDate          = "05/18/2016"
+    ticketData.invoice1             = "000012222331"
+    ticketData.invoice2             = ""
+    ticketData.instructions[1]      = "Exercise caution; Bright Yellow Powder can be very unpredictable"
+    ticketData.instructions[2]      = "in certain circumstances, and Light Blue Liquid is particularly"
+    ticketData.instructions[3]      = "nasty stuff if not handled appropriately."
+    ticketData.instructions[4]      = ""
+    ticketData.latePercent          = "3.0%"
+    
+    ticketItem = new strTicketItem[2]
+    ticketItem[1].packages          = "       15"
+    ticketItem[1].packageSize       = "    120"
+    ticketItem[1].productName       = "Bright Yellow Powder"
+    ticketItem[1].productNumber     = "667200"
+    ticketItem[1].productVer        = "01"
+    ticketItem[1].qtyShipped        = "       1,500"
+    ticketItem[1].unit              = "Lbs"
+    ticketItem[1].ourOrderNumber    = "23224"
+    ticketItem[2].packages          = "      100"
+    ticketItem[2].packageSize       = "     15"
+    ticketItem[2].productName       = "Light Blue Liquid"
+    ticketItem[2].productNumber     = "657301"
+    ticketItem[2].productVer        = "03"
+    ticketItem[2].qtyShipped        = "       1,000"
+    ticketItem[2].unit              = "Gal"
+    ticketItem[2].ourOrderNumber    = "23224"
+
+    ticketHazmat = new strHazmat[1]
+    ticketHazmat[1].quantity        = "    1,500"
+    ticketHazmat[1].unit            = "Lbs"
+    ticketHazmat[1].hm              = "Y"
+    ticketHazmat[1].description     = "Bright yellow powder"
+    ticketHazmat[1].weight          = " 22,500"
+    
+    analysis.totalNit               = "1500"
+    analysis.availP2O5              = "250"
+    analysis.solK2O                 = "275"
+    analysis.s                      = "12"
+    analysis.zn                     = "6223"
+    analysis.other                  = " "
+    analysis.acres                  = "1200"
+    analysis.perAcre                = "25"
+
+    
+    xcall DeliveryTicket(ticketData,ticketItem,ticketHazmat,analysis)
+
+    xreturn
+    
+endsubroutine
+
 subroutine DeliveryTicket
+
+    required in ticketData      ,strTicketData
+    required in ticketItem      ,[#]strTicketItem
+    required in ticketHazmat    ,[#]strHazmat
+    required in analysis        ,strAnalysis
+
     record
-        pdf,        @PdfFile
-        x1,     float
-        y1,     float
-        x2,     float
-        y2,     float
-        exeFolder,  string
+        pdf,            @PdfFile
+        x1,             float
+        y1,             float
+        x2,             float
+        y2,             float
+        exeFolder,      string
         arialNarrow,    string
         arialNarrowBold,string
     endrecord
@@ -29,9 +113,9 @@ proc
     pdf.SelectFont(arialNarrowBold,22)
     pdf.DrawText("SOME COMPANY INC.",36,729)
     pdf.SelectFont(arialNarrowBold,14)
-    pdf.DrawText("DELIVERY TICKET",459,740)
+    pdf.DrawText("DELIVERY TICKET",490,740)
     pdf.SelectFont(arialNarrowBold,9)
-    pdf.DrawText("SHIPPING DOCUMENT",477,731)
+    pdf.DrawText("SHIPPING DOCUMENT",500,731)
 
     ;;Small text below main title
     pdf.SelectFont(arialNarrow,8)
@@ -43,7 +127,7 @@ proc
     ;;TICKET NO box (top)
     pdf.DrawBox(481.5,729,598.5,702)
     pdf.SelectFont(arialNarrow,8)
-    pdf.DrawText("TICKET NO.",502,706.5)
+    pdf.DrawText("TICKET NO.",502,712)
 
     ;;CUSTOMER NO. box
     pdf.DrawBox(229.5,697.5,288,670.5,,PdfColor.LightPink,true,PdfColor.LightPink)
@@ -55,6 +139,11 @@ proc
     pdf.SelectFont(arialNarrow,6)
     pdf.DrawText("SHIP DATE",542,693)
 
+    ;;Sold To and Ship To Headings
+    pdf.SelectFont(arialNarrowBold,9)
+    pdf.DrawText("BILL TO",2,697.5)
+    pdf.DrawText("SHIP TO",320,697.5)
+    
     ;;Main outer box
     pdf.DrawBox(x1=5,y1=634.5,x2=607,y2=54)
 
@@ -265,105 +354,101 @@ proc
     ;;TICKET NO box (bottom)
     pdf.DrawBox(x1=486,y1=31.5,x2=603,y2=9)
     pdf.SelectFont(arialNarrow,8)
-    pdf.DrawText("TICKET NO.",490.5,13)
+    pdf.DrawText("TICKET NO.",490.5,18)
 
     ;;-----------------------------------------------------------------------------------------
     ;;Add X's as fake data
 
     pdf.SelectFont("Courier",12)
 
-    pdf.DrawText("XXXXX",555,711)                      ;;Top ticket number
-    pdf.DrawText("XXXXXXXX",230,675)                   ;;Pink customer number box
-    pdf.DrawText("XXXXXXXX",230,657)                   ;;Location # (below customer number box)
-    pdf.DrawText("XX/XX/XX",544,675)                   ;;Pink ship date box
+    pdf.DrawText(ticketData.ticketNumber,555,711)
+    pdf.DrawText(%atrim(ticketData.customerNumber),230,675)
+    pdf.DrawText(%atrim(ticketData.shipDate),544,675)
 
     ;;Sold To
-    pdf.DrawText("X",2,711)
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",2,697.5)
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",2,684)
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",2,670.5)
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",2,657)
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",2,643.5)
+    pdf.DrawText(%atrim(ticketData.soldTo(1)),2,684)
+    pdf.DrawText(%atrim(ticketData.soldTo[2]),2,670.5)
+    pdf.DrawText(%atrim(ticketData.soldTo[3]),2,657)
+    pdf.DrawText(%atrim(ticketData.soldTo[4]),2,643.5)
 
     ;;Ship To:
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXX",320,711)
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXX",320,697.5)
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",320,684)
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",320,670.5)
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",320,657)
+    pdf.DrawText(%atrim(ticketData.shipTo[1]),320,684)
+    pdf.DrawText(%atrim(ticketData.shipTo[2]),320,670.5)
+    pdf.DrawText(%atrim(ticketData.shipTo[3]),320,657)
+    pdf.DrawText(%atrim(ticketData.shipTo[4]),320,643.5)
 
-    pdf.DrawText("XXXXXXXXXXXXXXX",6,606)              ;;Customer order number
-    pdf.DrawText("XXXX",119,606)                       ;;Sales code
-    pdf.DrawText("XXXXXX",155,606)                     ;;Credit Approv
-    pdf.DrawText("XXXXXX",204,606)                     ;;Typed by
-    pdf.DrawText("XXXXXX",254,606)                     ;;Loaded by
-    pdf.DrawText("XXXXXX",308,606)                     ;;Checked by
-    pdf.DrawText("XXXXXXXXXXXXXXXX",357,606)           ;;Truck / Trailer No.
-    pdf.DrawText("XXXXXXXXXXXXXXXXX",479,606)          ;;Driver
+    pdf.DrawText(%atrim(ticketData.orderNumber),6,606)
+    pdf.DrawText(%atrim(ticketData.salesCode),119,606)
+    pdf.DrawText(%atrim(ticketData.creditApproval),155,606)
+    pdf.DrawText(%atrim(ticketData.typedBy),204,606)
+    pdf.DrawText(%atrim(ticketData.loadedBy),254,606)
+    pdf.DrawText(%atrim(ticketData.checkedBy),308,606)
+    pdf.DrawText(%atrim(ticketData.truckNumber),357,606)
+    pdf.DrawText(%atrim(ticketData.driverName),479,606)
 
     ;;Upper box
     begin
         data ix, int
+        data iy, int, 0
         for ix from 569 thru 400 by -12
         begin
             data yPos, float, ix
-            pdf.DrawText("XXXXXXXXX",6,yPos)                          ;;No of pkgs
-            pdf.DrawText("XXXXXXX",77,yPos)                           ;;Pkg size
-            pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",134,yPos)  ;;Prod name / desc
-            pdf.DrawText("XXXXXX",363,yPos)                           ;;Product no
-            pdf.DrawText("XX",413,yPos)                               ;;Ver
-            pdf.DrawText("XXXXXXXXXXXX",435,yPos)                     ;;Quantity shipped
-            pdf.DrawText("XXX",529,yPos)                              ;;Unit
-            pdf.DrawText("XXXXXX",558,yPos)                           ;;Van Diest Order Number
+            if ((iy+=1)>ticketItem.Length)
+                exitloop
+            pdf.DrawText(ticketItem[iy].packages,6,yPos)
+            pdf.DrawText(ticketItem[iy].packageSize,77,yPos)
+            pdf.DrawText(ticketItem[iy].productName,134,yPos)
+            pdf.DrawText(ticketItem[iy].productNumber,363,yPos)
+            pdf.DrawText(ticketItem[iy].productVer,413,yPos)
+            pdf.DrawText(ticketItem[iy].qtyShipped,435,yPos)
+            pdf.DrawText(ticketItem[iy].unit,529,yPos)
+            pdf.DrawText(ticketItem[iy].ourOrderNumber,558,yPos)
         end
     end
 
     ;;Lower box
     begin
         data ix, int
+        data iy, int, 0
         for ix from 365 thru 125 by -12
         begin
             data yPos, float, ix
-            pdf.DrawText("XXXXXXXXX",6,yPos)
-            pdf.DrawText("XXX",77,yPos)
-            pdf.DrawText("XX",103,yPos)
-            pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",125,yPos)
-            pdf.DrawText("XXXXXXX",443,yPos)
+            if ((iy+=1)>ticketHazmat.Length)
+                exitloop
+            pdf.DrawText(ticketHazmat[1].quantity,6,yPos)
+            pdf.DrawText(ticketHazmat[1].unit,77,yPos)
+            pdf.DrawText(ticketHazmat[1].hm,103,yPos)
+            pdf.DrawText(ticketHazmat[1].description,125,yPos)
+            pdf.DrawText(ticketHazmat[1].weight,443,yPos)
         end
     end
-
+    
     ;;Guaranteed analysis
     pdf.SelectFont("Courier",10)
-    pdf.DrawText("XXXXXXXX",549,366)        ;;Total nit
-    pdf.DrawText("XXXXXXXX",549,355)        ;;Avail P2O5
-    pdf.DrawText("XXXXXXXX",549,344)        ;;Sol K2O
-    pdf.DrawText("XXX",517,333)             ;;S
-    pdf.DrawText("XXXXXXX",557,333)         ;;ZN
-    pdf.DrawText("XXXXXXXXXXXXXXX",509,321)
-    pdf.DrawText("XXXX",542,311)            ;;Acres
-    pdf.DrawText("XX",524,299)              ;;Per acre
+    pdf.DrawText(analysis.totalNit,549,366)  
+    pdf.DrawText(analysis.availP2O5,549,355) 
+    pdf.DrawText(analysis.solK2O,549,344)    
+    pdf.DrawText(analysis.s,517,333)         
+    pdf.DrawText(analysis.zn,557,333)        
+    pdf.DrawText(analysis.other,509,321)
+    pdf.DrawText(analysis.acres,542,311)     
+    pdf.DrawText(analysis.perAcre,524,299)   
 
     pdf.SelectFont("Courier",12)
 
-    pdf.DrawText("XX/XX/XXXX",510,168)      ;;Invoice date
-    pdf.DrawText("XXXXXXXXXXXX",510,135)    ;;Invoice Nos
-    pdf.DrawText("XXXXXXXXXXXX",510,125)    ;;Invoice Nos
+    pdf.DrawText(ticketData.invoiceDate,510,168)
+    pdf.DrawText(ticketData.invoice1,510,135)   
+    pdf.DrawText(ticketData.invoice2,510,125)   
 
     ;;Delivery instructions
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",90,99)
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",90,90)
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",90,81)
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",90,72)
+    pdf.DrawText(ticketData.instructions[1],90,99)
+    pdf.DrawText(ticketData.instructions[2],90,90)
+    pdf.DrawText(ticketData.instructions[3],90,81)
+    pdf.DrawText(ticketData.instructions[4],90,72)
 
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",360,99)
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",360,90)
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",360,81)
-    pdf.DrawText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",360,72)
+    pdf.DrawText(ticketData.latePercent,6,36)
 
-    pdf.DrawText("X.X%",6,36)      ;;Late payment penalty
-
-    ;;Lower ticket number
-    pdf.DrawText("XXXXX",555,18)
+    pdf.DrawText(ticketData.ticketNumber,555,18)
 
     ;;-----------------------------------------------------------------------------------------
     ;;And show it
@@ -373,3 +458,56 @@ proc
     xreturn
 
 endsubroutine
+
+structure strTicketData
+    ticketNumber    ,a5
+    customerNumber  ,a8
+    shipDate        ,a8
+    soldTo          ,[4]a30
+    shipTo          ,[4]a30
+    orderNumber     ,a15
+    salesCode       ,a4
+    creditApproval  ,a6
+    typedBy         ,a6
+    loadedBy        ,a6
+    checkedBy       ,a6
+    truckNumber     ,a15
+    driverName      ,a15
+    invoiceDate     ,a10
+    invoice1        ,a12
+    invoice2        ,a12
+    instructions    ,[4]a70
+    latePercent     ,a4
+endstructure
+
+structure strTicketItem
+    packages        ,a9
+    packageSize     ,a7
+    productName     ,a30
+    productNumber   ,a6
+    productVer      ,a2
+    qtyShipped      ,a12
+    unit            ,a3
+    ourOrderNumber  ,a6
+endstructure
+
+structure strHazmat
+    quantity        ,a9
+    unit            ,a3
+    hm              ,a2
+    description     ,a40
+    weight          ,a7
+endstructure
+
+structure strAnalysis
+    totalNit        ,a8
+    availP2O5       ,a8
+    solK2O          ,a8
+    s               ,a3
+    zn              ,a7
+    other           ,a15
+    acres           ,a4
+    perAcre         ,a2
+endstructure
+
+

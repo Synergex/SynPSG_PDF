@@ -72,7 +72,7 @@ proc
         ("4 "), demo = "AutoItems"
         ("5 "), demo = "BlueAndRedBox"
         ("6 "), demo = "DblMessagesReport"
-        ("7 "), demo = "DeliveryTicket"
+        ("7 "), demo = "TestDeliveryTicket"
         ("8 "), demo = "DesignGrid"
         ("9 "), demo = "HeaderBodyFooter"
         ("10"), demo = "Landscape132"
