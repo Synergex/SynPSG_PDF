@@ -19,21 +19,10 @@ Requirements:   SynPSG_PDF requires Synergy/DE V10.3.1b or higher
 --------------------------------------------------------------------------------
 
 IMPORTANT NOTE:	Because of changes to the prototype file format between Synergy
-                versions 10.3.1 and 10.3.3, this example ships wioth no prototype
+                versions 10.3.1 and 10.3.3, this example ships with no prototype
                 files created. This means that you will need to build both the
                 ELB and Application projects before attempting to run the sample\
                 code.
-
-                Also, when you build the ELB under 10.3.3 you will currently see
-                the following warning:
-
-                "pdfdbl.dbl"(394):            if (^passed(detail_no)) then
-                %DBL-W-INVPASSED, ^PASSED on required parameter is always true
-
-                This is because of an issue in the underlying PDFDBL code which
-                is maintained by Synergex development. The issue has been
-                reported to them and will be addressed at some point, but
-                it is currently safe to ignore the warning and proceed.
 
 --------------------------------------------------------------------------------
 
