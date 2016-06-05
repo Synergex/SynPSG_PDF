@@ -8,6 +8,7 @@ main PdfTest
         wid,        i4
         aoption,    a2
         demo,       string
+        done,       boolean
     endrecord
 proc
     xcall flags(7004020,1)
@@ -63,65 +64,110 @@ proc
     begin
         xcall w_disp(wid,WD_POS,23,32,"  ",WD_POS,23,32,WD_READS,aoption)
 
+        xcall w_disp(wid,WD_POS,23,40,"Running test...")
+        xcall w_updt
+
+        done = false
+
         using aoption select
         ("E ","e "),
             exitloop
-        ("1 "), demo = "HelloPdf"
-        ("2 "), demo = "AttachFileTest"
-        ("3 "), demo = "WritesModeTest"
-        ("4 "), demo = "AutoItems"
-        ("5 "), demo = "BlueAndRedBox"
-        ("6 "), demo = "DblMessagesReport"
-        ("7 "), demo = "TestDeliveryTicket"
-        ("8 "), demo = "DesignGrid"
-        ("9 "), demo = "HeaderBodyFooter"
-        ("10"), demo = "Landscape132"
-        ("11"), demo = "MixedPageOrientation"
-        ("12"), demo = "Portrait100"
-        ("13"), demo = "CirclesTest"
-        ("14"), demo = "PieChartTest"
-        ("15"), demo = "SingleSeriesBarChart"
-        ("16"), demo = "MultiSeriesBarChart"
-        ("17"), demo = "InfoPage"
-        ("18"), demo = "FontsTest"
-        ("19"), demo = ""
-        ("20"), demo = ""
-        ("21"), demo = ""
-        ("22"), demo = ""
-        ("23"), demo = ""
-        ("24"), demo = ""
-        ("25"), demo = ""
-        ("26"), demo = ""
-        ("27"), demo = ""
-        ("28"), demo = ""
-        ("29"), demo = ""
-        ("30"), demo = ""
-        ("31"), demo = ""
-        ("32"), demo = ""
-        ("33"), demo = ""
-        ("34"), demo = ""
-        ("35"), demo = ""
-        ("36"), demo = ""
-        ("37"), demo = ""
-        ("38"), demo = ""
-        ("39"), demo = ""
-        ("40"), demo = ""
-        (),     demo = ""
+        ("1 "),
+        begin
+            xcall HelloPdf
+            done = true
+        end
+        ("2 "),
+        begin
+            xcall AttachFileTest
+            done = true
+        end
+        ("3 "),
+        begin
+            xcall WritesModeTest
+            done = true
+        end
+        ("4 "),
+        begin
+            xcall AutoItems
+            done = true
+        end
+        ("5 "),
+        begin
+            xcall BlueAndRedBox
+            done = true
+        end
+        ("6 "),
+        begin
+            xcall DblMessagesReport
+            done = true
+        end
+        ("7 "),
+        begin
+            xcall TestDeliveryTicket
+            done = true
+        end
+        ("8 "),
+        begin
+            xcall DesignGrid
+            done = true
+        end
+        ("9 "),
+        begin
+            xcall HeaderBodyFooter
+            done = true
+        end
+        ("10"),
+        begin
+            xcall Landscape132
+            done = true
+        end
+        ("11"),
+        begin
+            xcall MixedPageOrientation
+            done = true
+        end
+        ("12"),
+        begin
+            xcall Portrait100
+            done = true
+        end
+        ("13"),
+        begin
+            xcall CirclesTest
+            done = true
+        end
+        ("14"),
+        begin
+            xcall PieChartTest
+            done = true
+        end
+        ("15"),
+        begin
+            xcall SingleSeriesBarChart
+            done = true
+        end
+        ("16"),
+        begin
+            xcall MultiSeriesBarChart
+            done = true
+        end
+        ("17"),
+        begin
+            xcall InfoPage
+            done = true
+        end
+        ("18"),
+        begin
+            xcall FontsTest
+            done = true
+        end
         endusing
 
-        if (demo.Length > 0) then
-        begin
-            xcall w_disp(wid,WD_POS,23,40,"Running test...")
-            xcall w_updt
-
-            xcall xsubr(demo)
-
+        if (done) then
             xcall w_disp(wid,WD_POS,23,40,"PDF created, check the output folder.")
-        end
         else
-        begin
             xcall w_disp(wid,WD_POS,23,40,"Err, that one doesn't exist!")
-        end
 
         xcall w_updt
         sleep 0.5

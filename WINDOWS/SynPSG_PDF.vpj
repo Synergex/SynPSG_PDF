@@ -77,10 +77,10 @@
                 Value="0"/>
             <SynSetting
                 Name="proto_command_line"
-                Value="dblproto -platform=x86 %p%n%e"/>
+                Value="dblproto -out=SynPsgPdfAPI -platform=x86 %p%n%e"/>
             <SynSetting
                 Name="compile_command_line"
-                Value='dbl -T -d -qcheck -qalign -o OBJ:%rn.dbo -WD=762 "%p%n%e"'/>
+                Value='dbl -T -d -qcheck -qalign -WD=762 -o OBJ:%rn.dbo "%p%n%e"'/>
             <SynSetting
                 Name="linklibr_command_line"
                 Value="dblink -d -l EXE:%rn.elb OBJ:%rn.dbo"/>
@@ -129,7 +129,23 @@
         <Folder
             Name="Source Files"
             Filters="*.dbl;*.tpl;*.dbc">
+            <F N="../SOURCE/PDF/AutoBox.dbl"/>
+            <F N="../SOURCE/PDF/AutoBoxAbsolute.dbl"/>
+            <F N="../SOURCE/PDF/AutoBoxRowCol.dbl"/>
+            <F N="../SOURCE/PDF/AutoImage.dbl"/>
+            <F N="../SOURCE/PDF/AutoItem.dbl"/>
+            <F N="../SOURCE/PDF/AutoLine.dbl"/>
+            <F N="../SOURCE/PDF/AutoLineAbsolute.dbl"/>
+            <F N="../SOURCE/PDF/AutoLineRowCol.dbl"/>
+            <F N="../SOURCE/PDF/AutoText.dbl"/>
+            <F N="../SOURCE/PDF/AutoTextAbsolute.dbl"/>
+            <F N="../SOURCE/PDF/AutoTextRowCol.dbl"/>
+            <F N="../SOURCE/PDF/ChartDataSet.dbl"/>
+            <F N="../SOURCE/PDF/ChartItem.dbl"/>
+            <F N="../SOURCE/PDF/ChartSeries.dbl"/>
+            <F N="../SOURCE/PDF/Enumerations.dbl"/>
             <F N="../SOURCE/PDF/pdfdbl.dbl"/>
+            <F N="../SOURCE/PDF/Structures.dbl"/>
             <F N="../SOURCE/PDF/SynPSG_PDF.dbl"/>
         </Folder>
         <Folder
@@ -214,10 +230,10 @@
                 Value="1"/>
             <SynSetting
                 Name="proto_command_line"
-                Value="dblproto -platform=x64 %p%n%e"/>
+                Value="dblproto -out=SynPsgPdfAPI -platform=x64 %p%n%e"/>
             <SynSetting
                 Name="compile_command_line"
-                Value='dbl -T -d -qcheck -qalign -o OBJ:%rn.dbo -WD=762 "%p%n%e"'/>
+                Value='dbl -T -d -qcheck -qalign -WD=762 -o OBJ:%rn.dbo "%p%n%e"'/>
             <SynSetting
                 Name="linklibr_command_line"
                 Value="dblink -d -l EXE:%rn.elb OBJ:%rn.dbo"/>
@@ -334,10 +350,10 @@
                 Value="0"/>
             <SynSetting
                 Name="proto_command_line"
-                Value="dblproto -platform=x86 %p%n%e"/>
+                Value="dblproto -out=SynPsgPdfAPI -platform=x86 %p%n%e"/>
             <SynSetting
                 Name="compile_command_line"
-                Value='dbl -T -qstrict -qalign -o OBJ:%rn.dbo -WD=762 "%p%n%e"'/>
+                Value='dbl -T -qstrict -qalign -WD=762 -o OBJ:%rn.dbo "%p%n%e"'/>
             <SynSetting
                 Name="linklibr_command_line"
                 Value="dblink -l EXE:%rn.elb OBJ:%rn.dbo"/>
@@ -454,10 +470,10 @@
                 Value="1"/>
             <SynSetting
                 Name="proto_command_line"
-                Value="dblproto -platform=x64 %p%n%e"/>
+                Value="dblproto -out=SynPsgPdfAPI -platform=x64 %p%n%e"/>
             <SynSetting
                 Name="compile_command_line"
-                Value='dbl -T -qstrict -qalign -o OBJ:%rn.dbo -WD=762 "%p%n%e"'/>
+                Value='dbl -T -qstrict -qalign -WD=762 -o OBJ:%rn.dbo "%p%n%e"'/>
             <SynSetting
                 Name="linklibr_command_line"
                 Value="dblink -l EXE:%rn.elb OBJ:%rn.dbo"/>

@@ -1,0 +1,94 @@
+;;*****************************************************************************
+;;
+;; File:        ChartDataSet.dbl
+;;
+;; Type:        Class
+;;
+;; Description: Represents a data set from which to draw a chart.
+;;
+;; Date:        19th July 2015
+;;
+;; Author:      Steve Ives, Synergex Professional Services Group
+;;              http://www.synergex.com
+;;
+;;*****************************************************************************
+;;
+;; Copyright (c) 2015, Synergex International, Inc.
+;; All rights reserved.
+;;
+;; Redistribution and use in source and binary forms, with or without
+;; modification, are permitted provided that the following conditions are met:
+;;
+;; * Redistributions of source code must retain the above copyright notice,
+;;   this list of conditions and the following disclaimer.
+;;
+;; * Redistributions in binary form must reproduce the above copyright notice,
+;;   this list of conditions and the following disclaimer in the documentation
+;;   and/or other materials provided with the distribution.
+;;
+;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+;; ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+;; LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+;; CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+;; SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+;; INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+;; CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+;; ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+;; POSSIBILITY OF SUCH DAMAGE.
+;;
+;;*****************************************************************************
+
+namespace SynPSG.PDF
+
+    ;;; <summary>
+    ;;; Represents a data set from which to draw a chart.
+    ;;; </summary>
+    public class ChartDataSet
+
+        public method ChartDataSet
+            required in aSeriesCount, int
+            required in aItemsPerSeries, int
+            endparams
+            record 
+                ix, int
+            endrecord
+        proc
+            mSeries = new ChartSeries[aSeriesCount]
+            mGroupLabel = new string[aItemsPerSeries]
+            for ix from 1 thru aSeriesCount
+                mSeries[ix] = new ChartSeries(aItemsPerSeries)
+            for ix from 1 thru aItemsPerSeries
+                mGroupLabel[ix] = ""
+        endmethod
+
+        private mSeries, [#]@ChartSeries
+
+        public property Series, [#]@ChartSeries
+            method get
+            proc
+                mreturn mSeries
+            endmethod
+            method set
+            proc
+                mSeries = value
+            endmethod
+        endproperty
+
+        private mGroupLabel, [#]string
+
+        public property GroupLabel, [#]string
+            method get
+            proc
+                mreturn mGroupLabel
+            endmethod
+            method set
+            proc
+                mGroupLabel = value
+            endmethod
+        endproperty
+
+    endclass
+
+endnamespace

@@ -1,0 +1,145 @@
+;;*****************************************************************************
+;;
+;; File:        AutoTextAbsolute.dbl
+;;
+;; Type:        Class
+;;
+;; Description: Represents text that is to be drawn on the page of a PDF
+;;              document using absolute coordinates.
+;;
+;; Date:        19th July 2015
+;;
+;; Author:      Steve Ives, Synergex Professional Services Group
+;;              http://www.synergex.com
+;;
+;;*****************************************************************************
+;;
+;; Copyright (c) 2015, Synergex International, Inc.
+;; All rights reserved.
+;;
+;; Redistribution and use in source and binary forms, with or without
+;; modification, are permitted provided that the following conditions are met:
+;;
+;; * Redistributions of source code must retain the above copyright notice,
+;;   this list of conditions and the following disclaimer.
+;;
+;; * Redistributions in binary form must reproduce the above copyright notice,
+;;   this list of conditions and the following disclaimer in the documentation
+;;   and/or other materials provided with the distribution.
+;;
+;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+;; ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+;; LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+;; CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+;; SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+;; INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+;; CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+;; ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+;; POSSIBILITY OF SUCH DAMAGE.
+;;
+;;*****************************************************************************
+
+namespace SynPSG.PDF
+
+    ;;*********************************************************************
+    ;;; <summary>
+    ;;; Represents text that is to be drawn on the page of a PDF document using absolute coordinates.
+    ;;; </summary>
+    public class AutoTextAbsolute extends AutoText
+
+        public method AutoTextAbsolute
+            required in aText,      string
+            required in aX,         float
+            required in aY,         float
+.ifdef DBLNET
+            default  in aColor,     PdfColor,       PdfColor.DefaultColor
+            default  in aFontName,  string,         ^null
+            default  in aFontSize,  int,            0
+            default  in aMode,      AutoItemMode,   AutoItemMode.DefaultMode
+            default  in aUnderline, boolean,        false
+.else
+            optional in aColor,     PdfColor
+            optional in aFontName,  string
+            optional in aFontSize,  int
+            optional in aMode,      AutoItemMode
+            optional in aUnderline, boolean
+.endc
+            endparams
+            parent(aText,aColor,aUnderline,aMode)
+        proc
+            mX  = aX
+            mY  = aY
+
+.ifdef DBLNET
+            if (!String.IsNullOrWhiteSpace(aFontName))
+.else
+            if (^passed(aFontName) && (afontName!=^null) && (aFontName.Trim().Length>0))
+.endc
+                mFontName = aFontName
+
+.ifdef DBLNET
+            if (aFontSize>0)
+.else
+            if (^passed(aFontSize) && (aFontSize>0))
+.endc
+                mFontSize = aFontSize
+
+        endmethod
+
+        private mX, float
+
+        public property X, float
+            method get
+            proc
+                mreturn mX
+            endmethod
+            method set
+            proc
+                mX = value
+            endmethod
+        endproperty
+
+        private mY, float
+
+        public property Y, float
+            method get
+            proc
+                mreturn mY
+            endmethod
+            method set
+            proc
+                mY = value
+            endmethod
+        endproperty
+
+        private mFontName, string
+
+        public property FontName, string
+            method get
+            proc
+                mreturn mFontName
+            endmethod
+            method set
+            proc
+                mFontName = value
+            endmethod
+        endproperty
+
+        private mFontSize, int, 0
+
+        public property FontSize, int
+            method get
+            proc
+                mreturn mFontSize
+            endmethod
+            method set
+            proc
+                mFontSize = value
+            endmethod
+        endproperty
+
+    endclass
+
+endnamespace

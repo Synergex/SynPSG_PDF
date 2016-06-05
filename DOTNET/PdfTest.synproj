@@ -125,8 +125,56 @@
     <Compile Include="..\SOURCE\EXAMPLES\WritesModeTest.dbl">
       <Link>WritesModeTest.dbl</Link>
     </Compile>
+    <Compile Include="..\SOURCE\PDF\AutoBox.dbl">
+      <Link>AutoBox.dbl</Link>
+    </Compile>
+    <Compile Include="..\SOURCE\PDF\AutoBoxAbsolute.dbl">
+      <Link>AutoBoxAbsolute.dbl</Link>
+    </Compile>
+    <Compile Include="..\SOURCE\PDF\AutoBoxRowCol.dbl">
+      <Link>AutoBoxRowCol.dbl</Link>
+    </Compile>
+    <Compile Include="..\SOURCE\PDF\AutoImage.dbl">
+      <Link>AutoImage.dbl</Link>
+    </Compile>
+    <Compile Include="..\SOURCE\PDF\AutoItem.dbl">
+      <Link>AutoItem.dbl</Link>
+    </Compile>
+    <Compile Include="..\SOURCE\PDF\AutoLine.dbl">
+      <Link>AutoLine.dbl</Link>
+    </Compile>
+    <Compile Include="..\SOURCE\PDF\AutoLineAbsolute.dbl">
+      <Link>AutoLineAbsolute.dbl</Link>
+    </Compile>
+    <Compile Include="..\SOURCE\PDF\AutoLineRowCol.dbl">
+      <Link>AutoLineRowCol.dbl</Link>
+    </Compile>
+    <Compile Include="..\SOURCE\PDF\AutoText.dbl">
+      <Link>AutoText.dbl</Link>
+    </Compile>
+    <Compile Include="..\SOURCE\PDF\AutoTextAbsolute.dbl">
+      <Link>AutoTextAbsolute.dbl</Link>
+    </Compile>
+    <Compile Include="..\SOURCE\PDF\AutoTextRowCol.dbl">
+      <Link>AutoTextRowCol.dbl</Link>
+    </Compile>
+    <Compile Include="..\SOURCE\PDF\ChartDataSet.dbl">
+      <Link>ChartDataSet.dbl</Link>
+    </Compile>
+    <Compile Include="..\SOURCE\PDF\ChartItem.dbl">
+      <Link>ChartItem.dbl</Link>
+    </Compile>
+    <Compile Include="..\SOURCE\PDF\ChartSeries.dbl">
+      <Link>ChartSeries.dbl</Link>
+    </Compile>
+    <Compile Include="..\SOURCE\PDF\Enumerations.dbl">
+      <Link>Enumerations.dbl</Link>
+    </Compile>
     <Compile Include="..\SOURCE\PDF\pdfdbl.dbl">
       <Link>pdfdbl.dbl</Link>
+    </Compile>
+    <Compile Include="..\SOURCE\PDF\Structures.dbl">
+      <Link>Structures.dbl</Link>
     </Compile>
     <Compile Include="..\SOURCE\PDF\SynPSG_PDF.dbl">
       <Link>SynPSG_PDF.dbl</Link>
