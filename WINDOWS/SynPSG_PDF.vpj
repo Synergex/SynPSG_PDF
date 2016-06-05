@@ -145,8 +145,8 @@
             <F N="../SOURCE/PDF/ChartSeries.dbl"/>
             <F N="../SOURCE/PDF/Enumerations.dbl"/>
             <F N="../SOURCE/PDF/pdfdbl.dbl"/>
+            <F N="../SOURCE/PDF/PdfFile.dbl"/>
             <F N="../SOURCE/PDF/Structures.dbl"/>
-            <F N="../SOURCE/PDF/SynPSG_PDF.dbl"/>
         </Folder>
         <Folder
             Name="Header Files"

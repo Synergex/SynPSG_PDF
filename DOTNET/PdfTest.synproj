@@ -173,11 +173,11 @@
     <Compile Include="..\SOURCE\PDF\pdfdbl.dbl">
       <Link>pdfdbl.dbl</Link>
     </Compile>
+    <Compile Include="..\SOURCE\PDF\PdfFile.dbl">
+      <Link>PdfFile.dbl</Link>
+    </Compile>
     <Compile Include="..\SOURCE\PDF\Structures.dbl">
       <Link>Structures.dbl</Link>
-    </Compile>
-    <Compile Include="..\SOURCE\PDF\SynPSG_PDF.dbl">
-      <Link>SynPSG_PDF.dbl</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.dbl" />
     <EmbeddedResource Include="Properties\Resources.resx">
