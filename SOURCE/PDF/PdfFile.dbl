@@ -836,7 +836,7 @@ eof,
 
             ;;Set the default outline root node text
             this.OutlineRootText = "Home"
-            
+
         endmethod
 
         ;;*********************************************************************
@@ -1831,7 +1831,7 @@ eof,
                 NewPage()
 
             margin = 0
-            
+
 .ifdef DBLNET
             if (aBackgroundColor!=PdfColor.DefaultColor)
             begin
@@ -1898,7 +1898,7 @@ eof,
                 data barStartY, float, aBottomY + margin
                 if (drawGroupLabels)
                     barStartY += 15
-                
+
                 ;If the series specifies a color then set it.
                 if (aChartData.Series[ixSeries].Color != PdfColor.NotSpecified)
                     setCustomFillColor(aChartData.Series[ixSeries].Color)
@@ -1940,7 +1940,7 @@ eof,
                         ;;Figure out the X coordinate for the label
                         data labelWidth, float, pg.TextWidth(labelText)
                         data X, float, aTopX + margin + (groupWidth*(ix-1)) + (aSpaceBetweenGroups*(ix-1)) + ((groupWidth-labelWidth)/2)
-                        
+
                         pg.BeginText()
                         pg.MoveTextPos(X,aBottomY + margin)
                         pg.ShowText(labelText)
@@ -1948,7 +1948,7 @@ eof,
                     end
                 end
             end
-            
+
         endmethod
 
         ;;---------------------------------------------------------------------
@@ -1975,7 +1975,7 @@ eof,
         proc
             this.DrawBarChart(aTopLeft.X,aTopLeft.Y,aBottomRight.X,aBottomRight.Y,aSpaceBetweenGroups,aChartData,aBackgroundColor)
         endmethod
-        
+
         ;;---------------------------------------------------------------------
         ;;; <summary>
         ;;; Draws a bar chart with multiple data series
@@ -2001,7 +2001,7 @@ eof,
             optional in aBackgroundColor,   PdfColor
 .endc
             endparams
-            record 
+            record
                 topLeft,        XYcoordinate
                 bottomRight,    XYcoordinate
             endrecord
@@ -2011,8 +2011,8 @@ eof,
             bottomRight.X = XfromColumn(aToCol) + (this.ColumnWidth/2)
             bottomRight.Y = YfromBodyRow(aToRow) + ((this.RowHeight-this.ExtraRowSpacing)/2)
             this.DrawBarChart(topLeft.X,topLeft.Y,bottomRight.X,bottomRight.Y,aSpaceBetweenGroups,aChartData,aBackgroundColor)
-        endmethod        
-        
+        endmethod
+
         ;;---------------------------------------------------------------------
         ;;; <summary>
         ;;; Draws a chart legend for a chart that displays multiple data series.
@@ -2131,7 +2131,7 @@ eof,
                 NewPage()
 
             radius = aRadius
-            
+
 .ifdef DBLNET
             if (aBackgroundColor!=PdfColor.DefaultColor)
             begin
@@ -2152,7 +2152,7 @@ eof,
             startAngle = 0
             lastPoint.x = aCenterX
             lastPoint.y = aCenterY-radius
-            
+
             ;;Calculate the total of all data values
             totalDataValue = 0
             for ix from 1 thru aChartData.Series[1].Items.GetLength(1)
@@ -2162,26 +2162,26 @@ eof,
             begin
                 ;Set the fill color for this slice. This must be done before we start drawing.
                 setCustomFillColor(aChartData.Series[1].Items[ix].Color)
-                
+
                 ;;Calculate the number of percent we will have covered after this slice,
                 ;;and the compass angle of the end of the arc associated with this slice
                 endPercent = startPercent + ((aChartData.Series[1].Items[ix].DataValue / totalDataValue) * 100)
                 endAngle = (endPercent * 3.6)
-                
+
                 ;;Draw a line from the center to the arc
                 pg.MoveTo(aCenterX,aCenterY)
                 pg.LineTo(lastPoint.x,lastPoint.y)
-                
+
                 ;;Then draw the arc and record the position of the point at the end of the arc
                 pg.Arc(aCenterX,aCenterY,radius,startAngle,endAngle)
                 lastPoint = pg.GetCurrentPos()
-                
+
                 ;;Then draw a line back to the center point
                 pg.LineTo(aCenterX,aCenterY)
-                
+
                 ;;And fill the arc with the appropriate color for the slice
                 pg.Fill()
-            
+
                 ;;Get ready for the next slice
                 startPercent = endPercent
                 startAngle = ((360.0/100)*startPercent)
@@ -2248,7 +2248,7 @@ eof,
 .ifdef DBLNET
             showValues = aShowValues
 .else
-            if (^passed(aShowValues)) then 
+            if (^passed(aShowValues)) then
                 showValues = aShowValues
             else
                 showValues = false
@@ -2266,7 +2266,7 @@ eof,
                 data thisLabel, string
                 data thisWidth, float
 
-                if (showValues) then 
+                if (showValues) then
                     thisLabel = aChartData.Series[1].Items[ix].Label + " (" + %string(aChartData.Series[1].Items[ix].DataValue) + ")"
                 else
                     thisLabel = aChartData.Series[1].Items[ix].Label
@@ -2606,20 +2606,23 @@ eof,
             required in aFontName, string
             endparams
             record
-                font, string
-                available, boolean
+                fontName, string
+                isAvailable, boolean
             endrecord
         proc
-            available = false
-            foreach font in mAvailableFonts
+            isAvailable = false
+            if ((aFontName!=^null)&&(aFontName.Length>0))
             begin
-                if (font == aFontName)
+                foreach fontName in mAvailableFonts
                 begin
-                    available = true
-                    exitloop
+                    if (fontName == aFontName)
+                    begin
+                        isAvailable = true
+                        exitloop
+                    end
                 end
             end
-            mreturn available
+            mreturn isAvailable
         endmethod
 
         ;;---------------------------------------------------------------------
@@ -2627,7 +2630,7 @@ eof,
         ;;; Loads a TrueType font and embeds it in the PDF document ready for use.
         ;;; </summary>
         ;;; <param name="aFontFile">Full path to the font file (.ttf)</param>
-        ;;; <returns>Returns the name of the font that can be passed to the SelectFont method.</returns>
+        ;;; <returns>Returns the name of the font that can be passed to the SelectFont method, or ^NULL if the font fails to load.</returns>
         public method LoadTrueTypeFont, string
             required in aFontFile,      string
             endparams
