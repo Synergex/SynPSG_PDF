@@ -2,14 +2,16 @@
 import System
 import SynPSG.PDF
 
-subroutine TestDeliveryTicket
-    record 
+subroutine DeliveryTicket
+    record
         ticketData      ,strTicketData
         ticketItem      ,[#]strTicketItem
         ticketHazmat    ,[#]strHazmat
         analysis        ,strAnalysis
     endrecord
 proc
+
+    ;;Provide some dummy data for the delivery ticket
 
     ticketData.ticketNumber         = "12345"
     ticketData.customerNumber       = "27850000"
@@ -38,7 +40,7 @@ proc
     ticketData.instructions[3]      = "nasty stuff if not handled appropriately."
     ticketData.instructions[4]      = ""
     ticketData.latePercent          = "3.0%"
-    
+
     ticketItem = new strTicketItem[2]
     ticketItem[1].packages          = "       15"
     ticketItem[1].packageSize       = "    120"
@@ -63,7 +65,7 @@ proc
     ticketHazmat[1].hm              = "Y"
     ticketHazmat[1].description     = "Bright yellow powder"
     ticketHazmat[1].weight          = " 22,500"
-    
+
     analysis.totalNit               = "1500"
     analysis.availP2O5              = "250"
     analysis.solK2O                 = "275"
@@ -73,19 +75,19 @@ proc
     analysis.acres                  = "1200"
     analysis.perAcre                = "25"
 
-    
-    xcall DeliveryTicket(ticketData,ticketItem,ticketHazmat,analysis)
+    ;;Create a PDF containing the background data. The name of this file is DeliveryTicketForm.pdf
+    ;;This does not need to be done each time. Normally you would implement a check to see if the file
+    ;;is already there, and create it if necessary.
+    xcall PrintDeliveryTicketForm()
+
+    ;;Create a delivery ticket from the sample data. The background form will be used.
+    xcall PrintDeliveryTicket(ticketData,ticketItem,ticketHazmat,analysis)
 
     xreturn
-    
+
 endsubroutine
 
-subroutine DeliveryTicket
-
-    required in ticketData      ,strTicketData
-    required in ticketItem      ,[#]strTicketItem
-    required in ticketHazmat    ,[#]strHazmat
-    required in analysis        ,strAnalysis
+subroutine PrintDeliveryTicketForm
 
     record
         pdf,            @PdfFile
@@ -93,7 +95,6 @@ subroutine DeliveryTicket
         y1,             float
         x2,             float
         y2,             float
-        exeFolder,      string
         arialNarrow,    string
         arialNarrowBold,string
     endrecord
@@ -102,7 +103,7 @@ proc
 
     ;;Override default name to suppress date/time prefix, and and ask reader
     ;;apps to display the file in full page view.
-    pdf.FileName = "DeliveryTicket.pdf"
+    pdf.FileName = "DeliveryTicketForm.pdf"
     pdf.PageLayout = PdfPageLayout.Single
 
     ;;Load and embed custom fonts
@@ -143,7 +144,7 @@ proc
     pdf.SelectFont(arialNarrowBold,9)
     pdf.DrawText("BILL TO",2,697.5)
     pdf.DrawText("SHIP TO",320,697.5)
-    
+
     ;;Main outer box
     pdf.DrawBox(x1=5,y1=634.5,x2=607,y2=54)
 
@@ -356,8 +357,36 @@ proc
     pdf.SelectFont(arialNarrow,8)
     pdf.DrawText("TICKET NO.",490.5,18)
 
-    ;;-----------------------------------------------------------------------------------------
-    ;;Add X's as fake data
+    ;;Save the PDF to disk
+    pdf.Save()
+
+    xreturn
+
+endsubroutine
+
+subroutine PrintDeliveryTicket
+
+    required in ticketData,     strTicketData
+    required in ticketItem,     [#]strTicketItem
+    required in ticketHazmat,   [#]strHazmat
+    required in analysis,       strAnalysis
+
+    record
+        pdf, @PdfFile
+        errmsg, string
+    endrecord
+proc
+    ;;Create an instance of the PdfFile class
+    pdf = new PdfFile(,,,,,,,,,,,"OUTPUT:")
+
+    ;;Name the file that defines the background content (the "pre-printed" form)
+    if (!pdf.SetBackgroundFile("OUTPUT:DeliveryTicketForm.pdf",errmsg))
+        throw new Exception(errmsg)
+
+    ;;Override default name to suppress date/time prefix, and and ask reader
+    ;;apps to display the file in full page view.
+    pdf.FileName = "DeliveryTicket.pdf"
+    pdf.PageLayout = PdfPageLayout.Single
 
     pdf.SelectFont("Courier",12)
 
@@ -422,23 +451,23 @@ proc
             pdf.DrawText(ticketHazmat[1].weight,443,yPos)
         end
     end
-    
+
     ;;Guaranteed analysis
     pdf.SelectFont("Courier",10)
-    pdf.DrawText(analysis.totalNit,549,366)  
-    pdf.DrawText(analysis.availP2O5,549,355) 
-    pdf.DrawText(analysis.solK2O,549,344)    
-    pdf.DrawText(analysis.s,517,333)         
-    pdf.DrawText(analysis.zn,557,333)        
+    pdf.DrawText(analysis.totalNit,549,366)
+    pdf.DrawText(analysis.availP2O5,549,355)
+    pdf.DrawText(analysis.solK2O,549,344)
+    pdf.DrawText(analysis.s,517,333)
+    pdf.DrawText(analysis.zn,557,333)
     pdf.DrawText(analysis.other,509,321)
-    pdf.DrawText(analysis.acres,542,311)     
-    pdf.DrawText(analysis.perAcre,524,299)   
+    pdf.DrawText(analysis.acres,542,311)
+    pdf.DrawText(analysis.perAcre,524,299)
 
     pdf.SelectFont("Courier",12)
 
     pdf.DrawText(ticketData.invoiceDate,510,168)
-    pdf.DrawText(ticketData.invoice1,510,135)   
-    pdf.DrawText(ticketData.invoice2,510,125)   
+    pdf.DrawText(ticketData.invoice1,510,135)
+    pdf.DrawText(ticketData.invoice2,510,125)
 
     ;;Delivery instructions
     pdf.DrawText(ticketData.instructions[1],90,99)

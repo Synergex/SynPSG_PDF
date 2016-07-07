@@ -192,7 +192,6 @@
         <Folder
             Name="Other Files"
             Filters="">
-            <F N="/EXPERIMENTAL/TEST.TXT"/>
         </Folder>
     </Files>
     <Config

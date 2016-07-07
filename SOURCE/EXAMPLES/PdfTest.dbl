@@ -9,6 +9,8 @@ main PdfTest
         aoption,    a2
         demo,       string
         done,       boolean
+        fail,       boolean
+        failmsg,    string
     endrecord
 proc
     xcall flags(7004020,1)
@@ -19,23 +21,23 @@ proc
 
     xcall w_disp(wid,
     &   WD_POS, 2, 2,"1.  Hello PDF",
-    &   WD_POS, 3, 2,"2.  Attach File Test",
-    &   WD_POS, 4, 2,"3.  WRITES Mode Test",
-    &   WD_POS, 5, 2,"4.  Auto Items Test",
-    &   WD_POS, 6, 2,"5.  Blue and Red Boxes Test",
-    &   WD_POS, 7, 2,"6.  DBL Messages Report Test",
-    &   WD_POS, 8, 2,"7.  Delivery Ticket Test",
-    &   WD_POS, 9, 2,"8.  Design Grid Test",
-    &   WD_POS,10, 2,"9.  Header, Body and Footer Test",
-    &   WD_POS,11, 2,"10. Landscape 132 Column Test",
-    &   WD_POS,12, 2,"11. Mixed Page Orientation Test",
-    &   WD_POS,13, 2,"12. Portrait 100 Column Test",
-    &   WD_POS,14, 2,"13. Circles Test",
-    &   WD_POS,15, 2,"14. Pie Chart Test",
-    &   WD_POS,16, 2,"15. Bar Chart Test (1 data series)",
-    &   WD_POS,17, 2,"16. Bar Chart Test (2 data series)",
+    &   WD_POS, 3, 2,"2.  Attach File",
+    &   WD_POS, 4, 2,"3.  WRITES Mode",
+    &   WD_POS, 5, 2,"4.  Auto Items",
+    &   WD_POS, 6, 2,"5.  Blue and Red Boxes",
+    &   WD_POS, 7, 2,"6.  DBL Messages Report",
+    &   WD_POS, 8, 2,"7.  Delivery Ticket (Windows only)",
+    &   WD_POS, 9, 2,"8.  Design Grid",
+    &   WD_POS,10, 2,"9.  Header, Body and Footer",
+    &   WD_POS,11, 2,"10. Landscape 132 Column",
+    &   WD_POS,12, 2,"11. Mixed Page Orientation",
+    &   WD_POS,13, 2,"12. Portrait 100 Column",
+    &   WD_POS,14, 2,"13. Circles",
+    &   WD_POS,15, 2,"14. Pie Chart",
+    &   WD_POS,16, 2,"15. Bar Chart (1 data series)",
+    &   WD_POS,17, 2,"16. Bar Chart (2 data series)",
     &   WD_POS,18, 2,"17. Information Page",
-    &   WD_POS,19, 2,"18. Fonts Test",
+    &   WD_POS,19, 2,"18. Fonts",
     &   WD_POS,20, 2,"19. ",
     &   WD_POS,21, 2,"20. ",
     &   WD_POS, 2,40,"21. ",
@@ -68,6 +70,8 @@ proc
         xcall w_updt
 
         done = false
+        fail = false
+        failmsg = ""
 
         using aoption select
         ("E ","e "),
@@ -102,11 +106,22 @@ proc
             xcall DblMessagesReport
             done = true
         end
+.ifdef D_GUI
         ("7 "),
         begin
-            xcall TestDeliveryTicket
-            done = true
+            try
+            begin
+                xcall DeliveryTicket
+                done = true
+            end
+            catch (ex)
+            begin
+                fail = true
+                failmsg = ex.Message
+            end
+            endtry
         end
+.endc
         ("8 "),
         begin
             xcall DesignGrid
@@ -166,6 +181,8 @@ proc
 
         if (done) then
             xcall w_disp(wid,WD_POS,23,40,"PDF created, check the output folder.")
+        else if (fail) then
+            xcall w_disp(wid,WD_POS,23,40,(a)failmsg)
         else
             xcall w_disp(wid,WD_POS,23,40,"Err, that one doesn't exist!")
 

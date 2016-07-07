@@ -3174,26 +3174,74 @@ eof,
             endparams
             record
                 ok, boolean
+                outFileName,  string
                 errorMessage, string
             endrecord
         proc
             ;;Print page level items on the last page
             printEndPageItems()
 
+            ;;Set the name of the file to save
+.ifdef D_GUI
+            if (this.BackgroundFile.Length!=0) then
+                outFileName = this.FileLocation+"TEMP_"+%datetime+"_"+this.FileName
+            else
+.endc
+                outFileName = this.FileLocation+this.FileName
+
             ;;Create the PDF file on disk
             try
             begin
-                doc.SaveToFile(this.FileLocation+this.FileName)
+                doc.SaveToFile(outFileName)
                 errorMessage = ""
                 ok = true
             end
             catch (ex)
             begin
-                errorMessage = "Failed to save " + this.FileLocation+mFileName + ". Error was " + ex.Message
+                errorMessage = "Failed to save " + outFileName + ". Error was " + ex.Message
                 ok = false
             end
             endtry
 
+.ifdef D_GUI
+            ;;Do we have a background file?
+            if (this.BackgroundFile.Length!=0)
+            begin
+                ;Merge the temp file with the background file to create the final file
+                data command, string, '|pdftk "' + outFileName + '" background "' + mBackgroundFile + '" output "' + this.FileLocation+this.FileName + '"'
+                data tmpchn, i4
+                data response, a128
+                open(tmpchn=0,i,command)
+                ;
+                ;If the merge works, PDFtk outputs nothing (EOF)
+                ;
+                reads(tmpchn,response) [EOF=pdftk_ok]
+
+                ;If the input file is not found, PDFtk outputs this:
+                ;
+                ;   Error: Unable to find file.
+                ;   Error: Failed to open PDF file:
+                ;      <fileSpec>
+                ;   Errors encountered.  No output created.
+                ;   Done.  Input errors, so no output created.
+                ;
+                ;If the background file is not found, PDFtk outputs this:
+                ;
+                ;   Error: Failed to open background PDF file:
+                ;      <fileSpec>
+                ;      No output created.
+
+                if (response=="Error:")
+                begin
+                    errorMessage = "Failed to merge output with background file."
+                    ok = false
+                end
+
+                ;And delete the temp file
+pdftk_ok,       close tmpchn
+                xcall delet(outFileName)
+            end
+.endc
             ;;Clean up
             this.Dispose()
 
@@ -3232,6 +3280,54 @@ eof,
             end
         endmethod
 
+        ;;---------------------------------------------------------------------
+.ifdef D_GUI
+        ;;; <summary>
+        ;;; Sets the background file to be used.
+        ;;; </summary>
+        ;;; <param name="pdfFile">Name of the PDF file to use as a background file.</param>
+        ;;; <param name="aErrorMessage">Returned error message (if return value is false).</param>
+        ;;; <returns>Returns true on success, otherwise false.</returns>
+        public method SetBackgroundFile, boolean
+            required in  pdfFile, string
+            required out aErrorMessage, string
+            endparams
+            record
+                tmpValue, string
+            endrecord
+        proc
+            aErrorMessage = ""
+
+            ;Check PDFtk Pro is available
+            if (!isPdfTkProAvailable())
+            begin
+                aErrorMessage = "PDFtk Pro is not available!"
+                mreturn false
+            end
+
+            ;;Default to no background file
+            mBackgroundFile = ""
+
+            ;;Take the value we were given
+            tmpValue = pdfFile
+
+            ;Expand any logical names
+            tmpValue = expandLogicalInFileSpec(tmpValue)
+
+            ;Check the file exists
+            if (!fileExists(tmpValue))
+            begin
+                aErrorMessage = "Background file " + tmpValue + " not found!"
+                mreturn false
+            end
+
+            ;;Good to go, keep the value
+            this.BackgroundFile = tmpValue
+
+            mreturn true
+
+        endmethod
+.endc
         ;;---------------------------------------------------------------------
         ;;; <summary>
         ;;; Sets the current position within the current page.
@@ -3408,6 +3504,33 @@ eof,
             endmethod
         endproperty
 
+        ;;---------------------------------------------------------------------
+        ;;
+
+.ifdef D_GUI
+        private mBackgroundFile, string
+
+        ;;; <summary>
+        ;;; Specifies the name of a single page PDF file that is to be used as the background image for each page of the PDF file being created.
+        ;;; The file may be specified via either an absolute or relative path, and logical names are also supported.
+        ;;; This feature is only available on Windows and can only be used if you have a copy of PDFtk Pro in your system PATH.
+        ;;; If PDFtk Pro is not installed then the value of this property will revert to an empty string when set, but no exception is thrown.
+        ;;; In this case the background file will simply not be used.
+        ;;; For more information about PDFtk Pro refer to https://www.pdflabs.com/tools/pdftk-pro/
+        ;;; </summary>
+        public property BackgroundFile, string
+            method get
+            proc
+                if (mBackgroundFile==^null)
+                    mBackgroundFile = ""
+                mreturn mBackgroundFile
+            endmethod
+            private method set
+            proc
+                mBackgroundFile = value
+            endmethod
+        endproperty
+.endc
         ;;---------------------------------------------------------------------
         ;;
 
@@ -4610,6 +4733,37 @@ eof,
         proc
             now = %datetime
             mreturn %string(^d(now(1:14)),"XXXX-XX-XX_XX-XX-XX")
+        endmethod
+
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Checks PDFtk Pro is available
+        ;;; </summary>
+        ;;; <returns>Returns true if PDFTk Pro is available, otherwise false.</returns>
+        private method isPdfTkProAvailable, boolean
+            record
+                available, boolean
+                chn, i4
+            endrecord
+        proc
+            try
+            begin
+                data response, a128, ""
+                open(chn=0,i,"|pdftk")
+                reads(chn,response)
+                available = (response=="SYNOPSIS")
+            end
+            catch (ex)
+            begin
+                available = false
+            end
+            finally
+            begin
+                if (chn&&%chopen(chn))
+                    close chn
+            end
+            endtry
+            mreturn available
         endmethod
 
         ;;---------------------------------------------------------------------

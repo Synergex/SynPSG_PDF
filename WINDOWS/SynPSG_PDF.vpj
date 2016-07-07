@@ -155,7 +155,8 @@
             Name="Other Files"
             Filters="">
             <F N="DeployHaru.bat"/>
-            <F N="../readme.txt"/>
+            <F N="../LICENSE.md"/>
+            <F N="../README.md"/>
         </Folder>
     </Files>
     <Config
