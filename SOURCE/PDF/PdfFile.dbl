@@ -447,9 +447,7 @@ eof,
             fontBoldItalic = doc.GetFont("Courier-BoldOblique", ^null)
 
             ;;Start the first page
-            pg = doc.AddPage(
-            &   (HPdfPageSizes)this.PageSize,
-            &   (HPdfPageDirection)this.DefaultOrientation)
+            pg = doc.AddPage((HPdfPageSizes)this.PageSize,(HPdfPageDirection)this.DefaultOrientation)
             this.Orientation = this.DefaultOrientation
 
             ;;Get the pixel dimensions of the page
@@ -544,7 +542,7 @@ eof,
 .else
             if (^passed(aExtraRowSpacing) && (aExtraRowSpacing > 0))
 .endc
-            this.ExtraRowSpacing = aExtraRowSpacing
+                this.ExtraRowSpacing = aExtraRowSpacing
 
             ;;Calculate page dimensions in rows/columns based on current font
             this.RowHeight = fontSizeFloat + this.ExtraRowSpacing
@@ -674,7 +672,7 @@ eof,
 .else
                 if (^passed(aPartialFileName) && (aPartialFileName.Trim().Length > 0)) then
 .endc
-                this.FileName = getTempFilePrefix() + " " + aPartialFileName.Trim() + ".pdf"
+                    this.FileName = getTempFilePrefix() + " " + aPartialFileName.Trim() + ".pdf"
                 else
                     this.FileName = getTempFilePrefix() + ".pdf"
 
@@ -910,7 +908,9 @@ eof,
             NewLine()
             DrawTextRC("Main Parameters",,,,,,true)
             NewLine()
+
             DrawTextRC(" - Paper size         : ")
+
             using this.PageSize select
             (PdfPageSize.LETTER),
                 DrawTextRC("LETTER",,,,,,true)
@@ -937,7 +937,9 @@ eof,
             (PdfPageSize.COMM10),
                 DrawTextRC("COMM10",,,,,,true)
             endusing
+
             DrawTextRC(" - Orientation        : ")
+
             using (this.DefaultOrientation) select
             (PdfOrientation.Portrait),
                 DrawTextRC("Portrait",,,,,,true)
@@ -947,43 +949,51 @@ eof,
             DrawTextRC(" - Width              : " + %string(totalWidthDefaultOrientation,"XXXX.XX pixels"),,,,,,true)
             DrawTextRC(" - Height             : " + %string(totalHeightDefaultOrientation,"XXXX.XX pixels"),,,,,,true)
             DrawTextRC(" - Requested columns  : " + %string(this.RequestedColumns),,,,,,true)
+
             DrawTextRC(" - Max font size      : ")
             if (maxFontSize>0) then
                 DrawTextRC(%string(maxFontSize),,,,,,true)
             else
                 DrawTextRC("Not specified",,,,,,true)
+
             DrawTextRC(" - Center in page     : ")
             if (mCenterBodyInPage) then
                 DrawTextRC("yes",,,,,,true)
             else
                 DrawTextRC("no",,,,,,true)
+
             DrawTextRC(" - Left margin        : ")
             if (requestedLeftMargin>0) then
                 DrawTextRC(%string(requestedLeftMargin,'XX.XXX"'),,,,,,true)
             else
                 DrawTextRC("Not specified",,,,,,true)
+
             DrawTextRC(" - Top margin         : ")
             if (requestedTopMargin>0) then
                 DrawTextRC(%string(requestedTopMargin,'XX.XXX"'),,,,,,true)
             else
                 DrawTextRC("Not specified",,,,,,true)
+
             DrawTextRC(" - Right margin       : ")
             if (requestedRightMargin>0) then
                 DrawTextRC(%string(requestedRightMargin,'XX.XXX"'),,,,,,true)
             else
                 DrawTextRC("Not specified",,,,,,true)
+
             DrawTextRC(" - Bottom margin      : ")
             if (requestedBottomMargin>0) then
                 DrawTextRC(%string(requestedBottomMargin,'XX.XXX"'),,,,,,true)
             else
                 DrawTextRC("Not specified",,,,,,true)
+
             DrawTextRC(" - Header rows        : " + %string(this.HeaderRows),,,,,,true)
             DrawTextRC(" - Footer rows        : " + %string(this.FooterRows),,,,,,true)
             DrawTextRC(" - Space between rows : " + %string(this.ExtraRowSpacing,"XX.XX pixels"),,,,,,true)
-
             NewLine()
+
             DrawTextRC("Page Configuration - Row/Column Coordinates",,,,,,true)
             NewLine()
+
             DrawTextRC(" - Selected font size : " + %string(this.FontSize),,,,,,true)
             DrawTextRC(" - Actual columns     : " + %string(totalColsDefaultOrientation),,,,,,true)
             DrawTextRC(" - Total rows         : " + %string(totalRowsDefaultOrientation),,,,,,true)
@@ -1085,7 +1095,7 @@ eof,
 .else
             if (^passed(aFill) && aFill) then
 .endc
-            pg.FillStroke()
+                pg.FillStroke()
             else
                 pg.Stroke()
 
@@ -1142,7 +1152,6 @@ eof,
         ;;; Draws the box defined by an AutoBoxAbsolute object.
         ;;; </summary>
         ;;; <param name="aBox">AutoBoxAbsolute object to be drawn.</param>
-
         public method DrawBoxObject, void
             required in aBox, @AutoBoxAbsolute
             endparams
@@ -1292,7 +1301,6 @@ eof,
         ;;; Draws the box defined by an AutoBoxRowCol object.
         ;;; </summary>
         ;;; <param name="aBox">AutoBoxRowCol object to be drawn.</param>
-
         public method DrawBoxObjectRC, void
             required in aBox, @AutoBoxRowCol
             endparams
@@ -2595,8 +2603,6 @@ eof,
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         ;;; <summary>
         ;;; Indicates whether a named font is available for use. Available fonts include the implicit fonts that are defined by the PDF specification as well as other fonts that you have loaded by calling LoadTrueTypeFont.
         ;;; </summary>
@@ -3366,8 +3372,6 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         ;;; <summary>
         ;;; Converts a column number to an X coordinate.
         ;;; </summary>
@@ -3381,8 +3385,6 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         ;;; <summary>
         ;;; Converts a body row number to a Y coordinate.
         ;;; </summary>
@@ -3396,8 +3398,6 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         ;;; <summary>
         ;;; Converts a footer row number to a Y coordinate.
         ;;; </summary>
@@ -3411,8 +3411,6 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         ;;; <summary>
         ;;; Converts a header row number to a Y coordinate.
         ;;; </summary>
@@ -3444,10 +3442,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mAutoItems, @ArrayList
-
         ;;; <summary>
         ;;; Gets or sets a collection of auto objects to be drawn on each page.
         ;;; </summary>
@@ -3463,10 +3458,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mAvailableFonts, @ArrayList
-
         ;;; <summary>
         ;;; Gets or sets a collection of available font names.
         ;;; </summary>
@@ -3482,13 +3474,10 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mBackgroundColor, PdfColor
         private backgroundRed,    float
         private backgroundGreen,  float
         private backgroundBlue,   float
-
         ;;; <summary>
         ;;; Gets or sets the page background color. A custom value for page background color can be established via an optional parameter passed to the constructor method, and will be used for the first page. Subsequently changing the page background color will affect only new pages that are created after the background color is changed. There is no way to change the background color of a page after the page has been created. The default page background color is white.
         ;;; </summary>
@@ -3505,11 +3494,8 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
 .ifdef D_GUI
         private mBackgroundFile, string
-
         ;;; <summary>
         ;;; Specifies the name of a single page PDF file that is to be used as the background image for each page of the PDF file being created.
         ;;; The file may be specified via either an absolute or relative path, and logical names are also supported.
@@ -3532,10 +3518,7 @@ pdftk_ok,       close tmpchn
         endproperty
 .endc
         ;;---------------------------------------------------------------------
-        ;;
-
         private mBottomMargin, float
-
         ;;; <summary>
         ;;; Gets the height of the bottom margin in inches. Page margins are determined by parameters that are passed to the constructor and once defined cannot be changed. Margins only affect row and column based access to the document and do not affect absolute positioning access.
         ;;; </summary>
@@ -3552,10 +3535,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mCenterBodyInPage, boolean
-
         ;;; <summary>
         ;;; Gets whether the main page body (the printable area inside any specified margins) will be centered horizontally. The default value is true, and this can be overridden via a parameter passed to the Initialize method. When true, after an appropriate font size has been calculated in order to facilitate the required column width of the document, the left and right margins are altered in order to ensure than content is centered horizontally within each page. Page margins and body only affect row / column based access to the document and do not affect absolute positioning access.
         ;;; </summary>
@@ -3571,10 +3551,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mColumn, int
-
         ;;; <summary>
         ;;; Gets or sets the current column number. The concept of a current row and column is used when accessing the document by row and column, and is similar to the concept of current cursor position on the screen of a character based application. Generally, when displaying text to the document via the various methods that address row and column, the current position in the document moves either immediately after the printed text, or to the first column of the next row. Current row and column do not affect absolute positioning access to the document.
         ;;; </summary>
@@ -3590,10 +3567,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mColumns, int
-
         ;;; <summary>
         ;;; Gets the number of columns that are available, based on the requested margins and page width, at the selected font size. The number of columns actually available will generally to be equal to or greater to the number of columns requested via the optional "minimum columns" parameter passed to the Initialize method. The number of available columns is only applicable when accessing the document by row and column, and does not affect absolute positioning access to the document.
         ;;; </summary>
@@ -3609,10 +3583,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mColumnWidth, float
-
         ;;; <summary>
         ;;; Gets the width of a single column in device independent pixels (1/72 inch). The width is based on the font that was selected in order to achieve the number of columns required for the page. Column width is only applicable to row/column based access to the document using the default Courier font and has no significance when addressing the document via absolute positioning or alternate fonts.
         ;;; </summary>
@@ -3628,8 +3599,6 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         ;;; <summary>
         ;;; Gets the absolute coordinate system X coordinate that corresponds to the row/column coordinate system current column number.
         ;;; </summary>
@@ -3641,12 +3610,10 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
+        private mCreateOutline, boolean, true
         ;;; <summary>
         ;;; Gets or sets whether a document outline is created and whether default outline items are automatically added for each page.
         ;;; </summary>
-
-        private mCreateOutline, boolean, true
-
         public property CreateOutline, boolean
             method get
             proc
@@ -3685,12 +3652,10 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
+        private mCurrentFont, string
         ;;; <summary>
         ;;; Gets the name of the currently selected font.
         ;;; </summary>
-
-        private mCurrentFont, string
-
         public property CurrentFont, string
             method get
             proc
@@ -3703,12 +3668,10 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
+        private mCurrentFontSize, int
         ;;; <summary>
         ;;; Gets the currently selected font size.
         ;;; </summary>
-
-        private mCurrentFontSize, int
-
         public property CurrentFontSize, int
             method get
             proc
@@ -3721,10 +3684,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mDefaultOrientation, PdfOrientation
-
         ;;; <summary>
         ;;; Gets the default page orientation (portrait or landscape) of the PDF document. The deafult page orientation is defined for the document when calling the constructor method and cannot be changed.
         ;;; </summary>
@@ -3740,10 +3700,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mExtraRowSpacing, float
-
         ;;; <summary>
         ;;; Gets the amount of additional space that was requested between rows in device independent pixels.
         ;;; </summary>
@@ -3759,10 +3716,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mFileLocation, string
-
         ;;; <summary>
         ;;; Gets the location where the output file will be created as a full windows path including a trailing \.
         ;;; </summary>
@@ -3778,10 +3732,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mFileName, string
-
         ;;; <summary>
         ;;; Gets the name of the PDF file being created. The default name of the file will be in the format "YYYY-MM-DD HH.MM.SS <name> .pdf" where the value of <name> can be supplied via the optional "partial file name" parameter to the Initialize method. The name of the file is not used until you call either the Print, Preview or Save methods, so you may update the value of the property in order to override the default name until that time.
         ;;; </summary>
@@ -3797,11 +3748,9 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
         ;;; <summary>
         ;;; Gets the full file spec of the PDF file being created.
         ;;; </summary>
-
         public property FileSpec, string
             method get
             proc
@@ -3810,13 +3759,10 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mFillColor, PdfColor
         private textRed,    float
         private textGreen,  float
         private textBlue,   float
-
         ;;; <summary>
         ;;; Gets or sets the current fill color, which is the colur used to paint the internal areas of both text and lines, and boxes if the optional "fill" parameter is passed and true. The default fill color is black. The default fill color can be overridden when printing or drawing individual text, line or box items.
         ;;; </summary>
@@ -3834,10 +3780,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mFixedPitchFont, boolean
-
         ;;; <summary>
         ;;; Gets whether the currently selected font is a fixed-pitch font.
         ;;; </summary>
@@ -3853,11 +3796,8 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mFontSize, int
         private fontSizeFloat, float
-
         ;;; <summary>
         ;;; Gets the height of the default (automatically selected) font in device independent pixels (1/72 inch). The FontSize only has relevance when addressing the document using the default (Coruier) font.
         ;;; </summary>
@@ -3874,10 +3814,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mFooterRows, int
-
         ;;; <summary>
         ;;; Gets the number of footer rows that were reserved when the document was created. Footer rows are only relevant when using the FooterText property, and have no affect when accessing the document via absolute positioning mechanisms.
         ;;; </summary>
@@ -3893,10 +3830,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mFooterText, [#]string
-
         ;;; <summary>
         ;;; Gets or sets the array of strings to be displayed in the reserved page footer rows of pages that use the default page orientation. The array is initialized based on the number of footer rows requested when calling the constructor, and can subsequently be populated with the data to be displayed in the reserved footer area of each page.
         ;;; </summary>
@@ -3912,10 +3846,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mFooterTextAlternate, [#]string
-
         ;;; <summary>
         ;;; Gets or sets the array of strings to be displayed in the reserved page footer rows of pages with the alternate orientation. The array is initialized based on the number of footer rows requested when calling the constructor, and can subsequently be populated with the data to be displayed in the reserved footer area of each page.
         ;;; </summary>
@@ -3931,7 +3862,6 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
         ;;; <summary>
         ;;; Exposes the underlying HaruPDF document so that PDFDBL can be used to implement functionality not directly supported by this class.
         ;;; </summary>
@@ -3943,10 +3873,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mHeaderRows, int
-
         ;;; <summary>
         ;;; Gets the number of header rows that were reserved when the document was created. Header rows are only relevant when using the FooterText property, and have no affect when accessing the document via absolute positioning mechanisms.
         ;;; </summary>
@@ -3962,10 +3889,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mHeaderText, [#]string
-
         ;;; <summary>
         ;;; Gets or sets the array of strings to be displayed in the reserved page header rows of pages that use the default page orientation. The array is initialized based on the number of header rows requested when calling the constructor, and can subsequently be populated with the data to be displayed in the reserved header area of each page.
         ;;; </summary>
@@ -3981,10 +3905,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mHeaderTextAlternate, [#]string
-
         ;;; <summary>
         ;;; Gets or sets the array of strings to be displayed in the reserved page header rows. The array is initialized based on the number of header rows requested when calling the constructor, and can subsequently be populated with the data to be displayed in the reserved header area of each page.
         ;;; </summary>
@@ -4000,10 +3921,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mHeight, float
-
         ;;; <summary>
         ;;; Gets the height of the page in device independent pixels (1/72 inch). The height of the page is based on the paper size and orientation and defines the maximum value for Y coordinates when addressing the document via absolute positioning mechanisms.
         ;;; </summary>
@@ -4034,10 +3952,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mLeftMargin, float
-
         ;;; <summary>
         ;;; Gets the width of the left margin in inches. Page margins are determined by parameters that are passed to the constructor and once defined cannot be changed. Margins only affect row and column based access to the document and do not affect absolute positioning access.
         ;;; </summary>
@@ -4065,10 +3980,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mOrientation, PdfOrientation
-
         ;;; <summary>
         ;;; Gets the page orientation (portrait or landscape) of the current page. The page orientation is defined when a new page is added to the document.
         ;;; </summary>
@@ -4084,10 +3996,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mOutlineRootText, string
-
         ;;; <summary>
         ;;; Gets the page orientation (portrait or landscape) of the current page. The page orientation is defined when a new page is added to the document.
         ;;; </summary>
@@ -4103,8 +4012,6 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         ;;; <summary>
         ;;; Gets or sets the suggested page layout to be used by PDF reader applications when viewing the PDF document being created. Note that setting this property does not guarantee a particular page layout mode being used because some PDF reader applications allow the user to override the setting specified by the PDF document.
         ;;; </summary>
@@ -4120,8 +4027,6 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         ;;; <summary>
         ;;; Gets or sets the suggested page mode to be used by PDF reader applications when viewing the PDF document being created. Note that setting this property does not guarantee a particular page mode being used because some PDF reader applications allow the user to override the setting specified by the PDF document.
         ;;; </summary>
@@ -4137,10 +4042,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mPageNumber, int
-
         ;;; <summary>
         ;;; Gets the current page number. New pages can be created implicitly if performing "sequential writes" to the document, or explicitly by calling the the NewPage method. Once the document advances to a new page there is no way to go back to address earlier pages.
         ;;; </summary>
@@ -4156,10 +4058,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mPageSize, PdfPageSize
-
         ;;; <summary>
         ;;; Gets the page size used within the document.
         ;;; </summary>
@@ -4175,10 +4074,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mRequestedColumns, int
-
         ;;; <summary>
         ;;; Number of columns originally requested by the consuler.
         ;;; </summary>
@@ -4194,10 +4090,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mRightMargin, float
-
         ;;; <summary>
         ;;; Gets the width of the right margin in inches. Page margins are determined by parameters that are passed to the constructor and once defined cannot be changed. Margins only affect row and column based access to the document and do not affect absolute positioning access.
         ;;; </summary>
@@ -4214,10 +4107,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mRow, int
-
         ;;; <summary>
         ;;; Gets or sets the current row number. The concept of a current row and column is used when accessing the document by row and column, and is similar to the concept of current cursor position on the screen of a character based application. Generally, when displaying text to the document via the various methods that address row and column, the current position in the document moves either immediately after the printed text, or to the first column of the next row. Current row and column do not affect absolute positioning access to the document.
         ;;; </summary>
@@ -4233,10 +4123,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mRowHeight, float
-
         ;;; <summary>
         ;;; Height of a row in device independent pixels (1/72 inch). This INCLUDES any additional row spacing that was requested.
         ;;; </summary>
@@ -4252,10 +4139,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mRows, int
-
         ;;; <summary>
         ;;; Gets the number of rows that are available within the page body (i.e. between any top margin, header rows, footer rows and bottom margin), based on the page height, the requested top and bottom margins, and the number and height of any page header and footer rows, at the selected font size. The number of available rows is only applicable when accessing the document by row and column mechanisms and has no effect when accessing to the document via absolute positioning mechanisms.
         ;;; </summary>
@@ -4271,8 +4155,6 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         ;;; <summary>
         ;;; Gets the absolute coordinate system Y coordinate that corresponds to the row/column coordinate system current row number.
         ;;; </summary>
@@ -4284,13 +4166,10 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mStrokeColor,   PdfColor
         private lineRed,    float
         private lineGreen,  float
         private lineBlue,   float
-
         ;;; <summary>
         ;;; Gets or sets the current stroke color, which is the color used to paint the outside edge of lines, boxes and text. The default stroke color is black. The default stroke color can be overridden when printing or drawing individual text, line or box items.
         ;;; </summary>
@@ -4338,10 +4217,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mTopMargin, float
-
         ;;; <summary>
         ;;; Gets the height of the top margin in inches. Page margins are determined by parameters that are passed to the constructor and once defined cannot be changed. Margins only affect row and column based access to the document and do not affect absolute positioning access.
         ;;; </summary>
@@ -4358,10 +4234,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mUseAlternateFooters, boolean, false
-
         ;;; <summary>
         ;;; Gets or sets whether alternate text should be displayed in the page footers of pages that use the opposite orientation to the document default orientation. The default is that the same footer text is used for all pages. If this property is set to true then the alternative footer text should then be specified via the FooterTextAlternate property.
         ;;; </summary>
@@ -4392,10 +4265,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mUseAlternateHeaders, boolean, false
-
         ;;; <summary>
         ;;; Gets or sets whether alternate text should be displayed in the page headers of pages that use the opposite orientation to the document default orientation. The default is that the same header text is used for all pages. If this property is set to true then the alternative headter text should then be specified via the HeaderTextAlternate property.
         ;;; </summary>
@@ -4426,10 +4296,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private mWidth, float
-
         ;;; <summary>
         ;;; Gets the width of the page in device independent pixels (1/72 inch). The width of the page is based on the paper size and orientation and defines the maximum value for X coordinates when addressing the document via absolute positioning mechanisms.
         ;;; </summary>
@@ -4502,7 +4369,6 @@ pdftk_ok,       close tmpchn
 .endc
 
         ;;---------------------------------------------------------------------
-        ;;
 .ifdef D_GUI
         private static method expandLogicalInFileSpec, string
             required in fileSpec,               string
@@ -4615,8 +4481,6 @@ pdftk_ok,       close tmpchn
 .endc
 .endc
         ;;---------------------------------------------------------------------
-        ;;
-
         private method expandTokens, string
             required in aBuffer, string
             record
@@ -4650,8 +4514,6 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private static method fileExists, boolean
             required in path, string
             endparams
@@ -4767,8 +4629,6 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private method printAutoItem, void
             required in aItem, @AutoItem
         proc
@@ -4797,8 +4657,6 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private method printBeginPageItems, void
         proc
             if (this.AutoItems.Count > 0)
@@ -4814,8 +4672,6 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private method printEndPageItems, void
         proc
             ;;Print headers and footers on the current page
@@ -4837,8 +4693,6 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private method printPageFooters, void
         proc
             if (this.FooterRows)
@@ -4887,8 +4741,6 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private method printPageHeaders, void
         proc
             if (this.HeaderRows)
@@ -4937,16 +4789,12 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private method resetFillColor , void
         proc
             pg.SetRGBFill(textRed,textGreen,textBlue)
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private method resetFontAttributes, void
 .ifdef DBLNET
             default  in aBold,      boolean, false
@@ -4965,16 +4813,12 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private method resetStrokeColor, void
         proc
             pg.SetRGBStroke(lineRed,lineGreen,lineBlue)
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private method rgbFromPdfColor, void
             required in  aColor, PdfColor
             required out aRed, float
@@ -9019,8 +8863,6 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private method setBackroundColor, void
         proc
             if (BackgroundColor != PdfColor.White)
@@ -9036,8 +8878,6 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private method setCustomFillColor, void
             required in aColor, PdfColor
             record
@@ -9051,8 +8891,6 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private method setCustomStrokeColor, void
             required in aColor, PdfColor
             record
@@ -9066,8 +8904,6 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        ;;
-
         private method setFontAttributes, void
 .ifdef DBLNET
             default  in aBold,      boolean, false
