@@ -9,11 +9,18 @@ Original author: Steve Ives, Synergex Professional Services Group
 
 ## Requirements
 
-Synergy/DE V10.3.1b or higher
+### Synergy/DE V10.3.1b or higher
 
 In order to use the SynPSG_PDF classes you need both the source code (PDFDBL.DBL)
 and HaruPDF shared libraries from PDFKIT. For your convenience we have included
 both with this distribution.
+
+### Microsoft Visual C++ 2010 Redistributable Package
+
+To use this software on a system that does not have Visual Studio development
+tools installed you may need to install this package. You should be able to
+locate the required download easily using Google. Make sure you install the
+appropriate x86 or x64 version as required.
 
 ## Documentation
 
