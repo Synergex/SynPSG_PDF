@@ -121,21 +121,21 @@ namespace SynPSG.PDF
         ;;; <param name="aPartialFileName">Words to be included in the file name. Don't use characters that are not valid in file specifications.</param>
         ;;; <param name="aBackgroundColor">Establishes a custom page background color and implements that color on the first page. The default page background color is white.</param>
         public method PdfFile
-.ifdef DBLNET
+            .ifdef DBLNET
             required in aTextFile,          string
-            default  in aPageSize,          PdfPageSize,     PdfPageSize.LETTER
-            default  in aOrientation,       PdfOrientation,  PdfOrientation.Portrait
-            default  in aMaxFontSize,       int,             0
-            default  in aCenterBodyInPage,  boolean,         true
-            default  in aLeftMargin,        float,           0.16
-            default  in aTopMargin,         float,           0.16
-            default  in aRightMargin,       float,           0.16
-            default  in aBottomMargin,      float,           0.16
-            default  in aFileLocation,      string,          ""
-            default  in aPartialFileName,   string,          ""
-            default  in aBackgroundColor,   PdfColor,        PdfColor.White
-            default  in aExtraRowSpacing,   float,           0
-.else
+            default  in aPageSize,          PdfPageSize,    PdfPageSize.LETTER
+            default  in aOrientation,       PdfOrientation, PdfOrientation.Portrait
+            default  in aMaxFontSize,       int,            0
+            default  in aCenterBodyInPage,  boolean,        true
+            default  in aLeftMargin,        float,          0.16
+            default  in aTopMargin,         float,          0.16
+            default  in aRightMargin,       float,          0.16
+            default  in aBottomMargin,      float,          0.16
+            default  in aFileLocation,      string,         ""
+            default  in aPartialFileName,   string,         ""
+            default  in aBackgroundColor,   PdfColor,       PdfColor.White
+            default  in aExtraRowSpacing,   float,          0
+            .else
             required in aTextFile,          string
             optional in aPageSize,          PdfPageSize
             optional in aOrientation,       PdfOrientation
@@ -149,20 +149,20 @@ namespace SynPSG.PDF
             optional in aPartialFileName,   string
             optional in aBackgroundColor,   PdfColor
             optional in aExtraRowSpacing,   float
-.endc
+            .endc
             endparams
 
             record
-                inFile,                     string
-                fileData,                   @ArrayList
-                ch,                         i4
-                pos,                        i4
-                maxLength,                  int
-                tmpBuf,                     a512
-                spaces,                     a^size(tmpBuf)
-                length,                     int
-                row,                        string
-                continue,                   boolean
+                inFile,     string
+                fileData,   @ArrayList
+                ch,         i4
+                pos,        i4
+                maxLength,  int
+                tmpBuf,     a512
+                spaces,     a^size(tmpBuf)
+                length,     int
+                row,        string
+                continue,   boolean
             endrecord
 
         proc
@@ -213,7 +213,7 @@ namespace SynPSG.PDF
                 ;;Are there any <TAB> characters in the line that was read?
                 while (pos=%instr(1,row,%char(9)))
                 begin
-                    data newbuf, string, ""
+                    data newbuf,    string, ""
                     ;;Any data before the <TAB>?
                     if (pos>1)
                         newbuf = row(1,pos-1)
@@ -241,7 +241,7 @@ namespace SynPSG.PDF
                 continue = false
 
             end
-eof,
+        eof,
             close ch
 
             initialize(aPageSize,aOrientation,maxLength,aMaxFontSize,aCenterBodyInPage,aLeftMargin,aTopMargin,aRightMargin,aBottomMargin,0,0,aFileLocation,aPartialFileName,aBackgroundColor,aExtraRowSpacing)
@@ -296,23 +296,23 @@ eof,
         ;;; <param name="aPartialFileName">Words to be included in the file name. Don't use characters that are not valid in file specifications.</param>
         ;;; <param name="aBackgroundColor">Establishes a custom page background color and implements that color on the first page. The default page background color is white.</param>
         public method PdfFile
-.ifdef DBLNET
-            default in aPageSize,          PdfPageSize,     PdfPageSize.LETTER
-            default in aOrientation,       PdfOrientation,  PdfOrientation.Portrait
-            default in aMinimumColumns,    int,             80
-            default in aMaxFontSize,       int,             0
-            default in aCenterBodyInPage,  boolean,         true
-            default in aLeftMargin,        float,           0.16
-            default in aTopMargin,         float,           0.16
-            default in aRightMargin,       float,           0.16
-            default in aBottomMargin,      float,           0.16
-            default in aHeaderRows,        int,             0
-            default in aFooterRows,        int,             0
-            default in aFileLocation,      string,          ""
-            default in aPartialFileName,   string,          ""
-            default in aBackgroundColor,   PdfColor,        PdfColor.White
-            default in aExtraRowSpacing,   float,           0
-.else
+            .ifdef DBLNET
+            default in aPageSize,           PdfPageSize,    PdfPageSize.LETTER
+            default in aOrientation,        PdfOrientation, PdfOrientation.Portrait
+            default in aMinimumColumns,     int,            80
+            default in aMaxFontSize,        int,            0
+            default in aCenterBodyInPage,   boolean,        true
+            default in aLeftMargin,         float,          0.16
+            default in aTopMargin,          float,          0.16
+            default in aRightMargin,        float,          0.16
+            default in aBottomMargin,       float,          0.16
+            default in aHeaderRows,         int,            0
+            default in aFooterRows,         int,            0
+            default in aFileLocation,       string,         ""
+            default in aPartialFileName,    string,         ""
+            default in aBackgroundColor,    PdfColor,       PdfColor.White
+            default in aExtraRowSpacing,    float,          0
+            .else
             optional in aPageSize,          PdfPageSize
             optional in aOrientation,       PdfOrientation
             optional in aMinimumColumns,    int
@@ -328,7 +328,7 @@ eof,
             optional in aPartialFileName,   string
             optional in aBackgroundColor,   PdfColor
             optional in aExtraRowSpacing,   float
-.endc
+            .endc
             endparams
         proc
             initialize(aPageSize,aOrientation,aMinimumColumns,aMaxFontSize,aCenterBodyInPage,aLeftMargin,aTopMargin,aRightMargin,aBottomMargin,aHeaderRows,aFooterRows,aFileLocation,aPartialFileName,aBackgroundColor,aExtraRowSpacing)
@@ -352,23 +352,23 @@ eof,
         ;;; <param name="aPartialFileName">Words to be included in the file name. Don't use characters that are not valid in file specifications.</param>
         ;;; <param name="aBackgroundColor">Establishes a custom page background color and implements that color on the first page. The default page background color is white.</param>
         private method initialize, void
-.ifdef DBLNET
-            default in aPageSize,          PdfPageSize,     PdfPageSize.LETTER
-            default in aOrientation,       PdfOrientation,  PdfOrientation.Portrait
-            default in aMinimumColumns,    int,             80
-            default in aMaxFontSize,       int,             0
-            default in aCenterBodyInPage,  boolean,         true
-            default in aLeftMargin,        float,           0.16
-            default in aTopMargin,         float,           0.16
-            default in aRightMargin,       float,           0.16
-            default in aBottomMargin,      float,           0.16
-            default in aHeaderRows,        int,             0
-            default in aFooterRows,        int,             0
-            default in aFileLocation,      string,          ""
-            default in aPartialFileName,   string,          ""
-            default in aBackgroundColor,   PdfColor,        PdfColor.White
-            default in aExtraRowSpacing,   float,           0
-.else
+            .ifdef DBLNET
+            default in aPageSize,           PdfPageSize,    PdfPageSize.LETTER
+            default in aOrientation,        PdfOrientation, PdfOrientation.Portrait
+            default in aMinimumColumns,     int,            80
+            default in aMaxFontSize,        int,            0
+            default in aCenterBodyInPage,   boolean,        true
+            default in aLeftMargin,         float,          0.16
+            default in aTopMargin,          float,          0.16
+            default in aRightMargin,        float,          0.16
+            default in aBottomMargin,       float,          0.16
+            default in aHeaderRows,         int,            0
+            default in aFooterRows,         int,            0
+            default in aFileLocation,       string,         ""
+            default in aPartialFileName,    string,         ""
+            default in aBackgroundColor,    PdfColor,       PdfColor.White
+            default in aExtraRowSpacing,    float,          0
+            .else
             optional in aPageSize,          PdfPageSize
             optional in aOrientation,       PdfOrientation
             optional in aMinimumColumns,    int
@@ -384,12 +384,12 @@ eof,
             optional in aPartialFileName,   string
             optional in aBackgroundColor,   PdfColor
             optional in aExtraRowSpacing,   float
-.endc
+            .endc
             endparams
 
             record
-                ok,       boolean
-                attempts, int
+                ok,         boolean
+                attempts,   int
             endrecord
 
         proc
@@ -398,24 +398,24 @@ eof,
             ;;Original constructor code
 
             ;;Set page orientation
-.ifdef DBLNET
+            .ifdef DBLNET
             this.PageSize = aPageSize
-.else
+            .else
             if (^passed(aPageSize)) then
                 this.PageSize = aPageSize
             else
                 this.PageSize = PdfPageSize.LETTER
-.endc
+            .endc
 
             ;;Set default page orientation
-.ifdef DBLNET
+            .ifdef DBLNET
             this.DefaultOrientation = aOrientation
-.else
+            .else
             if (^passed(aOrientation)) then
                 this.DefaultOrientation = aOrientation
             else
                 this.DefaultOrientation = PdfOrientation.Portrait
-.endc
+            .endc
 
             ;;Create a new PDF document
             doc = new HPdfDoc()
@@ -460,11 +460,11 @@ eof,
             this.Width = totalWidthDefaultOrientation
 
             ;;Left margin
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aLeftMargin >= 0) then
-.else
+            .else
             if (^passed(aLeftMargin) && (aLeftMargin >= 0)) then
-.endc
+            .endc
             begin
                 requestedLeftMargin = aLeftMargin
                 this.LeftMargin = aLeftMargin
@@ -476,11 +476,11 @@ eof,
             end
 
             ;;Top margin
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aTopMargin >= 0) then
-.else
+            .else
             if (^passed(aTopMargin) && (aTopMargin >= 0)) then
-.endc
+            .endc
             begin
                 requestedTopMargin = aTopMargin
                 this.TopMargin = aTopMargin
@@ -492,11 +492,11 @@ eof,
             end
 
             ;;Right margin
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aRightMargin >= 0) then
-.else
+            .else
             if (^passed(aRightMargin) && (aRightMargin >= 0)) then
-.endc
+            .endc
             begin
                 requestedRightMargin = aRightMargin
                 this.RightMargin = aRightMargin
@@ -508,11 +508,11 @@ eof,
             end
 
             ;;Bottom margin
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aBottomMargin>=0) then
-.else
+            .else
             if (^passed(aBottomMargin) && (aBottomMargin>=0)) then
-.endc
+            .endc
             begin
                 requestedBottomMargin = aBottomMargin
                 this.BottomMargin = aBottomMargin
@@ -537,12 +537,12 @@ eof,
 
             ;;Were we asked to add extra spacing between rows?
             this.ExtraRowSpacing = 0
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aExtraRowSpacing > 0)
-.else
+            .else
             if (^passed(aExtraRowSpacing) && (aExtraRowSpacing > 0))
-.endc
-                this.ExtraRowSpacing = aExtraRowSpacing
+            .endc
+            this.ExtraRowSpacing = aExtraRowSpacing
 
             ;;Calculate page dimensions in rows/columns based on current font
             this.RowHeight = fontSizeFloat + this.ExtraRowSpacing
@@ -558,13 +558,13 @@ eof,
             pg.EndText()
 
             ;;Were header rows requested?
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aHeaderRows>0)
-.else
+            .else
             if (^passed(aHeaderRows) && (aHeaderRows>0))
-.endc
+            .endc
             begin
-                data ix, int
+                data ix,                int
                 this.HeaderRows = aHeaderRows
                 this.HeaderText = new string[this.HeaderRows]
                 for ix from 1 thru this.HeaderRows
@@ -572,13 +572,13 @@ eof,
             end
 
             ;;Were footer rows requested?
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aFooterRows>0)
-.else
+            .else
             if (^passed(aFooterRows) && (aFooterRows>0))
-.endc
+            .endc
             begin
-                data ix, int
+                data ix,                int
                 this.FooterRows = aFooterRows
                 this.FooterText = new string[this.FooterRows]
                 for ix from 1 thru this.FooterRows
@@ -598,11 +598,11 @@ eof,
             this.AutoItems = new ArrayList()
 
             ;;If we were given a custom backgound color then save it
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aBackgroundColor != BackgroundColor)
-.else
+            .else
             if (^passed(aBackgroundColor) && (aBackgroundColor != BackgroundColor))
-.endc
+            .endc
             begin
                 BackgroundColor = aBackgroundColor
                 ;;And use it for the first page
@@ -616,46 +616,46 @@ eof,
             ;;Original Initialize code
 
             ;;Define the output file location
-.ifdef DBLNET
+            .ifdef DBLNET
             if (!String.IsNullOrWhiteSpace(aFileLocation)) then
-.else
+            .else
             if (^passed(aFileLocation) && (aFileLocation.Trim().Length > 0)) then
-.endc
+            .endc
             begin
                 this.FileLocation = expandLogicalInFileSpec(aFileLocation)
                 if (this.FileLocation == %char(0)) then
                     throw new ApplicationException("Invalid location " + aFileLocation)
                 else
                 begin
-.ifdef D_GUI
+                    .ifdef D_GUI
                     if (!this.FileLocation.Trim().EndsWith("\"))
                         this.FileLocation = this.FileLocation.Trim() + "\"
-.else
-.ifdef OS_VMS
-.else
+                    .else
+                    .ifdef OS_VMS
+                    .else
                     if (!this.FileLocation.Trim().EndsWith("/"))
                         this.FileLocation = this.FileLocation.Trim() + "/"
-.endc
-.endc
+                    .endc
+                    .endc
                 end
             end
             else
             begin
                 ;;No file location passed
-.ifdef D_GUI
+                .ifdef D_GUI
                 ;;Windows. Make sure the path ends with a \
                 this.FileLocation = expandLogicalInFileSpec("TEMP:")
                 if (!this.FileLocation.Trim().EndsWith("\"))
                     this.FileLocation = this.FileLocation.Trim() + "\"
-.else
-.ifdef OS_VMS
+                .else
+                .ifdef OS_VMS
                 ;;VMS. Nothing to do.
                 this.FileLocation = "SYS$DISK:"
-.else
+                .else
                 ;;Unix/Linux. Make sure the path ends with a /
                 this.FileLocation = "./"
-.endc
-.endc
+                .endc
+                .endc
             end
 
             ;;Make sure the output file location exists
@@ -667,14 +667,14 @@ eof,
             repeat
             begin
                 ;;Construct the file name
-.ifdef DBLNET
+                .ifdef DBLNET
                 if (!String.IsNullOrWhiteSpace(aPartialFileName)) then
-.else
+                .else
                 if (^passed(aPartialFileName) && (aPartialFileName.Trim().Length > 0)) then
-.endc
-                    this.FileName = getTempFilePrefix() + " " + aPartialFileName.Trim() + ".pdf"
+                .endc
+                this.FileName = getTempFilePrefix() + " " + aPartialFileName.Trim() + ".pdf"
                 else
-                    this.FileName = getTempFilePrefix() + ".pdf"
+                this.FileName = getTempFilePrefix() + ".pdf"
 
                 ;;Make sure the file doesn't already exist
                 if (fileExists(this.FileLocation + this.FileName)) then
@@ -689,31 +689,31 @@ eof,
 
             ;;Are we going to center the body at the requested with within the
             ;;page by manipulating the left and right margins
-.ifdef DBLNET
+            .ifdef DBLNET
             this.CenterBodyInPage = aCenterBodyInPage
-.else
+            .else
             if (^passed(aCenterBodyInPage)) then
                 this.CenterBodyInPage = aCenterBodyInPage
             else
                 this.CenterBodyInPage = true
-.endc
+            .endc
 
             ;;Save the number of requested minimum columns
-.ifdef DBLNET
+            .ifdef DBLNET
             this.RequestedColumns = aMinimumColumns
-.else
+            .else
             if (^passed(aMinimumColumns) && aMinimumColumns) then
                 this.RequestedColumns = aMinimumColumns
             else
                 this.RequestedColumns = 80
-.endc
+            .endc
 
             ok = false
 
             if (this.Columns < this.RequestedColumns) then
             begin
                 ;;Not enough columns, decrease the font size until we get a match
-                data newFontSize, int
+                data newFontSize,       int
                 for newFontSize from mFontSize-1 thru 6 by -1
                 begin
                     FontSize = newFontSize
@@ -732,7 +732,7 @@ eof,
             else if (this.Columns > this.RequestedColumns) then
             begin
                 ;;Too many columns, increase the font size until we have gone too far
-                data newFontSize, int
+                data newFontSize,       int
                 for newFontSize from mFontSize+1 thru 64
                 begin
                     FontSize = newFontSize
@@ -771,11 +771,11 @@ eof,
 
             ;;Were we given a maximum font size?
             maxFontSize = 0
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aMaxFontSize>0)
-.else
+            .else
             if (^passed(aMaxFontSize) && (aMaxFontSize>0))
-.endc
+            .endc
             begin
                 maxFontSize = aMaxFontSize
                 if (this.FontSize > maxFontSize)
@@ -804,8 +804,8 @@ eof,
 
             if ((this.Columns != this.RequestedColumns) && this.CenterBodyInPage)
             begin
-                data additionalColumns, int, this.Columns - this.RequestedColumns
-                data additionalPixels, int, additionalColumns * this.ColumnWidth
+                data additionalColumns, int,this.Columns - this.RequestedColumns
+                data additionalPixels,  int,additionalColumns * this.ColumnWidth
 
                 ;;Divide the additional space between the left and right margins
                 leftOffset += (additionalPixels / 2.0)
@@ -835,6 +835,8 @@ eof,
             ;;Set the default outline root node text
             this.OutlineRootText = "Home"
 
+            this.LastErrorMessage = ""
+
         endmethod
 
         ;;*********************************************************************
@@ -847,8 +849,8 @@ eof,
         public method AddDesignGrid, void
             endparams
             record
-                x, float
-                y, float
+                x,  float
+                y,  float
             endrecord
         proc
 
@@ -898,7 +900,7 @@ eof,
         ;;; <summary>
         ;;; Adds an information page to the PDF document
         ;;; </summary>
-        public method AddInfoPage,      void
+        public method AddInfoPage, void
             endparams
         proc
             if (PageNumber==0)
@@ -1033,25 +1035,25 @@ eof,
         ;;; <param name="aStrokeColor">Custom stroke color.</param>
         ;;; <param name="aFill">Should the box be filled?</param>
         ;;; <param name="aFillColor">Custom fill color.</param>
-        public method DrawBox,        void
-            required in aFromX,       float
-            required in aFromY,       float
-            required in aToX,         float
-            required in aToY,         float
-.ifdef DBLNET
-            default  in aWidth,       float,        0
-            default  in aStrokeColor, PdfColor,     PdfColor.DefaultColor
-            default  in aFill,        boolean,      false
-            default  in aFillColor,   PdfColor,     PdfColor.DefaultColor
-.else
-            optional in aWidth,       float
-            optional in aStrokeColor, PdfColor
-            optional in aFill,        boolean
-            optional in aFillColor,   PdfColor
-.endc
+        public method DrawBox, void
+            required in aFromX,         float
+            required in aFromY,         float
+            required in aToX,           float
+            required in aToY,           float
+            .ifdef DBLNET
+            default  in aWidth,         float,      0
+            default  in aStrokeColor,   PdfColor,   PdfColor.DefaultColor
+            default  in aFill,          boolean,    false
+            default  in aFillColor,     PdfColor,   PdfColor.DefaultColor
+            .else
+            optional in aWidth,         float
+            optional in aStrokeColor,   PdfColor
+            optional in aFill,          boolean
+            optional in aFillColor,     PdfColor
+            .endc
             endparams
             record
-                penWidth,       float
+                penWidth,   float
             endrecord
         proc
             ;;If we don't have a first page then add one
@@ -1059,61 +1061,61 @@ eof,
                 NewPage()
 
             ;;Set the line width
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aWidth>0) then
-.else
+            .else
             if (^passed(aWidth) && (aWidth>0)) then
-.endc
-                penWidth = aWidth
+            .endc
+            penWidth = aWidth
             else
-                penWidth = 1
+            penWidth = 1
 
             pg.SetLineWidth(penWidth)
 
             ;;If we were passed a specific stroke color then use it
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
-.else
+            .else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
-.endc
-                setCustomStrokeColor(aStrokeColor)
+            .endc
+            setCustomStrokeColor(aStrokeColor)
 
             ;;If we were passed a specific fill color then use it
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aFillColor != PdfColor.DefaultColor) && (aFillColor!= this.StrokeColor))
-.else
+            .else
             if (^passed(aFillColor) && (aFillColor != this.FillColor))
-.endc
-                setCustomFillColor(aFillColor)
+            .endc
+            setCustomFillColor(aFillColor)
 
             ;;Define the box (this enters graphics mode)
             pg.Rectangle(aFromX,aFromY,aToX-aFromX,aToY-aFromY)
 
             ;;Draw the box (this exits graphics mode and returns to text mode)
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aFill) then
-.else
+            .else
             if (^passed(aFill) && aFill) then
-.endc
-                pg.FillStroke()
+            .endc
+            pg.FillStroke()
             else
-                pg.Stroke()
+            pg.Stroke()
 
             ;;If we changed the stroke color then revert back to the default color
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
-.else
+            .else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
-.endc
-                resetStrokeColor()
+            .endc
+            resetStrokeColor()
 
             ;;If we changed the fill color then revert back to the default color
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aFillColor != PdfColor.DefaultColor) && (aFillColor!= this.StrokeColor))
-.else
+            .else
             if (^passed(aFillColor) && (aFillColor != this.FillColor))
-.endc
-                resetFillColor()
+            .endc
+            resetFillColor()
 
         endmethod
 
@@ -1129,19 +1131,19 @@ eof,
         ;;; <param name="aFill">Should the box be filled?</param>
         ;;; <param name="aFillColor">Custom fill color.</param>
         public method DrawBox,        void
-            required in aFrom,        XYcoordinate
-            required in aTo,          XYcoordinate
-.ifdef DBLNET
-            default  in aWidth,       float,        0
-            default  in aStrokeColor, PdfColor,     PdfColor.DefaultColor
-            default  in aFill,        boolean,      false
-            default  in aFillColor,   PdfColor,     PdfColor.DefaultColor
-.else
-            optional in aWidth,       float
-            optional in aStrokeColor, PdfColor
-            optional in aFill,        boolean
-            optional in aFillColor,   PdfColor
-.endc
+            required in aFrom,          XYcoordinate
+            required in aTo,            XYcoordinate
+            .ifdef DBLNET
+            default  in aWidth,         float,      0
+            default  in aStrokeColor,   PdfColor,   PdfColor.DefaultColor
+            default  in aFill,          boolean,    false
+            default  in aFillColor,     PdfColor,   PdfColor.DefaultColor
+            .else
+            optional in aWidth,         float
+            optional in aStrokeColor,   PdfColor
+            optional in aFill,          boolean
+            optional in aFillColor,     PdfColor
+            .endc
             endparams
         proc
             this.DrawBox(aFrom.X,aFrom.Y,aTo.X,aTo.Y,aWidth,aStrokeColor,aFill,aFillColor)
@@ -1153,7 +1155,7 @@ eof,
         ;;; </summary>
         ;;; <param name="aBox">AutoBoxAbsolute object to be drawn.</param>
         public method DrawBoxObject, void
-            required in aBox, @AutoBoxAbsolute
+            required in aBox,   @AutoBoxAbsolute
             endparams
         proc
             DrawBox(aBox.FromX,aBox.FromY,aBox.ToX,aBox.ToY,aBox.Width,aBox.StrokeColor,aBox.Fill,aBox.FillColor)
@@ -1179,28 +1181,28 @@ eof,
             optional in aFromColumn,    n
             optional in aToRow,         n
             optional in aToColumn,      n
-.ifdef DBLNET
+            .ifdef DBLNET
             default  in aWidth,         float,      0
             default  in aStrokeColor,   PdfColor,   PdfColor.DefaultColor
             default  in aFill,          boolean,    false
             default  in aFillColor,     PdfColor,   PdfColor.DefaultColor
-.else
+            .else
             optional in aWidth,         float
             optional in aStrokeColor,   PdfColor
             optional in aFill,          boolean
             optional in aFillColor,     PdfColor
-.endc
+            .endc
             endparams
             record
-                lFromRow,               int
-                lFromColumn,            int
-                lToRow,                 int
-                lToColumn,              int
-                penWidth,               float
-                start_x,                float
-                start_y,                float
-                end_x,                  float
-                end_y,                  float
+                lFromRow,       int
+                lFromColumn,    int
+                lToRow,         int
+                lToColumn,      int
+                penWidth,       float
+                start_x,        float
+                start_y,        float
+                end_x,          float
+                end_y,          float
             endrecord
         proc
             ;;If we don't have a first page then add one
@@ -1232,32 +1234,32 @@ eof,
                 lToColumn = this.Columns
 
             ;;Set the line width
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aWidth>0) then
-.else
+            .else
             if (^passed(aWidth) && (aWidth>0)) then
-.endc
-                penWidth = aWidth
+            .endc
+            penWidth = aWidth
             else
-                penWidth = 1
+            penWidth = 1
 
             pg.SetLineWidth(penWidth)
 
             ;;If we were passed a specific stroke color then use it
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
-.else
+            .else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
-.endc
-                setCustomStrokeColor(aStrokeColor)
+            .endc
+            setCustomStrokeColor(aStrokeColor)
 
             ;;If we were passed a specific fill color then use it
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aFillColor!=PdfColor.DefaultColor) && (aFillColor != this.FillColor))
-.else
+            .else
             if (^passed(aFillColor) && (aFillColor != this.FillColor))
-.endc
-                setCustomFillColor(aFillColor)
+            .endc
+            setCustomFillColor(aFillColor)
 
             ;;Calculate the start and end points for a center cell to center cell line
             start_x = XfromColumn(lFromColumn) + (this.ColumnWidth / 2)
@@ -1269,30 +1271,30 @@ eof,
             pg.Rectangle(start_x,start_y,end_x-start_x,end_y-start_y)
 
             ;;Draw the box (this exits graphics mode and returns to text mode)
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aFill) then
-.else
+            .else
             if (^passed(aFill) && aFill) then
-.endc
-                pg.FillStroke()
+            .endc
+            pg.FillStroke()
             else
-                pg.Stroke()
+            pg.Stroke()
 
             ;;If we changed the stroke color then revert back to the default color
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
-.else
+            .else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
-.endc
-                resetStrokeColor()
+            .endc
+            resetStrokeColor()
 
             ;;If we changed the fill color then revert back to the default color
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aFillColor!=PdfColor.DefaultColor) && (aFillColor != this.FillColor))
-.else
+            .else
             if (^passed(aFillColor) && (aFillColor != this.FillColor))
-.endc
-                resetFillColor()
+            .endc
+            resetFillColor()
 
         endmethod
 
@@ -1302,7 +1304,7 @@ eof,
         ;;; </summary>
         ;;; <param name="aBox">AutoBoxRowCol object to be drawn.</param>
         public method DrawBoxObjectRC, void
-            required in aBox, @AutoBoxRowCol
+            required in aBox,   @AutoBoxRowCol
             endparams
         proc
             DrawBoxRC(aBox.FromRow,aBox.FromCol,aBox.ToRow,aBox.ToCol,aBox.Width,aBox.StrokeColor,aBox.Fill,aBox.FillColor)
@@ -1323,20 +1325,20 @@ eof,
             required in aCenterX,       float
             required in aCenterY,       float
             required in aRadius,        float
-.ifdef DBLNET
+            .ifdef DBLNET
             default  in aWidth,         float,      0
             default  in aStrokeColor,   PdfColor,   PdfColor.DefaultColor
             default  in aFill,          boolean,    false
             default  in aFillColor,     PdfColor,   PdfColor.DefaultColor
-.else
+            .else
             optional in aWidth,         float
             optional in aStrokeColor,   PdfColor
             optional in aFill,          boolean
             optional in aFillColor,     PdfColor
-.endc
+            .endc
             endparams
             record
-                penWidth,               float
+                penWidth,   float
             endrecord
         proc
             ;;If we don't have a first page then add one
@@ -1344,62 +1346,62 @@ eof,
                 NewPage()
 
             ;;Determine the line width
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aWidth>0) then
-.else
+            .else
             if (^passed(aWidth) && (aWidth>0)) then
-.endc
-                penWidth = aWidth
+            .endc
+            penWidth = aWidth
             else
-                penWidth = 1
+            penWidth = 1
 
             ;;And set it
             pg.SetLineWidth(penWidth)
 
             ;;If we were passed a specific stroke color then use it
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
-.else
+            .else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
-.endc
-                setCustomStrokeColor(aStrokeColor)
+            .endc
+            setCustomStrokeColor(aStrokeColor)
 
             ;;If we were passed a specific fill color then use it
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aFillColor != PdfColor.DefaultColor) && (aFillColor!= this.StrokeColor))
-.else
+            .else
             if (^passed(aFillColor) && (aFillColor != this.FillColor))
-.endc
-                setCustomFillColor(aFillColor)
+            .endc
+            setCustomFillColor(aFillColor)
 
             ;;Define the circle (this enters graphics mode)
             pg.Circle(aCenterX,aCenterY,aRadius)
 
             ;;Draw the circle (this exits graphics mode and returns to text mode)
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aFill) then
-.else
+            .else
             if (^passed(aFill) && aFill) then
-.endc
-                pg.FillStroke()
+            .endc
+            pg.FillStroke()
             else
-                pg.Stroke()
+            pg.Stroke()
 
             ;;If we changed the stroke color then revert back to the default color
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
-.else
+            .else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
-.endc
-                resetStrokeColor()
+            .endc
+            resetStrokeColor()
 
             ;;If we changed the fill color then revert back to the default color
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aFillColor != PdfColor.DefaultColor) && (aFillColor!= this.StrokeColor))
-.else
+            .else
             if (^passed(aFillColor) && (aFillColor != this.FillColor))
-.endc
-                resetFillColor()
+            .endc
+            resetFillColor()
 
         endmethod
 
@@ -1421,22 +1423,22 @@ eof,
             required in  aFileSpec,     string
             required in  aX,            float
             required in  aY,            float
-.ifdef DBLNET
+            .ifdef DBLNET
             default  in  aWidth,        float,      0
             default  in  aHeight,       float,      0
-.else
+            .else
             optional in  aWidth,        float
             optional in  aHeight,       float
-.endc
+            .endc
             optional out aErrorMessage, a
             endparams
             record
-                ok, boolean
-                fileSpec, string
-                errorMessage, string
-                image, @HPdfImage
-                width, float
-                height, float
+                ok,             boolean
+                fileSpec,       string
+                errorMessage,   string
+                image,          @HPdfImage
+                width,          float
+                height,         float
             endrecord
         proc
             ok = true
@@ -1483,23 +1485,23 @@ eof,
 
             if (ok)
             begin
-.ifdef DBLNET
+                .ifdef DBLNET
                 if (aWidth>0) then
-.else
+                .else
                 if (^passed(aWidth) && (aWidth>0)) then
-.endc
-                    width = aWidth
+                .endc
+                width = aWidth
                 else
-                    width = image.GetWidth()
+                width = image.GetWidth()
 
-.ifdef DBLNET
+                .ifdef DBLNET
                 if (aHeight>0) then
-.else
+                .else
                 if (^passed(aHeight) && (aHeight>0)) then
-.endc
-                    height = aHeight
+                .endc
+                height = aHeight
                 else
-                    height = image.GetHeight()
+                height = image.GetHeight()
 
                 pg.DrawImage(image,aX,aY,width,height)
 
@@ -1537,17 +1539,17 @@ eof,
         ;;; <param name="aWidth">Line width in pixels. Default is 1.</param>
         ;;; <param name="aStrokeColor">Custom stroke color.</param>
         public method DrawLine,       void
-            required in aFromX,       float
-            required in aFromY,       float
-            required in aToX,         float
-            required in aToY,         float
-.ifdef DBLNET
-            default  in aWidth,       float,        0
-            default  in aStrokeColor, PdfColor,     PdfColor.DefaultColor
-.else
+            required in aFromX,         float
+            required in aFromY,         float
+            required in aToX,           float
+            required in aToY,           float
+            .ifdef DBLNET
+            default  in aWidth,         float,      0
+            default  in aStrokeColor,   PdfColor,   PdfColor.DefaultColor
+            .else
             optional in aWidth,       float
             optional in aStrokeColor, PdfColor
-.endc
+            .endc
             endparams
             record
                 penWidth,   float
@@ -1558,24 +1560,24 @@ eof,
                 NewPage()
 
             ;;Set the line width
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aWidth>0) then
-.else
+            .else
             if (^passed(aWidth) && (aWidth>0)) then
-.endc
-                penWidth = aWidth
+            .endc
+            penWidth = aWidth
             else
-                penWidth = 1
+            penWidth = 1
 
             pg.SetLineWidth(penWidth)
 
             ;;If we were passed a specific stroke color then use it
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
-.else
+            .else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
-.endc
-                setCustomStrokeColor(aStrokeColor)
+            .endc
+            setCustomStrokeColor(aStrokeColor)
 
             ;;Draw the line
             pg.MoveTo(aFromX,aFromY)
@@ -1583,12 +1585,12 @@ eof,
             pg.Stroke()
 
             ;;If we changed the stroke color then revert back to the default color
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
-.else
+            .else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
-.endc
-                resetStrokeColor()
+            .endc
+            resetStrokeColor()
 
         endmethod
 
@@ -1598,7 +1600,7 @@ eof,
         ;;; </summary>
         ;;; <param name="aLine">PdfLine object to be displayed.</param>
         public method DrawLineObject, void
-            required in aLine,        @AutoLineAbsolute
+            required in aLine,  @AutoLineAbsolute
             endparams
         proc
             DrawLine(aLine.FromX,aLine.FromY,aLine.ToX,aLine.ToY,aLine.Width,aLine.StrokeColor)
@@ -1610,7 +1612,7 @@ eof,
         ;;; </summary>
         ;;; <param name="aLine">AutoLineRowCol object to be drawn.</param>
         public method DrawLineObjectRC, void
-            required in aLine, @AutoLineRowCol
+            required in aLine,  @AutoLineRowCol
             endparams
         proc
             DrawLineRC(aLine.FromRow,aLine.FromCol,aLine.ToRow,aLine.ToCol,aLine.Width,aLine.StrokeColor)
@@ -1631,17 +1633,17 @@ eof,
         ;;; <param name="aWidth">Line width in pixels. Default is 2.</param>
         ;;; <param name="aStrokeColor">Custom stroke color.</param>
         public method DrawLineRC,     void
-            required in aFromRow,     int
-            required in aFromCol,     int
-            required in aToRow,       int
-            required in aToCol,       int
-.ifdef DBLNET
-            default  in aWidth,       float,        0
-            default  in aStrokeColor, PdfColor,     PdfColor.DefaultColor
-.else
+            required in aFromRow,       int
+            required in aFromCol,       int
+            required in aToRow,         int
+            required in aToCol,         int
+            .ifdef DBLNET
+            default  in aWidth,         float,      0
+            default  in aStrokeColor,   PdfColor,   PdfColor.DefaultColor
+            .else
             optional in aWidth,       float
             optional in aStrokeColor, PdfColor
-.endc
+            .endc
             endparams
             record
                 penWidth,   float
@@ -1656,24 +1658,24 @@ eof,
                 NewPage()
 
             ;;Set the line width
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aWidth>0) then
-.else
+            .else
             if (^passed(aWidth) && (aWidth>0)) then
-.endc
-                penWidth = aWidth
+            .endc
+            penWidth = aWidth
             else
-                penWidth = 1
+            penWidth = 1
 
             pg.SetLineWidth(penWidth)
 
             ;;If we were passed a specific stroke color then use it
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
-.else
+            .else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
-.endc
-                setCustomStrokeColor(aStrokeColor)
+            .endc
+            setCustomStrokeColor(aStrokeColor)
 
             ;;Calculate the start and end points for a center cell to center cell line
             start_x = XfromColumn(aFromCol) + (this.ColumnWidth / 2)
@@ -1687,12 +1689,12 @@ eof,
             pg.Stroke()
 
             ;;If we changed the stroke color then revert back to the default color
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
-.else
+            .else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
-.endc
-                resetStrokeColor()
+            .endc
+            resetStrokeColor()
 
         endmethod
 
@@ -1710,15 +1712,15 @@ eof,
         ;;; <param name="aStrokeColor">Custom stroke color.</param>
         ;;; <returns>Returns the new current row number.</returns>
         public method DrawLineRow,    int
-.ifdef DBLNET
-            default  in aFullWidth,   boolean,      false
-            default  in aWidth,       int,          0
-            default  in aStrokeColor, PdfColor,     PdfColor.DefaultColor
-.else
+            .ifdef DBLNET
+            default  in aFullWidth,     boolean,    false
+            default  in aWidth,         int,        0
+            default  in aStrokeColor,   PdfColor,   PdfColor.DefaultColor
+            .else
             optional in aFullWidth,   boolean
             optional in aWidth,       int
             optional in aStrokeColor, PdfColor
-.endc
+            .endc
             endparams
             record
                 penWidth,   float
@@ -1738,24 +1740,24 @@ eof,
                 NewPage(this.Orientation)
 
             ;;Set the line width
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aWidth>0) then
-.else
+            .else
             if (^passed(aWidth) && (aWidth>0)) then
-.endc
-                penWidth = aWidth
+            .endc
+            penWidth = aWidth
             else
-                penWidth = 1
+            penWidth = 1
 
             pg.SetLineWidth(penWidth)
 
             ;;If we were passed a specific stroke color then use it
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
-.else
+            .else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
-.endc
-                setCustomStrokeColor(aStrokeColor)
+            .endc
+            setCustomStrokeColor(aStrokeColor)
 
             ;;Calculate the start and end points for a center cell to center cell line
             start_x = XfromColumn(this.Column) + (this.ColumnWidth / 2)
@@ -1764,11 +1766,11 @@ eof,
             end_y   = start_y
 
             ;;If we're being asked for a full-width line then add back in the partial cell pixels
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aFullWidth)
-.else
+            .else
             if (^passed(aFullWidth) && aFullWidth)
-.endc
+            .endc
             begin
                 start_x -= (this.ColumnWidth / 2)
                 end_x += (this.ColumnWidth / 2)
@@ -1780,12 +1782,12 @@ eof,
             pg.Stroke()
 
             ;;If we changed the stroke color then revert back to the default color
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
-.else
+            .else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
-.endc
-                resetStrokeColor()
+            .endc
+            resetStrokeColor()
 
             ;;Update current position
             this.Row = this.Row + 1
@@ -1814,24 +1816,24 @@ eof,
             required in aBottomY,               float
             required in aSpaceBetweenGroups,    float
             required in aChartData,             @ChartDataSet
-.ifdef DBLNET
+            .ifdef DBLNET
             default  in aBackgroundColor,       PdfColor,   PdfColor.DefaultColor
-.else
+            .else
             optional in aBackgroundColor,       PdfColor
-.endc
+            .endc
             endparams
             record
-                groupCount,     int
-                barsPerGroup,   int
-                ixSeries,       int
-                ixSeriesMember, int
-                totalBars,      int
-                margin,         int
-                maxBarHeight,   float
-                highestValue,   float
-                barWidth,       float
-                groupWidth,     float
-                drawGroupLabels,boolean
+                groupCount,         int
+                barsPerGroup,       int
+                ixSeries,           int
+                ixSeriesMember,     int
+                totalBars,          int
+                margin,             int
+                maxBarHeight,       float
+                highestValue,       float
+                barWidth,           float
+                groupWidth,         float
+                drawGroupLabels,    boolean
             endrecord
         proc
             ;;If we don't have a first page then add one
@@ -1840,30 +1842,30 @@ eof,
 
             margin = 0
 
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aBackgroundColor!=PdfColor.DefaultColor)
             begin
                 this.DrawBox(aTopX,aTopY,aBottomX,aBottomY,,aBackgroundColor,true,aBackgroundColor)
                 margin = 5
             end
-.else
+            .else
             if (^passed(aBackgroundColor))
             begin
                 this.DrawBox(aTopX,aTopY,aBottomX,aBottomY,,aBackgroundColor,true,aBackgroundColor)
                 margin = 5
             end
-.endc
+            .endc
             ;;Set the line width
             pg.SetLineWidth(1)
 
             ;;Do we have any group labels?
             drawGroupLabels = false
             begin
-                data ix, int
+                data ix,                    int
                 for ix from 1 thru aChartData.GroupLabel.GetLength(1)
                 begin
                     ;;Do we have a group label?
-                    data labelText,string, aChartData.GroupLabel[ix].Trim()
+                    data labelText,         string,     aChartData.GroupLabel[ix].Trim()
                     if (labelText.Length>0)
                         drawGroupLabels = true
                 end
@@ -1903,7 +1905,7 @@ eof,
             for ixSeries from 1 thru aChartData.Series.GetLength(1)
             begin
                 ;;Calculate the starting Y coordinare for all bars
-                data barStartY, float, aBottomY + margin
+                data barStartY,             float,      aBottomY + margin
                 if (drawGroupLabels)
                     barStartY += 15
 
@@ -1913,8 +1915,8 @@ eof,
 
                 for ixSeriesMember from 1 thru aChartData.Series[ixSeries].Items.GetLength(1)
                 begin
-                    data barHeight, float
-                    data barStartX, float
+                    data barHeight,         float
+                    data barStartX,         float
 
                     ;If the data item specifies a color then set it.
                     if (aChartData.Series[ixSeries].Items[ixSeriesMember].Color != PdfColor.NotSpecified)
@@ -1938,16 +1940,16 @@ eof,
 
             ;Draw group labels
             begin
-                data ix, int
+                data ix,                    int
                 for ix from 1 thru aChartData.GroupLabel.GetLength(1)
                 begin
                     ;;Do we have a group label?
-                    data labelText,string, aChartData.GroupLabel[ix].Trim()
+                    data labelText,         string,     aChartData.GroupLabel[ix].Trim()
                     if (labelText.Length>0)
                     begin
                         ;;Figure out the X coordinate for the label
-                        data labelWidth, float, pg.TextWidth(labelText)
-                        data X, float, aTopX + margin + (groupWidth*(ix-1)) + (aSpaceBetweenGroups*(ix-1)) + ((groupWidth-labelWidth)/2)
+                        data labelWidth,    float,      pg.TextWidth(labelText)
+                        data X,             float,      aTopX + margin + (groupWidth*(ix-1)) + (aSpaceBetweenGroups*(ix-1)) + ((groupWidth-labelWidth)/2)
 
                         pg.BeginText()
                         pg.MoveTextPos(X,aBottomY + margin)
@@ -1969,16 +1971,16 @@ eof,
         ;;; <param name="aSpaceBetweenGroups">Number of pixels to leave between data groups.</param>
         ;;; <param name="aChartData">ChartDataSet object that defines the data for the chart.</param>
         ;;; <param name="aBackgroundColor">The background color for the chart.</param>
-        public method DrawBarChart,  void
+        public method DrawBarChart,         void
             required in aTopLeft,               XYcoordinate
             required in aBottomRight,           XYcoordinate
             required in aSpaceBetweenGroups,    float
             required in aChartData,             @ChartDataSet
-.ifdef DBLNET
-            default  in aBackgroundColor,   PdfColor,   PdfColor.DefaultColor
-.else
+            .ifdef DBLNET
+            default  in aBackgroundColor,       PdfColor,   PdfColor.DefaultColor
+            .else
             optional in aBackgroundColor,   PdfColor
-.endc
+            .endc
             endparams
         proc
             this.DrawBarChart(aTopLeft.X,aTopLeft.Y,aBottomRight.X,aBottomRight.Y,aSpaceBetweenGroups,aChartData,aBackgroundColor)
@@ -1997,17 +1999,17 @@ eof,
         ;;; <param name="aChartData">ChartDataSet object that defines the data for the chart.</param>
         ;;; <param name="aBackgroundColor">The background color for the chart.</param>
         public method DrawBarChartRC,       void
-            required in aFromRow,           int
-            required in aFromCol,           int
-            required in aToRow,             int
-            required in aToCol,             int
-            required in aSpaceBetweenGroups,float
-            required in aChartData,         @ChartDataSet
-.ifdef DBLNET
-            default  in aBackgroundColor,   PdfColor,   PdfColor.DefaultColor
-.else
+            required in aFromRow,               int
+            required in aFromCol,               int
+            required in aToRow,                 int
+            required in aToCol,                 int
+            required in aSpaceBetweenGroups,    float
+            required in aChartData,             @ChartDataSet
+            .ifdef DBLNET
+            default  in aBackgroundColor,       PdfColor,   PdfColor.DefaultColor
+            .else
             optional in aBackgroundColor,   PdfColor
-.endc
+            .endc
             endparams
             record
                 topLeft,        XYcoordinate
@@ -2052,10 +2054,10 @@ eof,
 
             for ix from 1 thru seriesCount
             begin
-                data boxX, float, aTopX
-                data boxY, float, aTopY - (ix*15)
-                data labelX, float, boxX + 20
-                data labelY, float, boxY + 3
+                data boxX,      float,      aTopX
+                data boxY,      float,      aTopY - (ix*15)
+                data labelX,    float,      boxX + 20
+                data labelY,    float,      boxY + 3
                 data thisLabel, string
                 data thisWidth, float
 
@@ -2095,7 +2097,7 @@ eof,
         ;;; <param name="aTopLeft">X/Y coordinates for the top left corner of the legend box.</param>
         ;;; <param name="aChartData">ChartDataSet object that defines data for a multi-series chart.</param>
         ;;; <returns>Returns the X/Y coordinates of the bottom right corner of the legend that was drawn.</returns>
-        public method DrawMultiSeriesChartLegend, XYcoordinate
+        public method DrawMultiSeriesChartLegend,XYcoordinate
             required in aTopLeft,   XYcoordinate
             required in aChartData, @ChartDataSet
             endparams
@@ -2117,21 +2119,21 @@ eof,
             required in aCenterY,           float
             required in aRadius,            float
             required in aChartData,         @ChartDataSet
-.ifdef DBLNET
+            .ifdef DBLNET
             default  in aBackgroundColor,   PdfColor,   PdfColor.DefaultColor
-.else
+            .else
             optional in aBackgroundColor,   PdfColor
-.endc
+            .endc
             endparams
             record
-                ix,                 int
-                radius,             float
-                startPercent,       float
-                endPercent,         float
-                totalDataValue,     float
-                startAngle,         float
-                endAngle,           float
-                lastPoint,          HPdfPoint
+                ix,             int
+                radius,         float
+                startPercent,   float
+                endPercent,     float
+                totalDataValue, float
+                startAngle,     float
+                endAngle,       float
+                lastPoint,      HPdfPoint
             endrecord
         proc
             ;;If we don't have a first page then add one
@@ -2140,19 +2142,19 @@ eof,
 
             radius = aRadius
 
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aBackgroundColor!=PdfColor.DefaultColor)
             begin
                 this.DrawBox(aCenterX-radius-2,aCenterY+radius+2,aCenterX+radius+2,aCenterY-radius-2,,aBackgroundColor,true,aBackgroundColor)
                 radius -= 5
             end
-.else
+            .else
             if (^passed(aBackgroundColor))
             begin
                 this.DrawBox(aCenterX-radius-2,aCenterY+radius+2,aCenterX+radius+2,aCenterY-radius-2,,aBackgroundColor,true,aBackgroundColor)
                 radius -= 5
             end
-.endc
+            .endc
             ;;Set the line width
             pg.SetLineWidth(1)
 
@@ -2164,7 +2166,7 @@ eof,
             ;;Calculate the total of all data values
             totalDataValue = 0
             for ix from 1 thru aChartData.Series[1].Items.GetLength(1)
-                totalDataValue += aChartData.Series[1].Items[ix].DataValue
+            totalDataValue += aChartData.Series[1].Items[ix].DataValue
 
             for ix from 1 thru aChartData.Series[1].Items.GetLength(1)
             begin
@@ -2209,14 +2211,14 @@ eof,
         ;;; <param name="aChartData">Array of PieSlice objects that define the slices of the pie.</param>
         ;;; <param name="aBackgroundColor">Optional background color to draw behind the chart.</param>
         public method DrawPieChart,     void
-            required in aCenterPoint,   XYcoordinate
-            required in aRadius,        float
-            required in aChartData,     @ChartDataSet
-.ifdef DBLNET
+            required in aCenterPoint,       XYcoordinate
+            required in aRadius,            float
+            required in aChartData,         @ChartDataSet
+            .ifdef DBLNET
             default  in aBackgroundColor,   PdfColor,   PdfColor.DefaultColor
-.else
+            .else
             optional in aBackgroundColor,   PdfColor
-.endc
+            .endc
             endparams
         proc
             this.DrawPieChart(aCenterPoint.X,aCenterPoint.Y,aRadius,aChartData,aBackgroundColor)
@@ -2232,45 +2234,45 @@ eof,
         ;;; <param name="aChartData">ChartDataSet object that defines the legend to draw.</param>
         ;;; <returns>Returns the X/Y coordinates of the lower right corner of the legend that was drawn.</returns>
         public method DrawSingleSeriesChartLegend, XYcoordinate
-            required in aTopX,       float
-            required in aTopY,       float
-            required in aChartData,  @ChartDataSet
-.ifdef DBLNET
-            default in aShowValues, boolean, false
-.else
+            required in aTopX,          float
+            required in aTopY,          float
+            required in aChartData,     @ChartDataSet
+            .ifdef DBLNET
+            default in aShowValues,     boolean,false
+            .else
             optional in aShowValues, boolean
-.endc
+            .endc
             endparams
             record
-                showValues, boolean
-                ix,         int
-                dataItems,  int
-                maxWidth,   float
-                bottomRight,XYcoordinate
+                showValues,     boolean
+                ix,             int
+                dataItems,      int
+                maxWidth,       float
+                bottomRight,    XYcoordinate
             endrecord
         proc
             ;;If we don't have a first page then add one
             if (this.PageNumber==0)
                 NewPage()
 
-.ifdef DBLNET
+            .ifdef DBLNET
             showValues = aShowValues
-.else
+            .else
             if (^passed(aShowValues)) then
                 showValues = aShowValues
             else
                 showValues = false
-.endc
+            .endc
 
             dataItems = aChartData.Series[1].Items.GetLength(1)
             maxWidth = 0
 
             for ix from 1 thru dataItems
             begin
-                data boxX, float, aTopX
-                data boxY, float, aTopY - (ix*15)
-                data labelX, float, boxX + 20
-                data labelY, float, boxY + 3
+                data boxX,      float,      aTopX
+                data boxY,      float,      aTopY - (ix*15)
+                data labelX,    float,      boxX + 20
+                data labelY,    float,      boxY + 3
                 data thisLabel, string
                 data thisWidth, float
 
@@ -2313,14 +2315,14 @@ eof,
         ;;; <param name="aTopLeft">X/Y coordinates for the top left corner of the legend box.</param>
         ;;; <param name="aChartData">ChartDataSet object that defines the legend to draw.</param>
         ;;; <returns>Returns the X/Y coordinates of the lower right corner of the legend that was drawn.</returns>
-        public method DrawSingleSeriesChartLegend, XYcoordinate
+        public method DrawSingleSeriesChartLegend,XYcoordinate
             required in aTopLeft,       XYcoordinate
             required in aChartData,     @ChartDataSet
-.ifdef DBLNET
-            default in aShowValues,     boolean, false
-.else
+            .ifdef DBLNET
+            default in aShowValues,     boolean,false
+            .else
             optional in aShowValues,    boolean
-.endc
+            .endc
             endparams
         proc
             mreturn this.DrawSingleSeriesChartLegend(aTopLeft.X,aTopLeft.Y,aChartData,aShowValues)
@@ -2341,59 +2343,59 @@ eof,
             required in aText,      string
             required in aX,         float
             required in aY,         float
-.ifdef DBLNET
+            .ifdef DBLNET
             default  in aColor,     PdfColor,   PdfColor.DefaultColor
             default  in aFontName,  string,     ^null
             default  in aFontSize,  int,        0
             default  in aUnderline, boolean,    false
-.else
+            .else
             optional in aColor,     PdfColor
             optional in aFontName,  string
             optional in aFontSize,  int
             optional in aUnderline, boolean
-.endc
+            .endc
             endparams
         proc
             ;;If we don't have a first page then add one
             if (this.PageNumber==0)
                 NewPage()
 
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aColor!=PdfColor.DefaultColor) && (aColor != mFillColor))
-.else
+            .else
             if (^passed(aColor) && (aColor != mFillColor))
-.endc
+            .endc
             begin
                 setCustomStrokeColor(aColor)
                 setCustomFillColor(aColor)
             end
 
-.ifdef DBLNET
+            .ifdef DBLNET
             if (!(String.IsNullOrWhiteSpace(aFontName)) || (aFontSize>0))
-.else
+            .else
             if ((^passed(aFontName) && (aFontName!=^null)) || (^passed(aFontSize) && (aFontSize>0)))
-.endc
+            .endc
             begin
-                data tmpFontName, string
-                data tmpFontSize, int
+                data tmpFontName,   string
+                data tmpFontSize,   int
 
-.ifdef DBLNET
+                .ifdef DBLNET
                 if (!String.IsNullOrWhiteSpace(aFontName)) then
-.else
+                .else
                 if (^passed(aFontName) && (aFontName!=^null)) then
-.endc
-                    tmpFontName = aFontName
+                .endc
+                tmpFontName = aFontName
                 else
-                    tmpFontName = fontNormal.GetFontName()
+                tmpFontName = fontNormal.GetFontName()
 
-.ifdef DBLNET
+                .ifdef DBLNET
                 if (aFontSize>0) then
-.else
+                .else
                 if (^passed(aFontSize) && (aFontSize>0)) then
-.endc
-                    tmpFontSize = aFontSize
+                .endc
+                tmpFontSize = aFontSize
                 else
-                    tmpFontSize = mFontSize
+                tmpFontSize = mFontSize
 
                 SelectFont(tmpFontName,tmpFontSize)
             end
@@ -2403,29 +2405,29 @@ eof,
             pg.ShowText(aText)
             pg.EndText()
 
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aUnderline)
-.else
+            .else
             if (^passed(aUnderline) && aUnderline)
-.endc
+            .endc
             begin
-                data tmpToX, float, aX + pg.TextWidth(aText)
-                data tmpY, float, aY-1
+                data tmpToX,        float,      aX + pg.TextWidth(aText)
+                data tmpY,          float,      aY-1
                 DrawLine(aX,tmpY,tmpToX,tmpY,0.5)
             end
 
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((!String.IsNullOrWhiteSpace(aFontName)) || (aFontSize>0))
-.else
+            .else
             if ((^passed(aFontName) && (aFontName!=^null)) || (^passed(aFontSize) && (aFontSize>0)))
-.endc
-                ResetFont()
+            .endc
+            ResetFont()
 
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aColor!=PdfColor.DefaultColor) && (aColor != mFillColor))
-.else
+            .else
             if (^passed(aColor) && (aColor != mFillColor))
-.endc
+            .endc
             begin
                 resetStrokeColor()
                 resetFillColor()
@@ -2438,8 +2440,8 @@ eof,
         ;;; Draws the text defined by an AutoTextAbsolute object.
         ;;; </summary>
         ;;; <param name="aText">AutoTextAbsolute object to be drawn.</param>
-        public method DrawTextObject, void
-            required in aText, @AutoTextAbsolute
+        public method DrawTextObject,void
+            required in aText,  @AutoTextAbsolute
             endparams
         proc
             DrawText(aText.Text,aText.X,aText.Y,aText.Color,aText.FontName,aText.FontSize,aText.Underline)
@@ -2451,7 +2453,7 @@ eof,
         ;;; </summary>
         ;;; <param name="aText">AutoTextRowCol object to be drawn.</param>
         public method DrawTextObjectRC, void
-            required in aText, @AutoTextRowCol
+            required in aText,  @AutoTextRowCol
             endparams
         proc
             DrawTextRC(aText.Text,aText.Row,aText.Col,aText.Bold,aText.Italic,aText.Color,aText.NewLine,aText.Underline)
@@ -2475,23 +2477,23 @@ eof,
             required in aText,      string
             optional in aRow,       n
             optional in aCol,       n
-.ifdef DBLNET
+            .ifdef DBLNET
             default  in aBold,      boolean,    false
             default  in aItalic,    boolean,    false
             default  in aColor,     PdfColor,   PdfColor.DefaultColor
             default  in aNewLine,   boolean,    false
             default  in aUnderline, boolean,    false
-.else
+            .else
             optional in aBold,      boolean
             optional in aItalic,    boolean
             optional in aColor,     PdfColor
             optional in aNewLine,   boolean
             optional in aUnderline, boolean
-.endc
+            .endc
             endparams
             record
-                row,                int
-                col,                int
+                row,    int
+                col,    int
             endrecord
         proc
             ;;If we don't have a first page then add one
@@ -2526,11 +2528,11 @@ eof,
 
             setFontAttributes(aBold,aItalic)
 
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aColor!=PdfColor.DefaultColor) && (aColor != mFillColor))
-.else
+            .else
             if (^passed(aColor) && (aColor != mFillColor))
-.endc
+            .endc
             begin
                 setCustomStrokeColor(aColor)
                 setCustomFillColor(aColor)
@@ -2542,17 +2544,17 @@ eof,
             pg.EndText()
 
             ;;Underline?
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aUnderline)
-.else
+            .else
             if (^passed(aUnderline) && aUnderline)
-.endc
+            .endc
             begin
                 ;;If we're using a fixed-pitch font we can use underscore characters to do the underline
                 if (mFixedPitchFont) then
                 begin
                     ;;Fixed pitch, user underscores
-                    data underscore, a256
+                    data underscore,    a256
                     xcall fill("_",underscore)
                     pg.BeginText()
                     pg.MoveTextPos(XfromColumn(col),YfromBodyRow(row))
@@ -2562,30 +2564,30 @@ eof,
                 else
                 begin
                     ;;Variable-pitch, draw a line
-                    data tmpFromX, float, XfromColumn(col)
-                    data tmpToX, float, tmpFromX + pg.TextWidth(aText)
-                    data tmpY, float, YfromBodyRow(row) - 1
+                    data tmpFromX,      float,      XfromColumn(col)
+                    data tmpToX,        float,      tmpFromX + pg.TextWidth(aText)
+                    data tmpY,          float,      YfromBodyRow(row) - 1
                     DrawLine(tmpFromX,tmpY,tmpToX,tmpY,0.5)
                 end
             end
 
             resetFontAttributes(aBold,aItalic)
 
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aColor!=PdfColor.DefaultColor) && (aColor != mFillColor))
-.else
+            .else
             if (^passed(aColor) && (aColor != mFillColor))
-.endc
+            .endc
             begin
                 resetStrokeColor()
                 resetFillColor()
             end
 
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aNewLine) then
-.else
+            .else
             if (^passed(aNewLine) && aNewLine) then
-.endc
+            .endc
             begin
                 this.Row = row + 1
                 this.Column = 1
@@ -2608,12 +2610,12 @@ eof,
         ;;; </summary>
         ;;; <param name="aFontName"></param>
         ;;; <returns></returns>
-        public method FontAvailable, boolean
-            required in aFontName, string
+        public method FontAvailable,    boolean
+            required in aFontName,  string
             endparams
             record
-                fontName, string
-                isAvailable, boolean
+                fontName,       string
+                isAvailable,    boolean
             endrecord
         proc
             isAvailable = false
@@ -2638,12 +2640,12 @@ eof,
         ;;; <param name="aFontFile">Full path to the font file (.ttf)</param>
         ;;; <returns>Returns the name of the font that can be passed to the SelectFont method, or ^NULL if the font fails to load.</returns>
         public method LoadTrueTypeFont, string
-            required in aFontFile,      string
+            required in aFontFile,  string
             endparams
             record
-                ok, boolean
-                fileSpec, string
-                fontName, string
+                ok,         boolean
+                fileSpec,   string
+                fontName,   string
             endrecord
         proc
             ok = true
@@ -2690,8 +2692,8 @@ eof,
             optional in aNumberOfLines, n
             endparams
             record
-                lines, int
-                ix, int
+                lines,  int
+                ix,     int
             endrecord
         proc
             ;;If we don't have a first page then add one
@@ -2729,17 +2731,17 @@ eof,
         ;;; </summary>
         ;;; <returns>Returns the new page number.</returns>
         public method NewPage, int
-.ifdef DBLNET
+            .ifdef DBLNET
             default  in aOrientation, PdfOrientation, PdfOrientation.DefaultOrientation
-.else
+            .else
             optional in aOrientation, PdfOrientation
-.endc
-            optional in aOutlineText, a
+            .endc
+            optional in aOutlineText,   a
             endparams
             record
-                orientation, PdfOrientation
-                pageOutLine, @HPdfOutline
-                pageDestination, @HPdfDestination
+                orientation,        PdfOrientation
+                pageOutLine,        @HPdfOutline
+                pageDestination,    @HPdfDestination
             endrecord
         proc
 
@@ -2751,11 +2753,11 @@ eof,
             orientation = this.DefaultOrientation
 
             ;;Determine the page orientation of the new page
-.ifdef DBLNET
+            .ifdef DBLNET
             if ((aOrientation!=PdfOrientation.DefaultOrientation) && (this.Orientation!=aOrientation)) then
-.else
+            .else
             if (^passed(aOrientation) && (this.Orientation!=aOrientation)) then
-.endc
+            .endc
             begin
                 orientation = aOrientation
                 if (this.Orientation == this.DefaultOrientation) then
@@ -2827,7 +2829,7 @@ eof,
             if (this.CreateOutline && ((!^passed(aOutlineText)) || aOutlineText))
             begin
                 ;;Define the text to use for the page outline
-                data outlineText, string
+                data outlineText,   string
                 if (^passed(aOutlineText) && aOutlineText) then
                     outlineText = %atrim(aOutlineText)
                 else
@@ -2851,23 +2853,22 @@ eof,
         ;;; the PdfFile object is no longer valid.
         ;;; </summary>
         ;;; <returns>Returns true if the PDF file was saved and launched.</returns>
-        public method Preview, boolean
-            optional out aErrorMessage, string
-            endparams
+        public method Preview,      boolean
             record
-                ok,             boolean
-                errorMessage,   string
+                ok, boolean
             endrecord
         proc
-.ifndef D_GUI
+            this.LastErrorMessage = ""
+
+            .ifndef D_GUI
             ;;Preview is Windows only; best we can do is save the file.
-            if (this.Save(errorMessage)) then
-                errorMessage = "Preview is not supported on this system. The PDF file was saved."
+            if (this.Save()) then
+                this.LastErrorMessage = "Preview is not supported on this system. The PDF file was saved."
             else
-                errorMessage = "Preview is not supported on this system and there was a problem saving the PDF file. The error was " + errorMessage
+                this.LastErrorMessage = "Preview is not supported on this system and there was a problem saving the PDF file. The error was " + this.LastErrorMessage
             ok = false
-.else
-            if (this.Save(errorMessage)) then
+            .else
+            if (this.Save()) then
             begin
                 ;;And launch the associated application
                 xcall shell(,'"'+this.FileLocation+this.FileName+'"',D_NOCONSOLE|D_NOWAIT)
@@ -2875,13 +2876,10 @@ eof,
             end
             else
             begin
-                ;;Error message has already been set by Save()
+                ;;LastErrorMessage has already been set by Save()
                 ok = false
             end
-.endc
-            if (^passed(aErrorMessage))
-                aErrorMessage = errorMessage
-
+            .endc
             mreturn ok
 
         endmethod
@@ -2894,20 +2892,20 @@ eof,
         ;;; </summary>
         ;;; <returns>Returns true if the PDF file was saved and launched.</returns>
         public static method PreviewFile, boolean
-            required in  aPdfFileSpec, string
+            required in  aPdfFileSpec,  string
             optional out aErrorMessage, a
             endparams
             record
-                ok, boolean
-                pdfFileSpec, string
-                errorMessage, string
+                ok,             boolean
+                pdfFileSpec,    string
+                errorMessage,   string
             endrecord
         proc
 
-.ifndef D_GUI
+            .ifndef D_GUI
             errorMessage = "PreviewFile is not supported on this system!"
             ok = false
-.else
+            .else
             errorMessage = ""
             pdfFileSpec = expandLogicalInFileSpec(aPdfFileSpec)
 
@@ -2931,7 +2929,7 @@ eof,
                 errorMessage = "PDF file " + pdfFileSpec + " not found!"
                 ok = false
             end
-.endc
+            .endc
             if (^passed(aErrorMessage))
                 aErrorMessage = errorMessage
 
@@ -2941,40 +2939,49 @@ eof,
 
         ;;---------------------------------------------------------------------
         ;;; <summary>
-        ;;; Print the PDF file to a printer.
+        ;;; Print the PDF file to the users default printer.
         ;;; </summary>
-        ;;; <param name="aPrinterName">Optional printer name. If not passed then the users default printer is used.</param>
-        ;;; <param name="aErrorMessage">Optional returned error message.</param>
         ;;; <returns></returns>
         public method Print, boolean
-            optional in  aPrinterName,  string
-            optional out aErrorMessage, string
+
+        proc
+            mreturn this.Print(^null)
+        endmethod
+
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Print the PDF file to a printer.
+        ;;; </summary>
+        ;;; <param name="aPrinterName">Printer name to print to. If null then the users default printer is used.</param>
+        ;;; <returns></returns>
+        public method Print, boolean
+            required in aPrinterName, string
             endparams
             .define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
             record
                 ok,             boolean
                 pdfFileSpec,    string
                 command,        string
-                errorMessage,   string
             endrecord
         proc
+            this.LastErrorMessage = ""
 
-.ifndef D_GUI
+            .ifndef D_GUI
             ;;Print is Windows only; best we can do is save the file.
-            if (this.Save(errorMessage)) then
-                errorMessage = "Print is not supported on this system. The PDF file was saved."
+            if (this.Save()) then
+                this.LastErrorMessage = "Print is not supported on this system. The PDF file was saved."
             else
-                errorMessage = "Print is not supported on this system and there was a problem saving the PDF file. The error was " + errorMessage
+                this.LastErrorMessage = "Print is not supported on this system and there was a problem saving the PDF file. The error was " + this.LastErrorMessage
             ok = false
-.else
-            if (this.Save(errorMessage)) then
+            .else
+            if (this.Save()) then
             begin
                 pdfFileSpec = this.FileLocation + this.FileName
                 if (fileExists(pdfFileSpec)) then
                 begin
                     if (fileExists(D_SUMATRA_EXE)) then
                     begin
-                        if (^passed(aPrinterName) && aPrinterName.Length > 0) then
+                        if ((aPrinterName!=^null) && (aPrinterName.Length>0)) then
                             command = D_SUMATRA_EXE + ' -print-to "' + %atrim(aPrinterName) + '" -silent -exit-on-print ' + '"' + pdfFileSpec + '"'
                         else
                             command = D_SUMATRA_EXE + ' -print-to-default -silent -exit-on-print ' + '"' + pdfFileSpec + '"'
@@ -2985,32 +2992,29 @@ eof,
                         end
                         catch (ex)
                         begin
-                            errorMessage = "Failed to launch SumatraPDF. Error was " + ex.Message
+                            this.LastErrorMessage = "Failed to launch SumatraPDF. Error was " + ex.Message
                             ok = false
                         end
                         endtry
                     end
                     else
                     begin
-                        errorMessage = "SumartaPDF was not found!"
+                        this.LastErrorMessage = "SumartaPDF was not found!"
                         ok = false
                     end
                 end
                 else
                 begin
-                    errorMessage = "PDF file " + pdfFileSpec + " not found!"
+                    this.LastErrorMessage = "PDF file " + pdfFileSpec + " not found!"
                     ok = false
                 end
             end
             else
             begin
-                ;;Error message already set by Save()
+                ;;this.LastErrorMessage already set by Save()
                 ok = false
             end
-.endc
-            if (^passed(aErrorMessage))
-                aErrorMessage = errorMessage
-
+            .endc
             mreturn ok
 
         endmethod
@@ -3040,10 +3044,10 @@ eof,
 
         proc
 
-.ifdef D_GUI
+            .ifdef D_GUI
             errorMessage = "PrintFile is not supported on this system!"
             ok = false
-.else
+            .else
             errorMessage = ""
 
             pdfFileSpec = expandLogicalInFileSpec(aPdfFileSpec)
@@ -3080,7 +3084,7 @@ eof,
                 errorMessage = "PDF file " + pdfFileSpec + " not found!"
                 ok = false
             end
-.endc
+            .endc
             if (^passed(aErrorMessage))
                 aErrorMessage = errorMessage
 
@@ -3092,28 +3096,26 @@ eof,
         ;;; <summary>
         ;;; Show a SumartsPDF Print Dialog to print the PDF document.
         ;;; </summary>
-        ;;; <param name="aErrorMessage">Optional returned error message.</param>
         ;;; <returns></returns>
         public method PrintDialog, boolean
-            optional out aErrorMessage, string
-            endparams
             .define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
             record
                 ok,             boolean
                 pdfFileSpec,    string
                 command,        string
-                errorMessage,   string
             endrecord
         proc
-.ifndef D_GUI
+            this.LastErrorMessage = ""
+
+            .ifndef D_GUI
             ;;PrintDialog is Windows only; best we can do is save the file.
-            if (this.Save(errorMessage)) then
-                errorMessage = "PrintDialog is not supported on this system. The PDF file was saved."
+            if (this.Save()) then
+                this.LastErrorMessage = "PrintDialog is not supported on this system. The PDF file was saved."
             else
-                errorMessage = "PrintDialog is not supported on this system and there was a problem saving the PDF file. The error was " + errorMessage
+                this.LastErrorMessage = "PrintDialog is not supported on this system and there was a problem saving the PDF file. The error was " + this.LastErrorMessage
             ok = false
-.else
-            if (this.Save(errorMessage)) then
+            .else
+            if (this.Save()) then
             begin
                 pdfFileSpec = this.FileLocation + this.FileName
                 if (fileExists(pdfFileSpec)) then
@@ -3128,20 +3130,20 @@ eof,
                         end
                         catch (ex)
                         begin
-                            errorMessage = "Failed to launch SumatraPDF. Error was " + ex.Message
+                            this.LastErrorMessage = "Failed to launch SumatraPDF. Error was " + ex.Message
                             ok = false
                         end
                         endtry
                     end
                     else
                     begin
-                        errorMessage = "SumartaPDF was not found!"
+                        this.LastErrorMessage = "SumartaPDF was not found!"
                         ok = false
                     end
                 end
                 else
                 begin
-                    errorMessage = "PDF file " + pdfFileSpec + " not found!"
+                    this.LastErrorMessage = "PDF file " + pdfFileSpec + " not found!"
                     ok = false
                 end
             end
@@ -3150,10 +3152,7 @@ eof,
                 ;;Error message already set by Save()
                 ok = false
             end
-.endc
-            if (^passed(aErrorMessage))
-                aErrorMessage = errorMessage
-
+            .endc
             mreturn ok
 
         endmethod
@@ -3176,47 +3175,46 @@ eof,
         ;;; </summary>
         ;;; <returns>Returns true if the PDF file was successfully saved.</returns>
         public method Save, boolean
-            optional out aErrorMessage, string
-            endparams
             record
-                ok, boolean
-                outFileName,  string
-                errorMessage, string
+                ok,             boolean
+                outFileName,    string
             endrecord
         proc
+            this.LastErrorMessage = ""
+
             ;;Print page level items on the last page
             printEndPageItems()
 
             ;;Set the name of the file to save
-.ifdef D_GUI
+            .ifdef D_GUI
             if (this.BackgroundFile.Length!=0) then
-                outFileName = this.FileLocation+"TEMP_"+%datetime+"_"+this.FileName
+                outFileName = this.FileLocation + "TEMP_" + %datetime + "_" + this.FileName
             else
-.endc
-                outFileName = this.FileLocation+this.FileName
+                .endc
+            outFileName = this.FileLocation + this.FileName
 
             ;;Create the PDF file on disk
             try
             begin
                 doc.SaveToFile(outFileName)
-                errorMessage = ""
+                this.LastErrorMessage = ""
                 ok = true
             end
             catch (ex)
             begin
-                errorMessage = "Failed to save " + outFileName + ". Error was " + ex.Message
+                this.LastErrorMessage = "Failed to save " + outFileName + ". Error was " + ex.Message
                 ok = false
             end
             endtry
 
-.ifdef D_GUI
+            .ifdef D_GUI
             ;;Do we have a background file?
             if (this.BackgroundFile.Length!=0)
             begin
                 ;Merge the temp file with the background file to create the final file
-                data command, string, '|pdftk "' + outFileName + '" background "' + mBackgroundFile + '" output "' + this.FileLocation+this.FileName + '"'
-                data tmpchn, i4
-                data response, a128
+                data command,   string, '|pdftk "' + outFileName + '" background "' + mBackgroundFile + '" output "' + this.FileLocation+this.FileName + '"'
+                data tmpchn,    i4
+                data response,  a128
                 open(tmpchn=0,i,command)
                 ;
                 ;If the merge works, PDFtk outputs nothing (EOF)
@@ -3239,20 +3237,17 @@ eof,
 
                 if (response=="Error:")
                 begin
-                    errorMessage = "Failed to merge output with background file."
+                    this.LastErrorMessage = "Failed to merge output with background file."
                     ok = false
                 end
 
                 ;And delete the temp file
-pdftk_ok,       close tmpchn
+        pdftk_ok,       close tmpchn
                 xcall delet(outFileName)
             end
-.endc
+            .endc
             ;;Clean up
             this.Dispose()
-
-            if (^passed(aErrorMessage))
-                aErrorMessage = errorMessage
 
             mreturn ok
 
@@ -3264,15 +3259,15 @@ pdftk_ok,       close tmpchn
         ;;; </summary>
         ;;; <param name="aFontName">Font name as returned by LoadTrueTypeFont, or one of the native PDF font names (Courier, Courier-Bold, Courier-Oblique, Courier-BoldOblique, Helvetica, Helvetica-Bold, Helvetica-Oblique, Helvetica-BoldOblique, Times-Roman, Times-Bold, Times-Italic, Times-BoldItalic, Symbol, ZapfDingbats)</param>
         ;;; <param name="aFontSize">Point size to use.</param>
-        public method SelectFont, void
+        public method SelectFont,void
             required in aFontName, string
             required in aFontSize, int
             endparams
             record
-                fontSize, float
-                newFont, @HPdfFont
-                fontName, string
-                found, boolean
+                fontSize,   float
+                newFont,    @HPdfFont
+                fontName,   string
+                found,      boolean
             endrecord
         proc
             ;;If the font is available then switch to it
@@ -3287,7 +3282,7 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-.ifdef D_GUI
+        .ifdef D_GUI
         ;;; <summary>
         ;;; Sets the background file to be used.
         ;;; </summary>
@@ -3299,7 +3294,7 @@ pdftk_ok,       close tmpchn
             required out aErrorMessage, string
             endparams
             record
-                tmpValue, string
+                tmpValue,   string
             endrecord
         proc
             aErrorMessage = ""
@@ -3333,16 +3328,16 @@ pdftk_ok,       close tmpchn
             mreturn true
 
         endmethod
-.endc
+        .endc
         ;;---------------------------------------------------------------------
         ;;; <summary>
         ;;; Sets the current position within the current page.
         ;;; </summary>
         ;;; <param name="aRow">Row position, between 1 and Rows.</param>
         ;;; <param name="aColumn">Column position, between 1 and Columns.</param>
-        public method SetPosition,  void
-            optional in aRow,       n
-            optional in aColumn,    n
+        public method SetPosition, void
+            optional in aRow, n
+            optional in aColumn, n
             endparams
         proc
             ;;If we don't have a first page then add one
@@ -3391,7 +3386,7 @@ pdftk_ok,       close tmpchn
         ;;; <param name="aRow"></param>
         ;;; <returns></returns>
         public method YfromBodyRow, float
-            required in aBodyRow, int
+            required in aBodyRow,   int
             endparams
         proc
             mreturn this.Height - topOffset - (this.HeaderRows * this.RowHeight) - (aBodyRow * this.RowHeight) + this.ExtraRowSpacing
@@ -3475,9 +3470,9 @@ pdftk_ok,       close tmpchn
 
         ;;---------------------------------------------------------------------
         private mBackgroundColor, PdfColor
-        private backgroundRed,    float
-        private backgroundGreen,  float
-        private backgroundBlue,   float
+        private backgroundRed, float
+        private backgroundGreen, float
+        private backgroundBlue, float
         ;;; <summary>
         ;;; Gets or sets the page background color. A custom value for page background color can be established via an optional parameter passed to the constructor method, and will be used for the first page. Subsequently changing the page background color will affect only new pages that are created after the background color is changed. There is no way to change the background color of a page after the page has been created. The default page background color is white.
         ;;; </summary>
@@ -3494,7 +3489,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-.ifdef D_GUI
+        .ifdef D_GUI
         private mBackgroundFile, string
         ;;; <summary>
         ;;; Specifies the name of a single page PDF file that is to be used as the background image for each page of the PDF file being created.
@@ -3516,7 +3511,7 @@ pdftk_ok,       close tmpchn
                 mBackgroundFile = value
             endmethod
         endproperty
-.endc
+        .endc
         ;;---------------------------------------------------------------------
         private mBottomMargin, float
         ;;; <summary>
@@ -3610,7 +3605,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        private mCreateOutline, boolean, true
+        private mCreateOutline, boolean,true
         ;;; <summary>
         ;;; Gets or sets whether a document outline is created and whether default outline items are automatically added for each page.
         ;;; </summary>
@@ -3760,9 +3755,9 @@ pdftk_ok,       close tmpchn
 
         ;;---------------------------------------------------------------------
         private mFillColor, PdfColor
-        private textRed,    float
-        private textGreen,  float
-        private textBlue,   float
+        private textRed, float
+        private textGreen, float
+        private textBlue, float
         ;;; <summary>
         ;;; Gets or sets the current fill color, which is the colur used to paint the internal areas of both text and lines, and boxes if the optional "fill" parameter is passed and true. The default fill color is black. The default fill color can be overridden when printing or drawing individual text, line or box items.
         ;;; </summary>
@@ -3948,6 +3943,22 @@ pdftk_ok,       close tmpchn
             method set
             proc
                 doc.SetInfoAttr(HPdfInfoType.HPDF_INFO_KEYWORDS,value)
+            endmethod
+        endproperty
+
+        ;;---------------------------------------------------------------------
+        private mLastErrorMessage, string
+        ;;; <summary>
+        ;;; Gets the last error message generated by a call to the Preview(), Print(), PrintDialog() and Save() methods.
+        ;;; </summary>
+        public property LastErrorMessage, string
+            method get
+            proc
+                mreturn mLastErrorMessage
+            endmethod
+            private method set
+            proc
+                mLastErrorMessage = value
             endmethod
         endproperty
 
@@ -4166,10 +4177,10 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        private mStrokeColor,   PdfColor
-        private lineRed,    float
-        private lineGreen,  float
-        private lineBlue,   float
+        private mStrokeColor, PdfColor
+        private lineRed, float
+        private lineGreen, float
+        private lineBlue, float
         ;;; <summary>
         ;;; Gets or sets the current stroke color, which is the color used to paint the outside edge of lines, boxes and text. The default stroke color is black. The default stroke color can be overridden when printing or drawing individual text, line or box items.
         ;;; </summary>
@@ -4234,7 +4245,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        private mUseAlternateFooters, boolean, false
+        private mUseAlternateFooters, boolean,false
         ;;; <summary>
         ;;; Gets or sets whether alternate text should be displayed in the page footers of pages that use the opposite orientation to the document default orientation. The default is that the same footer text is used for all pages. If this property is set to true then the alternative footer text should then be specified via the FooterTextAlternate property.
         ;;; </summary>
@@ -4254,7 +4265,7 @@ pdftk_ok,       close tmpchn
                 ;;Initialize the array of alternate footer items
                 if (mUseAlternateFooters) then
                 begin
-                    data ix, int
+                    data ix,                    int
                     this.FooterTextAlternate = new string[this.FooterRows]
                     for ix from 1 thru this.FooterRows
                         this.FooterTextAlternate[ix] = ""
@@ -4265,7 +4276,7 @@ pdftk_ok,       close tmpchn
         endproperty
 
         ;;---------------------------------------------------------------------
-        private mUseAlternateHeaders, boolean, false
+        private mUseAlternateHeaders, boolean,false
         ;;; <summary>
         ;;; Gets or sets whether alternate text should be displayed in the page headers of pages that use the opposite orientation to the document default orientation. The default is that the same header text is used for all pages. If this property is set to true then the alternative headter text should then be specified via the HeaderTextAlternate property.
         ;;; </summary>
@@ -4285,7 +4296,7 @@ pdftk_ok,       close tmpchn
                 ;;Initialize the array of alternate header items
                 if (mUseAlternateHeaders) then
                 begin
-                    data ix, int
+                    data ix,    int
                     this.HeaderTextAlternate = new string[this.HeaderRows]
                     for ix from 1 thru this.HeaderRows
                         this.HeaderTextAlternate[ix] = ""
@@ -4314,7 +4325,7 @@ pdftk_ok,       close tmpchn
         ;;*********************************************************************
         ;;PRIVATE METHODS
 
-.ifdef D_GUI
+        .ifdef D_GUI
         ;;---------------------------------------------------------------------
         ;;; <summary>
         ;;; Determines whether the given path refers to an existing directory on disk.
@@ -4322,15 +4333,15 @@ pdftk_ok,       close tmpchn
         ;;; <param name="path">The path to test. </param>
         ;;; <returns>true if path refers to an existing directory; false if the directory does not exist or an error occurs when trying to determine if the specified file exists.</returns>
         private method directoryExists, boolean
-            required in path, string
+            required in path,   string
             endparams
             stack record
-                dll         ,D_ADDR ;;DLL Handle
-                folder      ,a260   ;;Null terminated folder spec
-                attributes  ,i4
+                dll,        D_ADDR ;;DLL Handle
+                folder,     a260   ;;Null terminated folder spec
+                attributes, i4
             endrecord
-.define INVALID_FILE_ATTRIBUTES     -1
-.define FILE_ATTRIBUTE_DIRECTORY    %x(10)
+            .define INVALID_FILE_ATTRIBUTES     -1
+            .define FILE_ATTRIBUTE_DIRECTORY    %x(10)
         proc
             dll = %dll_open("kernel32.dll")
             xcall fill(char(0),folder)
@@ -4341,7 +4352,7 @@ pdftk_ok,       close tmpchn
                 mreturn false
             mreturn (attributes & FILE_ATTRIBUTE_DIRECTORY)
         endmethod
-.else
+        .else
         ;;---------------------------------------------------------------------
         ;;; <summary>
         ;;; Determines whether the given path refers to an existing directory on disk.
@@ -4366,19 +4377,19 @@ pdftk_ok,       close tmpchn
             end
             endtry
         endmethod
-.endc
+        .endc
 
         ;;---------------------------------------------------------------------
-.ifdef D_GUI
-        private static method expandLogicalInFileSpec, string
-            required in fileSpec,               string
+        .ifdef D_GUI
+        private static method expandLogicalInFileSpec,string
+            required in fileSpec, string
             endparams
             stack record
-                colon,                          int
-                file,                           string
-                path,                           string
-                translation,                    a256
-                length,                         i4
+                colon,          int
+                file,           string
+                path,           string
+                translation,    a256
+                length,         i4
             endrecord
         proc
             ;;This routine assumes a file spec like LOGICAL:file.ext
@@ -4412,7 +4423,7 @@ pdftk_ok,       close tmpchn
                 mreturn fileSpec.Trim()
             end
         endmethod
-.else
+        .else
 .ifdef OS_VMS
         ;VMS
         private static method expandLogicalInFileSpec, string
@@ -4479,7 +4490,7 @@ pdftk_ok,       close tmpchn
             end
         endmethod
 .endc
-.endc
+        .endc
         ;;---------------------------------------------------------------------
         private method expandTokens, string
             required in aBuffer, string
@@ -4520,7 +4531,7 @@ pdftk_ok,       close tmpchn
         proc
             try
             begin
-                data ch, int, 0
+                data ch,    int,0
                 open(ch,i,path)
                 close ch
                 mreturn true
@@ -4536,9 +4547,9 @@ pdftk_ok,       close tmpchn
         ;; <summary>
         ;;; Returns the date in MM/DD/YYYY format
         ;;; </summary>
-        private method getFormattedDateMMDDYYYY, string
+        private method getFormattedDateMMDDYYYY,string
             record
-                now, a20
+                now,    a20
             endrecord
         proc
             now = %datetime
@@ -4551,7 +4562,7 @@ pdftk_ok,       close tmpchn
         ;;; </summary>
         private method getFormattedDateDDMMYYYY, string
             record
-                now, a20
+                now,    a20
             endrecord
         proc
             now = %datetime
@@ -4564,7 +4575,7 @@ pdftk_ok,       close tmpchn
         ;;; </summary>
         private method getFormattedTimeHHMM, string
             record
-                now, a20
+                now,    a20
             endrecord
         proc
             now = %datetime
@@ -4577,7 +4588,7 @@ pdftk_ok,       close tmpchn
         ;;; </summary>
         private method getFormattedTimeHHMMSS, string
             record
-                now, a20
+                now,    a20
             endrecord
         proc
             now = %datetime
@@ -4590,7 +4601,7 @@ pdftk_ok,       close tmpchn
         ;;; </summary>
         private method getTempFilePrefix, string
             record
-                now, a20
+                now,    a20
             endrecord
         proc
             now = %datetime
@@ -4604,13 +4615,13 @@ pdftk_ok,       close tmpchn
         ;;; <returns>Returns true if PDFTk Pro is available, otherwise false.</returns>
         private method isPdfTkProAvailable, boolean
             record
-                available, boolean
-                chn, i4
+                available,  boolean
+                chn,        i4
             endrecord
         proc
             try
             begin
-                data response, a128, ""
+                data response,  a128,   ""
                 open(chn=0,i,"|pdftk")
                 reads(chn,response)
                 available = (response=="SYNOPSIS")
@@ -4629,8 +4640,8 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        private method printAutoItem, void
-            required in aItem, @AutoItem
+        private method printAutoItem,void
+            required in aItem,  @AutoItem
         proc
 
             if (aItem.is.AutoTextAbsolute) then
@@ -4661,7 +4672,7 @@ pdftk_ok,       close tmpchn
         proc
             if (this.AutoItems.Count > 0)
             begin
-                data item, @Object
+                data item,  @Object
                 foreach item in this.AutoItems
                 begin
                     ;;Only print the "end of page" auto items
@@ -4672,7 +4683,7 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        private method printEndPageItems, void
+        private method printEndPageItems,void
         proc
             ;;Print headers and footers on the current page
             printPageHeaders()
@@ -4681,7 +4692,7 @@ pdftk_ok,       close tmpchn
             ;;Then auto items
             if (this.AutoItems.Count > 0)
             begin
-                data item, @Object
+                data item,  @Object
                 foreach item in this.AutoItems
                 begin
                     ;;Only print the "end of page" auto items
@@ -4693,7 +4704,7 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        private method printPageFooters, void
+        private method printPageFooters,void
         proc
             if (this.FooterRows)
             begin
@@ -4717,11 +4728,11 @@ pdftk_ok,       close tmpchn
                     else if (footer=="[LINE]") then
                     begin
                         ;;Calculate the start and end points for a full width line
-                        data penWidth, float, 1.0
-                        data start_x,  float, XfromColumn(1)
-                        data start_y,  float, YfromFooterRow(ix) + (((this.RowHeight-this.ExtraRowSpacing)-penWidth)/2)
-                        data end_x,    float, XfromColumn(this.Columns) + this.ColumnWidth
-                        data end_y,    float, start_y
+                        data penWidth,  float,      1.0
+                        data start_x,   float,      XfromColumn(1)
+                        data start_y,   float,      YfromFooterRow(ix) + (((this.RowHeight-this.ExtraRowSpacing)-penWidth)/2)
+                        data end_x,     float,      XfromColumn(this.Columns) + this.ColumnWidth
+                        data end_y,     float,      start_y
 
                         ;;Draw the line
                         pg.SetLineWidth(penWidth)
@@ -4741,7 +4752,7 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        private method printPageHeaders, void
+        private method printPageHeaders,void
         proc
             if (this.HeaderRows)
             begin
@@ -4765,11 +4776,11 @@ pdftk_ok,       close tmpchn
                     else if (header=="[LINE]") then
                     begin
                         ;;Calculate the start and end points for a full width line
-                        data penWidth, float, 1.0
-                        data start_x,  float, XfromColumn(1)
-                        data start_y,  float, YfromHeaderRow(ix) + (((this.RowHeight-this.ExtraRowSpacing)-penWidth)/2)
-                        data end_x,    float, XfromColumn(this.Columns) + this.ColumnWidth
-                        data end_y,    float, start_y
+                        data penWidth,  float,      1.0
+                        data start_x,   float,      XfromColumn(1)
+                        data start_y,   float,      YfromHeaderRow(ix) + (((this.RowHeight-this.ExtraRowSpacing)-penWidth)/2)
+                        data end_x,     float,      XfromColumn(this.Columns) + this.ColumnWidth
+                        data end_y,     float,      start_y
 
                         ;;Draw the line
                         pg.SetLineWidth(penWidth)
@@ -4789,27 +4800,27 @@ pdftk_ok,       close tmpchn
         endmethod
 
         ;;---------------------------------------------------------------------
-        private method resetFillColor , void
+        private method resetFillColor,  void
         proc
             pg.SetRGBFill(textRed,textGreen,textBlue)
         endmethod
 
         ;;---------------------------------------------------------------------
         private method resetFontAttributes, void
-.ifdef DBLNET
+            .ifdef DBLNET
             default  in aBold,      boolean, false
             default  in aItalic,    boolean, false
-.else
+            .else
             optional in aBold,      boolean
             optional in aItalic,    boolean
-.endc
+            .endc
         proc
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aBold || aItalic)
-.else
+            .else
             if ((^passed(aBold) && aBold) || (^passed(aItalic) && aItalic))
-.endc
-                resetFont()
+            .endc
+            resetFont()
         endmethod
 
         ;;---------------------------------------------------------------------
@@ -4820,10 +4831,10 @@ pdftk_ok,       close tmpchn
 
         ;;---------------------------------------------------------------------
         private method rgbFromPdfColor, void
-            required in  aColor, PdfColor
-            required out aRed, float
-            required out aGreen, float
-            required out aBlue, float
+            required in  aColor,    PdfColor
+            required out aRed,      float
+            required out aGreen,    float
+            required out aBlue,     float
         proc
 
             using aColor select
@@ -8881,9 +8892,9 @@ pdftk_ok,       close tmpchn
         private method setCustomFillColor, void
             required in aColor, PdfColor
             record
-                tmpRed, float
-                tmpGreen, float
-                tmpBlue, float
+                tmpRed,     float
+                tmpGreen,   float
+                tmpBlue,    float
             endrecord
         proc
             rgbFromPdfColor(aColor,tmpRed,tmpGreen,tmpBlue)
@@ -8894,9 +8905,9 @@ pdftk_ok,       close tmpchn
         private method setCustomStrokeColor, void
             required in aColor, PdfColor
             record
-                tmpRed, float
-                tmpGreen, float
-                tmpBlue, float
+                tmpRed,     float
+                tmpGreen,   float
+                tmpBlue,    float
             endrecord
         proc
             rgbFromPdfColor(aColor,tmpRed,tmpGreen,tmpBlue)
@@ -8905,15 +8916,15 @@ pdftk_ok,       close tmpchn
 
         ;;---------------------------------------------------------------------
         private method setFontAttributes, void
-.ifdef DBLNET
+            .ifdef DBLNET
             default  in aBold,      boolean, false
             default  in aItalic,    boolean, false
-.else
+            .else
             optional in aBold,      boolean
             optional in aItalic,    boolean
-.endc
+            .endc
         proc
-.ifdef DBLNET
+            .ifdef DBLNET
             if (aBold && aItalic) then
             begin
                 pg.SetFontAndSize(fontBoldItalic,fontSizeFloat)
@@ -8929,7 +8940,7 @@ pdftk_ok,       close tmpchn
                 pg.SetFontAndSize(fontItalic,fontSizeFloat)
                 this.CurrentFont = fontBoldItalic.GetFontName()
             end
-.else
+            .else
             if (^passed(aBold) && aBold && ^passed(aItalic) && aItalic) then
             begin
                 pg.SetFontAndSize(fontBoldItalic,fontSizeFloat)
@@ -8945,7 +8956,7 @@ pdftk_ok,       close tmpchn
                 pg.SetFontAndSize(fontItalic,fontSizeFloat)
                 this.CurrentFont = fontBoldItalic.GetFontName()
             end
-.endc
+            .endc
         endmethod
 
     endclass

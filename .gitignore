@@ -57,3 +57,4 @@
 # Ignore specific folders
 
 Documentation/Web Help
+*.dep

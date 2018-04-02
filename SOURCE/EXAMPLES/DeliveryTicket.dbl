@@ -379,9 +379,13 @@ proc
     ;;Create an instance of the PdfFile class
     pdf = new PdfFile(,,,,,,,,,,,"OUTPUT:")
 
+    .ifdef D_GUI
     ;;Name the file that defines the background content (the "pre-printed" form)
     if (!pdf.SetBackgroundFile("OUTPUT:DeliveryTicketForm.pdf",errmsg))
         throw new Exception(errmsg)
+    .else
+    throw new Exception("This example is only supported on Windows!")
+    .endc
 
     ;;Override default name to suppress date/time prefix, and and ask reader
     ;;apps to display the file in full page view.
