@@ -2852,11 +2852,11 @@ eof,
         ;;; </summary>
         ;;; <returns>Returns true if the PDF file was saved and launched.</returns>
         public method Preview, boolean
-            optional out aErrorMessage, a
+            optional out aErrorMessage, string
             endparams
             record
                 ok,             boolean
-                errorMessage,   a256
+                errorMessage,   string
             endrecord
         proc
 .ifndef D_GUI
@@ -2947,15 +2947,15 @@ eof,
         ;;; <param name="aErrorMessage">Optional returned error message.</param>
         ;;; <returns></returns>
         public method Print, boolean
-            optional in  aPrinterName,  a
-            optional out aErrorMessage, a
+            optional in  aPrinterName,  string
+            optional out aErrorMessage, string
             endparams
             .define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
             record
                 ok,             boolean
                 pdfFileSpec,    string
                 command,        string
-                errorMessage,   a256
+                errorMessage,   string
             endrecord
         proc
 
@@ -2974,7 +2974,7 @@ eof,
                 begin
                     if (fileExists(D_SUMATRA_EXE)) then
                     begin
-                        if (^passed(aPrinterName) && aPrinterName) then
+                        if (^passed(aPrinterName) && aPrinterName.Length > 0) then
                             command = D_SUMATRA_EXE + ' -print-to "' + %atrim(aPrinterName) + '" -silent -exit-on-print ' + '"' + pdfFileSpec + '"'
                         else
                             command = D_SUMATRA_EXE + ' -print-to-default -silent -exit-on-print ' + '"' + pdfFileSpec + '"'
@@ -3095,14 +3095,14 @@ eof,
         ;;; <param name="aErrorMessage">Optional returned error message.</param>
         ;;; <returns></returns>
         public method PrintDialog, boolean
-            optional out aErrorMessage, a
+            optional out aErrorMessage, string
             endparams
             .define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
             record
                 ok,             boolean
                 pdfFileSpec,    string
                 command,        string
-                errorMessage,   a256
+                errorMessage,   string
             endrecord
         proc
 .ifndef D_GUI
@@ -3176,7 +3176,7 @@ eof,
         ;;; </summary>
         ;;; <returns>Returns true if the PDF file was successfully saved.</returns>
         public method Save, boolean
-            optional out aErrorMessage, a
+            optional out aErrorMessage, string
             endparams
             record
                 ok, boolean
