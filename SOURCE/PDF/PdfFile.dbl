@@ -542,7 +542,9 @@ namespace SynPSG.PDF
             .else
             if (^passed(aExtraRowSpacing) && (aExtraRowSpacing > 0))
             .endc
-            this.ExtraRowSpacing = aExtraRowSpacing
+            begin
+                this.ExtraRowSpacing = aExtraRowSpacing
+            end
 
             ;;Calculate page dimensions in rows/columns based on current font
             this.RowHeight = fontSizeFloat + this.ExtraRowSpacing
@@ -1104,7 +1106,134 @@ namespace SynPSG.PDF
             ;;If we changed the stroke color then revert back to the default color
             .ifdef DBLNET
             if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
+                .else
+            if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
+            .endc
+            resetStrokeColor()
+
+            ;;If we changed the fill color then revert back to the default color
+            .ifdef DBLNET
+            if ((aFillColor != PdfColor.DefaultColor) && (aFillColor!= this.StrokeColor))
+                .else
+            if (^passed(aFillColor) && (aFillColor != this.FillColor))
+            .endc
+            resetFillColor()
+
+        endmethod
+
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Draws a rounded box defined by two X/Y points on the page and a curve radius.
+        ;;; The current position is NOT updated by this method.
+        ;;; </summary>
+        ;;; <param name="aFromX">X coordinate of one corner of the box.</param>
+        ;;; <param name="aFromY">Y coordinate of one corner of the box.</param>
+        ;;; <param name="aToX">X coordinate of the opposite corner of the box.</param>
+        ;;; <param name="aToY">Y coordinate of the opposite corner of the box.</param>
+        ;;; <param name="aWidth">Line width in pixels. Default is 1.</param>
+        ;;; <param name="aStrokeColor">Custom stroke color.</param>
+        ;;; <param name="aFill">Should the box be filled?</param>
+        ;;; <param name="aFillColor">Custom fill color.</param>
+        public method DrawRoundedBox, void
+            required in aFromX,         float
+            required in aFromY,         float
+            required in aToX,           float
+            required in aToY,           float
+            required in aRadius,        float
+            .ifdef DBLNET
+            default  in aWidth,         float,      0
+            default  in aStrokeColor,   PdfColor,   PdfColor.DefaultColor
+            default  in aFill,          boolean,    false
+            default  in aFillColor,     PdfColor,   PdfColor.DefaultColor
             .else
+            optional in aWidth,         float
+            optional in aStrokeColor,   PdfColor
+            optional in aFill,          boolean
+            optional in aFillColor,     PdfColor
+            .endc
+            endparams
+            record
+                penWidth,   float
+            endrecord
+        proc
+            ;;If we don't have a first page then add one
+            if (this.PageNumber==0)
+                NewPage()
+
+            ;;Set the line width
+            .ifdef DBLNET
+            if (aWidth>0) then
+                .else
+            if (^passed(aWidth) && (aWidth>0)) then
+            .endc
+            penWidth = aWidth
+            else
+            penWidth = 1
+
+            pg.SetLineWidth(penWidth)
+
+            ;;If we were passed a specific stroke color then use it
+            .ifdef DBLNET
+            if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
+                .else
+            if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
+            .endc
+            setCustomStrokeColor(aStrokeColor)
+
+            ;;If we were passed a specific fill color then use it
+            .ifdef DBLNET
+            if ((aFillColor != PdfColor.DefaultColor) && (aFillColor!= this.StrokeColor))
+                .else
+            if (^passed(aFillColor) && (aFillColor != this.FillColor))
+            .endc
+            setCustomFillColor(aFillColor)
+
+            ;;-----------------------------------------------------------------------------
+
+            ;;Top line (left to right)
+            pg.MoveTo(aFromX+aRadius,aFromY)
+            pg.LineTo(aToX-aRadius,aFromY)
+
+            ;;Top-right arc
+            pg.Arc(aToX-aRadius,aFromY-aRadius,aRadius,0,90)
+
+            ;;Right side line (top to bottom)
+            pg.LineTo(aToX,aToY+aRadius)
+
+            ;;Bottom-right arc
+            pg.Arc(aToX-aRadius,aToY+aRadius,aRadius,90,180)
+
+            ;;Bottom line (right to left)
+            pg.LineTo(aFromX+aRadius,aToY)
+
+            ;;Draw the bottom-left arc
+            pg.Arc(aFromX+aRadius,aToY+aRadius,aRadius,180,270)
+
+            ;;Left side line (bottom to top)
+            pg.LineTo(aFromX,aFromY-aRadius)
+
+            ;;Top-left arc
+            pg.Arc(aFromX+aRadius,aFromY-aRadius,aRadius,270,360)
+
+            ;;Draw it
+            .ifdef DBLNET
+            if (aFill) then
+                pg.FillStroke()
+            else
+                pg.Stroke()
+            .else
+            if (^passed(aFill) && aFill) then
+                pg.FillStroke()
+            else
+                pg.Stroke()
+            .endc
+
+            ;;-----------------------------------------------------------------------------
+
+            ;;If we changed the stroke color then revert back to the default color
+            .ifdef DBLNET
+            if ((aStrokeColor!=PdfColor.DefaultColor) && (aStrokeColor != this.StrokeColor))
+                .else
             if (^passed(aStrokeColor) && (aStrokeColor != this.StrokeColor))
             .endc
             resetStrokeColor()
@@ -1402,6 +1531,122 @@ namespace SynPSG.PDF
             if (^passed(aFillColor) && (aFillColor != this.FillColor))
             .endc
             resetFillColor()
+
+        endmethod
+
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Loads a JPEG or PNG image and returns the HARU PDF Image object.
+        ;;; </summary>
+        ;;; <param name="aFileSpec">Full or relative file spec of image to load (.jpg, .jpeg or .png).</param>
+        ;;; <returns>Returns true on success, false if an error occurs.</returns>
+        public method LoadImage,        boolean
+            required in  aFileSpec,     string
+            required out aImage,        @HPdfImage
+            optional out aErrorMessage, a
+            endparams
+            record
+                ok,             boolean
+                fileSpec,       string
+                errorMessage,   string
+            endrecord
+        proc
+            ok = true
+            errorMessage = ""
+
+            ;;Remove spaces and expand logical names
+            fileSpec = expandLogicalInFileSpec(aFileSpec.Trim())
+
+            if (fileExists(fileSpec)) then
+            begin
+                try
+                begin
+                    if (fileSpec.ToLower().EndsWith(".jpg") || fileSpec.ToLower().EndsWith(".jpeg")) then
+                        aImage = doc.LoadJpegImageFromFile(fileSpec)
+                    else if (fileSpec.ToLower().EndsWith(".png")) then
+                        aImage = doc.LoadPngImageFromFile(fileSpec)
+                    else
+                    begin
+                        errorMessage = "Unsupported image format!"
+                        ok = false
+                    end
+                end
+                catch (ex)
+                begin
+                    ;;Most likely cause of a crash here is a bad image format,
+                    ;;especially on non-windows systems if an image file has
+                    ;;not been transferred there in binary mode. On VMS image
+                    ;;files should show up as:
+                    ;;  File organization: Sequential
+                    ;;  Record format:     Fixed length 512 byte records
+                    errorMessage = ex.Message
+                    ok = false
+                end
+                endtry
+            end
+            else
+            begin
+                errorMessage = "Image file not found!"
+                ok = false
+            end
+
+            mreturn ok
+
+        endmethod
+
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
+        ;;; Displays a previously loaded HARU image object at a specified position
+        ;;; on the current page. Note that if you specify height and width then
+        ;;; you should try to maintain the same ratio as the dimensions of the
+        ;;; actual image, otherwise the image will be stretched or shrunk in
+        ;;; order to achieve the dimensions that you specify.
+        ;;; </summary>
+        ;;; <param name="aImage">Previously loaded HARU image object.</param>
+        ;;; <param name="aX">X position of bottom left corner of image on the current page.</param>
+        ;;; <param name="aY">Y position of bottom left corner of image on the current page.</param>
+        ;;; <param name="aWidth">Width to occupy in device independent pixels (defaults to the pixel width of the image).</param>
+        ;;; <param name="aWidth">Height to occupy in device independent pixels (defaults to the pixel height of the image).</param>
+        public method DrawImage,        void
+            required in  aImage,        @HPdfImage
+            required in  aX,            float
+            required in  aY,            float
+            .ifdef DBLNET
+            default  in  aWidth,        float,      0
+            default  in  aHeight,       float,      0
+            .else
+            optional in  aWidth,        float
+            optional in  aHeight,       float
+            .endc
+            endparams
+            record
+                width,          float
+                height,         float
+            endrecord
+        proc
+            ;;If we don't have a first page then add one
+            if (this.PageNumber==0)
+                NewPage()
+
+            .ifdef DBLNET
+            if (aWidth>0) then
+                .else
+            if (^passed(aWidth) && (aWidth>0)) then
+            .endc
+            width = aWidth
+            else
+            width = aImage.GetWidth()
+
+            .ifdef DBLNET
+            if (aHeight>0) then
+                .else
+            if (^passed(aHeight) && (aHeight>0)) then
+            .endc
+            height = aHeight
+            else
+            height = aImage.GetHeight()
+
+            pg.DrawImage(aImage,aX,aY,width,height)
 
         endmethod
 
@@ -2339,6 +2584,8 @@ namespace SynPSG.PDF
         ;;; <param name="aColor">Display the text in a specific color.</param>
         ;;; <param name="aFontName">Display text in a specific font.</param>
         ;;; <param name="aFontSize">Display text in a specific font size.</param>
+        ;;; <param name="aUnderline">Underline the text.</param>
+        ;;; <param name="aRotation">Rotate the text by this many degrees.</param>
         public method DrawText,    void
             required in aText,      string
             required in aX,         float
@@ -2348,17 +2595,21 @@ namespace SynPSG.PDF
             default  in aFontName,  string,     ^null
             default  in aFontSize,  int,        0
             default  in aUnderline, boolean,    false
+            default  in aRotation,  int,        0
             .else
             optional in aColor,     PdfColor
             optional in aFontName,  string
             optional in aFontSize,  int
             optional in aUnderline, boolean
+            optional in aRotation,  int
             .endc
             endparams
         proc
             ;;If we don't have a first page then add one
             if (this.PageNumber==0)
+            begin
                 NewPage()
+            end
 
             .ifdef DBLNET
             if ((aColor!=PdfColor.DefaultColor) && (aColor != mFillColor))
@@ -2384,24 +2635,76 @@ namespace SynPSG.PDF
                 .else
                 if (^passed(aFontName) && (aFontName!=^null)) then
                 .endc
-                tmpFontName = aFontName
+                begin
+                    tmpFontName = aFontName
+                end
                 else
-                tmpFontName = fontNormal.GetFontName()
+                begin
+                    tmpFontName = fontNormal.GetFontName()
+                end
 
                 .ifdef DBLNET
                 if (aFontSize>0) then
                 .else
                 if (^passed(aFontSize) && (aFontSize>0)) then
                 .endc
-                tmpFontSize = aFontSize
+                begin
+                    tmpFontSize = aFontSize
+                end
                 else
-                tmpFontSize = mFontSize
+                begin
+                    tmpFontSize = mFontSize
+                end
 
                 SelectFont(tmpFontName,tmpFontSize)
             end
 
             pg.BeginText()
-            pg.MoveTextPos(aX,aY)
+
+            .ifdef DBLNET
+            if (aRotation!=0) then
+            begin
+                ;;Calculate the radian angle
+                data radianAngle, float, (aRotation/180.0) * Math.PI
+                ;;Setup the text rotation
+                pg.SetTextMatrix((float)Math.Cos(radianAngle), (float)Math.Sin(radianAngle), -(float)Math.Sin(radianAngle), (float)Math.Cos(radianAngle),aX,aY)
+            end
+            else
+            begin
+                pg.MoveTextPos(aX,aY)
+            end
+            .else
+            if (^passed(aRotation) && (aRotation!=0)) then
+            begin
+                data radianAngle,    float
+                data radianAngleSIN, float
+                data radianAngleCOS, float
+
+                data fpRadianAngle,    a8
+                data fpRadianAngleSIN, a8
+                data fpRadianAngleCOS, a8
+
+                ;;Calculate the radian angle
+                radianAngle = (aRotation/180.0) * 3.14159265358979
+                xcall fp_from_num(fpRadianAngle,radianAngle)
+
+                ;;Calculate the sine of the radian angle
+                xcall fp_sin(fpRadianAngleSIN,fpRadianAngle)
+                xcall fp_to_num(fpRadianAngleSIN,radianAngleSIN)
+
+                ;;Calculate the cosine of the radian angle
+                xcall fp_cos(fpRadianAngleCOS,fpRadianAngle)
+                xcall fp_to_num(fpRadianAngleCOS,radianAngleCOS)
+
+                ;;Setup the text rotation
+                pg.SetTextMatrix(radianAngleCOS,radianAngleSIN,-radianAngleSIN,radianAngleCOS,aX,aY)
+            end
+            else
+            begin
+                pg.MoveTextPos(aX,aY)
+            end
+            .endc
+            ;;Draw the text
             pg.ShowText(aText)
             pg.EndText()
 
@@ -2421,7 +2724,9 @@ namespace SynPSG.PDF
             .else
             if ((^passed(aFontName) && (aFontName!=^null)) || (^passed(aFontSize) && (aFontSize>0)))
             .endc
-            ResetFont()
+            begin
+                ResetFont()
+            end
 
             .ifdef DBLNET
             if ((aColor!=PdfColor.DefaultColor) && (aColor != mFillColor))
@@ -3094,6 +3399,73 @@ namespace SynPSG.PDF
 
         ;;---------------------------------------------------------------------
         ;;; <summary>
+        ;;; Print a PDF file directly from disk, after diplaying a printer selection dialog
+        ;;; </summary>
+        ;;; <param name="aPPdfFileName">Name of PDF file to be printed.</param>
+        ;;; <param name="aErrorMessage">Optional returned error message.</param>
+        ;;; <returns></returns>
+        public static method PrintFileDialog, boolean
+            required in  aPdfFileSpec,  a
+            optional out aErrorMessage, a
+            endparams
+
+            .define D_SUMATRA_EXE "C:\Program Files (x86)\SumatraPDF\SumatraPDF.exe"
+
+            record
+                ok,             boolean
+                pdfFileSpec,    string
+                command,        string
+                errorMessage,   string
+            endrecord
+
+        proc
+
+            .ifndef D_GUI
+            errorMessage = "PrintFileDialog is not supported on this system!"
+            ok = false
+            .else
+            errorMessage = ""
+
+            pdfFileSpec = expandLogicalInFileSpec(aPdfFileSpec)
+
+            if (fileExists(pdfFileSpec)) then
+            begin
+                if (fileExists(D_SUMATRA_EXE)) then
+                begin
+                    command = D_SUMATRA_EXE + '  -print-dialog -silent -exit-on-print ' + '"' + pdfFileSpec + '"'
+
+                    try
+                    begin
+                        xcall spawn(command,D_NOCONSOLE|D_NOWINDOW)
+                        ok = true
+                    end
+                    catch (ex)
+                    begin
+                        errorMessage = "Failed to launch SumatraPDF. Error was " + ex.Message
+                        ok = false
+                    end
+                    endtry
+                end
+                else
+                begin
+                    errorMessage = "SumartaPDF was not found!"
+                    ok = false
+                end
+            end
+            else
+            begin
+                errorMessage = "PDF file " + pdfFileSpec + " not found!"
+                ok = false
+            end
+            .endc
+            if (^passed(aErrorMessage))
+                aErrorMessage = errorMessage
+
+            mreturn ok
+
+        endmethod
+        ;;---------------------------------------------------------------------
+        ;;; <summary>
         ;;; Show a SumartsPDF Print Dialog to print the PDF document.
         ;;; </summary>
         ;;; <returns></returns>
@@ -3188,10 +3560,14 @@ namespace SynPSG.PDF
             ;;Set the name of the file to save
             .ifdef D_GUI
             if (this.BackgroundFile.Length!=0) then
+            begin
                 outFileName = this.FileLocation + "TEMP_" + %datetime + "_" + this.FileName
+            end
             else
-                .endc
-            outFileName = this.FileLocation + this.FileName
+            .endc
+            begin
+                outFileName = this.FileLocation + this.FileName
+            end
 
             ;;Create the PDF file on disk
             try
