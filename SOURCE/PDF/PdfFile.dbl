@@ -55,7 +55,6 @@
 ;;*****************************************************************************
 
 import HPdf
-import System
 import System.Collections
 
 namespace SynPSG.PDF

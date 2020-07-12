@@ -1,6 +1,5 @@
 
-import System
-import SynPSG.PDF
+import SynPsg.PDF
 
 subroutine DeliveryTicket
     record

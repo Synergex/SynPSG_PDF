@@ -1,4 +1,4 @@
-import SynPSG.PDF
+import SynPsg.PDF
 
 subroutine MultiSeriesBarChart
     record 

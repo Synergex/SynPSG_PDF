@@ -1,5 +1,5 @@
 
-import SynPSG.PDF
+import SynPsg.PDF
 
 subroutine AutoItems
     record

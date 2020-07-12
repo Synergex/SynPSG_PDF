@@ -6,9 +6,8 @@
 
 .ifndef NO_HPDF
 
-import System
 .ifdef DBLNET
-import System.Runtime.InteropServices
+SynPsg.System.Runtime.InteropServices
 .endc
 
 .ifdef OS_VMS
