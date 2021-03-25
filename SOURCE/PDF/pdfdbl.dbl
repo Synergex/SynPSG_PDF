@@ -6,8 +6,9 @@
 
 .ifndef NO_HPDF
 
+import System
 .ifdef DBLNET
-SynPsg.System.Runtime.InteropServices
+import System.Runtime.InteropServices
 .endc
 
 .ifdef OS_VMS
@@ -21,6 +22,7 @@ SynPsg.System.Runtime.InteropServices
 .endc
 .else
 .if D_ADDRSIZE .eq. 8
+;TODO needs runtime not compile time test of sizeof INTPTR on .net
 .define HARUPDF_LIB	"libhpdf64.dll"
 .else
 .define HARUPDF_LIB	"libhpdf.dll"
@@ -390,7 +392,7 @@ namespace HPdf
 .ifdef DBLNET
 	    s = "error-code=0x" + %hex(error_no) + " detail-code=" + %string(detail_no)
 .else
-	    if (^passed(detail_no)) then
+	    if detail_no then
 		s = "error-code=0x" + %hex(error_no) + " detail-code=" + %string(detail_no)
 	    else
 		s = "error-code=0x" + %hex(error_no)
