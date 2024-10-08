@@ -17,7 +17,7 @@ proc
     pdf.PageLayout = PdfPageLayout.Single
 
     ;;Open a sequential file
-    open(ch=0,i:s,"DBLDIR:REL_DBL.TXT")
+    open(ch=0,i:s,"MEDIA:LibreBarcode39Extended-Regular.txt")
 
     ;;Read through the file and add the content to the PDF
     repeat
