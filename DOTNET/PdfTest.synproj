@@ -74,6 +74,9 @@
     <Compile Include="..\SOURCE\EXAMPLES\AutoItems.dbl">
       <Link>AutoItems.dbl</Link>
     </Compile>
+    <Compile Include="..\SOURCE\EXAMPLES\BarcodeFontTest.dbl">
+      <Link>BarcodeFontTest.dbl</Link>
+    </Compile>
     <Compile Include="..\SOURCE\EXAMPLES\BlueAndRedBox.dbl">
       <Link>BlueAndRedBox.dbl</Link>
     </Compile>
