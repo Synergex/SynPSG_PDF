@@ -25,10 +25,10 @@ proc
 
     pdf.SelectFont(code39,48)
     pdf.DrawTextRC("*12345678*)",9,1)
+    pdf.DrawText("*12345678*",500,100)
 
     pdf.SelectFont("Courier",10)
     pdf.DrawTextRC("Value 12345678",10,15)
-
     
     ;;Save the document and show the results.
     pdf.Preview()
