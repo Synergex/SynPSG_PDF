@@ -1,0 +1,271 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+<title>Page Headers and Footers</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
+<meta name="generator" content="HelpSmith 10.1 (Build 24.1202)" />
+<link type="text/css" rel="stylesheet" href="../css/tree.css?b1fab730" />
+<link type="text/css" rel="stylesheet" href="../css/topics.css?f0fe7ebf" />
+<link type="text/css" rel="stylesheet" href="../css/apr.css?f0fe7ebf" />
+<link type="text/css" rel="stylesheet" href="../css/app.css?f0fe7ebf" />
+<script src="../js/jquery-3.7.1.min.js"></script>
+<script src="../js/tree.min.js?b1fab730"></script>
+<script src="../js/tabs.min.js?b1fab730"></script>
+<script src="../js/jquery.cookie.js?b1fab730"></script>
+<script src="../js/headroom.min.js?b1fab730"></script>
+<script src="../js/app.min.js?b1fab730"></script>
+<script src="../js/search.min.js?b1fab730"></script>
+<!-- Web Help Topic -->
+<script>
+doAppStart();
+</script>
+</head>
+<body>
+	<header>
+		<div id="hs-header-d">
+			<div id="hs-content-h">
+  <div id="hs-wrapper-h">
+    <span id="hs-title-h">Synergy PDF API</span>
+  </div>
+</div>
+		</div>
+		<div id="hs-header-m">
+			<div id="hs-content-m">
+  <div id="hs-area-left">
+    <div id="hs-menu" class="hs-menu-toggle">
+      <span class="line1"></span>
+      <span class="line2"></span>
+      <span class="line3"></span>
+    </div>
+  </div>
+  <div id="hs-area-center">
+    <span id="hs-title-m">Synergy PDF API</span>
+  </div>
+  <div id="hs-area-right"></div>
+</div>
+		</div>
+	</header>
+	<nav id="hs-nav">
+		<div id="hs-nav-content">
+			<ul id="nav-tabs" role="tablist">
+				<li class="hs-toc-tab" role="tab">
+					<a href="#hs-toc-panel">Contents</a>
+				</li>
+				
+				<li class="hs-search-tab" role="tab">
+					<a href="#hs-search-panel">Search</a>
+				</li>
+			</ul>
+			<div id="tabs-panels">
+				<div class="hstabs-panel" id="hs-toc-panel" role="tabpanel">
+					<div id="toc-tree" class="hs-tree"></div>
+				</div>
+				
+				<div class="hstabs-panel" id="hs-search-panel" role="tabpanel">
+					<div id="hs-search-content">
+						<div id="search-form">
+							<label for="squery" class="sfield-title text-label">Type in the keyword(s) to find:</label>
+							<div id="search-box">
+								<div class="search-container">
+									<input type="text" id="squery" autocomplete="off">
+								</div>
+								<div class="search-btn" title="Search"></div>
+							</div>
+							<div id="options-box">
+								<span class="text-label">Match:</span>
+								<input type="radio" id="anywords" name="match" value="anywords" checked="checked"><label for="anywords" class="text-label">Any words</label>
+								<input type="radio" id="phrase" name="match" value="phrase"><label for="phrase" class="text-label">Phrase</label>
+							</div>
+						</div>
+						<div id="search-result"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</nav>
+		<div id="hs-content">
+			<main>
+				<article>
+					<div id="topic-content">
+  <div id="content-box" class="page0">
+    <h1 class="hd0"><span class="ts0">Page Headers and Footers</span></h1>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The </span><a href="idh-topic30.htm" class="hs0">PdfFile</a><span class="ts1">&nbsp;class supports optional page header and footer regions which are areas at the the top and/or bottom of each page that are reserved for text that will appear on every page. The header and/or footer text can be defined once and is then automatically added to each page.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Page headers and footers are defined in terms of the number of rows that each will occupy at the top and/or bottom of each page, and these rows are effectively reserved from the number of rows available on the page; essentially reducing the number of rows allocated to the page body.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Page headers are printed below the top margin and above the main body of the page. Page footers are printed below the main body of the page and above the bottom margin.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">No additional blank space is allocated between the bottom of the page headers and the top of the page body, or the bottom of the page body and the top of the page footers. If you require a physical separation between the page body and the page headers and footers then allocate one or more additional header or footer lines and leave them blank.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="enable"></a><span class="ts2">Enabling Page Headers and Footers</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Page headers and footers are allocated by passing optional parameters to the </span><a href="idh-topic30.htm#Constructors" class="hs0">constructor</a><span class="ts1">&nbsp;method of the </span><a href="idh-topic30.htm" class="hs0">PdfFile</a><span class="ts1">&nbsp;class. For example:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">import SynPSG.PDF</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">main PdfTest</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp; record</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pdf,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @PdfFile</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerRows, int</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; footerRows, int</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp; endrecord</span></p>
+    <p class="ps2"><span class="ts7">proc</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp; headerRows = 2</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp; footerRows = 2</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp; </span><span class="ts8">pdf = new PdfFile(,,,,,headerRows,footerRows)</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp; </span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp; </span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp; pdf = ^null</span></p>
+    <p class="ps2"><span class="ts7">endmain</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="headers"></a><span class="ts2">Defining Page Header Text</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">To define the text to be printed in the reserved page header lines you load the text into the </span><a href="idh-topic30.htm#HeaderText_property" class="hs0">HeaderText</a><span class="ts1">&nbsp;property. This property is an array of string and is initialized to the appropriate number of elements when you call the constructor method (above). For example:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">pdf.HeaderText[1] = &quot;Customer Phone List&quot;</span></p>
+    <p class="ps2"><span class="ts7">pdf.HeaderText[2] = &quot;&quot;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">When setting the page header text you should ensure that the text that you specify does not exceed the width of the page, which you can determine by referring to the value of the </span><a href="idh-topic30.htm#Columns_property" class="hs0">Columns</a><span class="ts1">&nbsp;property. If you specified that a minimum number of columns must be available then you can rely on the fact that at least that number of columns will be available.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">If you want one of the header lines to be blank it is not necessary to set it to an empty string like in the example above. This code was written to show how to address the various page header lines by their element number.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="footers"></a><span class="ts2">Defining Page Footer Text</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">To define the text to be printed in the reserved page footer lines you load the text into the </span><a href="idh-topic30.htm#FooterText_property" class="hs0">FooterText</a><span class="ts1">&nbsp;property. This property is an array of string and is initialized to the appropriate number of elements when you call the constructor method (above). For example:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">pdf.FooterText[1] = &quot;&quot;</span></p>
+    <p class="ps2"><span class="ts7">pdf.FooterText[2] = &quot;That's the end of this page, get ready for the next one...&quot;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">When setting the page footer text you should ensure that the text that you specify does not exceed the width of the page, which you can determine by referring to the value of the </span><a href="idh-topic30.htm#Columns_property" class="hs0">Columns</a><span class="ts1">&nbsp;property. If you specified that a minimum number of columns must be available then you can rely on the fact that at least that number of columns will be available.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">If you want one of the footer lines to be blank it is not necessary to set it to an empty string like in the example above. This code was written to show how to address the various page header lines by their element number.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="replacement_tokens"></a><span class="ts2">Using Replacement Tokens</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">There are several replacement tokens that can be used within the text of page header and/or footer lines. These tokens cause some value to be printed in place of the token. The tokens are:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div>
+      <table class="tbl1">
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">DD/MM/YYYY</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">Prints the current date in DD/MM/YYYY format</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">[FILE]</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">Prints the name of the PDF file being created.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">HH:MM</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">Prints the current time in HH:MM format.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">HH:MM:SS</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">Prints the current time in HH:MM:SS format.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">[LINE]</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">Prints a horizontal line across the current header or footer line. The line will be 1 device independent pixel thick and will be drawn in the current </span><a href="idh-topic30.htm#StrokeColor_property" class="hs0">StrokeColor</a><span class="ts1">.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">[LOCATION]</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">Prints the location where the PDF file will be saved.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">MM/DD/YYYY</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">Prints the current date in MM/DD/YYYY format.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">[PAGE#]</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">Prints the current page number.</span></p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This is an example of using replacement tokens:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">pdf.HeaderText[1] = &quot;Customer Phone List&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Printed MM/DD/YYYY at HH:MM&quot;</span></p>
+    <p class="ps2"><span class="ts7">pdf.HeaderText[2] = &quot;[LINE]&quot;</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">pdf.FooterText[1] = &quot;[LINE]&quot;</span></p>
+    <p class="ps2"><span class="ts7">pdf.FooterText[2] = &quot;Page [PAGE#]&quot;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Changing Header or Footer Text</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Header and footer text is added to a page at the very end of the processing of the page, at the time that the </span><a href="idh-topic30.htm#NewPage_method" class="hs0">NewPage</a><span class="ts1">&nbsp;method is called to add the next page. This means that you may change the page </span><a href="idh-topic30.htm#HeaderText_property" class="hs0">HeaderText</a><span class="ts1">&nbsp;or </span><a href="idh-topic30.htm#Footertext_property" class="hs0">FooterText</a><span class="ts1">&nbsp;at any time until the </span><a href="idh-topic30.htm#NewPage_method" class="hs0">NewPage</a><span class="ts1">&nbsp;method is called, and your changes will take effect for the current page and all subsequent pages. It is not possible to change the header or footer text for previously completed pages and it is not possible to change the number of header or footer rows being used.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="alternate_header_and_footers"></a><span class="ts2">Alternate Headers and Footers</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">A PDF document can contain pages that are both portrait and landscape orientations. Clearly this could present a problem when using header or footer lines, because the width of the text in header or footer lines may be appropriate for the default orientation, but may be too narrow (or too wide) for pages in the alternate orientation. To address this the </span><a href="idh-topic30.htm" class="hs0">PdfFile</a><span class="ts1">&nbsp;class allows you to define alternate header and footer text for pages that may be added in the alternate orientation. To do this you must set the </span><a href="idh-topic30.htm#UseAlternateHeaders_property" class="hs0">UseAlternateHeaders</a><span class="ts1">&nbsp;to true and then populate </span><a href="idh-topic30.htm#HeaderTextAlternate_property" class="hs0">HeaderTextAlternate</a><span class="ts1">, or set </span><a href="idh-topic30.htm#UseAlternateFooters_property" class="hs0">UseAlternateFooters</a><span class="ts1">&nbsp;to true and then populate </span><a href="idh-topic30.htm#FooterTextAlternate_property" class="hs0">FooterTextAlternate</a><span class="ts1">. For example:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">headerRows = 2</span></p>
+    <p class="ps2"><span class="ts7">footerRows = 2</span></p>
+    <p class="ps2"><span class="ts7">pdf = new PdfFile(,,,,,headerRows,footerRows)</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">pdf.HeaderText[1] = &quot;Customer Phone List&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Printed MM/DD/YYYY at HH:MM&quot;</span></p>
+    <p class="ps2"><span class="ts7">pdf.HeaderText[2] = &quot;[LINE]&quot;</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">pdf.FooterText[1] = &quot;[LINE]&quot;</span></p>
+    <p class="ps2"><span class="ts7">pdf.FooterText[2] = &quot;Page [PAGE#]&quot;</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">pdf.UseAlternateHeaders = true</span></p>
+    <p class="ps2"><span class="ts7">pdf.HeaderTextAlternate[1] = &quot;Customer Phone List&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Printed MM/DD/YYYY at HH:MM&quot;</span></p>
+    <p class="ps2"><span class="ts7">pdf.HeaderTextAlternate[2] = &quot;[LINE]&quot;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">In this example the regular page headers would be used for pages in the default orientation (portrait in this case) and the alternate page headers, containing wider text, would be used for pages using the alternate (landscape) orientation.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Continue reading with </span><a href="idh-topic130.htm" class="hs0">Working With Text</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+  </div>
+</div>
+				</article>
+			</main>
+		</div>
+		<footer>
+			<div id="hs-footer"><div id="hs-content-f">
+  <div id="hs-wrapper-f">
+    <span id="hs-title-f">Copyright &copy; 2015 Synergex International, Inc.</span>
+  </div>
+</div></div>
+		</footer>
+</body>
+</html>

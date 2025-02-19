@@ -1,0 +1,2057 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+<title>PdfFile Class</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
+<meta name="generator" content="HelpSmith 10.1 (Build 24.1202)" />
+<link type="text/css" rel="stylesheet" href="../css/tree.css?b1fab730" />
+<link type="text/css" rel="stylesheet" href="../css/topics.css?f0fe7ebf" />
+<link type="text/css" rel="stylesheet" href="../css/apr.css?f0fe7ebf" />
+<link type="text/css" rel="stylesheet" href="../css/app.css?f0fe7ebf" />
+<script src="../js/jquery-3.7.1.min.js"></script>
+<script src="../js/tree.min.js?b1fab730"></script>
+<script src="../js/tabs.min.js?b1fab730"></script>
+<script src="../js/jquery.cookie.js?b1fab730"></script>
+<script src="../js/headroom.min.js?b1fab730"></script>
+<script src="../js/app.min.js?b1fab730"></script>
+<script src="../js/search.min.js?b1fab730"></script>
+<!-- Web Help Topic -->
+<script>
+doAppStart();
+</script>
+</head>
+<body>
+	<header>
+		<div id="hs-header-d">
+			<div id="hs-content-h">
+  <div id="hs-wrapper-h">
+    <span id="hs-title-h">Synergy PDF API</span>
+  </div>
+</div>
+		</div>
+		<div id="hs-header-m">
+			<div id="hs-content-m">
+  <div id="hs-area-left">
+    <div id="hs-menu" class="hs-menu-toggle">
+      <span class="line1"></span>
+      <span class="line2"></span>
+      <span class="line3"></span>
+    </div>
+  </div>
+  <div id="hs-area-center">
+    <span id="hs-title-m">Synergy PDF API</span>
+  </div>
+  <div id="hs-area-right"></div>
+</div>
+		</div>
+	</header>
+	<nav id="hs-nav">
+		<div id="hs-nav-content">
+			<ul id="nav-tabs" role="tablist">
+				<li class="hs-toc-tab" role="tab">
+					<a href="#hs-toc-panel">Contents</a>
+				</li>
+				
+				<li class="hs-search-tab" role="tab">
+					<a href="#hs-search-panel">Search</a>
+				</li>
+			</ul>
+			<div id="tabs-panels">
+				<div class="hstabs-panel" id="hs-toc-panel" role="tabpanel">
+					<div id="toc-tree" class="hs-tree"></div>
+				</div>
+				
+				<div class="hstabs-panel" id="hs-search-panel" role="tabpanel">
+					<div id="hs-search-content">
+						<div id="search-form">
+							<label for="squery" class="sfield-title text-label">Type in the keyword(s) to find:</label>
+							<div id="search-box">
+								<div class="search-container">
+									<input type="text" id="squery" autocomplete="off">
+								</div>
+								<div class="search-btn" title="Search"></div>
+							</div>
+							<div id="options-box">
+								<span class="text-label">Match:</span>
+								<input type="radio" id="anywords" name="match" value="anywords" checked="checked"><label for="anywords" class="text-label">Any words</label>
+								<input type="radio" id="phrase" name="match" value="phrase"><label for="phrase" class="text-label">Phrase</label>
+							</div>
+						</div>
+						<div id="search-result"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</nav>
+		<div id="hs-content">
+			<main>
+				<article>
+					<div id="topic-content">
+  <div id="content-box" class="page0">
+    <h1 class="hd0"><span class="ts0">PdfFile Class</span></h1>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Provides methods and properties that can be manipulated in order to create, view and save a PDF file.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline0" />
+    </div>
+    <p class="ps1"><a id="Inheritance"></a><span class="ts2">Inheritance Hierarchy</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">System.Object</span></p>
+    <p class="ps2"><span class="ts1">SynPSG.PDF.PdfFile</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts4">Namespace:</span><span class="ts1">&nbsp;SynPSG.PDF</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline0" />
+    </div>
+    <p class="ps1"><a id="Syntax"></a><span class="ts2">Syntax</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public class PdfFile</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The PdfFile class exposes the following members:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline0" />
+    </div>
+    <p class="ps1"><a id="Constructors"></a><span class="ts2">Constructors</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">The PdfFile class has two constructor methods, both of which have several optional parameters. One constructor allows a PdfFile to be created from scratch:</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method PdfFile</span></p>
+    <p><span class="ts7">&nbsp;</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aPageSize,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><a href="idh-topic250.htm" class="hs2">PdfPageSize</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aOrientation,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><a href="idh-topic40.htm" class="hs2">PdfOrientation</a></p>
+    <p><span class="ts7">&nbsp;</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aMinimumColumns,&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aMaxFontSize,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aCenterBodyInPage, boolean</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    <p><span class="ts7">&nbsp;</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aLeftMargin,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aTopMargin,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aRightMargin,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aBottomMargin,&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p><span class="ts7">&nbsp;</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aHeaderRows,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFooterRows,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p><span class="ts7">&nbsp;</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFileLocation,&nbsp;&nbsp;&nbsp;&nbsp; string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aPartialFileName,&nbsp; string</span></p>
+    <p><span class="ts7">&nbsp;</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aBackgroundColor,&nbsp; </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p><span class="ts7">&nbsp;</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aExtraRowSpacing,&nbsp; float</span></p>
+    <p><span class="ts7">&nbsp;</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">While the second constructor allows a PDF file to be created by loading the data from an existing text file:</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method PdfFile</span></p>
+    <p><span class="ts7">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">required in aTextFile,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; string</span></p>
+    <p><span class="ts7">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">optional in aPageSize,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PdfPageSize</span></p>
+    <p class="ps2"><span class="ts7">optional in aOrientation,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PdfOrientation</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">optional in aMaxFontSize,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p class="ps2"><span class="ts7">optional in aCenterBodyInPage,&nbsp; boolean</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">optional in aLeftMargin,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p class="ps2"><span class="ts7">optional in aTopMargin,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p class="ps2"><span class="ts7">optional in aRightMargin,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p class="ps2"><span class="ts7">optional in aBottomMargin,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">optional in aFileLocation,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; string</span></p>
+    <p class="ps2"><span class="ts7">optional in aPartialFileName,&nbsp;&nbsp; string</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">optional in aBackgroundColor,&nbsp;&nbsp; PdfColor</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">optional in aExtraRowSpacing,&nbsp;&nbsp; float</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts4">TextFile</span></h3>
+    <h3 class="hd0"><span class="ts1">The name of an existing text file that is to be the source of the data for the PDF file. The file will be opened and read, and the number of columns in the PDF file will be based on the widest record encountered in the text file. You can still pass various other parameters to determine the overall characteristics of the resulting PDF file. When reading the text file, any form feed (ASCII 12) characters that are encountered in the text file will be translated to new page instructions when creating the PDF file.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts4">Page Size</span></h3>
+    <p><span class="ts1">All pages in a PDF document are the same </span><a href="idh-topic210.htm#page_sizes" class="hs0">page size</a><span class="ts1">.</span><span class="ts1">&nbsp;The default page size is LETTER. You can change the page size used in a document by passing a custom page size value to the </span><span class="ts7">aPageSize</span><span class="ts1">&nbsp;parameter. Available page sizes are defined by the </span><a href="idh-topic250.htm" class="hs0">PdfPageSize</a><span class="ts1">&nbsp;enumeration.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts4">Orientation</span></h3>
+    <p><span class="ts1">Pages in a PDF document default to portrait orientation. You can override the default orientation on a page by page basis as you add pages to the document. If you wish to change the default page orientation to landscape then you can do so by passing a value of </span><a href="idh-topic40.htm" class="hs0">PdfOrientation.Landscape</a><span class="ts1">&nbsp;to the </span><span class="ts7">aOrientation</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts4">Margins</span></h3>
+    <p><span class="ts1">The concept of page margins doesn't really exist in PDF files; it is generally left to the software that creates documents to determine if margins are required. For most applications a small margin works well so PdfFile defaults to applying default margins of 0.16&quot; on all four sides of each page; this is about the same as the natural margins on most modern laser and ink-jet printers. If you wish to override the default margins you can do so by passing values to the </span><span class="ts7">aLeftMargin</span><span class="ts1">, </span><span class="ts7">aTopMargin</span><span class="ts1">, </span><span class="ts7">aRightMargin</span><span class="ts1">&nbsp;and </span><span class="ts7">aBottomMargin</span><span class="ts1">&nbsp;parameters. The values that you pass define the width or height of each margin in inches. Page margins only affect operations that use the </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">&nbsp;system, and have no affect on operations that use the </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">&nbsp;system.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts4">Header and Footer Rows</span></h3>
+    <p><span class="ts1">Many reports use the concept of page header and footer rows so the PdfFile class allows you to reserve a number of rows for page header and/or footer information. You do this by passing the number of rows that you wish to reserve to the </span><span class="ts7">aHeaderRows</span><span class="ts1">&nbsp;and/or </span><span class="ts7">aFooterRows</span><span class="ts1">&nbsp;parameters. Headers and footers only affect operations that use the </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">&nbsp;system, and have no affect on operations that use the </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">&nbsp;system. For more information refer to </span><a href="idh-topic190.htm" class="hs0">Page Headers and Footers</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts4">Columns and Font Size</span></h3>
+    <p><span class="ts1">When using the </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">&nbsp;system the page body will by default be divided into 80 columns across. You can override the number of columns by passing a custom value to the </span><span class="ts7">aMinimumColumns</span><span class="ts1">&nbsp;parameter. A font size will then be automatically selected in order to achieve the required number of columns within the page body, taking into account any left and right margins that have been defined.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">If a relatively small number of columns is requested (e.g. 40 columns or less) then a fairly large font size will be selected. If you find that the automatically selected font size is too large for your requirements you can place a cap on the font size selection by passing a custom value to the </span><span class="ts7">aMaxFontSize</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">By default the font size that provides at least the number of columns requested will be selected, the page body will be configured to contain exactly the number of columns were requested, and if there is left over space then the left and right margins will be adjusted so that the page body appears to be centered horizontally in the page. Of course it is possible that the selected font size might actually be able to support slightly more columns that were requested. If you wish to leave the margins exactly as defined and have access to any additional columns that would fit in the page body then you can pass false to the </span><span class="ts7">aCenterBodyInPage</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts4">File Location and Partial Name</span></h3>
+    <p><span class="ts1">The location where the PDF file will be created is defined by the environment variable TEMP. You can override this default location by passing the optional </span><span class="ts7">aFileLocation</span><span class="ts1">&nbsp;parameter. You may pass either a full or relative file specification, or the name of an environment variable that defined the location to be used.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The name of the PDF file that will be created defaults to a time-stamped value of YYYY-MM-DD HH.MM.SS.pdf (e.g. 2015-08-31 11:47.03.pdf). You can customize this default name by passing the optional </span><span class="ts7">aPartialFileName</span><span class="ts1">&nbsp;parameter, any text that you pass will be added to the file name after the date and time stamp and before the file extension. You should pass a small number of descriptive words. For example, if you pass the value &quot;Invoice 0072232&quot; then the final file name would look something like this:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">2015-08-29 12.16.51 Invoice 0072232.pdf</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">The partial file name value that you pass must not contain characters that are not valid in file specifications.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">If you wish to totally customize the file name then you can set the FileName property to your custom file name after calling the constructor method.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts4">Page Background Color</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">By default the background color of pages in a PDF document is white. You can override this by passing an alternate member of the </span><a href="idh-topic50.htm" class="hs0">PdfColor</a><span class="ts1">&nbsp;enumeration to the </span><span class="ts7">aBackgroundColor</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Caution should be used when assigning page background colors because if the document is to be printed then using a non-white background color has the potential to use excessive amounts of printer ink or toner.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts4">Extra Row Spacing</span></h3>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">The </span><span class="ts7">aExtraRowSpacing</span><span class="ts1">&nbsp;parameter can be used to define that an amount of additional space should be added between each row </span><span class="ts1">when using the row/column coordinates system. Specify the amount of additional space in device independent pixels, and that amount of space will be added to the height of each row. The additional space is added below the actual space occupied by the select font size. This setting affects all rows, including header and footer rows. Bear in mind that specifying an amount of extra space between rows is likely to reduce the number of rows available in the page body.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline0" />
+    </div>
+    <p class="ps1"><a id="Properties"></a><span class="ts2">Properties</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div>
+      <table class="tbl0">
+        <tr class="row0">
+          <td class="cell7">
+            <h3 class="hd0"><span class="ts4">Property Name</span></h3>
+          </td>
+          <td class="cell8">
+            <h3 class="hd0"><span class="ts4">Type</span></h3>
+          </td>
+          <td class="cell9">
+            <h3 class="hd0"><span class="ts4">Description</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p><span class="ts1">Author</span></p>
+          </td>
+          <td class="cell11">
+            <p><span class="ts1">string</span></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets or sets the name of the author of the PDF document.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p class="ps1"><a id="AutoItems_property"></a><span class="ts6">AutoItems</span></p>
+          </td>
+          <td class="cell11">
+            <p><span class="ts1">@System.Collections.ArrayList</span></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets or sets a collection of </span><a href="idh-topic200.htm" class="hs0">auto item</a><span class="ts1">&nbsp;objects that are to be drawn on each page.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="AvailableFonts_property"></a><span class="ts6">AvailableFonts</span></p>
+          </td>
+          <td class="cell8">
+            <h3 class="hd0"><span class="ts1">@System.Collections.ArrayList</span></h3>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Exposes a collection of the internal names of fonts that are available for use. Available fonts include the implicit fonts that are defined by the PDF specification as well as other fonts that you have loaded by calling </span><a href="idh-topic30.htm#LoadTrueTypeFont_method" class="hs0">LoadTrueTypeFont</a><span class="ts1">. See also the </span><a href="idh-topic30.htm#FontAvailable_method" class="hs0">FontAvailable</a><span class="ts1">&nbsp;method.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <h3 class="hd1"><a id="PageBackgroundColor_property"></a><span class="ts6">BackgroundColor</span></h3>
+          </td>
+          <td class="cell8">
+            <p><a href="idh-topic50.htm" class="hs0">PdfColor</a></p>
+          </td>
+          <td class="cell9">
+            <h3 class="hd0"><span class="ts1">Gets or sets the page background color. A custom value for page background color can be established via an optional parameter passed to the constructor method, and will be used for the first page. Subsequently changing the page background color will affect only new pages that are created after the background color is changed. There is no way to change the background color of a page after the page has been created. The default page background color is white.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="BackgroundFile_property"></a><span class="ts6">BackgroundFile</span></p>
+          </td>
+          <td class="cell8">
+            <h3 class="hd0"><span class="ts1">string</span></h3>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the full file spec of the PDF file that has been set for use as a background file. The background file is set by calling the </span><a href="idh-topic30.htm#SetBackgroundFile_method" class="hs0">SetBackgroundFile </a><span class="ts1">method.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p class="ps1"><a id="BottomMargin_property"></a><span class="ts6">BottomMargin</span></p>
+          </td>
+          <td class="cell11">
+            <p><span class="ts1">float</span></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets the height of the bottom margin in inches. Page margins are determined by parameters that are passed to the </span><a href="idh-topic30.htm#Constructors" class="hs0">constructor method</a><span class="ts1">&nbsp;and once defined cannot be changed.&nbsp; Margins only affect </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column</a><span class="ts1">&nbsp;based access to the document and do not affect </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute</a><span class="ts1">&nbsp;positioning access.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p class="ps1"><a id="CenterBodyInPage_property"></a><span class="ts6">CenterBodyInPage</span></p>
+          </td>
+          <td class="cell11">
+            <p><span class="ts1">boolean</span></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets whether the main page body (the printable area inside any specified margins) will be centered horizontally. The default value is true, and this can be overridden via a parameter passed to </span><a href="idh-topic30.htm#Constructors" class="hs0">constructor</a><span class="ts1">&nbsp;method. When true, after an appropriate font size has been calculated in order to facilitate the required column width of the document, the left and right margins are altered in order to ensure than content is centered horizontally within each page. Page margins and body only affect </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column</a><span class="ts1">&nbsp;based access to the document and do not affect </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute</a><span class="ts1">&nbsp;positioning access.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p class="ps1"><a id="Column_property"></a><span class="ts6">Column</span></p>
+          </td>
+          <td class="cell11">
+            <p><span class="ts1">int</span></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets or sets the current column number. The concept of a current row and column is used when accessing the document by </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column</a><span class="ts1">, and is similar to the concept of current cursor position on the screen of a character based application. Generally, when displaying text to the document via the various methods that address row/column, the current position in the document moves either immediately after the printed text, or to the first column of the next row. Current row and column do not affect absolute positioning access to the document.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p class="ps1"><a id="Columns_property"></a><span class="ts6">Columns</span></p>
+          </td>
+          <td class="cell11">
+            <p><span class="ts1">int</span></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets the number of columns that are available, based on the requested margins and page width, at the selected font size. The number of columns actually available will generally to be equal to or greater to the number of columns requested via the optional &quot;minimum columns&quot; parameter passed to the </span><a href="idh-topic30.htm#Constructors" class="hs0">constructor</a><span class="ts1">&nbsp;method. The number of available columns is only applicable when accessing the document by </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column</a><span class="ts1">&nbsp;and does not affect </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute</a><span class="ts1">&nbsp;positioning access to the document.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p class="ps1"><a id="ColumnWidth_property"></a><span class="ts6">ColumnWidth</span></p>
+          </td>
+          <td class="cell11">
+            <p><span class="ts1">float</span></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets the width of a single column in </span><a href="idh-topic210.htm#device_independent_pixels" class="hs0">device independent pixels</a><span class="ts1">. The width is based on the font that was selected in order to achieve the number of columns required for the page. Column width is only applicable when printing text using the default font (Courier) and automatically selected font size.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="ColumnX_property"></a><span class="ts6">ColumnX</span></p>
+          </td>
+          <td class="cell8">
+            <h3 class="hd0"><span class="ts1">float</span></h3>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinate</a><span class="ts1">&nbsp;system X coordinate that corresponds to the </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinate</a><span class="ts1">&nbsp;system current column number.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="CreateOutline_property"></a><span class="ts6">CreateOutline</span></p>
+          </td>
+          <td class="cell8">
+            <h3 class="hd0"><span class="ts1">boolean</span></h3>
+          </td>
+          <td class="cell9">
+            <h3 class="hd0"><span class="ts1">Gets or sets a value that defines whether a document outline will be created. By default a document outline is created and automatically populates with outline items for each new page. To disable the creation of a document outline set this property to false before the first page is added to the document. </span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p class="ps1"><a id="CreationDate_property"></a><span class="ts6">CreationDate</span></p>
+          </td>
+          <td class="cell11">
+            <p><span class="ts1">string</span></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets the creation date of the document.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p class="ps1"><a id="Creator_property"></a><span class="ts6">Creator</span></p>
+          </td>
+          <td class="cell11">
+            <p><span class="ts1">string</span></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets or sets the name of the creator of the PDF document. By default this property is set to &quot;Synergex PSG PdfFile Class&quot;.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="CurrentFont_property"></a><span class="ts6">CurrentFont</span></p>
+          </td>
+          <td class="cell8">
+            <h3 class="hd0"><span class="ts1">string</span></h3>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the name of the currently selected font. This will either be the default font (Courier) or the name of the last font selected by the </span><a href="idh-topic30.htm#SelectFont_method" class="hs0">SelectFont</a><span class="ts1">&nbsp;method.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <h3 class="hd1"><a id="CurrentFontSize_method"></a><span class="ts6">CurrentFontSize</span></h3>
+          </td>
+          <td class="cell8">
+            <h3 class="hd0"><span class="ts1">int</span></h3>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the name of the currently selected font size. This will either be the default (automatically selected) font size or the last font size selected by the </span><a href="idh-topic30.htm#SelectFont_method" class="hs0">SelectFont</a><span class="ts1">&nbsp;method.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="ExtraRowSpacing_property"></a><span class="ts6">ExtraRowSpacing</span></p>
+          </td>
+          <td class="cell8">
+            <h3 class="hd0"><span class="ts1">float</span></h3>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the amount of additional space in </span><a href="idh-topic210.htm#device_independent_pixels" class="hs0">device independent pixels</a><span class="ts1">&nbsp;that is being added between rows.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p class="ps1"><a id="FileLocation_property"></a><span class="ts6">FileLocation</span></p>
+          </td>
+          <td class="cell11">
+            <p><span class="ts1">string</span></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets the location where the output file will be created as a full windows path including a trailing \. The default location is the folder pointed to by the TEMP environment variable. You can override this location by passing an alternative location to the </span><span class="ts7">aFileLocation</span><span class="ts1">&nbsp;parameter of the </span><a href="idh-topic30.htm#Constructors" class="hs0">constructor</a><span class="ts1">&nbsp;method.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p class="ps1"><a id="FileName_property"></a><span class="ts6">FileName</span></p>
+          </td>
+          <td class="cell11">
+            <p><span class="ts1">string</span></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets or sets the name of the PDF file being created. The default name of the file will be in the format &quot;YYYY-MM-DD HH.MM.SS &lt;name&gt; .pdf&quot; where the value of &lt;name&gt; can be supplied via the optional </span><span class="ts7">aPartialFileName</span><span class="ts1">&nbsp;parameter to the </span><a href="idh-topic30.htm#Constructors" class="hs0">constructor</a><span class="ts1">&nbsp;method. The name of the file is not used until you call either the Preview or Save methods, so you may update the value of the property in order to override the default name until that time.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="FileSpec_property"></a><span class="ts6">FileSpec</span></p>
+          </td>
+          <td class="cell8">
+            <h3 class="hd0"><span class="ts1">string</span></h3>
+          </td>
+          <td class="cell9">
+            <h3 class="hd0"><span class="ts1">Gets the full file spec of the PDF file that will be created. Equivalent to FileLocation + FileName.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="FixedPitchFont_property"></a><span class="ts6">FixedPitchFont</span></p>
+          </td>
+          <td class="cell8">
+            <h3 class="hd0"><span class="ts1">boolean</span></h3>
+          </td>
+          <td class="cell9">
+            <h3 class="hd0"><span class="ts1">Gets whether the currently selected font is a fixed-pitch font.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p class="ps1"><a id="FillColor_property"></a><span class="ts6">FillColor</span></p>
+          </td>
+          <td class="cell11">
+            <p><a href="idh-topic50.htm" class="hs0">PdfColor</a></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets or sets the current fill color. This is the color used to paint the internal areas of text, lines and boxes if the optional &quot;fill&quot; parameter is passed and true. The default fill color is black. The default fill color can be overridden when printing or drawing individual text, line or box items.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p class="ps1"><a id="FontFize_property"></a><span class="ts6">FontSize</span></p>
+          </td>
+          <td class="cell11">
+            <p><span class="ts1">int</span></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets the height of the default (automatically selected) font in </span><a href="idh-topic210.htm#device_independent_pixels" class="hs0">device independent pixels</a><span class="ts1">. The FontSize only has relevance when addressing the document using the default (Courier) font.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p class="ps1"><a id="FooterRows_property"></a><span class="ts6">FooterRows</span></p>
+          </td>
+          <td class="cell11">
+            <p><span class="ts1">int</span></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets the number of footer rows that were reserved when the document was created. Footer rows are only relevant when using the </span><a href="idh-topic30.htm#FooterText_property" class="hs0">FooterText</a><span class="ts1">&nbsp;property, and have no affect when accessing the document via absolute positioning mechanisms.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p class="ps1"><a id="FooterText_property"></a><span class="ts6">FooterText</span></p>
+          </td>
+          <td class="cell11">
+            <p><span class="ts1">[#]string</span></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets or sets the array of strings to be displayed in the reserved page footer rows of pages that use the default page orientation. The array is initialized based on the number of footer rows requested when the </span><a href="idh-topic30.htm#Constructors" class="hs0">constructor</a><span class="ts1">&nbsp;was called, and can subsequently be populated with the data to be displayed in the reserved footer area of each page.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="FooterTextAlternate_property"></a><span class="ts6">FooterTextAlternate</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">[#]string</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets or sets the array of strings to be displayed in the reserved page footer rows of pages that use the alternate page orientation. This property can only be used after setting </span><a href="idh-topic30.htm#UseAlternateFooters_property" class="hs0">UseAlternateFooters</a><span class="ts1">&nbsp;to true.The array is initialized based on the number of footer rows requested when the </span><a href="idh-topic30.htm#Constructors" class="hs0">constructor</a><span class="ts1">&nbsp;was called, and can subsequently be populated with the data to be displayed in the reserved footer area of each page.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="HaruDocument_property"></a><span class="ts6">HaruDocument</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">@HPdfDoc</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Exposes the underlying PDFDBL document object.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p class="ps1"><a id="HeaderRows_property"></a><span class="ts6">HeaderRows</span></p>
+          </td>
+          <td class="cell11">
+            <p><span class="ts1">int</span></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets the number of header rows that were reserved when the document was created. Header rows are only relevant when using the </span><a href="idh-topic30.htm#HeaderText_property" class="hs0">HeaderText</a><span class="ts1">&nbsp;property, and have no affect when accessing the document via absolute positioning mechanisms.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell10">
+            <p class="ps1"><a id="HeaderText_property"></a><span class="ts6">HeaderText</span></p>
+          </td>
+          <td class="cell11">
+            <p><span class="ts1">[#]string</span></p>
+          </td>
+          <td class="cell12">
+            <p><span class="ts1">Gets or sets the array of strings to be displayed in the reserved page header rows of pages that use the default page orientation. The array is initialized based on the number of header rows requested when the </span><a href="idh-topic30.htm#Constructors" class="hs0">constructor</a><span class="ts1">&nbsp;was called</span><span class="ts1">, and can subsequently be populated with the data to be displayed in the reserved header area of each page.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="HeaderTextAlternate_property"></a><span class="ts6">HeaderTextAlternate</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">[#]string</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets or sets the array of strings to be displayed in the reserved page header rows of pages that use the alternate page orientation. This property can only be used after setting </span><a href="idh-topic30.htm#UseAlternateHeaders_property" class="hs0">UseAlternateHeaders</a><span class="ts1">&nbsp;to true. The array is initialized based on the number of header rows requested when the </span><a href="idh-topic30.htm#Constructors" class="hs0">constructor</a><span class="ts1">&nbsp;was called, and can subsequently be populated with the data to be displayed in the reserved header area of each page.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="Height_property"></a><span class="ts6">Height</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">float</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the height of the page in </span><a href="idh-topic210.htm#device_independent_pixels" class="hs0">device independent pixels</a><span class="ts1">. The height of the page is based on the paper size and orientation and defines the maximum value for Y coordinates when addressing the document via absolute positioning mechanisms.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="Keywords_property"></a><span class="ts6">Keywords</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">string</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets or sets the keywords of the PDF document.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="LeftMargin_property"></a><span class="ts6">LeftMargin</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">float</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the width of the left margin in inches. Page margins are determined by parameters that are passed to the constructor method and once defined cannot be changed.&nbsp; Margins only affect row and column based access to the document and do not affect absolute positioning access.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="ModificationDate_property"></a><span class="ts6">ModificationDate</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">string</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the modification date of the PDF document.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="Orientation_property"></a><span class="ts6">Orientation</span></p>
+          </td>
+          <td class="cell8">
+            <p><a href="idh-topic40.htm" class="hs0">PdfOrientation</a></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the page orientation (portrait or landscape) of the PDF document. The page orientation is defined for the document when calling the constructor method and cannot be changed.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="OutlineRootText_property"></a><span class="ts6">OutlineRootText</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">string</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets or sets the text that will be used for the root node of the documents outline. The default text is &quot;Home&quot;. If you need to change the value you should do so before adding any content to the document.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="PageLayout_property"></a><span class="ts6">PageLayout</span></p>
+          </td>
+          <td class="cell8">
+            <p><a href="idh-topic320.htm" class="hs0">PdfPageLayout</a></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets or sets the suggested page layout mode to be used by PDF reader applications when viewing the PDF document being created. Note that setting this property does not guarantee a particular page layout mode being used because some PDF reader applications allow the user to override the setting specified by the PDF document.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="PageMode_property"></a><span class="ts6">PageMode</span></p>
+          </td>
+          <td class="cell8">
+            <p><a href="idh-topic330.htm" class="hs0">PdfPageMode</a></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets or sets the suggested page mode to be used by PDF reader applications when viewing the PDF document being created. Note that setting this property does not guarantee a particular page mode being used because some PDF reader applications allow the user to override the setting specified by the PDF document. On OpenVMS systems setting the value of this property currently has no effect.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="PageNumber_property"></a><span class="ts6">PageNumber</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">int</span></p>
+          </td>
+          <td class="cell9">
+            <h3 class="hd0"><span class="ts1">Gets the current page number.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="PageSize_property"></a><span class="ts6">PageSize</span></p>
+          </td>
+          <td class="cell8">
+            <p><a href="idh-topic250.htm" class="hs0">PdfPageSize</a></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the page size used in the PDF document.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="RequestedColumns_property"></a><span class="ts6">RequestedColumns</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">int</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the number of columns that were originally requested when the </span><a href="idh-topic30.htm#Constructors" class="hs0">constructor</a><span class="ts1">&nbsp;method was called.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="RightMargin_property"></a><span class="ts6">RightMargin</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">float</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the width of the right margin in inches. Page margins are determined by parameters that are passed to the constructor method and once defined cannot be changed.&nbsp; Margins only affect row and column based access to the document and do not affect absolute positioning access.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="Row_property"></a><span class="ts6">Row</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">int</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets or sets the current row number. The concept of a current row and column is used when accessing the document by row and column, and is similar to the concept of current cursor position on the screen of a character based application. Generally, when displaying text to the document via the various methods that address row and column, the current position in the document moves either immediately after the printed text, or to the first column of the next row. Current row and column do not affect absolute positioning access to the document.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="RowHeight_property"></a><span class="ts6">RowHeight</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">float</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the height of a single row in device independent pixels. The height of a row is determined by the height of the selected font plus any additional spacing that is being manually added between rows.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="Rows_property"></a><span class="ts6">Rows</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">int</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the number of rows that are available within the page body (i.e. between any top margin, header rows, footer rows and bottom margin), based on the page height, the requested top and bottom margins, and the number and height of any page header and footer rows, at the selected font size. The number of available rows is only applicable when accessing the document by </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">&nbsp;and has no effect when accessing to the document via </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="RowY_property"></a><span class="ts6">RowY</span></p>
+          </td>
+          <td class="cell8">
+            <h3 class="hd0"><span class="ts1">float</span></h3>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinate</a><span class="ts1">&nbsp;system Y coordinate that corresponds to the </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinate</a><span class="ts1">&nbsp;systems current row number.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="StrokeColor_property"></a><span class="ts6">StrokeColor</span></p>
+          </td>
+          <td class="cell8">
+            <p><a href="idh-topic50.htm" class="hs0">PdfColor</a></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets or sets the current stroke color, which is the color used to paint the outside edge of lines, boxes and text. The default stroke color is black. The default stroke color can be overridden when printing or drawing individual text, line or box items.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="Subject_property"></a><span class="ts6">Subject</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">string</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets or sets the subject attribute of the PDF document.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="Title_property"></a><span class="ts6">Title</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">string</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets or sets the title attribute of the PDF document.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="TopMargin_property"></a><span class="ts6">TopMargin</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">float</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the height of the top margin in inches. Page margins are determined by parameters that are passed to the constructor method and once defined cannot be changed.&nbsp; Margins only affect row and column based access to the document and do not affect absolute positioning access.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="UseAlternateFooters_property"></a><span class="ts6">UseAlternateFooters</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">boolean</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets or sets whether alternate text should be displayed in the page footers of pages that use the opposite orientation to the document default orientation. The default is that the same footer text is used for all pages. If this property is set to true then the alternative footer text should then be specified via the </span><a href="idh-topic30.htm#FooterTextAlternate_property" class="hs0">FooterTextAlternate</a><span class="ts1">&nbsp;property.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="UseAlternateHeaders_property"></a><span class="ts6">UseAlternateHeaders</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">boolean</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets or sets whether alternate text should be displayed in the page headers of pages that use the opposite orientation to the document default orientation. The default is that the same header text is used for all pages. If this property is set to true then the alternative header text should then be specified via the </span><a href="idh-topic30.htm#HeaderTextAlternate_property" class="hs0">HeaderTextAlternate </a><span class="ts1">property.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell7">
+            <p class="ps1"><a id="Width_property"></a><span class="ts6">Width</span></p>
+          </td>
+          <td class="cell8">
+            <p><span class="ts1">float</span></p>
+          </td>
+          <td class="cell9">
+            <p><span class="ts1">Gets the width of the page in </span><a href="idh-topic210.htm#device_independent_pixels" class="hs0">device independent pixels</a><span class="ts1">. The width of the page is based on the paper size and orientation and defines the maximum value for X coordinates when addressing the document via absolute positioning mechanisms.</span></p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline0" />
+    </div>
+    <p class="ps1"><a id="Methods"></a><span class="ts2">Methods</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div>
+      <table class="tbl0">
+        <tr class="row0">
+          <td class="cell13">
+            <p><a href="idh-topic30.htm#AddDesignGrid_method" class="hs0">AddDesignGrid</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Adds a design grid to all pages of the document, via the </span><a href="idh-topic30.htm#AutoItems_property" class="hs0">AutoItems</a><span class="ts1">&nbsp;collection.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell15">
+            <p><a href="idh-topic30.htm#Dispose_method" class="hs0">Dispose</a></p>
+          </td>
+          <td class="cell16">
+            <p><span class="ts1">Releases resources allocated by the PDF document. After calling this method the PdfFile object is no longer valid.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawBarChart_method" class="hs0">DrawBarChart</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws a </span><a href="idh-topic430.htm" class="hs0">bar chart</a><span class="ts1">&nbsp;containing a multiple data series on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawBarChartRC_method" class="hs0">DrawBarChartRC</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws a </span><a href="idh-topic430.htm" class="hs0">bar chart</a><span class="ts1">&nbsp;containing a multiple data series on the current page of the PDF document using </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawBox_method" class="hs0">DrawBox</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws a box on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the box are defined by individual passed parameters.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawBoxObject_method" class="hs0">DrawBoxObject</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws a box on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the box are defined by a passed </span><a href="idh-topic240.htm" class="hs0">AutoBoxAbsolute</a><span class="ts1">&nbsp;object.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawBoxObjectRC_method" class="hs0">DrawBoxObjectRC</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws a box on the current page of the PDF document using </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/col coordinates</a><span class="ts1">. The characteristics of the box are defined by a passed </span><a href="idh-topic70.htm" class="hs0">AutoBoxRowCol</a><span class="ts1">&nbsp;object.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawBoxRC_method" class="hs0">DrawBoxRC</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws a box on the current page of the PDF document using </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/col coordinates</a><span class="ts1">. The characteristics of the box are defined by individual passed parameters.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawCircle_method" class="hs0">DrawCircle</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws a circle on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the circle are defined by individual passed parameters.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell18">
+            <p><a href="idh-topic30.htm#DrawImage_method" class="hs0">DrawImage</a><span class="ts1">&nbsp;(from file)</span></p>
+          </td>
+          <td class="cell16">
+            <p><span class="ts1">Draws an image on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The image is loaded directly from a file and the characteristics of the image are defined by individual passed parameters.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawImageFromObject_method" class="hs0">DrawImage </a><span class="ts1">(from object)</span></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws an image on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The image must be previously loaded and the characteristics of the image are defined by individual passed parameters.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawImageObject_method" class="hs0">DrawImageObject</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws an image on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the image are defined by a passed </span><a href="idh-topic100.htm" class="hs0">AutoImage</a><span class="ts1">&nbsp;object.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell18">
+            <p><a href="idh-topic30.htm#DrawLine_method" class="hs0">DrawLine</a></p>
+          </td>
+          <td class="cell16">
+            <p><span class="ts1">Draws a horizontal, vertical or diagonal line on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the line are defined by individual passed parameters.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawLineObject_method" class="hs0">DrawLineObject</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws a horizontal, vertical or diagonal line on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the line are defined by a passed </span><a href="idh-topic230.htm" class="hs0">AutoLineAbsolute</a><span class="ts1">&nbsp;object.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawLineObjectRC_method" class="hs0">DrawLineObjectRC</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws a horizontal, vertical or diagonal line on the current page of the PDF document using </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">. The characteristics of the line are defined by a passed </span><a href="idh-topic220.htm" class="hs0">AutoLineRowCol</a><span class="ts1">&nbsp;object.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawLineRC_method" class="hs0">DrawLineRC</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws a horizontal, vertical or diagonal line on the current page of a PDF document using </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">. The characteristics of the line are defined by individual passed parameters.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawLineRow_method" class="hs0">DrawLineRow</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws a horizontal line from the current position to the end of the current row, using </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawMultiSeriesChartLegend_method" class="hs0">DrawMultiSeriesChartLegend</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws a data legend for a chart containing a multiple data series on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawPieChart_method" class="hs0">DrawPieChart</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws a </span><a href="idh-topic410.htm" class="hs0">pie chart</a><span class="ts1">&nbsp;on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawRoundedBox_method" class="hs0">DrawRoundedBox</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws a box with rounded corners on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the box are defined by individual passed parameters.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawText_method" class="hs0">DrawText</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws text on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the text are defined by individual passed parameters.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawTextObject_method" class="hs0">DrawTextObject</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws text on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the text are defined by a passed </span><a href="idh-topic110.htm" class="hs0">AutoTextAbsolute</a><span class="ts1">&nbsp;object.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawTextObjectRC_method" class="hs0">DrawTextObjectRC</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws text on the current page of the PDF document using </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">. The characteristics of the text are defined by a passed </span><a href="idh-topic90.htm" class="hs0">AutoTextRowCol</a><span class="ts1">&nbsp;object.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#DrawTextRC_method" class="hs0">DrawTextRC</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Draws text on the current page of the PDF document using </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">. The characteristics of the text are defined by individual passed parameters.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#LoadImage_method" class="hs0">LoadImage</a></p>
+          </td>
+          <td class="cell14">
+            <h3 class="hd0"><span class="ts1">Loads an image from an image file into an image object.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#LoadTrueTypeFont_method" class="hs0">LoadTrueTypeFont</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Loads a TrueType font from a font file (.ttf) and embeds the font in the PDF document.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#NewLine_method" class="hs0">NewLine</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Sets the current position for the </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">&nbsp;system </span><span class="ts1">to the first column on the next line.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell19">
+            <p><a href="idh-topic30.htm#NewPage_method" class="hs0">NewPage</a></p>
+          </td>
+          <td class="cell20">
+            <p><span class="ts1">Completes the current page and adds a new page to the PDF document.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell18">
+            <p><a href="idh-topic30.htm#Preview_method" class="hs0">Preview</a></p>
+          </td>
+          <td class="cell16">
+            <p><span class="ts1">Saves the PDF file to disk and then launches it via the default application that is registered to handle PDF files.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#PreviewFile_method" class="hs0">PreviewFile</a><span class="ts1">&nbsp;(static)</span></p>
+          </td>
+          <td class="cell14">
+            <h3 class="hd0"><span class="ts1">Displays an existing (on disk) PDF document in the default registered viewer application.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#Print_method" class="hs0">Print</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Completes the current PDF document, saves it to disk, and prints it to a printer.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#PrintDialog_method" class="hs0">PrintDialog</a></p>
+          </td>
+          <td class="cell14">
+            <h3 class="hd0"><span class="ts1">Completes the current PDF document, saves it to disk, and shows a print dialog to allow the document to be printed to a printer selected by the user.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#PrintFile_method" class="hs0">PrintFile</a><span class="ts1">&nbsp;(static)</span></p>
+          </td>
+          <td class="cell14">
+            <h3 class="hd0"><span class="ts1">Prints an existing (on disk) PDF document to a printer.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#PrintFileDialog_method" class="hs0">PrintFileDialog </a><span class="ts1">(static)</span></p>
+          </td>
+          <td class="cell14">
+            <h3 class="hd0"><span class="ts1">Prints an existing (on disk) PDF document to a printer that is selected in a print dialog.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#ResetFont_method" class="hs0">ResetFont</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Resets the current font to the default normal font used by the </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">&nbsp;system.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell18">
+            <p><a href="idh-topic30.htm#Save_method" class="hs0">Save</a></p>
+          </td>
+          <td class="cell16">
+            <p><span class="ts1">Completes the PDF document and saves it to disk.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell18">
+            <p><a href="idh-topic30.htm#SelectFont_method" class="hs0">SelectFont</a></p>
+          </td>
+          <td class="cell16">
+            <p><span class="ts1">Selects an alternate font to be used for subsequent </span><a href="idh-topic30.htm#DrawText_method" class="hs0">DrawText</a><span class="ts1">&nbsp;operations.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <h3 class="hd0"><span class="ts1">SetBackgroundFile</span></h3>
+          </td>
+          <td class="cell14">
+            <h3 class="hd0"><span class="ts1">Specifies a PDF file that is to be used to provide content (e.g. a &quot;pre-printed&quot; form, or a watermark) for the new PDF file that is currently being created.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell18">
+            <p><a href="idh-topic30.htm#SetPosition_method" class="hs0">SetPosition</a></p>
+          </td>
+          <td class="cell16">
+            <p><span class="ts1">Sets the current position used by the </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">&nbsp;system.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#XfromColumn_method" class="hs0">XfromColumn</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Converts a column number to an X coordinate.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#YFromBodyRow_method" class="hs0">YfromBodyRow</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Converts a body row number to a Y coordinate.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#YFromFooterRow_method" class="hs0">YfromFooterRow</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Converts a footer row number to a Y coordinate.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell17">
+            <p><a href="idh-topic30.htm#YFromHeaderRow_method" class="hs0">YfromHeaderRow</a></p>
+          </td>
+          <td class="cell14">
+            <p><span class="ts1">Converts a header row number to a Y coordinate.</span></p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <p class="ps1"><a id="AddDesignGrid_method"></a><span class="ts15">AddDesignGrid Method</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Adds a design grid to all pages of the document (via the </span><a href="idh-topic30.htm#AutoItems_property" class="hs0">AutoItems</a><span class="ts1">&nbsp;collection).</span></p>
+    <p><span class="ts7">public method AddDesignGrid, void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">The design grid consists of light-gray lines spaced at 5, 10 and 100 pixel intervals both horizontally and vertically. These lines can assist when defining the layout for new document types.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <p class="ps1"><a id="Dispose_method"></a><span class="ts15">Dispose Method</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Releases resources allocated by the PDF document. After calling this method the PdfFile object is no longer valid.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This method is called automatically whenever you call the </span><a href="idh-topic30.htm#Preview_method" class="hs0">Preview</a><span class="ts1">, </span><a href="idh-topic30.htm#Print_method" class="hs0">Print</a><span class="ts1">&nbsp;or </span><a href="idh-topic30.htm#Save_method" class="hs0">Save</a><span class="ts1">&nbsp;methods. You should call this method manually if you decide to abort the creation of a PDF document without calling one of those methods.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method Dispose, void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawBarChart_method"></a><span class="ts15">DrawBarChart Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a </span><a href="idh-topic440.htm" class="hs0">bar chart containing multiple series of data</a><span class="ts1">&nbsp;on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawMultiSeriesBarChart, void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aTopX,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aTopY,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aBottomX,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aBottomY,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aSpaceBetweenGroups,&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aChartData,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @</span><a href="idh-topic460.htm" class="hs2">ChartMultiSeries</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aBackGroundColor,</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">&nbsp;</span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The area where the chart will be drawn is defined by passing the coordinates of the top left corner of the chart via the </span><span class="ts7">aTopX </span><span class="ts1">and </span><span class="ts7">aTopY </span><span class="ts1">parameters, and the coordinates of the bottom right corner via the </span><span class="ts7">aBottomX </span><span class="ts1">and </span><span class="ts7">aBottomY </span><span class="ts1">parameters. The </span><span class="ts7">aSpaceBetweenGroups </span><span class="ts1">parameter allows you to specify the number of pixels to leave blank between neighboring groups of bars. The </span><span class="ts7">aChartData </span><span class="ts1">parameter is used to pass a </span><a href="idh-topic460.htm" class="hs0">ChartMultiSeries</a><a href="idh-topic390.htm" class="hs0">&nbsp;</a><span class="ts1">object that defines the bars to be drawn within the chart.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawBarChart_method2"></a><span class="ts15">DrawBarChart Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a </span><a href="idh-topic440.htm" class="hs0">bar chart containing multiple series of data</a><span class="ts1">&nbsp;on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawMultiSeriesBarChart, void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aTopLeft,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><a href="idh-topic420.htm" class="hs2">XYcoordinate</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aBottomRight,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><a href="idh-topic420.htm" class="hs2">XYcoordinate</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aSpaceBetweenGroups,&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aChartData,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @</span><a href="idh-topic460.htm" class="hs2">ChartMultiSeries</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aBackGroundColor,</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">&nbsp;</span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The area where the chart will be drawn is defined by passing the coordinates of the top left corner of the chart via the </span><span class="ts7">aTopLeft </span><span class="ts1">parameter, and the coordinates of the bottom right corner via the </span><span class="ts7">aBottomRight p</span><span class="ts1">arameter. The </span><span class="ts7">aSpaceBetweenGroups </span><span class="ts1">parameter allows you to specify the number of pixels to leave blank between neighboring groups of bars. The </span><span class="ts7">aChartData </span><span class="ts1">parameter is used to pass a </span><a href="idh-topic460.htm" class="hs0">ChartMultiSeries</a><a href="idh-topic390.htm" class="hs0">&nbsp;</a><span class="ts1">object that defines the bars to be drawn within the chart.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawBarChartRC_method"></a><span class="ts15">DrawBarChartRC Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a </span><a href="idh-topic440.htm" class="hs0">bar chart containing multiple series of data</a><span class="ts1">&nbsp;on the current page of the PDF document using </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawMultiSeriesBarChart, void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFromRow,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFromCol,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aToRow,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aToCol,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aSpaceBetweenGroups,&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aChartData,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @</span><a href="idh-topic460.htm" class="hs2">ChartMultiSeries</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aBackGroundColor,</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The area where the chart will be drawn is defined by passing the coordinates of the top left corner of the chart via the </span><span class="ts7">aFromRow </span><span class="ts1">and </span><span class="ts7">aFromCol </span><span class="ts1">parameters, and the coordinates of the bottom right corner via the </span><span class="ts7">aToRow </span><span class="ts1">and </span><span class="ts7">aToCol </span><span class="ts1">parameters. The </span><span class="ts7">aSpaceBetweenGroups </span><span class="ts1">parameter allows you to specify the number of pixels to leave blank between neighboring groups of bars. The </span><span class="ts7">aChartData </span><span class="ts1">parameter is used to pass a </span><a href="idh-topic460.htm" class="hs0">ChartMultiSeries</a><a href="idh-topic390.htm" class="hs0">&nbsp;</a><span class="ts1">object that defines the bars to be drawn within the chart.</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <p class="ps1"><a id="DrawBox_method"></a><span class="ts15">DrawBox Method</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a box on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the box are defined by individual passed parameters.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawBox,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFromX,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFromY,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aToX,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aToY,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aWidth,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aStrokeColor, </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFill,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFillColor,&nbsp;&nbsp; </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This method draws a box on the current page of the PDF document, the position and size of the box being defined by passing the </span><span class="ts7">aFromX</span><span class="ts1">, </span><span class="ts7">aFromY</span><span class="ts1">, </span><span class="ts7">aToX</span><span class="ts1">&nbsp;and </span><span class="ts7">aToY</span><span class="ts1">&nbsp;parameters to describe two diagonally opposite corners of the box using the absolute coordinates system.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">You can alter the width of the line used to draw the box by passing the optional </span><span class="ts7">aWidth</span><span class="ts1">&nbsp;parameter, the color of the line used to draw the box box by passing the optional </span><span class="ts7">aStrokeColor</span><span class="ts1">&nbsp;parameter. You can also specify whether the box should be filled using the current </span><a href="idh-topic30.htm#FillColor_property" class="hs0">FillColor</a><span class="ts1">&nbsp;by passing true to the optional </span><span class="ts7">aFill</span><span class="ts1">&nbsp;parameter, and can override the current default fill color by passing the </span><span class="ts7">aFillColor</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <p class="ps1"><a id="DrawBox_method2"></a><span class="ts15">DrawBox Method</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a box on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the box are defined by individual passed parameters.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawBox,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFrom,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><a href="idh-topic420.htm" class="hs2">XYcoordinate</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aTo,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><a href="idh-topic420.htm" class="hs2">XYcoordinate</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aWidth,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aStrokeColor, </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFill,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFillColor,&nbsp;&nbsp; </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This method draws a box on the current page of the PDF document, the position and size of the box being defined by passing the </span><span class="ts7">aFrom</span><span class="ts1">, and </span><span class="ts7">aTo</span><span class="ts1">&nbsp;parameters to describe two diagonally opposite corners of the box using the absolute coordinates system.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">You can alter the width of the line used to draw the box by passing the optional </span><span class="ts7">aWidth</span><span class="ts1">&nbsp;parameter, the color of the line used to draw the box box by passing the optional </span><span class="ts7">aStrokeColor</span><span class="ts1">&nbsp;parameter. You can also specify whether the box should be filled using the current </span><a href="idh-topic30.htm#FillColor_property" class="hs0">FillColor</a><span class="ts1">&nbsp;by passing true to the optional </span><span class="ts7">aFill</span><span class="ts1">&nbsp;parameter, and can override the current default fill color by passing the </span><span class="ts7">aFillColor</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <p class="ps1"><a id="DrawBoxObject_method"></a><span class="ts15">DrawBoxObject Method</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a box on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the box are defined by a passed </span><a href="idh-topic240.htm" class="hs0">AutoBoxAbsolute</a><span class="ts1">&nbsp;object.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawBox,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aBoxObj,&nbsp;&nbsp;&nbsp;&nbsp; @</span><a href="idh-topic240.htm" class="hs2">AutoBoxAbsolute</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This method is primarily used when drawing </span><a href="idh-topic200.htm#AutoBoxItems" class="hs0">auto box items</a><span class="ts1">&nbsp;but can also be used by custom code.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawBoxObjectRC_method"></a><span class="ts15">DrawBoxObjectRC Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a box on the current page of the PDF document using </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/col coordinates</a><span class="ts1">. The characteristics of the box are defined by a passed </span><a href="idh-topic70.htm" class="hs0">AutoBoxRowCol</a><span class="ts1">&nbsp;object.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawBoxRC,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aBoxObj,&nbsp;&nbsp;&nbsp;&nbsp; @</span><a href="idh-topic70.htm" class="hs2">AutoBoxRowCol</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This method is primarily used when drawing </span><a href="idh-topic200.htm#AutoBoxItems" class="hs0">auto box items</a><span class="ts1">, but can also be used by custom code.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawBoxRC_method"></a><span class="ts15">DrawBoxRC Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a box on the current page of the PDF document using </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/col coordinates</a><span class="ts1">. The characteristics of the box are defined by individual passed parameters.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawBoxRC,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFromRow,&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFromColumn,&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aToRow,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aToColumn,&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aWidth,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aStrokeColor, </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFill,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFillColor,&nbsp;&nbsp; </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">By default the box will be drawn from the top left cell of the current page, to the bottom right cell, but you can customize the box by passing various optional parameters to describe the box to be drawn. The position and size of the box can be defined by using the </span><span class="ts7">aFromRow</span><span class="ts1">, </span><span class="ts7">aFromColumn</span><span class="ts1">, </span><span class="ts7">aToRow</span><span class="ts1">&nbsp;and </span><span class="ts7">aToColumn</span><span class="ts1">&nbsp;parameters to describe two diagonally opposite corners of the box using the row/column coordinates system. By default the box will be drawn as an outline only using a line that is 1 device independent pixel wide and the color of the line will be defined by the current </span><a href="idh-topic30.htm#StrokeColor_property" class="hs0">StrokeColor</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">You can alter the width of the line used to draw the box by passing the optional </span><span class="ts7">aWidth</span><span class="ts1">&nbsp;parameter, the color of the line used to draw the box box by passing the optional </span><span class="ts7">aStrokeColor</span><span class="ts1">&nbsp;parameter. You can also specify whether the box should be filled using the current </span><a href="idh-topic30.htm#FillColor_property" class="hs0">FillColor</a><span class="ts1">&nbsp;by passing true to the optional </span><span class="ts7">aFill</span><span class="ts1">&nbsp;parameter, and can override the current default fill color by passing the </span><span class="ts7">aFillColor</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <p class="ps1"><a id="DrawCircle_method"></a><span class="ts15">DrawCircle Method</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a circle on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the circle are defined by individual passed parameters.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawBox,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aCenterX,&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aCenterY,&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aRadius,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aWidth,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aStrokeColor, </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFill,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFillColor,&nbsp;&nbsp; </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This method draws a circle on the current page of the PDF document, the position and size of the box being defined by passing the </span><span class="ts7">aCenterX</span><span class="ts1">, </span><span class="ts7">aCenterY</span><span class="ts1">, </span><span class="ts7">aRadius</span><span class="ts1">&nbsp;parameters to describe the center point and radius of the circle using the absolute coordinates system.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">You can alter the width of the line used to draw the circle by passing the optional </span><span class="ts7">aWidth</span><span class="ts1">&nbsp;parameter, the color of the line used to draw the circle box by passing the optional </span><span class="ts7">aStrokeColor</span><span class="ts1">&nbsp;parameter. You can also specify whether the circle should be filled using the current </span><a href="idh-topic30.htm#FillColor_property" class="hs0">FillColor</a><span class="ts1">&nbsp;by passing true to the optional </span><span class="ts7">aFill</span><span class="ts1">&nbsp;parameter, and can override the current default fill color by passing the </span><span class="ts7">aFillColor</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawImage_method"></a><span class="ts15">DrawImage Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws an image on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the image are defined by individual passed parameters.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">You may use JPEG (*.jpeg or *.jpg) or PNG (*.png) images, and for optimal results images should be created at a resolution of 72dpi.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawImage,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in&nbsp; aFileSpec,&nbsp;&nbsp;&nbsp;&nbsp; string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in&nbsp; aX,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in&nbsp; aY,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in&nbsp; aWidth,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in&nbsp; aHeight,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional out aErrorMessage, string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">You must at least specify the file spec of the image file to be drawn via the </span><span class="ts7">aFileSpec</span><span class="ts1">&nbsp;parameter as well as the location of the lower left pixel of the image via the </span><span class="ts7">aX </span><span class="ts1">and </span><span class="ts7">aY</span><span class="ts1">&nbsp;parameters, using the absolute coordinates system. The file spec that you pass can either be a full or relative path to an image file, and logical names are supported in the file specification.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">You can optionally define the size of the image on the page by passing the optional </span><span class="ts7">aWidth</span><span class="ts1">&nbsp;and </span><span class="ts7">aHeight</span><span class="ts1">&nbsp;parameters. The values that you pass are a number of device independent pixels. Bear in mind that device independent pixels and image file pixels may not be the same thing. Device independent pixels in&nbsp; PDF document are always use a resolution of 72dpi, whereas the pixels in an image file might be at a different resolution. For example, if you use an image file that was created at a resolution of 300dpi then the image will be displayed at a much larger size when added to a PDF file. The </span><span class="ts7">aWidth</span><span class="ts1">&nbsp;and </span><span class="ts7">aHeight</span><span class="ts1">&nbsp;parameters can be manipulated in order to correct these scaling problems in such cases.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The return value will be true on successful completion, or false if an error occurred. Possible errors can occur if the image file is not found, or if the file is of an unsupported type based on file extension. If the return value is false then an explanatory message can be obtained by passing a string variable to the </span><span class="ts7">aErrorMessage</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawImageFromObject_method"></a><span class="ts15">DrawImage Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws an image on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the image are defined by individual passed parameters.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">You may use JPEG (*.jpeg or *.jpg) or PNG (*.png) images that have previously been loaded into a HPdfImage object via the LoadImage method. For optimal results images should be created at a resolution of 72dpi.</span></h3>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawImage,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in&nbsp; aImage,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @HPdfImage</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in&nbsp; aX,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in&nbsp; aY,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in&nbsp; aWidth,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in&nbsp; aHeight,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">You must at least specify the image to be drawn via the </span><span class="ts7">aImage</span><span class="ts1">&nbsp;parameter as well as the location of the lower left pixel of the image via the </span><span class="ts7">aX </span><span class="ts1">and </span><span class="ts7">aY</span><span class="ts1">&nbsp;parameters, using the absolute coordinates system. The image that you pass myst be an HPsfImage object that you have previously loaded via the </span><a href="idh-topic30.htm#LoadImage_method" class="hs0">LoadImage</a><span class="ts1">&nbsp;method.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">You can optionally define the size of the image on the page by passing the optional </span><span class="ts7">aWidth</span><span class="ts1">&nbsp;and </span><span class="ts7">aHeight</span><span class="ts1">&nbsp;parameters. The values that you pass are a number of device independent pixels. Bear in mind that device independent pixels and image file pixels may not be the same thing. Device independent pixels in&nbsp; PDF document are always use a resolution of 72dpi, whereas the pixels in an image file might be at a different resolution. For example, if you use an image file that was created at a resolution of 300dpi then the image will be displayed at a much larger size when added to a PDF file. The </span><span class="ts7">aWidth</span><span class="ts1">&nbsp;and </span><span class="ts7">aHeight</span><span class="ts1">&nbsp;parameters can be manipulated in order to correct these scaling problems in such cases.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawImageObject_method"></a><span class="ts15">DrawImageObject Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws an image on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the image are defined by a passed </span><a href="idh-topic100.htm" class="hs0">AutoImage</a><span class="ts1">&nbsp;object.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawImage,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in&nbsp; aImageObj,&nbsp;&nbsp;&nbsp;&nbsp; @</span><a href="idh-topic100.htm" class="hs2">AutoImage</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional out aErrorMessage, string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This method is primarily used when drawing </span><a href="idh-topic200.htm#AutoImageItems" class="hs0">auto image items</a><span class="ts1">, but can also be used by custom code.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawLine_method"></a><span class="ts15">DrawLine Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a horizontal, vertical or diagonal line on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the line are defined by individual passed parameters.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawLine,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFromX,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFromY,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aToX,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aToY,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aWidth,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aStrokeColor, </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The starting position is defined via the </span><span class="ts7">aFromX</span><span class="ts1">&nbsp;and </span><span class="ts7">aFromY</span><span class="ts1">&nbsp;parameters and the ending position is defined via the </span><span class="ts7">aToX</span><span class="ts1">&nbsp;and </span><span class="ts7">aToY</span><span class="ts1">&nbsp;parameters.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The width of the line can be altered by passing the required width of the line in device independent pixels to the optional </span><span class="ts7">aWidth</span><span class="ts1">&nbsp;parameter. The color of the line can be altered by passing the required color to the optional </span><span class="ts7">aStrokeColor</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawLineObject_method"></a><span class="ts15">DrawLineObject Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a horizontal, vertical or diagonal line on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the line are defined by a passed </span><a href="idh-topic230.htm" class="hs0">AutoLineAbsolute</a><span class="ts1">&nbsp;object.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawLine,&nbsp;&nbsp; void</span></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; required in aLineObj, @</span><a href="idh-topic230.htm" class="hs2">AutoLineAbsolute</a></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This method is primarily used when drawing </span><a href="idh-topic200.htm#AutolineItems" class="hs0">auto line items</a><span class="ts1">, but can also be used by custom code.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawLineObjectRC_method"></a><span class="ts15">DrawLineObjectRC Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a horizontal, vertical or diagonal line on the current page of the PDF document using </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">. The characteristics of the line are defined by a passed </span><a href="idh-topic220.htm" class="hs0">AutoLineRowCol</a><span class="ts1">&nbsp;object.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawLineObjectRC, void</span></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; required in aLineObj,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @</span><a href="idh-topic220.htm" class="hs2">AutoLineRowCol</a></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This method is primarily used when drawing </span><a href="idh-topic200.htm#AutolineItems" class="hs0">auto line items</a><span class="ts1">, but can also be used by custom code.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawLineRC_method"></a><span class="ts15">DrawLineRC Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a horizontal, vertical or diagonal line on the current page of a PDF document using </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">. The characteristics of the line are defined by individual passed parameters.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawLineRC,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFromRow,&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFromCol,&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aToRow,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aToCol,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aWidth,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aStrokeColor, </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The line is drawn from the center of a starting cell (defined by the </span><span class="ts7">aFromRow</span><span class="ts1">&nbsp;and </span><span class="ts7">aFromCol</span><span class="ts1">&nbsp;parameters) to the center of an ending cell (defined by the </span><span class="ts7">aToRow</span><span class="ts1">&nbsp;and </span><span class="ts7">aToCol</span><span class="ts1">&nbsp;parameters).</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The width of the line can be altered by passing the required width of the line in device independent pixels to the optional </span><span class="ts7">aWidth</span><span class="ts1">&nbsp;parameter. The color of the line can be altered by passing the required color to the optional </span><span class="ts7">aStrokeColor</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawLineRow_method"></a><span class="ts15">DrawLineRow Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a horizontal line from the current position to the end of the current row, using </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawLineRow,&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFullWidth,&nbsp;&nbsp; boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aWidth,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aStrokeColor, </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The line is drawn from the center of the current cell to the center of the last column of the current row, and will default to being 1 device independent pixel wide and drawn in the current </span><a href="idh-topic30.htm#StrokeColor_property" class="hs0">StrokeColor</a><span class="ts1">. </span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">If you pass true to the optional </span><span class="ts7">aFullWidth</span><span class="ts1">&nbsp;parameter then the line will to be drawn from the left edge of the starting cell to the right-edge of the ending cell.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The width of the line can be altered by passing the required width of the line in device independent pixels to the optional </span><span class="ts7">aWidth</span><span class="ts1">&nbsp;parameter. The color of the line can be altered by passing the required color to the optional </span><span class="ts7">aStrokeColor</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawMultiSeriesChartLegend_method"></a><span class="ts15">DrawMultiSeriesChartLegend Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a chart legend for a chart that displays multiple data series. The legend text is based on the label for each data series.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawMultiSeriesChartLegend, </span><a href="idh-topic420.htm" class="hs2">XYcoordinate</a></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; required in aTopX,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; required in aTopY,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; required in aChartData,&nbsp;&nbsp; @</span><a href="idh-topic460.htm" class="hs2">ChartDataSet</a></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The top left corner of the legend is positioned by passing the </span><span class="ts7">aTopX</span><span class="ts1">, </span><span class="ts7">aTopY </span><span class="ts1">parameters. The text and colors for the legend are defined by the </span><a href="idh-topic460.htm" class="hs0">ChartDataSet </a><span class="ts1">object passed via the </span><span class="ts7">aChartData</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">This method returns an XYcoordinate that defines where the bottom right corner of the legend falls. This information can be useful if you wish to subsequently draw a box around the legend.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawMultiSeriesChartLegend_method2"></a><span class="ts15">DrawMultiSeriesChartLegend Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Draws a chart legend for a chart that displays multiple data series. The legend text is based on the label for each data series.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawMultiSeriesChartLegend, </span><a href="idh-topic420.htm" class="hs2">XYcoordinate</a></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; required in aTopLeft,&nbsp;&nbsp;&nbsp;&nbsp; </span><a href="idh-topic420.htm" class="hs2">XYcoordinate</a></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; required in aChartData,&nbsp;&nbsp; @</span><a href="idh-topic460.htm" class="hs2">ChartDataSet</a></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The top left corner of the legend is positioned by passing the </span><span class="ts7">aTopLeft </span><span class="ts1">parameter. The text and colors for the legend are defined by the </span><a href="idh-topic460.htm" class="hs0">ChartDataSet </a><span class="ts1">object passed via the </span><span class="ts7">aChartData</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">This method returns an XYcoordinate that defines where the bottom right corner of the legend falls. This information can be useful if you wish to subsequently draw a box around the legend.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawPieChart_method"></a><span class="ts15">DrawPieChart Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a </span><a href="idh-topic410.htm" class="hs0">pie chart</a><span class="ts1">&nbsp;on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawPieChart,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aCenterX,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aCenterY,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aRadius,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aChartData,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @</span><a href="idh-topic460.htm" class="hs2">ChartDataSet</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aBackgroundColor, </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The center point and radius of the pie chart are defined by the </span><span class="ts7">aCenterX</span><span class="ts1">, </span><span class="ts7">aCenterY </span><span class="ts1">and </span><span class="ts7">aRadius </span><span class="ts1">parameters. The </span><span class="ts7">aChartData </span><span class="ts1">parameter accepts a </span><a href="idh-topic460.htm" class="hs2">ChartDataSet</a><span class="ts1">&nbsp;object that contains the data to be charted. Even though a </span><a href="idh-topic460.htm" class="hs2">ChartDataSet</a><span class="ts1">&nbsp;may define multiple data series, only the first data series is used when drawing a pie chart.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawPieChart_method2"></a><span class="ts15">DrawPieChart Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a </span><a href="idh-topic410.htm" class="hs0">pie chart</a><span class="ts1">&nbsp;on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawPieChart,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aCenterPoint,&nbsp;&nbsp;&nbsp;&nbsp; </span><a href="idh-topic420.htm" class="hs2">XYcoordinate</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aRadius,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aChartData,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @</span><a href="idh-topic460.htm" class="hs2">ChartDataSet</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aBackgroundColor, </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The center point and radius of the pie chart are defined by the </span><span class="ts7">aCenterPoint </span><span class="ts1">and </span><span class="ts7">aRadius </span><span class="ts1">parameters. The </span><span class="ts7">aChartData </span><span class="ts1">parameter accepts a </span><a href="idh-topic460.htm" class="hs2">ChartDataSet</a><span class="ts1">&nbsp;object that contains the data to be charted. Even though a </span><a href="idh-topic460.htm" class="hs2">ChartDataSet</a><span class="ts1">&nbsp;may define multiple data series, only the first data series is used when drawing a pie chart.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawSingleSeriesChartLegend_method"></a><span class="ts15">DrawSingleSeriesChartLegend Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a legend for a chart that displays a single series of data. The legend text is based on the label for individual data items in the first data series.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawSingleSeriesChartLegend, </span><a href="idh-topic420.htm" class="hs2">XYcoordinate</a></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; required in aTopX,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; required in aTopY,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; required in aChartData,&nbsp;&nbsp; @</span><a href="idh-topic460.htm" class="hs2">ChartDataSet</a></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; optional in aShowValues,&nbsp; boolean</span></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The top left corner of the legend is positioned by passing the </span><span class="ts7">aTopX</span><span class="ts1">, </span><span class="ts7">aTopY </span><span class="ts1">parameters. The text and colors for the legend are defined by the </span><a href="idh-topic460.htm" class="hs2">ChartDataSet</a><span class="ts1">&nbsp;objects passed via the </span><span class="ts7">aChartData</span><span class="ts1">&nbsp;parameter. Passing true to the </span><span class="ts7">aShowValues </span><span class="ts1">parameter causes the data values to be displayed in parentheses after the data items label.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This method returns an </span><a href="idh-topic420.htm" class="hs2">XYcoordinate</a><span class="ts1">&nbsp;that defines where the bottom right corner of the legend falls. This information can be useful if you wish to subsequently draw a box around the legend.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">This is an example of a chart legend:</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps1"><img width="224" height="79" alt="" src="../images/piechartlegend.png" /></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawSingleSeriesChartLegend_method2"></a><span class="ts15">DrawSingleSeriesChartLegend Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a chart legend for a chart containing a single data series on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawSingleSeriesChartLegend, </span><a href="idh-topic420.htm" class="hs2">XYcoordinate</a></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; required in aTopLeft,&nbsp;&nbsp;&nbsp;&nbsp; </span><a href="idh-topic420.htm" class="hs2">XYcoordinate</a></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; required in aChartData,&nbsp;&nbsp; @</span><a href="idh-topic460.htm" class="hs2">ChartDataSet</a></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; optional in aShowValues,&nbsp; boolean</span></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The top left corner of the legend is positioned by passing the </span><span class="ts7">aTopLeft </span><span class="ts1">parameter. The text and colors for the legend are defined by the </span><a href="idh-topic460.htm" class="hs2">ChartDataSet</a><span class="ts1">&nbsp;object passed via the </span><span class="ts7">aChartData</span><span class="ts1">&nbsp;parameter. Passing true to the </span><span class="ts7">aShowValues </span><span class="ts1">parameter causes the data values to be displayed in parentheses after the data items label.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This method returns an </span><a href="idh-topic420.htm" class="hs2">XYcoordinate </a><span class="ts1">that defines where the bottom right corner of the legend falls. This information can be useful if you wish to subsequently draw a box around the legend.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <p class="ps1"><a id="DrawRoundedBox_method"></a><span class="ts15">DrawRoundedBox Method</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws a box with rounded corners on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the box are defined by individual passed parameters.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawBox,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFromX,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFromY,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aToX,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aToY,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aRadius,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aWidth,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aStrokeColor, </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFill,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFillColor,&nbsp;&nbsp; </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This method draws a box with rounded corners on the current page of the PDF document, the position and size of the box being defined by passing the </span><span class="ts7">aFromX</span><span class="ts1">, </span><span class="ts7">aFromY</span><span class="ts1">, </span><span class="ts7">aToX</span><span class="ts1">&nbsp;and </span><span class="ts7">aToY</span><span class="ts1">&nbsp;parameters to describe two diagonally opposite corners of the box using the absolute coordinates system. The box is drawn exactly the same way as with the </span><a href="idh-topic30.htm#DrawBox_method" class="hs2">DrawBox</a><span class="ts1">&nbsp;method, however the corners of the box are rounded off based on the radius specified via the </span><span class="ts7">aRadius</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">You can alter the width of the line used to draw the box by passing the optional </span><span class="ts7">aWidth</span><span class="ts1">&nbsp;parameter, the color of the line used to draw the box box by passing the optional </span><span class="ts7">aStrokeColor</span><span class="ts1">&nbsp;parameter. You can also specify whether the box should be filled using the current </span><a href="idh-topic30.htm#FillColor_property" class="hs0">FillColor</a><span class="ts1">&nbsp;by passing true to the optional </span><span class="ts7">aFill</span><span class="ts1">&nbsp;parameter, and can override the current default fill color by passing the </span><span class="ts7">aFillColor</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawText_method"></a><span class="ts15">DrawText Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws text on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the text are defined by individual passed parameters.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawText,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aText,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aX,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aY,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aColor,&nbsp;&nbsp;&nbsp;&nbsp; </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFontName,&nbsp; string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFontSize,&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aUnderline, boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aRotation,&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The text passed via the </span><span class="ts7">aText</span><span class="ts1">&nbsp;parameter is drawn at the position defined by the passed </span><span class="ts7">aX</span><span class="ts1">&nbsp;and </span><span class="ts7">aY</span><span class="ts1">&nbsp;parameters. By default the text is drawn using the default normal font and current </span><a href="idh-topic30.htm#StrokeColor_property" class="hs0">StrokeColor</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">You can also override the color of the text by passing a </span><a href="idh-topic50.htm" class="hs0">PdfColor</a><span class="ts1">&nbsp;value to the optional </span><span class="ts7">aColor</span><span class="ts1">&nbsp;parameter. You determine that the text is displayed in a different font or font size by passing values to the optional </span><span class="ts7">aFontName</span><span class="ts1">&nbsp;and </span><span class="ts7">aFontSize</span><span class="ts1">&nbsp;parameters. The font name that you specify must be either one of the PDF environments </span><a href="idh-topic170.htm#ImplicitFonts" class="hs0">implicit fonts</a><span class="ts1">&nbsp;or the internal name of a TrueType font that you have previously loaded by calling the </span><a href="idh-topic30.htm#LoadTrueTypeFont_method" class="hs0">LoadTrueTypeFont</a><span class="ts1">&nbsp;method.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">If you wish the text to be underlined then pass a value of true to the </span><span class="ts7">aUnderline</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The current position of the row/column coordinates system is NOT updated by calling this method.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The text may optionally be rotated by specifying the number of degrees of rotation via the </span><span class="ts7">aRotation </span><span class="ts1">parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawTextObject_method"></a><span class="ts15">DrawTextObject Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws text on the current page of the PDF document using </span><a href="idh-topic210.htm#absolute_coordinates" class="hs0">absolute coordinates</a><span class="ts1">. The characteristics of the text are defined by a passed </span><a href="idh-topic110.htm" class="hs0">AutoTextAbsolute</a><span class="ts1">&nbsp;object.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawText,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aTextObj,&nbsp; @</span><a href="idh-topic110.htm" class="hs2">AutoTextAbsolute</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This method is primarily used when drawing </span><a href="idh-topic200.htm#AutoTextItems" class="hs0">auto text items</a><span class="ts1">, but can also be used by custom code.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawTextObjectRC_method"></a><span class="ts15">DrawTextObjectRC Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws text on the current page of the PDF document using </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">. The characteristics of the text are defined by a passed </span><a href="idh-topic90.htm" class="hs0">AutoTextRowCol</a><span class="ts1">&nbsp;object.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawTextRC,&nbsp;&nbsp;&nbsp; void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aTextObj,&nbsp; @</span><a href="idh-topic90.htm" class="hs2">AutoTextRowCol</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">This method is primarily used when drawing </span><a href="idh-topic200.htm#AutoTextItems" class="hs0">auto text items</a><span class="ts1">, but can also be used by custom code.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="DrawTextRC_method"></a><span class="ts15">DrawTextRC Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Draws text on the current page of the PDF document using </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">. The characteristics of the text are defined by individual passed parameters.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method DrawTextRC,&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aText,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aRow,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aCol,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aBold,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aItalic,&nbsp;&nbsp;&nbsp; boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aColor,&nbsp;&nbsp;&nbsp;&nbsp; </span><a href="idh-topic50.htm" class="hs2">PdfColor</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aNewLine,&nbsp;&nbsp; boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aUnderline, boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The text passed via the </span><span class="ts7">aText</span><span class="ts1">&nbsp;parameter is drawn at the current position as defined by the </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">&nbsp;system. By default the text is drawn using the default normal font and current </span><a href="idh-topic30.htm#StrokeColor_property" class="hs0">StrokeColor</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">You can override the position where the text is displayed by passing values to the optional </span><span class="ts7">aRow</span><span class="ts1">&nbsp;or </span><span class="ts7">aCol</span><span class="ts1">&nbsp;parameters. You can also cause the text to be displayed in bold, italic or both by passing true to a combination of the </span><span class="ts7">aBold</span><span class="ts1">&nbsp;and </span><span class="ts7">aItalic</span><span class="ts1">&nbsp;parameters. You can also override the color of the text by passing a </span><a href="idh-topic50.htm" class="hs0">PdfColor</a><span class="ts1">&nbsp;value to the optional </span><span class="ts7">aColor</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The current position will be set to the </span><a href="idh-topic30.htm#Row_property" class="hs0">Row</a><span class="ts1">&nbsp;and </span><a href="idh-topic30.htm#Column_property" class="hs0">Column</a><span class="ts1">&nbsp;positions of the cell immediately following the text that was displayed, unless you pass a value of true to the optional </span><span class="ts7">aNewLine</span><span class="ts1">&nbsp;parameter, in which case the current position will be set to the first column on the next line. If this happens, and the new line is below the body of the current page, then the </span><a href="idh-topic30.htm#NewPage_method" class="hs0">NewPage</a><span class="ts1">&nbsp;method is automatically called and the current position will be set to the first column on the first row of the new page.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">If you wish the text to be underlined then pass a value of true to the </span><span class="ts7">aUnderline</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="FontAvailable_method"></a><span class="ts15">FontAvailable Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Indicates whether a named font is available for use.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method FontAvailable, boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFontName, string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Available fonts include the implicit fonts that are defined by the PDF specification as well as other fonts that you have loaded by calling </span><a href="idh-topic30.htm#LoadTrueTypeFont_method" class="hs0">LoadTrueTypeFont</a><span class="ts1">. Pass the internal name of the font that you wish to check to the </span><span class="ts7">aFontName</span><span class="ts1">&nbsp;parameter. The method returns true if the font is available, otherwise false.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="LoadImage_method"></a><span class="ts15">LoadImage Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Loads a JPEG or PNG image and returns the HARU PDF Image object.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method LoadImage,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in&nbsp; aFileSpec,&nbsp;&nbsp;&nbsp;&nbsp; string</span></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp;&nbsp; required out aImage,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @HpdfImage</span></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp;&nbsp; optional out aErrorMessage, string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">The image file spec may either be a full path to a JPEG or PNG image file, or may use a Synergy logical name in the file specification.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="LoadTrueTypeFont_method"></a><span class="ts15">LoadTrueTypeFont Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Loads a TrueType font from a font file (.ttf) and embeds the font in the PDF document.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts7">public method LoadTrueTypeFont, string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFontFile,&nbsp;&nbsp;&nbsp; string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">You must pass the full path to a TrueType font, logical names are not supported in the file specification. The method returns the internal name of the font, which you will need in order to subsequently display text using the font.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="NewLine_method"></a><span class="ts15">NewLine Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Throws one or more &quot;new lines&quot;. Sets the current position to the first column on the next line (row/column coordinates system). Calling this method is similar to displaying a &lt;CR&gt;&lt;LF&gt; pair to a character-cell terminal.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts7">public method NewLine,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional in aNumberOfLines, int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">By default this method throws one new line, but you can specify the number of new lines to throw by passing a value to the </span><span class="ts7">aNumberOfLines</span><span class="ts1">&nbsp;parameter. If the current position is already on the last line of the page body when this method is called then a new page will automatically be added and the current position will be set to the first column of the first row of the new page.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The </span><a href="idh-topic30.htm#Row_property" class="hs0">Row</a><span class="ts1">&nbsp;and </span><a href="idh-topic30.htm#Column_property" class="hs0">Column</a><span class="ts1">&nbsp;properties are updated to reflect the new current position. If the operation resulted in a new page being added then the </span><a href="idh-topic30.htm#PageNumber_property" class="hs0">PageNumber</a><span class="ts1">&nbsp;property is incremented. The routine returns the new current row number.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="NewPage_method"></a><span class="ts15">NewPage Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Completes the current page and adds a new page to the PDF document.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method NewPage, int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aOrientation, </span><a href="idh-topic40.htm" class="hs2">PdfOrientation</a></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aOutlineText, string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">When this method is called the first thing that happens is that the current page is completed. This includes the addition of any </span><a href="idh-topic200.htm#AutoItemMode" class="hs0">EndPage Auto Items</a><span class="ts1">&nbsp;to the page, as well as the addition of any </span><a href="idh-topic190.htm" class="hs0">header and/or footer</a><span class="ts1">&nbsp;content.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Once the current page has been completed a new page is added to the document. Having added a new page it is not possible to change the content of any previous page.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The orientation of the new page will default to the default page orientation of the document, unless you override it by passing a value to the optional </span><span class="ts7">aOrientation</span><span class="ts1">&nbsp;property. If the orientation changes then the values of the </span><a href="idh-topic30.htm#Height_property" class="hs0">Height</a><span class="ts1">, </span><a href="idh-topic30.htm#Width_property" class="hs0">Width</a><span class="ts1">, </span><a href="idh-topic30.htm#Rows_property" class="hs0">Rows</a><span class="ts1">&nbsp;and </span><a href="idh-topic30.htm#Columns_property" class="hs0">Columns</a><span class="ts1">&nbsp;properties will be updated to reflect the new page orientation. Note that the calculation of font size for the row/column coordinates system is NOT re-evaluated; the same font and font size will be used, resulting in a different number of rows and columns for pages in the alternate orientation.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">If a document outline is being created then by default a new outline item will be added for each new page; the default outline text will be &quot;Page &lt;page number&gt;&quot;. To override this default outline text pass a custom value to the </span><span class="ts7">aOutlineText</span><span class="ts1">&nbsp;parameter. To prevent the addition of an outline item for the new page pass a value of ^null to </span><span class="ts7">aOutlineText</span><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">As soon as a page is added, any </span><a href="idh-topic200.htm#AutoItemMode" class="hs0">BeginPage Auto Items</a><span class="ts1">&nbsp;will be added to the new page.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The current </span><a href="idh-topic30.htm#Row_property" class="hs0">Row</a><span class="ts1">&nbsp;and </span><a href="idh-topic30.htm#Column_property" class="hs0">Column</a><span class="ts1">&nbsp;properties are both reset to a value of 1 and the </span><a href="idh-topic30.htm#PageNumber_property" class="hs0">PageNumber</a><span class="ts1">&nbsp;property is incremented.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="Preview_method"></a><span class="ts15">Preview Method</span><span class="ts6">&nbsp;(Windows only)</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Saves the PDF file to disk and then launches it via the default application that is registered to handle PDF files.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts7">public method Preview, boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional out aErrorMessage, string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">The return value of the method will be true unless an error occurs while attempting to save or launch the document. </span><span class="ts1">If the method returns false then an explanatory message can be returned via the optional </span><span class="ts7">aErrorMessage</span><span class="ts1">&nbsp;parameter. </span><span class="ts1">This method calls the </span><a href="idh-topic30.htm#Save_method" class="hs0">Save</a><span class="ts1">&nbsp;method which in turn calls the </span><a href="idh-topic30.htm#Dispose_method" class="hs0">Dispose</a><span class="ts1">&nbsp;method. </span><span class="ts1">The PdfFile object is no longer valid after calling this method.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">This method only works on Windows and requires that you have associated a PDF viewer application with the .pdf file extension. If you call this method on a non-Windows system the PDF file will be saved and the method will return false.</span></h3>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <p class="ps1"><a id="PreviewFile_method"></a><span class="ts15">PreviewFile Method</span><span class="ts6">&nbsp;(Windows only, static)</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Displays an existing (on disk) PDF document in the default registered viewer application.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public static method PreviewFile, boolean</span></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; required in&nbsp; aPdfFileSpec, string</span></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; optional out aErrorMessage, a</span></p>
+    <p><span class="ts7">&nbsp;&nbsp;&nbsp; endparams</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Note that the method is static, so an example of calling it looks like:</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">if (PdfFile.PreviewFile(pdfFileSpec,errorMessage)) then</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">;;Success</span></p>
+    <p><span class="ts7">else</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">;;Error, refer to errorMessage</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">This method only works on Windows and requires that you have a file association for the PDF file extension. If you call this method on a non-Windows system the method will return false, along with an explanatory error message.</span></h3>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="Print_method"></a><span class="ts15">Print Method</span><span class="ts6">&nbsp;(Windows only)</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Completes the current PDF document, saves it to disk, and prints it to a printer.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method Print, boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aPrinterName, string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional out aErrorMessage, string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">This method completes the current document by calling the </span><a href="idh-topic30.htm#Save_method" class="hs0">Save</a><span class="ts1">&nbsp;method and then prints the document to a printer. If the </span><span class="ts7">aPrinterName</span><span class="ts1">&nbsp;parameter is passed then it is used as the name of the printer to be targeted; otherwise the default printer is used. </span><span class="ts1">The return value of the method will be true unless an error occurs while attempting to save or print the document. If the method returns false then an explanatory message can be returned via the optional </span><span class="ts7">aErrorMessage</span><span class="ts1">&nbsp;parameter. The PdfFile object is no longer valid after calling this method.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">This method only works on Windows and requires that you have </span><a href="idh-topic340.htm#SumatraPDF" class="hs0">SumartaPDF</a><span class="ts1">&nbsp;installed. If you call this method on a non-Windows system the PDF file will be saved and the method will return false.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="PrintDialog_method"></a><span class="ts15">PrintDialog Method</span><span class="ts6">&nbsp;(Windows only)</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Completes the current PDF document, saves it to disk, and shows a print dialog to allow the document to be printed to a printer selected by the user.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method Print, boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional out aErrorMessage, string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">This method completes the current document by calling the </span><a href="idh-topic30.htm#Save_method" class="hs0">Save</a><span class="ts1">&nbsp;method and then shows a print dialog to allow the user to select a printer to be targeted. The user can also select other options such as the number of copies to be printed.The return value of the method will be true unless an error occurs while attempting to save or print the document. If the method returns false then an explanatory message can be returned via the optional </span><span class="ts7">aErrorMessage</span><span class="ts1">&nbsp;parameter. The PdfFile object is no longer valid after calling this method.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">This method only works on Windows and requires that you have </span><a href="idh-topic340.htm#SumatraPDF" class="hs0">SumartaPDF</a><span class="ts1">&nbsp;installed. If you call this method on a non-Windows system the PDF file will be saved and the method will return false, along with an explanatory error message.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="PrintFile_method"></a><span class="ts15">PrintFile Method</span><span class="ts6">&nbsp;(Windows only, static)</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Prints an existing (on disk) PDF document to a printer.</span></h3>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p class="ps7"><span class="ts10">public static method PrintFile, boolean</span></p>
+    <p class="ps7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts10">required in&nbsp; aPdfFileSpec,&nbsp; a</span></p>
+    <p class="ps7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts10">optional in&nbsp; aPrinterName,&nbsp; a</span></p>
+    <p class="ps7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts10">optional out aErrorMessage, a</span></p>
+    <p class="ps7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts10">endparams</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Note that the method is static, so an example of calling it looks like:</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">if (PdfFile.PrintFile(pdfFileSpec,printerName,errorMessage)) then</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">;;Success</span></p>
+    <p><span class="ts7">else</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">;;Error, refer to errorMessage</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">The printer name parameter is optional. By default the PDF file will be printed to your default printer.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This method only works on Windows and requires that you have </span><a href="idh-topic340.htm#SumatraPDF" class="hs0">SumartaPDF</a><span class="ts1">&nbsp;installed. If you call this method on a non-Windows system the method will return false.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="PrintFileDialog_method"></a><span class="ts15">PrintFileDialog Method</span><span class="ts6">&nbsp;(Windows only, static)</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Prints an existing (on disk) PDF document to a printer that is selected in a printer selection dialog.</span></h3>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p class="ps7"><span class="ts10">public static method PrintFile, boolean</span></p>
+    <p class="ps7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts10">required in&nbsp; aPdfFileSpec,&nbsp; a</span></p>
+    <p class="ps7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts10">optional out aErrorMessage, a</span></p>
+    <p class="ps7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts10">endparams</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Note that the method is static, so an example of calling it looks like:</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">if (PdfFile.PrintFileDialog(pdfFileSpec,errorMessage)) then</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">;;Success</span></p>
+    <p><span class="ts7">else</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">;;Error, refer to errorMessage</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">The printer to be used is selected from a printer selection dialog that is displayed to the user.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This method only works on Windows and requires that you have </span><a href="idh-topic340.htm#SumatraPDF" class="hs0">SumartaPDF</a><span class="ts1">&nbsp;installed. If you call this method on a non-Windows system the method will return false.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="ResetFont_method"></a><span class="ts15">ResetFont Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Resets the current font to the default normal font used by the </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">&nbsp;system.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method ResetFont, void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="Save_method"></a><span class="ts15">Save Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Completes the PDF document and saves it to disk.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method Save, boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional out aErrorMessage, string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">When this method is called the first thing that happens is that the current page is completed. This includes the addition of any </span><a href="idh-topic200.htm#AutoItemMode" class="hs0">EndPage Auto Items</a><span class="ts1">&nbsp;to the page as well as the addition of any </span><a href="idh-topic190.htm" class="hs0">header and/or footer</a><span class="ts1">&nbsp;content. The name of the output file is then determined by concatenating the values of </span><a href="idh-topic30.htm#FileLocation_property" class="hs0">FileLocation</a><span class="ts1">&nbsp;and </span><a href="idh-topic30.htm#FileName_property" class="hs0">FileName</a><span class="ts1">&nbsp;and the document is saved to disk. The method returns a value of true if the document is successfully saved to disk, otherwise a value of false is returned. If the method returns false then an explanatory message can be returned via the optional </span><span class="ts7">aErrorMessage</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The </span><a href="idh-topic30.htm#Dispose_method" class="hs0">Dispose</a><span class="ts1">&nbsp;method is called by this method. The PdfFile object is no longer valid after calling this method.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="SelectFont_method"></a><span class="ts15">SelectFont Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Selects an alternate font to be used for subsequent </span><a href="idh-topic30.htm#DrawText_method" class="hs0">DrawText</a><span class="ts1">&nbsp;operations.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method SelectFont,&nbsp;&nbsp;&nbsp; void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFontName, string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFontSize, int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The font name that you pass via the X property must be either one of the PDF environments </span><a href="idh-topic170.htm#ImplicitFonts" class="hs0">implicit fonts</a><span class="ts1">&nbsp;or the internal name of a TrueType font that you have previously loaded by calling the </span><a href="idh-topic30.htm#LoadTrueTypeFont_method" class="hs0">LoadTrueTypeFont</a><span class="ts1">&nbsp;method.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The </span><span class="ts7">aFontSize</span><span class="ts1">&nbsp;parameter allows you to determine the point size of the font to be used.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="SetBackgroundFile_method"></a><span class="ts15">SetBackgroundFile Method (Windows only)</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Specifies an existing PDF file that is to be used to provide the page background for the PDF file currently being created. The PDF file specified might typically contain a &quot;pre-printed&quot; form of some kind, or perhaps a watermark image.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This method is only available on Windows, and can only be used if a licensed copy of </span><a href="idh-topic340.htm#pdftk_Pro" class="hs0">PDFtk Pro</a><span class="ts1">&nbsp;is detected.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method SetBackgroundFile, boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in&nbsp; aPdfFile, string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required out aErrorMessage, string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">Use the </span><span class="ts7">aPdfFile</span><span class="ts1">&nbsp;parameter to specify the name of a PDF file that contains a single page that is to be used as the background for all pages in the PDF file currently being created . A returns value of true indicates that the background file was successfully set. If there is a problem setting the background file, either because the specified file was not found, or because PDFtk Pro was not detected, then the method returns false, and also returns an explanatory error message via the </span><span class="ts7">aErrorMessage</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="SetPosition_method"></a><span class="ts15">SetPosition Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Sets the current position used by the </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">&nbsp;system.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method SetPosition, void</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aRow,&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aColumn, int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">Specify the new current position by passing values to the </span><span class="ts7">aRow</span><span class="ts1">&nbsp;and/or </span><span class="ts7">aColumn</span><span class="ts1">&nbsp;parameters. Calling this method causes the values of the </span><a href="idh-topic30.htm#Row_property" class="hs0">Row</a><span class="ts1">&nbsp;and </span><a href="idh-topic30.htm#Column_property" class="hs0">Column</a><span class="ts1">&nbsp;properties to be updated. You can also set the current position by manipulating those properties directly.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="XfromColumn_method"></a><span class="ts15">XfromColumn Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Converts a column number to an X coordinate.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method XfromColumn, float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aColumn, int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">Specify the column number that you wish to determine the X coordinate for via the </span><span class="ts7">aColumn</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="YfromBodyRow_method"></a><span class="ts15">YfromBodyRow Method</span></h3>
+    <p><br /><span class="ts1">Converts a body row number to a Y coordinate.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">private method YfromBodyRow, float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aBodyRow, int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">Specify the body row number that you wish to determine the Y coordinate for via the </span><span class="ts7">aBodyRow</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="YfromFooterRow_method"></a><span class="ts15">YfromFooterRow Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Converts a footer row number to a Y coordinate.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method YfromFooterRow, float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFooterRow, int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">Specify the body row number that you wish to determine the Y coordinate for via the </span><span class="ts7">aFooterRow</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline1" />
+    </div>
+    <h3 class="hd1"><a id="YfromHeaderRow_method"></a><span class="ts15">YfromHeaderRow Method</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Converts a header row number to a Y coordinate.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method YfromHeaderRow, float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aHeaderRow, int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">Specify the body row number that you wish to determine the Y coordinate for via the </span><span class="ts7">aHeaderRow</span><span class="ts1">&nbsp;parameter.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline0" />
+    </div>
+    <h2 class="hd1"><a id="Remarks"></a><span class="ts2">Remarks</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div class="hr-wrapper">
+      <hr class="hline0" />
+    </div>
+    <p class="ps1"><a id="Examples"></a><span class="ts2">Examples</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+  </div>
+</div>
+				</article>
+			</main>
+		</div>
+		<footer>
+			<div id="hs-footer"><div id="hs-content-f">
+  <div id="hs-wrapper-f">
+    <span id="hs-title-f">Copyright &copy; 2015 Synergex International, Inc.</span>
+  </div>
+</div></div>
+		</footer>
+</body>
+</html>

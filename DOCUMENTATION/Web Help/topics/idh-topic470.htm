@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+<title>Working with Page Backgrounds</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
+<meta name="generator" content="HelpSmith 10.1 (Build 24.1202)" />
+<link type="text/css" rel="stylesheet" href="../css/tree.css?b1fab730" />
+<link type="text/css" rel="stylesheet" href="../css/topics.css?f0fe7ebf" />
+<link type="text/css" rel="stylesheet" href="../css/apr.css?f0fe7ebf" />
+<link type="text/css" rel="stylesheet" href="../css/app.css?f0fe7ebf" />
+<script src="../js/jquery-3.7.1.min.js"></script>
+<script src="../js/tree.min.js?b1fab730"></script>
+<script src="../js/tabs.min.js?b1fab730"></script>
+<script src="../js/jquery.cookie.js?b1fab730"></script>
+<script src="../js/headroom.min.js?b1fab730"></script>
+<script src="../js/app.min.js?b1fab730"></script>
+<script src="../js/search.min.js?b1fab730"></script>
+<!-- Web Help Topic -->
+<script>
+doAppStart();
+</script>
+</head>
+<body>
+	<header>
+		<div id="hs-header-d">
+			<div id="hs-content-h">
+  <div id="hs-wrapper-h">
+    <span id="hs-title-h">Synergy PDF API</span>
+  </div>
+</div>
+		</div>
+		<div id="hs-header-m">
+			<div id="hs-content-m">
+  <div id="hs-area-left">
+    <div id="hs-menu" class="hs-menu-toggle">
+      <span class="line1"></span>
+      <span class="line2"></span>
+      <span class="line3"></span>
+    </div>
+  </div>
+  <div id="hs-area-center">
+    <span id="hs-title-m">Synergy PDF API</span>
+  </div>
+  <div id="hs-area-right"></div>
+</div>
+		</div>
+	</header>
+	<nav id="hs-nav">
+		<div id="hs-nav-content">
+			<ul id="nav-tabs" role="tablist">
+				<li class="hs-toc-tab" role="tab">
+					<a href="#hs-toc-panel">Contents</a>
+				</li>
+				
+				<li class="hs-search-tab" role="tab">
+					<a href="#hs-search-panel">Search</a>
+				</li>
+			</ul>
+			<div id="tabs-panels">
+				<div class="hstabs-panel" id="hs-toc-panel" role="tabpanel">
+					<div id="toc-tree" class="hs-tree"></div>
+				</div>
+				
+				<div class="hstabs-panel" id="hs-search-panel" role="tabpanel">
+					<div id="hs-search-content">
+						<div id="search-form">
+							<label for="squery" class="sfield-title text-label">Type in the keyword(s) to find:</label>
+							<div id="search-box">
+								<div class="search-container">
+									<input type="text" id="squery" autocomplete="off">
+								</div>
+								<div class="search-btn" title="Search"></div>
+							</div>
+							<div id="options-box">
+								<span class="text-label">Match:</span>
+								<input type="radio" id="anywords" name="match" value="anywords" checked="checked"><label for="anywords" class="text-label">Any words</label>
+								<input type="radio" id="phrase" name="match" value="phrase"><label for="phrase" class="text-label">Phrase</label>
+							</div>
+						</div>
+						<div id="search-result"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</nav>
+		<div id="hs-content">
+			<main>
+				<article>
+					<div id="topic-content">
+  <div id="content-box" class="page0">
+    <h1 class="hd0"><span class="ts0">Working with Page Backgrounds</span></h1>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">On Windows only, the PDF API allows you to provide background content for a new PDF file that you are creating by providing an existing PDF file that contains the background information to be used for each page of the new file. This is done by calling the </span><a href="idh-topic30.htm#SetBackgroundFile_method" class="hs0">SetBackgroundFile</a><span class="ts1">&nbsp;method.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Note that using this feature requires that a licensed copy of </span><a href="https://www.pdflabs.com/tools/pdftk-pro" target="_blank" class="hs0">PDFtk Pro</a><span class="ts1">&nbsp;is present in your system PATH.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">The background PDF file might typically contain the layout of a &quot;pre-printed&quot; form, or perhaps a watermark image. Using a background file has several potential benefits, including but not limited to:</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">1.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">Improved performance because the background file only needs to be built once, not for every page of every document produced.</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">2.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">Increased flexibility because the background PDF file can be produced by a wide variety of applications. For example you might use Microsoft Word or Excel to produce a background PDF file, and then use that file with the PDF API.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Here is a simple example of how to specify the use of a background file:</span></h3>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Create an instance of the PdfFile class</span></p>
+    <p class="ps2"><span class="ts7">pdf = new PdfFile()</span></p>
+    <p class="ps6"><span class="ts10">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Name the other PDF file that defines page background content</span></p>
+    <p class="ps2"><span class="ts7">if (!pdf.SetBackgroundFile(&quot;FORMS:DeliveryTicketForm.pdf&quot;,errorMessage)</span></p>
+    <p class="ps2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">throw new Exception(errorMessage)</span></p>
+    <p class="ps6"><span class="ts10">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Other code to define the content of the PDF file</span></p>
+    <p class="ps6"><span class="ts10">&nbsp;</span></p>
+    <p class="ps6"><span class="ts10">&nbsp;</span></p>
+    <p class="ps6"><span class="ts10">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Show the results</span></p>
+    <p class="ps2"><span class="ts7">pdf.Preview()</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+  </div>
+</div>
+				</article>
+			</main>
+		</div>
+		<footer>
+			<div id="hs-footer"><div id="hs-content-f">
+  <div id="hs-wrapper-f">
+    <span id="hs-title-f">Copyright &copy; 2015 Synergex International, Inc.</span>
+  </div>
+</div></div>
+		</footer>
+</body>
+</html>

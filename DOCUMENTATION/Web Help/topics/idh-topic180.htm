@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+<title>Completing Documents</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
+<meta name="generator" content="HelpSmith 10.1 (Build 24.1202)" />
+<link type="text/css" rel="stylesheet" href="../css/tree.css?b1fab730" />
+<link type="text/css" rel="stylesheet" href="../css/topics.css?f0fe7ebf" />
+<link type="text/css" rel="stylesheet" href="../css/apr.css?f0fe7ebf" />
+<link type="text/css" rel="stylesheet" href="../css/app.css?f0fe7ebf" />
+<script src="../js/jquery-3.7.1.min.js"></script>
+<script src="../js/tree.min.js?b1fab730"></script>
+<script src="../js/tabs.min.js?b1fab730"></script>
+<script src="../js/jquery.cookie.js?b1fab730"></script>
+<script src="../js/headroom.min.js?b1fab730"></script>
+<script src="../js/app.min.js?b1fab730"></script>
+<script src="../js/search.min.js?b1fab730"></script>
+<!-- Web Help Topic -->
+<script>
+doAppStart();
+</script>
+</head>
+<body>
+	<header>
+		<div id="hs-header-d">
+			<div id="hs-content-h">
+  <div id="hs-wrapper-h">
+    <span id="hs-title-h">Synergy PDF API</span>
+  </div>
+</div>
+		</div>
+		<div id="hs-header-m">
+			<div id="hs-content-m">
+  <div id="hs-area-left">
+    <div id="hs-menu" class="hs-menu-toggle">
+      <span class="line1"></span>
+      <span class="line2"></span>
+      <span class="line3"></span>
+    </div>
+  </div>
+  <div id="hs-area-center">
+    <span id="hs-title-m">Synergy PDF API</span>
+  </div>
+  <div id="hs-area-right"></div>
+</div>
+		</div>
+	</header>
+	<nav id="hs-nav">
+		<div id="hs-nav-content">
+			<ul id="nav-tabs" role="tablist">
+				<li class="hs-toc-tab" role="tab">
+					<a href="#hs-toc-panel">Contents</a>
+				</li>
+				
+				<li class="hs-search-tab" role="tab">
+					<a href="#hs-search-panel">Search</a>
+				</li>
+			</ul>
+			<div id="tabs-panels">
+				<div class="hstabs-panel" id="hs-toc-panel" role="tabpanel">
+					<div id="toc-tree" class="hs-tree"></div>
+				</div>
+				
+				<div class="hstabs-panel" id="hs-search-panel" role="tabpanel">
+					<div id="hs-search-content">
+						<div id="search-form">
+							<label for="squery" class="sfield-title text-label">Type in the keyword(s) to find:</label>
+							<div id="search-box">
+								<div class="search-container">
+									<input type="text" id="squery" autocomplete="off">
+								</div>
+								<div class="search-btn" title="Search"></div>
+							</div>
+							<div id="options-box">
+								<span class="text-label">Match:</span>
+								<input type="radio" id="anywords" name="match" value="anywords" checked="checked"><label for="anywords" class="text-label">Any words</label>
+								<input type="radio" id="phrase" name="match" value="phrase"><label for="phrase" class="text-label">Phrase</label>
+							</div>
+						</div>
+						<div id="search-result"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</nav>
+		<div id="hs-content">
+			<main>
+				<article>
+					<div id="topic-content">
+  <div id="content-box" class="page0">
+    <h1 class="hd0"><span class="ts0">Completing Documents</span></h1>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Once you have finished building the document you have two options. Both involve saving the PDF file to disk, and one also launches the file for preview by the user.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Previewing the PDF</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">To preview the document you call </span><a href="idh-topic30.htm#Preview_method" class="hs0">PdfFile.Preview</a><span class="ts1">. For example:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps2"><span class="ts8">pdf = new PdfFile()</span></p>
+    <p class="ps2"><span class="ts8">.</span></p>
+    <p class="ps2"><span class="ts8">.</span></p>
+    <p class="ps2"><span class="ts8">.</span></p>
+    <p class="ps2"><span class="ts8">pdf.Preview()</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The preview method first saves the PDF file to disk (based on the values of the </span><a href="idh-topic30.htm#FileLocation_property" class="hs0">PdfFile.FileLocation</a><span class="ts1">&nbsp;and </span><a href="idh-topic30.htm#FileName_property" class="hs0">PdfFile.FileName</a><span class="ts1">, and then launches the saved file using its default Windows file association. So if the .pdf file extension is associated with the Adobe Reader application, the application will start and display your final document.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">After calling </span><a href="idh-topic30.htm#Preview_method" class="hs0">PdfFile.Preview</a><span class="ts1">&nbsp;the PdfFile object is no longer valid.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Saving the PDF</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">If you don't wish to have the user preview the document you can simply save it to disk by calling </span><a href="idh-topic30.htm#Save_method" class="hs0">PdfFile.Save</a><span class="ts1">&nbsp;method. For example:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps2"><span class="ts8">pdf = new PdfFile()</span></p>
+    <p class="ps2"><span class="ts8">.</span></p>
+    <p class="ps2"><span class="ts8">.</span></p>
+    <p class="ps2"><span class="ts8">.</span></p>
+    <p class="ps2"><span class="ts8">pdf.SaveToFile()</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">After calling </span><a href="idh-topic30.htm#Save_method" class="hs0">PdfFile.Save</a><span class="ts1">&nbsp;the PdfFile object is no longer valid.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Invalidating the PdfFile Object</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">It is important to understand that calling either </span><a href="idh-topic30.htm#Preview_method" class="hs0">PdfFile.Preview</a><span class="ts1">&nbsp;or </span><a href="idh-topic30.htm#Save_method" class="hs0">PdfFile.Save</a><span class="ts1">&nbsp;executes code that cleans up and deallocates resources. After calling either of these methods the </span><a href="idh-topic30.htm" class="hs0">PdfFile</a><span class="ts1">&nbsp;object is no longer valid.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Aborting PDF Creation</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">If for any reason you decide to stop working on the creation of a PDF file after creating an instance of the </span><a href="idh-topic30.htm" class="hs0">PdfFile</a><span class="ts1">&nbsp;class, you should call </span><a href="idh-topic30.htm#Dispose_method" class="hs0">PdfFile.Dispose</a><span class="ts1">&nbsp;to clean up and release allocated resources. For example:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps2"><span class="ts8">pdf = new PdfFile()</span></p>
+    <p class="ps2"><span class="ts8">.</span></p>
+    <p class="ps2"><span class="ts8">.</span></p>
+    <p class="ps2"><span class="ts8">.</span></p>
+    <p class="ps2"><span class="ts8">pdf.Dispose()</span></p>
+    <p><span class="ts7">&nbsp;</span></p>
+    <p><span class="ts7">&nbsp;</span></p>
+    <p><span class="ts7">&nbsp;</span></p>
+  </div>
+</div>
+				</article>
+			</main>
+		</div>
+		<footer>
+			<div id="hs-footer"><div id="hs-content-f">
+  <div id="hs-wrapper-f">
+    <span id="hs-title-f">Copyright &copy; 2015 Synergex International, Inc.</span>
+  </div>
+</div></div>
+		</footer>
+</body>
+</html>
