@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+<title>Working with Fonts</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
+<meta name="generator" content="HelpSmith 10.1 (Build 24.1202)" />
+<link type="text/css" rel="stylesheet" href="../css/tree.css?b1fab730" />
+<link type="text/css" rel="stylesheet" href="../css/topics.css?af09f847" />
+<link type="text/css" rel="stylesheet" href="../css/apr.css?af09f847" />
+<link type="text/css" rel="stylesheet" href="../css/app.css?af09f847" />
+<script src="../js/jquery-3.7.1.min.js"></script>
+<script src="../js/tree.min.js?b1fab730"></script>
+<script src="../js/tabs.min.js?b1fab730"></script>
+<script src="../js/jquery.cookie.js?b1fab730"></script>
+<script src="../js/headroom.min.js?b1fab730"></script>
+<script src="../js/app.min.js?b1fab730"></script>
+<script src="../js/search.min.js?b1fab730"></script>
+<!-- Web Help Topic -->
+<script>
+doAppStart();
+</script>
+</head>
+<body>
+	<header>
+		<div id="hs-header-d">
+			<div id="hs-content-h">
+  <div id="hs-wrapper-h">
+    <span id="hs-title-h">Synergy PDF API</span>
+  </div>
+</div>
+		</div>
+		<div id="hs-header-m">
+			<div id="hs-content-m">
+  <div id="hs-area-left">
+    <div id="hs-menu" class="hs-menu-toggle">
+      <span class="line1"></span>
+      <span class="line2"></span>
+      <span class="line3"></span>
+    </div>
+  </div>
+  <div id="hs-area-center">
+    <span id="hs-title-m">Synergy PDF API</span>
+  </div>
+  <div id="hs-area-right"></div>
+</div>
+		</div>
+	</header>
+	<nav id="hs-nav">
+		<div id="hs-nav-content">
+			<ul id="nav-tabs" role="tablist">
+				<li class="hs-toc-tab" role="tab">
+					<a href="#hs-toc-panel">Contents</a>
+				</li>
+				
+				<li class="hs-search-tab" role="tab">
+					<a href="#hs-search-panel">Search</a>
+				</li>
+			</ul>
+			<div id="tabs-panels">
+				<div class="hstabs-panel" id="hs-toc-panel" role="tabpanel">
+					<div id="toc-tree" class="hs-tree"></div>
+				</div>
+				
+				<div class="hstabs-panel" id="hs-search-panel" role="tabpanel">
+					<div id="hs-search-content">
+						<div id="search-form">
+							<label for="squery" class="sfield-title text-label">Type in the keyword(s) to find:</label>
+							<div id="search-box">
+								<div class="search-container">
+									<input type="text" id="squery" autocomplete="off">
+								</div>
+								<div class="search-btn" title="Search"></div>
+							</div>
+							<div id="options-box">
+								<span class="text-label">Match:</span>
+								<input type="radio" id="anywords" name="match" value="anywords" checked="checked"><label for="anywords" class="text-label">Any words</label>
+								<input type="radio" id="phrase" name="match" value="phrase"><label for="phrase" class="text-label">Phrase</label>
+							</div>
+						</div>
+						<div id="search-result"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</nav>
+		<div id="hs-content">
+			<main>
+				<article>
+					<div id="topic-content">
+  <div id="content-box" class="page0">
+    <h1 class="hd0"><span class="ts0">Working with Fonts</span></h1>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="ImplicitFonts"></a><span class="ts2">PDF Implicit Fonts</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The Adobe PDF specification defines a set of fonts that must be inherently supported by all applications that process PDF files. These fonts are:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div>
+      <table class="tbl2">
+        <tr class="row0">
+          <td class="cell0">
+            <h3 class="hd0"><span class="ts4">Fixed-Pitch Fonts</span></h3>
+          </td>
+          <td class="cell0">
+            <h3 class="hd0"><span class="ts4">Variable-Pitch Fonts</span></h3>
+          </td>
+          <td class="cell0">
+            <h3 class="hd0"><span class="ts4">Symbol Fonts</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <h3 class="hd0"><span class="ts1">Courier</span></h3>
+            <h3 class="hd0"><span class="ts1">Courier-Bold</span></h3>
+            <h3 class="hd0"><span class="ts1">Courier-Oblique</span></h3>
+            <h3 class="hd0"><span class="ts1">Courier-BoldOblique</span></h3>
+          </td>
+          <td class="cell0">
+            <h3 class="hd0"><span class="ts1">Helvetica</span></h3>
+            <h3 class="hd0"><span class="ts1">Helvetica-Bold</span></h3>
+            <h3 class="hd0"><span class="ts1">Helvetica-Oblique</span></h3>
+            <h3 class="hd0"><span class="ts1">Helvetica-BoldOblique</span></h3>
+            <h3 class="hd0"><span class="ts1">Times-Roman</span></h3>
+            <h3 class="hd0"><span class="ts1">Times-Bold</span></h3>
+            <h3 class="hd0"><span class="ts1">Times-Italic</span></h3>
+            <h3 class="hd0"><span class="ts1">Times-BoldItalic</span></h3>
+          </td>
+          <td class="cell0">
+            <h3 class="hd0"><span class="ts1">Symbol</span></h3>
+            <h3 class="hd0"><span class="ts1">ZapfDingbats</span></h3>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">The advantage of using these implicitly supported fonts is that it is not necessary to embed the font within each PDF document that uses the font, because the font must be provided and supported by all applications that will process the document. This in turn means that the PDF documents are smaller, faster to transmit, etc.</span></h3>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">By default the PdfFile class works with the implicit Courier font. When the PdfFile </span><a href="idh-topic30.htm#constructors" class="hs0">constructor</a><span class="ts1">&nbsp;method is called a required number of columns is defined (for working with the </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">&nbsp;system) and various point sizes of the Courier font are tried in order to determine the most appropriate font size that will deliver at least the required number of columns. The Courier font is used because it is the only implicit font that is a fixed-pitch font, allowing the page to be divided into rows and columns of an equal size.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">You can change the current font at any time by calling </span><a href="idh-topic30.htm#SelectFont_method" class="hs0">PdfFile.SelectFont</a><span class="ts1">, and having done so all subsequent text drawing will use the requested font. To revert to the default font you can call </span><a href="idh-topic30.htm#ResetFont_method" class="hs0">PdfFile.ResetFont</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">If you select a variable-pitch font then you can still display text via the methods that use the </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">&nbsp;system, but the text that you display may occupy more or less space than the same text would occupy if you were using the fixed-pitch font.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Here is some example code that displays text using an alternate implicit font:</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Create an instance of the PdfFile class</span></p>
+    <p class="ps2"><span class="ts8">pdf = new PdfFile()</span></p>
+    <p class="ps2"><span class="ts8">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Draw text in the default font</span></p>
+    <p class="ps2"><span class="ts8">pdf.DrawTextRC(&quot;This text is displayed using the default Courier font.&quot;,1,1)</span></p>
+    <p class="ps2"><span class="ts8">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Switch to the implicit Helvetica font, same font size as we're currently using</span></p>
+    <p class="ps2"><span class="ts8">pdf.SelectFont(&quot;Helvetica&quot;,pdf.FontSize)</span></p>
+    <p class="ps2"><span class="ts8">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Draw text in the alternate font</span></p>
+    <p class="ps2"><span class="ts8">pdf.DrawTextRC(&quot;This text is displayed using the Helvetica font.&quot;,2,1)</span></p>
+    <p class="ps2"><span class="ts1">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Switch back to the default font</span></p>
+    <p class="ps2"><span class="ts8">pdf.ResetFont()</span></p>
+    <p class="ps2"><span class="ts8">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Show the results</span></p>
+    <p class="ps2"><span class="ts8">pdf.Preview()</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="TrueType"></a><span class="ts2">TrueType Fonts</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">In addition to working with the implicit fonts you also have the option of loading TrueType fonts from a .ttf file. To load a TrueType font you call </span><a href="idh-topic30.htm#LoadTrueTypeFont_method" class="hs0">PdfFile.LoadTrueTypeFont</a><span class="ts1">&nbsp;which loads the font from the font file, embeds the font into the PDF document, and returns the internal name of the font. You can then pass that internal name to </span><a href="idh-topic30.htm#SelectFont_method" class="hs0">PdfFile.SelectFont</a><span class="ts1">&nbsp;in order to select the font for use, or you can pass the name to various methods that accept a font name, for example </span><a href="idh-topic30.htm#DrawText_method" class="hs0">PdfFile.DrawText</a><span class="ts1">. To verify is a particular font is available for use call </span><a href="idh-topic30.htm#FontAvailable_method" class="hs0">PdfFile.FontAvailable</a><span class="ts1">.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Here is some example code that displays text using an explicitly loaded and embedded TrueType font:</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Create an instance of the PdfFile class</span></p>
+    <p class="ps2"><span class="ts8">pdf = new PdfFile()</span></p>
+    <p class="ps2"><span class="ts8">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Load the TrueType font</span></p>
+    <p class="ps2"><span class="ts8">arialFont = pdf.LoadTrueTypeFont(&quot;C:\Windows\Fonts\arial.ttf&quot;)</span></p>
+    <p class="ps2"><span class="ts8">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Switch to Arial 16 point</span></p>
+    <p class="ps2"><span class="ts8">pdf.SelectFont(arialFont,16)</span></p>
+    <p class="ps2"><span class="ts8">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Draw text in Arial 16 point</span></p>
+    <p class="ps2"><span class="ts8">pdf.DrawTextRC(&quot;This text is displayed using the Arial 16 point.&quot;,1,1)</span></p>
+    <p class="ps2"><span class="ts8">pdf.DrawTextRC(&quot;So is this!&quot;,2,1)</span></p>
+    <p class="ps2"><span class="ts8">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Switch back to the default font</span></p>
+    <p class="ps2"><span class="ts8">pdf.ResetFont()</span></p>
+    <p class="ps2"><span class="ts8">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Draw text, absolute positioning now, still using the Arial font, this time 12 point, Green</span></p>
+    <p class="ps2"><span class="ts8">pdf.DrawText(&quot;This text is displayed using the Arial 12 point.&quot;,50,400,PdfColor.Green,arialFont,12)</span></p>
+    <p class="ps2"><span class="ts8">&nbsp;</span></p>
+    <p class="ps2"><span class="ts9">;;Show the results</span></p>
+    <p class="ps2"><span class="ts8">pdf.Preview()</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts4">IMPORTANT:</span><span class="ts1">&nbsp;If you transfer font files (*.ttf) from Windows to a Linux or OpenVMS system you must do so via a binary FTP transfer. Transferring fonts by copying them via a Samba or another file share (even as part of a ZIP file) probably won't result in the file having the correct file attributes on the target system. On OpenVMS systems font files must have the following attributes, which you can check via a DIRECTORY/FULL command:</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">File organization:&nbsp; Sequential</span></p>
+    <p class="ps2"><span class="ts7">Record format:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fixed length 512 byte records</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Continue reading with </span><a href="idh-topic140.htm" class="hs0">Working With Lines</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+  </div>
+</div>
+				</article>
+			</main>
+		</div>
+		<footer>
+			<div id="hs-footer"><div id="hs-content-f">
+  <div id="hs-wrapper-f">
+    <span id="hs-title-f">Copyright &copy; 2015 Synergex International, Inc.</span>
+  </div>
+</div></div>
+		</footer>
+</body>
+</html>

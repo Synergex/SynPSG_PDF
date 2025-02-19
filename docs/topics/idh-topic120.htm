@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+<title>Creating a PDF File</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
+<meta name="generator" content="HelpSmith 10.1 (Build 24.1202)" />
+<link type="text/css" rel="stylesheet" href="../css/tree.css?b1fab730" />
+<link type="text/css" rel="stylesheet" href="../css/topics.css?af09f847" />
+<link type="text/css" rel="stylesheet" href="../css/apr.css?af09f847" />
+<link type="text/css" rel="stylesheet" href="../css/app.css?af09f847" />
+<script src="../js/jquery-3.7.1.min.js"></script>
+<script src="../js/tree.min.js?b1fab730"></script>
+<script src="../js/tabs.min.js?b1fab730"></script>
+<script src="../js/jquery.cookie.js?b1fab730"></script>
+<script src="../js/headroom.min.js?b1fab730"></script>
+<script src="../js/app.min.js?b1fab730"></script>
+<script src="../js/search.min.js?b1fab730"></script>
+<!-- Web Help Topic -->
+<script>
+doAppStart();
+</script>
+</head>
+<body>
+	<header>
+		<div id="hs-header-d">
+			<div id="hs-content-h">
+  <div id="hs-wrapper-h">
+    <span id="hs-title-h">Synergy PDF API</span>
+  </div>
+</div>
+		</div>
+		<div id="hs-header-m">
+			<div id="hs-content-m">
+  <div id="hs-area-left">
+    <div id="hs-menu" class="hs-menu-toggle">
+      <span class="line1"></span>
+      <span class="line2"></span>
+      <span class="line3"></span>
+    </div>
+  </div>
+  <div id="hs-area-center">
+    <span id="hs-title-m">Synergy PDF API</span>
+  </div>
+  <div id="hs-area-right"></div>
+</div>
+		</div>
+	</header>
+	<nav id="hs-nav">
+		<div id="hs-nav-content">
+			<ul id="nav-tabs" role="tablist">
+				<li class="hs-toc-tab" role="tab">
+					<a href="#hs-toc-panel">Contents</a>
+				</li>
+				
+				<li class="hs-search-tab" role="tab">
+					<a href="#hs-search-panel">Search</a>
+				</li>
+			</ul>
+			<div id="tabs-panels">
+				<div class="hstabs-panel" id="hs-toc-panel" role="tabpanel">
+					<div id="toc-tree" class="hs-tree"></div>
+				</div>
+				
+				<div class="hstabs-panel" id="hs-search-panel" role="tabpanel">
+					<div id="hs-search-content">
+						<div id="search-form">
+							<label for="squery" class="sfield-title text-label">Type in the keyword(s) to find:</label>
+							<div id="search-box">
+								<div class="search-container">
+									<input type="text" id="squery" autocomplete="off">
+								</div>
+								<div class="search-btn" title="Search"></div>
+							</div>
+							<div id="options-box">
+								<span class="text-label">Match:</span>
+								<input type="radio" id="anywords" name="match" value="anywords" checked="checked"><label for="anywords" class="text-label">Any words</label>
+								<input type="radio" id="phrase" name="match" value="phrase"><label for="phrase" class="text-label">Phrase</label>
+							</div>
+						</div>
+						<div id="search-result"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</nav>
+		<div id="hs-content">
+			<main>
+				<article>
+					<div id="topic-content">
+  <div id="content-box" class="page0">
+    <h1 class="hd0"><span class="ts0">Creating a PDF File</span></h1>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">To create a new PDF document you create an instance of the </span><a href="idh-topic30.htm" class="hs0">PdfFile</a><span class="ts1">&nbsp;class and then interact with the resulting object in order to define the content of the document.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Creating an Instance of the PdfFile Class</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Creating an instance of the </span><a href="idh-topic30.htm" class="hs0">PdfFile</a><span class="ts1">&nbsp;class establishes the basic context that can be used to create a PDF document. For example:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">import SynPSG.PDF</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;</span></p>
+    <p class="ps2"><span class="ts7">main PdfTest</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp; record</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pdf, @PdfFile</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp; endrecord</span></p>
+    <p class="ps2"><span class="ts7">proc</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp; </span><span class="ts8">pdf = new PdfFile()</span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp; </span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp; </span></p>
+    <p class="ps2"><span class="ts7">&nbsp;&nbsp;&nbsp; pdf = ^null</span></p>
+    <p class="ps2"><span class="ts7">endmain</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">In the above example the PDF document created would be configured to contain letter sized pages and the default page orientation would be set to portrait. When addressing paged in the document using the </span><a href="idh-topic210.htm#row_column_coordinates" class="hs0">row/column coordinates</a><span class="ts1">&nbsp;system each page would have an initial margin of 0.16&quot; all the way around. No page header or footer lines would be defined, and the page body would be organized into an 80-column wide grid. If necessary the left and right margins would then be adjusted in order to ensure that the 80-column wide page body was centered horizontally.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The </span><a href="idh-topic30.htm" class="hs0">PdfFile</a><span class="ts1">&nbsp;class </span><a href="idh-topic30.htm#Constructors" class="hs0">constructor</a><span class="ts1">&nbsp;method defines several optional parameters that you can manipulate in order to configure various options. Below you will find several examples of doing so:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Page Size</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The following code creates a PDF document that will contain A4 pages.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps2"><span class="ts8">pdf = new PdfFile(PdfPageSize.A4)</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Page Orientation</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">The following code creates a PDF document in which pages will default to landscape orientation, but portrait pages could still be added.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps3"><span class="ts8">pdf = new PdfFile(,PdfOrientation.Landscape)</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Available Columns</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">The following code creates a PDF document that will have 100 columns available in the page body. The page size will be letter and pages will default to portrait orientation, but landscape paged could still be added.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps3"><span class="ts8">pdf = new PdfFile(,,100)</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Page Margins</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">The following code creates a PDF document whose pages will have 0.75&quot; left and right margins and 1.5&quot; top and bottom margins. Pages will be letter size and will default to portrait orientation. The page body will be 60 columns wide.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps3"><span class="ts8">pdf = new PdfFile(,,60,,,0.75,1.5,0.75,1.5)</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Header and Footer Rows</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">The following code creates a PDF document whose letter pages will default to landscape orientation and the page body will be organized into 132 columns. There will be two page header rows and two page footer rows.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps3"><span class="ts8">pdf = new PdfFile(,PdfOrientation.Landscape,132,,,,,,,2,2)</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">There are lots of other possible combinations. For further information refer to the </span><a href="idh-topic30.htm" class="hs0">PdfFile</a><span class="ts1">&nbsp;class </span><a href="idh-topic30.htm#constructors" class="hs0">constructor</a><span class="ts1">&nbsp;method.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Setting Preferred Page Layout</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">PDF reader applications can present the pages of PDF documents in a number of different ways, e.g. display a whole page at a time, display the whole width of a single page, display two pages side-by-side, etc.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">You can set a preference for how PDF viewer applications display your document by setting </span><a href="idh-topic30.htm#PageLayout_property" class="hs0">PdfFile.PageLayout</a><span class="ts1">&nbsp;using a value from the </span><a href="idh-topic320.htm" class="hs0">PdfPageLayout</a><span class="ts1">&nbsp;enumeration </span><span class="ts1">. E.g.:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps4"><span class="ts8">pdf = new PdfFile()</span></p>
+    <p class="ps4"><span class="ts8">pdf.PageLayout = PdfPageLayout.Single</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Setting Preferred Display Mode</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">PDF reader applications typically support several different views that can be used to present the pages of PDF documents, e.g. display the document with a thumbnails window, display the document with an outline view, etc.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">You can set a preference for the view that a PDF viewer application should use by setting </span><a href="idh-topic30.htm#PageMode_property" class="hs0">PdfFile.PageMode</a><span class="ts1">&nbsp;using a value from the </span><a href="idh-topic330.htm" class="hs0">PdfPageLayout</a><span class="ts1">&nbsp;enumeration . E.g.:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps4"><span class="ts8">pdf = new PdfFile()</span></p>
+    <p class="ps4"><span class="ts8">pdf.PageMode = PdfPageMode.Outline</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Continue reading with </span><a href="idh-topic190.htm" class="hs0">Page Headers and Footers</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+  </div>
+</div>
+				</article>
+			</main>
+		</div>
+		<footer>
+			<div id="hs-footer"><div id="hs-content-f">
+  <div id="hs-wrapper-f">
+    <span id="hs-title-f">Copyright &copy; 2015 Synergex International, Inc.</span>
+  </div>
+</div></div>
+		</footer>
+</body>
+</html>

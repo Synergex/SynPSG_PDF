@@ -1,0 +1,316 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+<title>General Concepts</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
+<meta name="generator" content="HelpSmith 10.1 (Build 24.1202)" />
+<link type="text/css" rel="stylesheet" href="../css/tree.css?b1fab730" />
+<link type="text/css" rel="stylesheet" href="../css/topics.css?af09f847" />
+<link type="text/css" rel="stylesheet" href="../css/apr.css?af09f847" />
+<link type="text/css" rel="stylesheet" href="../css/app.css?af09f847" />
+<script src="../js/jquery-3.7.1.min.js"></script>
+<script src="../js/tree.min.js?b1fab730"></script>
+<script src="../js/tabs.min.js?b1fab730"></script>
+<script src="../js/jquery.cookie.js?b1fab730"></script>
+<script src="../js/headroom.min.js?b1fab730"></script>
+<script src="../js/app.min.js?b1fab730"></script>
+<script src="../js/search.min.js?b1fab730"></script>
+<!-- Web Help Topic -->
+<script>
+doAppStart();
+</script>
+</head>
+<body>
+	<header>
+		<div id="hs-header-d">
+			<div id="hs-content-h">
+  <div id="hs-wrapper-h">
+    <span id="hs-title-h">Synergy PDF API</span>
+  </div>
+</div>
+		</div>
+		<div id="hs-header-m">
+			<div id="hs-content-m">
+  <div id="hs-area-left">
+    <div id="hs-menu" class="hs-menu-toggle">
+      <span class="line1"></span>
+      <span class="line2"></span>
+      <span class="line3"></span>
+    </div>
+  </div>
+  <div id="hs-area-center">
+    <span id="hs-title-m">Synergy PDF API</span>
+  </div>
+  <div id="hs-area-right"></div>
+</div>
+		</div>
+	</header>
+	<nav id="hs-nav">
+		<div id="hs-nav-content">
+			<ul id="nav-tabs" role="tablist">
+				<li class="hs-toc-tab" role="tab">
+					<a href="#hs-toc-panel">Contents</a>
+				</li>
+				
+				<li class="hs-search-tab" role="tab">
+					<a href="#hs-search-panel">Search</a>
+				</li>
+			</ul>
+			<div id="tabs-panels">
+				<div class="hstabs-panel" id="hs-toc-panel" role="tabpanel">
+					<div id="toc-tree" class="hs-tree"></div>
+				</div>
+				
+				<div class="hstabs-panel" id="hs-search-panel" role="tabpanel">
+					<div id="hs-search-content">
+						<div id="search-form">
+							<label for="squery" class="sfield-title text-label">Type in the keyword(s) to find:</label>
+							<div id="search-box">
+								<div class="search-container">
+									<input type="text" id="squery" autocomplete="off">
+								</div>
+								<div class="search-btn" title="Search"></div>
+							</div>
+							<div id="options-box">
+								<span class="text-label">Match:</span>
+								<input type="radio" id="anywords" name="match" value="anywords" checked="checked"><label for="anywords" class="text-label">Any words</label>
+								<input type="radio" id="phrase" name="match" value="phrase"><label for="phrase" class="text-label">Phrase</label>
+							</div>
+						</div>
+						<div id="search-result"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</nav>
+		<div id="hs-content">
+			<main>
+				<article>
+					<div id="topic-content">
+  <div id="content-box" class="page0">
+    <h1 class="hd0"><span class="ts0">General Concepts</span></h1>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">A class named </span><a href="idh-topic30.htm" class="hs0">PdfFile</a><span class="ts1">&nbsp;represents a PDF file that you are creating. That class has various properties which are generally used to obtain information about the PDF file being created (although some properties allow you to change things), and also has various methods that generally are used to define the content for the PDF file.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="device_independent_pixels"></a><span class="ts2">Device Independent Pixels</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">All PDF files use the concept of device independent pixels to define the positioning and size of items rendered on pages within the file. Device independent pixels are square in shape and measure 1/72 of an inch in both dimensions. This means a standard US Letter sized page, which when held in a portrait orientation measures 8.5 inches wide and 11 inches high, has device a independent pixel resolution of 612 x 792. </span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps1"><a id="coordinates_system"></a><span class="ts2">Coordinates System</span><br /><span class="ts6">&nbsp;</span></p>
+    <p><span class="ts1">PDF files use an X / Y coordinates system where X values represent a position in the horizontal direction and Y values represent positions in the vertical direction. The pixel in the lower-left corner of each page has the coordinates 0,0, and the pixel in the upper-right corner has coordinates based on the height and width of the page in the chosen orientation. For example, the pixel at the upper-right corner of a Letter page, when displayed in a portrait orientation, has the coordinates 612,792.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Remember, device independent pixels are always 1/72 of an inch, so to determine the coordinates system for any given page take the size of the page in inches and multiply by 72.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="page_sizes"></a><span class="ts2">Common Page Sizes and Resolutions</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div>
+      <table class="tbl0">
+        <tr class="row0">
+          <td class="cell0">
+            <h3 class="hd0"><span class="ts4">Common Name</span></h3>
+          </td>
+          <td class="cell1">
+            <h3 class="hd0"><span class="ts4">Page Size (W x H, portrait)</span></h3>
+          </td>
+          <td class="cell2">
+            <h3 class="hd0"><span class="ts4">Dimension (device independent pixels)</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">LETTER</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">8.5 x 11 inches</span></p>
+          </td>
+          <td class="cell2">
+            <p><span class="ts1">612 x 792</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">LEGAL</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">8.5 x 14 inches</span></p>
+          </td>
+          <td class="cell2">
+            <p><span class="ts1">612 x 1008</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">A3</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">297 x 420 mm</span></p>
+          </td>
+          <td class="cell2">
+            <p><span class="ts1">841.89 x 1199.551 </span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">A4</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">210 x 297 mm</span></p>
+          </td>
+          <td class="cell2">
+            <p><span class="ts1">595.276 x 841.89</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">A5</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">148 x 210 mm</span></p>
+          </td>
+          <td class="cell2">
+            <p><span class="ts1">419.528 x 595.276 </span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">B4</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">250 x 353 mm</span></p>
+          </td>
+          <td class="cell2">
+            <p><span class="ts1">708.661 x 1000.63</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">B5</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">176 x 250 mm</span></p>
+          </td>
+          <td class="cell2">
+            <p><span class="ts1">498.898 x 708.661</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">EXECUTIVE</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">7.25 x 10.5 inches</span></p>
+          </td>
+          <td class="cell2">
+            <p><span class="ts1">522 x 756 </span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">US4X6</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">4 x 6 inches</span></p>
+          </td>
+          <td class="cell2">
+            <p><span class="ts1">288 x 432</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">US4X8</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">4 x 8 inches</span></p>
+          </td>
+          <td class="cell2">
+            <p><span class="ts1">288 x 576</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">US5X7</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">5 x 7 inches</span></p>
+          </td>
+          <td class="cell2">
+            <p><span class="ts1">360 x 504</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell0">
+            <p><span class="ts1">COMM10</span></p>
+          </td>
+          <td class="cell1">
+            <p><span class="ts1">4.125 x 9.5 inches</span></p>
+          </td>
+          <td class="cell2">
+            <p><span class="ts1">297 x 684 </span></p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h2 class="hd1"><a id="locating_items"></a><span class="ts2">Locating and Sizing Items</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Ultimately the positioning and sizing of all items is based on the device independent pixels coordinates system, and indeed that system can be used, but to make some common operations easier the </span><a href="idh-topic30.htm" class="hs0">PdfFile</a><span class="ts1">&nbsp;class also provides for the ability to logically divide the page up into a grid of rows and columns (based on the size of a character when using a fixed-pitch font) and then use that grid as an alternate coordinates system.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="row_column_coordinates"></a><span class="ts2">Using Row / Column Coordinates</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The row / column coordinates system is primarily intended for use when producing data-centric reports. It revolves around the fact that a single fixed-pitch font will be used to display the primary content in the document, although it is still possible to use other fonts and point sizes to display things like titles and headings. The Courier font is used because it is one of the very few native fonts that are supported by the PDF file specification; it must be inherently supported by all PDF applications and environments without the need to embed the font within the actual PDF document.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The point size that will be used with the row / column coordinates system is selected automatically based on a requested &quot;minimum width&quot; for the document expressed in terms of the number of columns needed to display the report. For example, a developer might specify that a width of 80 characters is needed to display a particular report, that the report should be displayed in portrait mode, and that each page must have have a 0.75 inch margin on both the left and right sides. Based on this information a particular point size will be selected that allows for at least the requested number of columns to be displayed within the page margins.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Once a point size has been selected in order to facilitate the required width in columns, the maximum number of rows per page can be calculated. This calculation takes into account any requested page top and bottom margins, and also any requested page header and page footer lines. These calculations all take place when the programmer creates a new </span><a href="idh-topic30.htm" class="hs0">PdfFile</a><span class="ts1">&nbsp;object, and the programmer can then access various information about the row/column coordinates system (e.g the width of the page in columns, and height of the page in rows) via various properties of the PdfFile object.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">When working with the row/column coordinates system you can think of each page of a PDF document as being organized like this:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps1"><img width="382" height="584" alt="" src="../images/rowcolumnpagelayout.png" /></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Pages can optionally have top, bottom, left and right margins, in which no content will be printed (unless you print content there via the absolute positioning system). The size of the margins are defined when you construct a new </span><a href="idh-topic30.htm" class="hs0">PdfFile</a><span class="ts1">&nbsp;object and once defined can't be changed.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Pages can also optionally have one or more header and / or footer rows defined. These are reserved areas that will contain content that will be added to all pages of the document. The number of header and / or footer rows is defined when you construct a new </span><a href="idh-topic30.htm" class="hs0">PdfFile</a><span class="ts1">&nbsp;object and once defined can't be changed. For more information refer to </span><a href="idh-topic190.htm" class="hs0">Working With Headers and Footers</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Whatever space remains after margins and page headers and footers have been allocated is allocated to the page body, which is then divided up into a grid of rows and columns. The number of rows available in the page body can be determined by referring to the </span><a href="idh-topic30.htm#Rows_property" class="hs0">Rows</a><span class="ts1">&nbsp;property, and the number of columns by referring to the </span><a href="idh-topic30.htm#Columns_property" class="hs0">Columns</a><span class="ts1">&nbsp;property.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The coordinates system used within the page body is based on a grid of rows and columns. The size of each cell (row/column intersection) is defined by the size of a character in the Courier font at the selected font size. The coordinates system is 1-based and is rooted in the top-left cell within the page body, coordinates 1,1. The highest row that you can address is defined by the </span><a href="idh-topic30.htm#Rows_property" class="hs0">Rows</a><span class="ts1">&nbsp;property and the highest column that you can address is defined by the </span><a href="idh-topic30.htm#Columns_property" class="hs0">Columns</a><span class="ts1">&nbsp;property.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The row / column coordinates system is always available, as is the absolute coordinates system. Both may be used at the same time.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h2 class="hd1"><a id="absolute_coordinates"></a><span class="ts2">Using Absolute Coordinates</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The absolute positioning system provides total control over the positioning and sizing of items on the page; you will work with the native coordinates system of the PDF file and can size and position items without restriction. When working with the absolute coordinates system you can think of each page of a PDF document as being organized like this:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps1"><img width="416" height="616" alt="" src="../images/absolutepagelayout.png" /></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">As you can see there are no predefined margins, headers or footers when working with the absolute coordinates system; the entire page width (X coordinates) and height (Y coordinates) is available to you to draw items.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The coordinates system is based on the width and height of the page expressed in terms of </span><a href="idh-topic210.htm#Device_independent_pixels" class="hs0">device independent pixels</a><span class="ts1">. The coordinates system is 0-based and is rooted in the bottom-left pixel of the page, coordinates 0,0. The highest X coordinate that you can address is defined by the </span><a href="idh-topic30.htm#Width_property" class="hs0">Width</a><span class="ts1">&nbsp;property and the highest Y coordinate that you can address is defined by the </span><a href="idh-topic30.htm#Height_property" class="hs0">Height</a><span class="ts1">&nbsp;property.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">When positioning items such as text and images using the absolute coordinates system you express the position by specifying the X / Y coordinates of the bottom left corner of the item.</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">The absolute coordinates system is always available, as is the row / column coordinates system. Both may be used at the same time.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Continue reading with </span><a href="idh-topic120.htm" class="hs0">Creating a PDF File</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+  </div>
+</div>
+				</article>
+			</main>
+		</div>
+		<footer>
+			<div id="hs-footer"><div id="hs-content-f">
+  <div id="hs-wrapper-f">
+    <span id="hs-title-f">Copyright &copy; 2015 Synergex International, Inc.</span>
+  </div>
+</div></div>
+		</footer>
+</body>
+</html>

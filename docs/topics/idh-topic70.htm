@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+<title>AutoBoxRowCol</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
+<meta name="generator" content="HelpSmith 10.1 (Build 24.1202)" />
+<link type="text/css" rel="stylesheet" href="../css/tree.css?b1fab730" />
+<link type="text/css" rel="stylesheet" href="../css/topics.css?af09f847" />
+<link type="text/css" rel="stylesheet" href="../css/apr.css?af09f847" />
+<link type="text/css" rel="stylesheet" href="../css/app.css?af09f847" />
+<script src="../js/jquery-3.7.1.min.js"></script>
+<script src="../js/tree.min.js?b1fab730"></script>
+<script src="../js/tabs.min.js?b1fab730"></script>
+<script src="../js/jquery.cookie.js?b1fab730"></script>
+<script src="../js/headroom.min.js?b1fab730"></script>
+<script src="../js/app.min.js?b1fab730"></script>
+<script src="../js/search.min.js?b1fab730"></script>
+<!-- Web Help Topic -->
+<script>
+doAppStart();
+</script>
+</head>
+<body>
+	<header>
+		<div id="hs-header-d">
+			<div id="hs-content-h">
+  <div id="hs-wrapper-h">
+    <span id="hs-title-h">Synergy PDF API</span>
+  </div>
+</div>
+		</div>
+		<div id="hs-header-m">
+			<div id="hs-content-m">
+  <div id="hs-area-left">
+    <div id="hs-menu" class="hs-menu-toggle">
+      <span class="line1"></span>
+      <span class="line2"></span>
+      <span class="line3"></span>
+    </div>
+  </div>
+  <div id="hs-area-center">
+    <span id="hs-title-m">Synergy PDF API</span>
+  </div>
+  <div id="hs-area-right"></div>
+</div>
+		</div>
+	</header>
+	<nav id="hs-nav">
+		<div id="hs-nav-content">
+			<ul id="nav-tabs" role="tablist">
+				<li class="hs-toc-tab" role="tab">
+					<a href="#hs-toc-panel">Contents</a>
+				</li>
+				
+				<li class="hs-search-tab" role="tab">
+					<a href="#hs-search-panel">Search</a>
+				</li>
+			</ul>
+			<div id="tabs-panels">
+				<div class="hstabs-panel" id="hs-toc-panel" role="tabpanel">
+					<div id="toc-tree" class="hs-tree"></div>
+				</div>
+				
+				<div class="hstabs-panel" id="hs-search-panel" role="tabpanel">
+					<div id="hs-search-content">
+						<div id="search-form">
+							<label for="squery" class="sfield-title text-label">Type in the keyword(s) to find:</label>
+							<div id="search-box">
+								<div class="search-container">
+									<input type="text" id="squery" autocomplete="off">
+								</div>
+								<div class="search-btn" title="Search"></div>
+							</div>
+							<div id="options-box">
+								<span class="text-label">Match:</span>
+								<input type="radio" id="anywords" name="match" value="anywords" checked="checked"><label for="anywords" class="text-label">Any words</label>
+								<input type="radio" id="phrase" name="match" value="phrase"><label for="phrase" class="text-label">Phrase</label>
+							</div>
+						</div>
+						<div id="search-result"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</nav>
+		<div id="hs-content">
+			<main>
+				<article>
+					<div id="topic-content">
+  <div id="content-box" class="page0">
+    <h1 class="hd0"><span class="ts0">AutoBoxRowCol Class</span></h1>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This class defines a box that is to be drawn on one or more pages of a </span><a href="idh-topic30.htm" class="hs0">PdfFile</a><span class="ts1">&nbsp;object using row/column coordinates.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="Inheritance"></a><span class="ts2">Inheritance Heirarchy</span></h2>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">System.Object</span></p>
+    <p><span class="ts1">&nbsp; SynPSG.PDF.AutoItem</span></p>
+    <p><span class="ts1">&nbsp;&nbsp;&nbsp; SynPSG.PDF.AutoLine</span></p>
+    <p><span class="ts1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SynPSG.PDF.AutoBox</span></p>
+    <p><span class="ts1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SynPSG.PDF.AutoBoxRowCol</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts4">Namespace:</span><span class="ts1">&nbsp;SynPSG.PDF</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="Syntax"></a><span class="ts2">Syntax</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public class AutoBoxRowCol extends AutoBox</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The AutoBoxRowCol class exposes the following members:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="Constructors"></a><span class="ts2">Constructors</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">The AutoBoxRowCol class has a single constructor method that has several optional parameters:</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method AutoBoxRowCol</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFromRow,&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFromCol,&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aToRow,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aToCol,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aWidth,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aStrokeColor, PdfColor</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFill,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; boolean</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aFillColor,&nbsp;&nbsp; PdfColor</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aMode,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AutoItemMode</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">For guidance on constructing objects of this type refer to </span><a href="idh-topic30.htm#DrawBoxRC_method" class="hs0">PdfFile.DrawBoxRC</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="Properties"></a><span class="ts2">Properties</span></h2>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <div>
+      <table class="tbl0">
+        <tr class="row0">
+          <td class="cell28">
+            <p class="ps1"><a id="FromRow_property"></a><span class="ts6">FromRow</span></p>
+          </td>
+          <td class="cell29">
+            <p><span class="ts1">int</span></p>
+          </td>
+          <td class="cell30">
+            <h3 class="hd0"><span class="ts1">Defines the row of one corner of the box. Defaults to the current row.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell28">
+            <p class="ps1"><a id="FromCol_property"></a><span class="ts6">FromCol</span></p>
+          </td>
+          <td class="cell29">
+            <p><span class="ts1">int</span></p>
+          </td>
+          <td class="cell30">
+            <h3 class="hd0"><span class="ts1">Defines the column of one corner of the box. Defaults to the current column.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell28">
+            <p class="ps1"><a id="Fill_property"></a><span class="ts6">Fill</span></p>
+          </td>
+          <td class="cell29">
+            <p><span class="ts1">boolean</span></p>
+          </td>
+          <td class="cell30">
+            <h3 class="hd0"><span class="ts1">Defines whether the box should be filled with the fill color. Default is not to fill the box.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell31">
+            <p class="ps1"><a id="FillColor_property"></a><span class="ts6">FillColor</span></p>
+          </td>
+          <td class="cell32">
+            <p><a href="idh-topic50.htm" class="hs0">PdfColor</a></p>
+          </td>
+          <td class="cell33">
+            <h3 class="hd0"><span class="ts1">Defines a custom fill color to be used if filling the box.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell28">
+            <p class="ps1"><a id="Mode_property"></a><span class="ts6">Mode</span></p>
+          </td>
+          <td class="cell29">
+            <p><a href="idh-topic80.htm" class="hs0">AutoItemMode</a></p>
+          </td>
+          <td class="cell30">
+            <h3 class="hd0"><span class="ts1">Defines whether the box should be drawn at the beginning or end of the processing of each page.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell31">
+            <p class="ps1"><a id="StrokeColor_property"></a><span class="ts6">StrokeColor</span></p>
+          </td>
+          <td class="cell32">
+            <p><a href="idh-topic50.htm" class="hs0">PdfColor</a></p>
+          </td>
+          <td class="cell33">
+            <h3 class="hd0"><span class="ts1">Defines a custom stroke color to use when drawing the box.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell31">
+            <p class="ps1"><a id="ToRow_property"></a><span class="ts6">ToRow</span></p>
+          </td>
+          <td class="cell32">
+            <p><span class="ts1">int</span></p>
+          </td>
+          <td class="cell33">
+            <h3 class="hd0"><span class="ts1">Defines the row of the opposite corner of the box. Defaults to the highest row.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell31">
+            <p class="ps1"><a id="ToCol_property"></a><span class="ts6">ToCol</span></p>
+          </td>
+          <td class="cell32">
+            <p><span class="ts1">int</span></p>
+          </td>
+          <td class="cell33">
+            <h3 class="hd0"><span class="ts1">Defines the column of the opposite corner of the box. Defaults to the highest column.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell31">
+            <p class="ps1"><a id="Width_property"></a><span class="ts6">Width</span></p>
+          </td>
+          <td class="cell32">
+            <p><span class="ts1">float</span></p>
+          </td>
+          <td class="cell33">
+            <h3 class="hd0"><span class="ts1">Defines the width of the line used to draw the outline of the box.</span></h3>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="Methods"></a><span class="ts2">Methods</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">None</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="Remarks"></a><span class="ts2">Remarks</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Instances of this class can be added to the </span><a href="idh-topic30.htm#AutoItems_property" class="hs0">PdfFile.AutoItems</a><span class="ts1">&nbsp;collection or can be passed to the </span><a href="idh-topic30.htm#DrawBoxObjectRC_method" class="hs0">PdfFile.DrawBoxObjectRC</a><span class="ts1">&nbsp;method.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="Examples"></a><span class="ts2">Examples</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+  </div>
+</div>
+				</article>
+			</main>
+		</div>
+		<footer>
+			<div id="hs-footer"><div id="hs-content-f">
+  <div id="hs-wrapper-f">
+    <span id="hs-title-f">Copyright &copy; 2015 Synergex International, Inc.</span>
+  </div>
+</div></div>
+		</footer>
+</body>
+</html>

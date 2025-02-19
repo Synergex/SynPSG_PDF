@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+<title>AutoImage</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
+<meta name="generator" content="HelpSmith 10.1 (Build 24.1202)" />
+<link type="text/css" rel="stylesheet" href="../css/tree.css?b1fab730" />
+<link type="text/css" rel="stylesheet" href="../css/topics.css?af09f847" />
+<link type="text/css" rel="stylesheet" href="../css/apr.css?af09f847" />
+<link type="text/css" rel="stylesheet" href="../css/app.css?af09f847" />
+<script src="../js/jquery-3.7.1.min.js"></script>
+<script src="../js/tree.min.js?b1fab730"></script>
+<script src="../js/tabs.min.js?b1fab730"></script>
+<script src="../js/jquery.cookie.js?b1fab730"></script>
+<script src="../js/headroom.min.js?b1fab730"></script>
+<script src="../js/app.min.js?b1fab730"></script>
+<script src="../js/search.min.js?b1fab730"></script>
+<!-- Web Help Topic -->
+<script>
+doAppStart();
+</script>
+</head>
+<body>
+	<header>
+		<div id="hs-header-d">
+			<div id="hs-content-h">
+  <div id="hs-wrapper-h">
+    <span id="hs-title-h">Synergy PDF API</span>
+  </div>
+</div>
+		</div>
+		<div id="hs-header-m">
+			<div id="hs-content-m">
+  <div id="hs-area-left">
+    <div id="hs-menu" class="hs-menu-toggle">
+      <span class="line1"></span>
+      <span class="line2"></span>
+      <span class="line3"></span>
+    </div>
+  </div>
+  <div id="hs-area-center">
+    <span id="hs-title-m">Synergy PDF API</span>
+  </div>
+  <div id="hs-area-right"></div>
+</div>
+		</div>
+	</header>
+	<nav id="hs-nav">
+		<div id="hs-nav-content">
+			<ul id="nav-tabs" role="tablist">
+				<li class="hs-toc-tab" role="tab">
+					<a href="#hs-toc-panel">Contents</a>
+				</li>
+				
+				<li class="hs-search-tab" role="tab">
+					<a href="#hs-search-panel">Search</a>
+				</li>
+			</ul>
+			<div id="tabs-panels">
+				<div class="hstabs-panel" id="hs-toc-panel" role="tabpanel">
+					<div id="toc-tree" class="hs-tree"></div>
+				</div>
+				
+				<div class="hstabs-panel" id="hs-search-panel" role="tabpanel">
+					<div id="hs-search-content">
+						<div id="search-form">
+							<label for="squery" class="sfield-title text-label">Type in the keyword(s) to find:</label>
+							<div id="search-box">
+								<div class="search-container">
+									<input type="text" id="squery" autocomplete="off">
+								</div>
+								<div class="search-btn" title="Search"></div>
+							</div>
+							<div id="options-box">
+								<span class="text-label">Match:</span>
+								<input type="radio" id="anywords" name="match" value="anywords" checked="checked"><label for="anywords" class="text-label">Any words</label>
+								<input type="radio" id="phrase" name="match" value="phrase"><label for="phrase" class="text-label">Phrase</label>
+							</div>
+						</div>
+						<div id="search-result"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</nav>
+		<div id="hs-content">
+			<main>
+				<article>
+					<div id="topic-content">
+  <div id="content-box" class="page0">
+    <h1 class="hd0"><span class="ts0">AutoImage Class</span></h1>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">This class defines an image that is to be drawn on one or more pages of a </span><a href="idh-topic30.htm" class="hs0">PdfFile</a><span class="ts1">&nbsp;object using absolute coordinates.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="Inheritance"></a><span class="ts2">Inheritance Heirarchy</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">System.Object</span></p>
+    <p><span class="ts1">&nbsp; SynPSG.AutoItem</span></p>
+    <p><span class="ts1">&nbsp;&nbsp;&nbsp; SynPSG.PDF.AutoImage</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts4">Namespace:</span><span class="ts1">&nbsp;SynPSG.PDF</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="Syntax"></a><span class="ts2">Syntax</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public class AutoImage extends AutoItem</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The AutoImage class exposes the following members:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="Constructors"></a><span class="ts2">Constructors</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">The AutoImage class has a single constructor method that has several required and optional parameters:</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts7">public method AutoImage</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aFileSpec, string</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aX, float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">required in aY, float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aWidth, float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aHeight, float</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">optional in aMode, AutoItemMode</span></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ts7">endparams</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p><span class="ts1">For guidance on constructing objects of this type refer to </span><a href="idh-topic30.htm#DrawImage_method" class="hs0">PdfFile.DrawImage</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="Properties"></a><span class="ts2">Properties</span></h2>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <div>
+      <table class="tbl0">
+        <tr class="row0">
+          <td class="cell34">
+            <p class="ps1"><a id="FileSpec_property"></a><span class="ts6">FileSpec</span></p>
+          </td>
+          <td class="cell35">
+            <p><span class="ts1">string</span></p>
+          </td>
+          <td class="cell36">
+            <h3 class="hd0"><span class="ts4">REQUIRED.</span><span class="ts1">&nbsp;Defines the file specification of the image to display. JPEG (.jpg or .jpeg) and PNG (.png) files are supported. Specify a full or relative path to a supported image file. Logical names are supported.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell34">
+            <p class="ps1"><a id="Height_property"></a><span class="ts6">Height</span></p>
+          </td>
+          <td class="cell35">
+            <p><span class="ts1">float</span></p>
+          </td>
+          <td class="cell36">
+            <p><span class="ts1">Defines the height to be used to draw the image in </span><a href="idh-topic210.htm#device_independent_pixels" class="hs0">device independent pixels</a><span class="ts1">. Defaults to the pixel height of the image.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell34">
+            <p class="ps1"><a id="Mode_property"></a><span class="ts6">Mode</span></p>
+          </td>
+          <td class="cell35">
+            <p><a href="idh-topic80.htm" class="hs0">AutoItemMode</a></p>
+          </td>
+          <td class="cell36">
+            <h3 class="hd0"><span class="ts1">Defines whether the box should be drawn at the beginning or end of the processing of each page.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell37">
+            <p class="ps1"><a id="Width_property"></a><span class="ts6">Width</span></p>
+          </td>
+          <td class="cell38">
+            <p><span class="ts1">float</span></p>
+          </td>
+          <td class="cell39">
+            <p><span class="ts1">Defines the width to be used to draw the image in </span><a href="idh-topic210.htm#device_independent_pixels" class="hs0">device independent pixels</a><span class="ts1">. Defaults to the pixel width of the image.</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell37">
+            <p class="ps1"><a id="X_property"></a><span class="ts6">X</span></p>
+          </td>
+          <td class="cell38">
+            <p><span class="ts1">float</span></p>
+          </td>
+          <td class="cell39">
+            <h3 class="hd0"><span class="ts4">REQUIRED.</span><span class="ts1">&nbsp;Defines the X coordinate where the bottom right pixel of the image should be positioned.</span></h3>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell37">
+            <p class="ps1"><a id="Y_property"></a><span class="ts6">Y</span></p>
+          </td>
+          <td class="cell38">
+            <p><span class="ts1">float</span></p>
+          </td>
+          <td class="cell39">
+            <h3 class="hd0"><span class="ts4">REQUIRED.</span><span class="ts1">&nbsp;Defines the Y coordinate where the bottom right pixel of the image should be positioned.</span></h3>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="Methods"></a><span class="ts2">Methods</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">None</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="Remarks"></a><span class="ts2">Remarks</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">Instances of this class can be added to the </span><a href="idh-topic30.htm#AutoItems_property" class="hs0">PdfFile.AutoItems</a><span class="ts1">&nbsp;collection or can be passed to the </span><a href="idh-topic30.htm#DrawImageObject_method" class="hs0">PdfFile.DrawImageObject</a><span class="ts1">&nbsp;method.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="Examples"></a><span class="ts2">Examples</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+  </div>
+</div>
+				</article>
+			</main>
+		</div>
+		<footer>
+			<div id="hs-footer"><div id="hs-content-f">
+  <div id="hs-wrapper-f">
+    <span id="hs-title-f">Copyright &copy; 2015 Synergex International, Inc.</span>
+  </div>
+</div></div>
+		</footer>
+</body>
+</html>

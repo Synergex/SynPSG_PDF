@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+<title>Windows Setup</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
+<meta name="generator" content="HelpSmith 10.1 (Build 24.1202)" />
+<link type="text/css" rel="stylesheet" href="../css/tree.css?b1fab730" />
+<link type="text/css" rel="stylesheet" href="../css/topics.css?af09f847" />
+<link type="text/css" rel="stylesheet" href="../css/apr.css?af09f847" />
+<link type="text/css" rel="stylesheet" href="../css/app.css?af09f847" />
+<script src="../js/jquery-3.7.1.min.js"></script>
+<script src="../js/tree.min.js?b1fab730"></script>
+<script src="../js/tabs.min.js?b1fab730"></script>
+<script src="../js/jquery.cookie.js?b1fab730"></script>
+<script src="../js/headroom.min.js?b1fab730"></script>
+<script src="../js/app.min.js?b1fab730"></script>
+<script src="../js/search.min.js?b1fab730"></script>
+<!-- Web Help Topic -->
+<script>
+doAppStart();
+</script>
+</head>
+<body>
+	<header>
+		<div id="hs-header-d">
+			<div id="hs-content-h">
+  <div id="hs-wrapper-h">
+    <span id="hs-title-h">Synergy PDF API</span>
+  </div>
+</div>
+		</div>
+		<div id="hs-header-m">
+			<div id="hs-content-m">
+  <div id="hs-area-left">
+    <div id="hs-menu" class="hs-menu-toggle">
+      <span class="line1"></span>
+      <span class="line2"></span>
+      <span class="line3"></span>
+    </div>
+  </div>
+  <div id="hs-area-center">
+    <span id="hs-title-m">Synergy PDF API</span>
+  </div>
+  <div id="hs-area-right"></div>
+</div>
+		</div>
+	</header>
+	<nav id="hs-nav">
+		<div id="hs-nav-content">
+			<ul id="nav-tabs" role="tablist">
+				<li class="hs-toc-tab" role="tab">
+					<a href="#hs-toc-panel">Contents</a>
+				</li>
+				
+				<li class="hs-search-tab" role="tab">
+					<a href="#hs-search-panel">Search</a>
+				</li>
+			</ul>
+			<div id="tabs-panels">
+				<div class="hstabs-panel" id="hs-toc-panel" role="tabpanel">
+					<div id="toc-tree" class="hs-tree"></div>
+				</div>
+				
+				<div class="hstabs-panel" id="hs-search-panel" role="tabpanel">
+					<div id="hs-search-content">
+						<div id="search-form">
+							<label for="squery" class="sfield-title text-label">Type in the keyword(s) to find:</label>
+							<div id="search-box">
+								<div class="search-container">
+									<input type="text" id="squery" autocomplete="off">
+								</div>
+								<div class="search-btn" title="Search"></div>
+							</div>
+							<div id="options-box">
+								<span class="text-label">Match:</span>
+								<input type="radio" id="anywords" name="match" value="anywords" checked="checked"><label for="anywords" class="text-label">Any words</label>
+								<input type="radio" id="phrase" name="match" value="phrase"><label for="phrase" class="text-label">Phrase</label>
+							</div>
+						</div>
+						<div id="search-result"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</nav>
+		<div id="hs-content">
+			<main>
+				<article>
+					<div id="topic-content">
+  <div id="content-box" class="page0">
+    <h1 class="hd0"><span class="ts0">Setting up a Windows Environment</span></h1>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Deploy the libHaru Files</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Before attempting to use the APU you must copy the required libHaru binaries to an appropriate location on your system. One option is to place them in a directory that is included in the Windows PATH; another option is to deploy to the folder containing your executable. As the executable when using traditional Synergy is always dbr.exe a good choice is to deploy the files to the dbl\bin folder. But remember there are separate dbl\bin folders for 32-bit and 64-bit environments.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">These are the files that must be deployed:</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <div>
+      <table class="tbl0">
+        <tr class="row0">
+          <td class="cell3">
+            <h3 class="hd0"><span class="ts4">Synergy Used</span></h3>
+          </td>
+          <td class="cell4">
+            <p><span class="ts11">libHaru Binaries</span></p>
+          </td>
+          <td class="cell5">
+            <p><span class="ts11">Copy From</span></p>
+          </td>
+          <td class="cell6">
+            <p><span class="ts11">Copy To</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell3">
+            <p><span class="ts7">32-bit</span></p>
+          </td>
+          <td class="cell4">
+            <p><span class="ts7">libhpdf.dll</span></p>
+            <p><span class="ts7">libpng15.dll</span></p>
+            <p><span class="ts7">zlibwapi.dll</span></p>
+          </td>
+          <td class="cell5">
+            <p><span class="ts7">WINDOWS\X86</span></p>
+          </td>
+          <td class="cell6">
+            <p><span class="ts7">C:\Program Files (x86)\Synergex\SynergyDE\dbl\bin</span></p>
+          </td>
+        </tr>
+        <tr class="row0">
+          <td class="cell3">
+            <p><span class="ts7">64-bit</span></p>
+          </td>
+          <td class="cell4">
+            <p><span class="ts7">libhpdf64.dll</span></p>
+            <p><span class="ts7">libpng15_64.dll</span></p>
+            <p><span class="ts7">zlibwapi64.dll</span></p>
+          </td>
+          <td class="cell5">
+            <p><span class="ts7">WINDOWS\X64</span></p>
+          </td>
+          <td class="cell6">
+            <p><span class="ts7">C:\Program Files\Synergex\SynergyDE\dbl\bin</span></p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">To make deploying the libHaru binaries easy we have provided a Windows batch file named DeployHaru.bat that copies the various binary files (above) to the required locations. If you choose to use this batch file then you must execute it from an administrative command prompt.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Note that the libHaru binary files are runtime components so you will also need to ship them along with your application and ensure that they are placed in appropriate locations on other systems where your application will execute.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">C++ Runtime Dependencies</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">The libHaru DLLs on which this environment depends were built with Visual Studio 2010 and require that the Microsoft Visual Studio C++ 2010 Redistributable Packages for both X86 and X64 are installed. It is possible that these are already installed because of the presence of other applications on your system, but you should always check. These DLL's are also required on runtime-only systems. You will find the installers for these required runtimes in the WINDOWS\X86 and WINDOWS\X64 folders, or if you prefer can download them from Microsoft:</span></h3>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <p class="ps1"><span class="ts5">32-bit: </span><a href="https://www.microsoft.com/en-us/download/details.aspx?id=5555" target="_blank" class="hs1">https://www.microsoft.com/en-us/download/details.aspx?id=5555</a></p>
+    <p class="ps1"><span class="ts5">64-bit: </span><a href="https://www.microsoft.com/en-us/download/details.aspx?id=14632" target="_blank" class="hs1">https://www.microsoft.com/en-us/download/details.aspx?id=14632</a><span class="ts5">&nbsp;</span></p>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Building the API</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">The environment consists of a number of classes and enumerations that can be manipulated in order to create PDF files. The code for these classes and enumerations can be found in the various source files in the SOURCE\PDF folder. You can edit and build the code using a supplied Workbench project.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">To build the ELB on your system:</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">1.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">Open Workbench.</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">2.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">From the menu select </span><span class="ts4">Project &gt; Open Workspace</span><span class="ts1">.</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">3.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">Browse to the folder where you extracted the package and select and open the workspace </span><span class="ts4">WINDOWS\SynPSG_PDF.vpw</span><span class="ts1">.</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">4.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">If you are running Synergy/DE 10.3.1 there was a bug in Workbench that would cause a build to fail unless there was a source file open in the editor, so open any .dbl source file before proceeding.</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">5.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">From the menu select </span><span class="ts4">Project &gt; Set Active Project &gt; SynPSG_PDF</span><span class="ts1">.</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">6.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">From the menu select </span><span class="ts4">Build &gt; Build</span><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Building and Running the Sample Programs</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">The distributed environment includes several </span><a href="idh-topic310.htm" class="hs0">example programs</a><span class="ts1">&nbsp;that show how to use various features of the API</span><span class="ts1">. You will find the source code for the example programs is in the </span><span class="ts4">SOURCE\EXAMPLES</span><span class="ts1">&nbsp;folder. To build and run the example programs:</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">1.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">Open Workbench.</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">2.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">From the menu select </span><span class="ts4">Project &gt; Open Workspace</span><span class="ts1">.</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">3.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">Browse to the folder where you extracted the package and select and open the workspace </span><span class="ts4">WINDOWS\SynPSG_PDF.vpw</span><span class="ts1">.</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">4.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">If you are running Synergy/DE 10.3.1 there was a bug in Workbench that would cause a build to fail unless there was a source file open in the editor, so open any .dbl source file before proceeding.</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">5.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">From the menu select </span><span class="ts4">Project &gt; Set Active Project &gt; PdfTest</span><span class="ts1">.</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">6.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">From the menu select </span><span class="ts4">Build &gt; Build</span><span class="ts1">.</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">7.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">From the menu select </span><span class="ts4">Build &gt; Execute</span><span class="ts1">. You can run the various examples by selecting them from the simple menu that is displayed.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Each of the example programs creates a PDF file and the PDF file will be displayed using the default application that you have registered to open PDF files. The PDF files that are created are located in the </span><span class="ts4">OUTPUT</span><span class="ts1">&nbsp;folder.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Incorporating the API into your Development Environment</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Before you can use the API classes from your own code base you will need to do two things:</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">1.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">Make the strong prototyping header files available in your development environment.</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">2.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">Link against SynPSG_PDF.elb</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts4">Prototype Files</span></h3>
+    <h3 class="hd0"><span class="ts1">Because the API is implemented using object oriented code it is necessary to prototype the code and provide those prototypes to the compiler when compiling application code that uses the API. The supplied environment already creates the required prototype file, it is called SynPsgPdfAPI.dbp and you will find it in the WINDOWS\hdr folder. Yous simply need to make the prototype file available in your development environment. This can be achieved by specifying the &quot;import directory&quot; by setting the SYNIMPDIR environment variable to include the path to the WINDOWS\hdr folder. SYNIMPDIR is a &quot;search list&quot; logical that supports several paths being specified separated by commas, so if you already have it set in your environment then simply add the path to the WINDOWS\hdr folder; if not then set it for the first time.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Another option is to change the location where the supplied environment creates the prototype file in the first place, to a location where other prototype files already exist for your environment. You could do that by changing the values for both SYNEXPDIR and SYNIMPDIR in the Open tab of the Project Properties dialogs for both the SynPSG_PDF.vpj and PdfTest.vpj workbench projects.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts4">Link against SynPSG_PDF.elb</span></h3>
+    <h3 class="hd0"><span class="ts1">Having built the API (above) you will find the resulting ELB in the WINDOWS\exe folder. You could modify your own build environment to link against it in that location (you should ALWAYS do so via an environment variable that points to the location), or you could change the location that the ELB is created in by altering the settings in the Link tab of the Synergy/DE Options dialog for the SynPSG_PDF.vpj Workbench project.</span></h3>
+    <p class="ps1"><span class="ts5">&nbsp;</span></p>
+    <h2 class="hd1"><a id="SumatraPDF"></a><span class="ts2">Installing SumatraPDF</span></h2>
+    <p><span class="ts1">Sumatra PDF is a open-source PDF viewer for Windows. Sumatra has a minimalistic design, is small, and starts up quickly, and can be used to read PDF, eBook (ePub, Mobi), XPS, DjVu, CHM, and comic books. One of the things that SumatraPDF does well is provide the ability to print PDF files to Windows printers without user intervention or custom UI showing up on the screen. You can find more information about Sumarta PDF at </span><a href="http://www.sumatrapdfreader.org" target="_blank" class="hs0">http://www.sumatrapdfreader.org</a><span class="ts1">. On Windows the API uses SumatraPDF to print PDF files.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">If you wish to call the </span><a href="idh-topic30.htm#Print_method" class="hs0">PdfFile.Print</a><span class="ts1">&nbsp;method on Windows then you must install SumatraPDF V3.0 (or later) first. The installer for SumatraPDF is included within this environment, you'll find it in a folder named WINDOWS\SumatraPDF. If you chose not to install SumatraPDF then </span><a href="idh-topic30.htm#Print_method" class="hs0">PdfFile.Print</a><span class="ts1">&nbsp;will always return an error status, but you will still be able to call </span><a href="idh-topic30.htm#Preview_method" class="hs0">PdfFile.Preview</a><span class="ts1">&nbsp;to view PDF files that you create, or call </span><a href="idh-topic30.htm#Save_method" class="hs0">PdfFile.Save</a><span class="ts1">&nbsp;to save the PDF file to disk.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd1"><a id="PDFtk_Pro"></a><span class="ts2">Installing PDFtk Pro</span></h2>
+    <h3 class="hd0"><span class="ts1">PDFtk Pro is a simple Windows utility that allows for various manipulations of PDF files, including the ability to provide background content by merging PDF files together into a single file. In addition to providing a Windows UI for users to manually manipulate PDF files, PDFtk Pro also provides a command-line utility, that the PDF API can leverage if present.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">If you with to use the PdfFile.BackgroundFile property to provide background content for a PDF file that you are creating then you will need to purchase and install a copy of PDFtk Pro and ensure that the executable is available via the Windows PATH.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p><span class="ts1">At the time of writing the cost of PDFtk Pro is $3.99 US Dollars. For additional information refer to </span><a href="https://www.pdflabs.com/tools/pdftk-pro" target="_blank" class="hs0">https://www.pdflabs.com/tools/pdftk-pro</a><span class="ts1">.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h2 class="hd0"><span class="ts2">Additional Notes for .NET Environments</span></h2>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">To use the API in a .NET environment you should follow the examples provided in the DOTNET folder:</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">1.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">Create a Synergy .NET Class Library and include all of the source files from the SOURCE\PDF folder.</span></p>
+    <p class="ps0"><span style="font-family: Tahoma; font-size: 10pt; color: Black">2.</span><span style="display: inline-block; width: 13px"></span><span class="ts1">Add a reference to this class library in other projects where you want to use the API.</span></p>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">Because of an apparent bug in the underlying haruPDF code it is not possible to use the API successfully in 32-bit environments if your code is built for &quot;Any CPU&quot;. If you need 32-bit support then you must build an explicit 32-bit version of the class library.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+    <h3 class="hd0"><span class="ts1">For .NET applications you must either ensure that the required libHaru DLL's (see above) are included in a folder that is included in the system PATH, or you must place copies of the DLL's alongside your applications executable(s). Placing the DLL files in dbl\bin is not sufficient for .NET applications unless you explicitly add that folder to PATH. Note that doing so is not recommended if you have both 32-bit and 64-bit Synergy on the system.</span></h3>
+    <p><span class="ts1">&nbsp;</span></p>
+  </div>
+</div>
+				</article>
+			</main>
+		</div>
+		<footer>
+			<div id="hs-footer"><div id="hs-content-f">
+  <div id="hs-wrapper-f">
+    <span id="hs-title-f">Copyright &copy; 2015 Synergex International, Inc.</span>
+  </div>
+</div></div>
+		</footer>
+</body>
+</html>
